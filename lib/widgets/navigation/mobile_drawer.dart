@@ -64,12 +64,14 @@ class MobileDrawer extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         const Text(
-                          'Sr. Flutter Developer',
+                          AppConstants.fullRoleHeadline,
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 11,
                             color: AppColors.cyanPrimary,
                             fontWeight: FontWeight.w500,
                           ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

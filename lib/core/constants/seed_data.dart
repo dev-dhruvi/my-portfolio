@@ -13,7 +13,7 @@ class SeedData {
   static Profile get initialProfile => const Profile(
     id: 'default_profile',
     name: AppConstants.developerName,
-    headline: 'Sr. Flutter Developer | Mobile Application Specialist',
+    headline: AppConstants.fullRoleHeadline,
     bio: AppConstants.summary,
     email: AppConstants.email,
     phone: AppConstants.phone,

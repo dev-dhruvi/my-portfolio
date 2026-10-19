@@ -4,8 +4,11 @@ class AppConstants {
 
   // Personal Branding & Identity (Verified from Resumes)
   static const String developerName = 'Dhruvi Patel';
-  static const String primaryRole = 'Sr. Flutter Developer';
-  static const String secondaryRole = 'Mobile Application Developer';
+  static const String primaryRole = 'Sr. Software Engineer';
+  static const String secondaryRole = 'Sr. Flutter Developer';
+  static const String tertiaryRole = 'Mobile Application Developer';
+  static const String fullRoleHeadline =
+      'Sr. Software Engineer • Sr. Flutter Developer • Mobile Application Developer';
   static const String email = 'dhruvi39604@gmail.com';
   static const String phone = '+91 9925589405';
   static const String location = 'Surat, Gujarat, India';
@@ -19,11 +22,11 @@ class AppConstants {
 
   // Role Switcher items
   static const List<String> animatedRoles = [
+    'Sr. Software Engineer',
     'Sr. Flutter Developer',
     'Mobile Application Developer',
-    'Cross-Platform Specialist',
+    'Cross-Platform Architect',
     'Flutter Web Engineer',
-    'Clean Architecture Advocate',
   ];
 
   // Professional summary (Verified from latest resume)

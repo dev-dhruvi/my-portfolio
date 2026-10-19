@@ -99,7 +99,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                           ).copyWith(fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          'Flutter Engineer',
+                          'Sr. Software Engineer • Sr. Flutter Developer',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,

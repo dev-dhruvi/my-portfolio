@@ -181,7 +181,20 @@ class _HeroSectionState extends State<HeroSection> {
             height: 1.1,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
+
+        // Prominent Headline & Roles
+        Text(
+          AppConstants.fullRoleHeadline,
+          textAlign: isCentered ? TextAlign.center : TextAlign.start,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: AppColors.cyanPrimary,
+            letterSpacing: 0.2,
+          ),
+        ),
+        const SizedBox(height: 14),
 
         // Animated Role Text
         Row(
@@ -190,9 +203,9 @@ class _HeroSectionState extends State<HeroSection> {
               : MainAxisAlignment.start,
           children: [
             const Text(
-              'A ',
+              'Specializing as ',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.w400,
                 color: AppColors.textMutedDark,
               ),
@@ -215,7 +228,7 @@ class _HeroSectionState extends State<HeroSection> {
                 AppConstants.animatedRoles[_currentRoleIndex],
                 key: ValueKey<int>(_currentRoleIndex),
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w700,
                   color: AppColors.violetLight,
                 ),

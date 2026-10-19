@@ -56,7 +56,7 @@ class _DhruviPortfolioAppState extends State<DhruviPortfolioApp> {
         builder: (context, theme, _) {
           return MaterialApp.router(
             title:
-                '${AppConstants.developerName} | ${AppConstants.primaryRole}',
+                '${AppConstants.developerName} | ${AppConstants.fullRoleHeadline}',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,

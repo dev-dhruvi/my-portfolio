@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dhruvi_portfolio/admin/auth/admin_login_page.dart';
+import 'package:dhruvi_portfolio/core/constants/app_constants.dart';
 import 'package:dhruvi_portfolio/core/constants/seed_data.dart';
 import 'package:dhruvi_portfolio/sections/hero/hero_section.dart';
 import 'package:dhruvi_portfolio/services/auth_service.dart';
@@ -19,8 +20,9 @@ void main() {
         ),
       );
 
-      // Verify developer name
+      // Verify developer name and headline
       expect(find.text('Dhruvi Patel'), findsOneWidget);
+      expect(find.text(AppConstants.fullRoleHeadline), findsOneWidget);
       expect(find.text('View Projects'), findsOneWidget);
       expect(find.text('Download Resume'), findsOneWidget);
       expect(find.text('Contact Me'), findsOneWidget);

@@ -64,7 +64,7 @@ class FooterSection extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       const Text(
-                        'Sr. Flutter Developer & Mobile Architect',
+                        AppConstants.fullRoleHeadline,
                         style: TextStyle(
                           fontSize: 12,
                           color: AppColors.cyanPrimary,
