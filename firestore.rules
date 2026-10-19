@@ -1,0 +1,443 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// This security rules file assumes the following data structures:
+//
+// Collection: profile
+// Document ID: default
+// Fields:
+//   - id: string (optional, max 50 chars) - Document ID descriptor ('default')
+//   - name: string (required, 1-100 chars) - Developer's full name
+//   - headline: string (required, 1-200 chars) - Professional headline / title
+//   - bio: string (required, 1-5000 chars) - Professional bio / executive summary
+//   - email: string (required, 3-150 chars, valid email format) - Verified contact email
+//   - phone: string (required, 0-30 chars) - Contact telephone number
+//   - location: string (required, 0-150 chars) - Geographic location (e.g. Surat, India)
+//   - githubUrl: string (optional, 0-300 chars) - GitHub profile URL
+//   - linkedinUrl: string (optional, 0-300 chars) - LinkedIn profile URL
+//   - resumeUrl: string (optional, 0-300 chars) - Configurable resume file / download link
+//   - avatarUrl: string (optional, 0-300 chars) - Profile image URL
+//   - yearsOfExperience: string (optional, 0-30 chars) - Experience descriptor (e.g. '4+')
+//   - openToWork: bool (optional) - Active availability indicator
+//   - updatedAt: string or timestamp (optional) - ISO 8601 string or timestamp
+//
+// Collection: experiences
+// Document ID: {experienceId} (e.g. UUID v4 or alphanumeric slug)
+// Fields:
+//   - id: string (optional on partial update, max 100 chars; matches document ID)
+//   - role: string (required, 1-150 chars) - Job title / position
+//   - company: string (required, 1-150 chars) - Employer / company name
+//   - location: string (optional, 0-150 chars) - Office / job location
+//   - startDate: string (required, 1-50 chars) - Employment start date (e.g. 'May 2025')
+//   - endDate: string (required, 1-50 chars) - Employment end date (e.g. 'Present')
+//   - isCurrent: bool (optional) - Whether role is currently active
+//   - responsibilities: list (optional, max 50 items) - Key achievements/responsibilities
+//   - technologies: list (optional, max 50 items) - Stack/technologies used
+//   - orderIndex: number (required, 0-10000) - Display ordering sequence
+//   - isPublished: bool (required) - Visibility toggle (true = public, false = draft)
+//   - createdAt: string or timestamp (optional) - Record creation timestamp
+//
+// Collection: projects
+// Document ID: {projectId} (e.g. alphanumeric slug or UUID)
+// Fields:
+//   - id: string (optional on partial update, max 100 chars; matches document ID)
+//   - slug: string (required, 1-150 chars) - URL-friendly project identifier
+//   - title: string (required, 1-200 chars) - Project display title
+//   - shortDescription: string (required, 1-1000 chars) - Brief card summary
+//   - fullDescription: string (required, 1-10000 chars) - Comprehensive case study
+//   - category: string (required, 1-100 chars) - Project classification
+//   - technologies: list (optional, max 50 items) - Tech stack tags
+//   - thumbnailUrl: string (optional, 0-500 chars) - Preview image asset/URL
+//   - galleryUrls: list (optional, max 30 items) - Gallery screenshot URLs
+//   - personalContribution: string (optional, 0-5000 chars) - Specific contributions
+//   - challengesAndSolutions: string (optional, 0-5000 chars) - Problem solving notes
+//   - verifiedOutcomes: string (optional, 0-5000 chars) - Measured business outcomes
+//   - playStoreUrl: string (optional, 0-500 chars) - Google Play Store link
+//   - appStoreUrl: string (optional, 0-500 chars) - Apple App Store link
+//   - githubUrl: string (optional, 0-500 chars) - Source code repository link
+//   - demoUrl: string (optional, 0-500 chars) - Live interactive demo link
+//   - isFeatured: bool (optional) - Featured badge indicator
+//   - isPublished: bool (required) - Visibility toggle (true = public, false = draft)
+//   - orderIndex: number (required, 0-10000) - Display sequence
+//   - createdAt: string or timestamp (optional) - Record creation timestamp
+//
+// Collection: skills
+// Document ID: {skillId} (e.g. 'sk_flutter' or UUID)
+// Fields:
+//   - id: string (optional on partial update, max 100 chars; matches document ID)
+//   - name: string (required, 1-100 chars) - Name of technology / tool
+//   - category: string (required, 1-100 chars) - Skill category group
+//   - iconName: string (optional, 0-100 chars) - Icon descriptor identifier
+//   - description: string (optional, 0-1000 chars) - Contextual capability note
+//   - isHighlighted: bool (optional) - Top competency flag
+//   - isPublished: bool (required) - Visibility toggle (true = public, false = draft)
+//   - orderIndex: number (required, 0-10000) - Sorting sequence
+//
+// Collection: education
+// Document ID: {educationId} (e.g. 'edu_1_mca' or UUID)
+// Fields:
+//   - id: string (optional on partial update, max 100 chars; matches document ID)
+//   - degree: string (required, 1-200 chars) - Degree / certification title
+//   - institution: string (required, 1-200 chars) - College / university name
+//   - affiliation: string (optional, 0-200 chars) - University affiliation
+//   - location: string (required, 1-150 chars) - Campus location
+//   - startDate: string (required, 1-50 chars) - Enrollment start date
+//   - endDate: string (required, 1-50 chars) - Completion date
+//   - cgpa: string (optional, 0-50 chars) - Academic score / CGPA
+//   - honors: string (optional, 0-200 chars) - Distinction / honors achieved
+//   - description: string (optional, 0-2000 chars) - Curriculum focus summary
+//   - isPublished: bool (required) - Visibility toggle (true = public, false = draft)
+//   - orderIndex: number (required, 0-10000) - Display order
+//
+// Collection: admins
+// Document ID: {adminId} (matches Firebase Auth UID)
+// Fields:
+//   - role: string (required) - Must be 'admin' for console authorization
+//   - email: string (optional) - Administrator email
+//   - createdAt: timestamp or string (optional) - Provisioning timestamp
+//   Provisioning Note: Client-side creation/updates are strictly forbidden.
+//   Admin accounts must be provisioned via Firebase Console or Admin SDK.
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Authentication & Authorization Helper Functions
+    // ===============================================================
+
+    /// Checks if the request is originating from an authenticated caller.
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    /// Checks whether the caller is a verified administrator.
+    /// Derives authority securely from server-managed /admins/{uid} document.
+    function isAdmin() {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ===============================================================
+    // General Validation Helper Functions
+    // ===============================================================
+
+    /// Verifies that all mandatory keys exist in the incoming document state.
+    function hasRequiredFields(data, fields) {
+      return data.keys().hasAll(fields);
+    }
+
+    /// Verifies that no arbitrary or unexpected keys exist (Strict Schema Lockdown).
+    function hasOnlyAllowedFields(data, fields) {
+      return data.keys().hasOnly(fields);
+    }
+
+    /// Validates string type and bounds (prevents Resource Exhaustion / 1MB DoS).
+    function isValidString(val, minLen, maxLen) {
+      return val is string &&
+        val.size() >= minLen &&
+        val.size() <= maxLen;
+    }
+
+    /// Validates optional string field (if present and not null, must satisfy length).
+    function isValidOptionalString(data, field, maxLen) {
+      return !(field in data) ||
+        data[field] == null ||
+        (data[field] is string && data[field].size() <= maxLen);
+    }
+
+    /// Validates optional list field and caps maximum array size.
+    function isValidOptionalList(data, field, maxSize) {
+      return !(field in data) ||
+        data[field] == null ||
+        (data[field] is list && data[field].size() <= maxSize);
+    }
+
+    /// Validates optional boolean field.
+    function isValidOptionalBool(data, field) {
+      return !(field in data) ||
+        data[field] == null ||
+        data[field] is bool;
+    }
+
+    /// Validates email address format with bounded length.
+    function isValidEmail(email) {
+      return email is string &&
+        email.size() >= 3 &&
+        email.size() <= 150 &&
+        email.matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
+    }
+
+    /// Validates optional timestamp or ISO 8601 string date representation.
+    function isValidOptionalTimestampOrIso(data, field) {
+      return !(field in data) ||
+        data[field] == null ||
+        (data[field] is string && data[field].size() <= 50) ||
+        data[field] is timestamp;
+    }
+
+    /// Checks if a resource document is marked as published.
+    function isPublishedDoc() {
+      return ('isPublished' in resource.data) && (resource.data.isPublished == true);
+    }
+
+    // ===============================================================
+    // Domain Validator Functions (Enforced in BOTH Create & Update)
+    // ===============================================================
+
+    /// Validates the profile document schema, constraints, and size bounds.
+    function isValidProfile(data) {
+      return hasRequiredFields(data, ['name', 'headline', 'bio', 'email', 'phone', 'location']) &&
+        hasOnlyAllowedFields(data, [
+          'id', 'name', 'headline', 'bio', 'email', 'phone', 'location',
+          'githubUrl', 'linkedinUrl', 'resumeUrl', 'avatarUrl',
+          'yearsOfExperience', 'openToWork', 'updatedAt'
+        ]) &&
+        isValidString(data.name, 1, 100) &&
+        isValidString(data.headline, 1, 200) &&
+        isValidString(data.bio, 1, 5000) &&
+        isValidEmail(data.email) &&
+        isValidString(data.phone, 0, 30) &&
+        isValidString(data.location, 0, 150) &&
+        isValidOptionalString(data, 'id', 50) &&
+        isValidOptionalString(data, 'githubUrl', 300) &&
+        isValidOptionalString(data, 'linkedinUrl', 300) &&
+        isValidOptionalString(data, 'resumeUrl', 300) &&
+        isValidOptionalString(data, 'avatarUrl', 300) &&
+        isValidOptionalString(data, 'yearsOfExperience', 30) &&
+        isValidOptionalBool(data, 'openToWork') &&
+        isValidOptionalTimestampOrIso(data, 'updatedAt');
+    }
+
+    /// Validates experience documents on create and update.
+    function isValidExperience(data) {
+      return hasRequiredFields(data, [
+          'role', 'company', 'startDate', 'endDate', 'orderIndex', 'isPublished'
+        ]) &&
+        hasOnlyAllowedFields(data, [
+          'id', 'role', 'company', 'location', 'startDate', 'endDate',
+          'isCurrent', 'responsibilities', 'technologies', 'orderIndex',
+          'isPublished', 'createdAt'
+        ]) &&
+        isValidString(data.role, 1, 150) &&
+        isValidString(data.company, 1, 150) &&
+        isValidString(data.startDate, 1, 50) &&
+        isValidString(data.endDate, 1, 50) &&
+        data.isPublished is bool &&
+        data.orderIndex is number && data.orderIndex >= 0 && data.orderIndex <= 10000 &&
+        isValidOptionalString(data, 'id', 100) &&
+        isValidOptionalString(data, 'location', 150) &&
+        isValidOptionalBool(data, 'isCurrent') &&
+        isValidOptionalList(data, 'responsibilities', 50) &&
+        isValidOptionalList(data, 'technologies', 50) &&
+        isValidOptionalTimestampOrIso(data, 'createdAt');
+    }
+
+    /// Validates project documents on create and update.
+    function isValidProject(data) {
+      return hasRequiredFields(data, [
+          'title', 'slug', 'category', 'shortDescription', 'fullDescription',
+          'orderIndex', 'isPublished'
+        ]) &&
+        hasOnlyAllowedFields(data, [
+          'id', 'slug', 'title', 'shortDescription', 'fullDescription',
+          'category', 'technologies', 'thumbnailUrl', 'galleryUrls',
+          'personalContribution', 'challengesAndSolutions', 'verifiedOutcomes',
+          'playStoreUrl', 'appStoreUrl', 'githubUrl', 'demoUrl',
+          'isFeatured', 'isPublished', 'orderIndex', 'createdAt'
+        ]) &&
+        isValidString(data.title, 1, 200) &&
+        isValidString(data.slug, 1, 150) &&
+        isValidString(data.category, 1, 100) &&
+        isValidString(data.shortDescription, 1, 1000) &&
+        isValidString(data.fullDescription, 1, 10000) &&
+        data.isPublished is bool &&
+        data.orderIndex is number && data.orderIndex >= 0 && data.orderIndex <= 10000 &&
+        isValidOptionalString(data, 'id', 100) &&
+        isValidOptionalBool(data, 'isFeatured') &&
+        isValidOptionalString(data, 'thumbnailUrl', 500) &&
+        isValidOptionalList(data, 'galleryUrls', 30) &&
+        isValidOptionalList(data, 'technologies', 50) &&
+        isValidOptionalString(data, 'personalContribution', 5000) &&
+        isValidOptionalString(data, 'challengesAndSolutions', 5000) &&
+        isValidOptionalString(data, 'verifiedOutcomes', 5000) &&
+        isValidOptionalString(data, 'playStoreUrl', 500) &&
+        isValidOptionalString(data, 'appStoreUrl', 500) &&
+        isValidOptionalString(data, 'githubUrl', 500) &&
+        isValidOptionalString(data, 'demoUrl', 500) &&
+        isValidOptionalTimestampOrIso(data, 'createdAt');
+    }
+
+    /// Validates skill documents on create and update.
+    function isValidSkill(data) {
+      return hasRequiredFields(data, [
+          'name', 'category', 'orderIndex', 'isPublished'
+        ]) &&
+        hasOnlyAllowedFields(data, [
+          'id', 'name', 'category', 'iconName', 'description',
+          'isHighlighted', 'isPublished', 'orderIndex'
+        ]) &&
+        isValidString(data.name, 1, 100) &&
+        isValidString(data.category, 1, 100) &&
+        data.isPublished is bool &&
+        data.orderIndex is number && data.orderIndex >= 0 && data.orderIndex <= 10000 &&
+        isValidOptionalString(data, 'id', 100) &&
+        isValidOptionalString(data, 'iconName', 100) &&
+        isValidOptionalString(data, 'description', 1000) &&
+        isValidOptionalBool(data, 'isHighlighted');
+    }
+
+    /// Validates education documents on create and update.
+    function isValidEducation(data) {
+      return hasRequiredFields(data, [
+          'degree', 'institution', 'location', 'startDate', 'endDate',
+          'orderIndex', 'isPublished'
+        ]) &&
+        hasOnlyAllowedFields(data, [
+          'id', 'degree', 'institution', 'affiliation', 'location',
+          'startDate', 'endDate', 'cgpa', 'honors', 'description',
+          'isPublished', 'orderIndex'
+        ]) &&
+        isValidString(data.degree, 1, 200) &&
+        isValidString(data.institution, 1, 200) &&
+        isValidString(data.location, 1, 150) &&
+        isValidString(data.startDate, 1, 50) &&
+        isValidString(data.endDate, 1, 50) &&
+        data.isPublished is bool &&
+        data.orderIndex is number && data.orderIndex >= 0 && data.orderIndex <= 10000 &&
+        isValidOptionalString(data, 'id', 100) &&
+        isValidOptionalString(data, 'affiliation', 200) &&
+        isValidOptionalString(data, 'cgpa', 50) &&
+        isValidOptionalString(data, 'honors', 200) &&
+        isValidOptionalString(data, 'description', 2000);
+    }
+
+    // ===============================================================
+    // Collection Security Rules
+    // ===============================================================
+
+    // ---------------------------------------------------------------
+    // 1. Profile Collection (`profile/default`)
+    // ---------------------------------------------------------------
+    match /profile/{profileId} {
+      // Public read: allow anyone (public visitors) to view the portfolio profile
+      allow read: if true;
+
+      // Admin write: allow verified administrators to create or update profile/default
+      allow create, update: if isAdmin() &&
+                              profileId == 'default' &&
+                              isValidProfile(request.resource.data);
+
+      // Deletion is disabled to protect application integrity
+      allow delete: if false;
+    }
+
+    // ---------------------------------------------------------------
+    // 2. Experiences Collection (`experiences/{experienceId}`)
+    // ---------------------------------------------------------------
+    match /experiences/{experienceId} {
+      // Public read: allow published experiences; verified admins can also read drafts
+      allow read: if isPublishedDoc() || isAdmin();
+
+      // Admin create: verified admins only, with complete schema validation
+      allow create: if isAdmin() &&
+                      isValidExperience(request.resource.data) &&
+                      (!('id' in request.resource.data) || request.resource.data.id == experienceId);
+
+      // Admin update: verified admins only; preserves document identity and re-validates schema
+      allow update: if isAdmin() &&
+                      isValidExperience(request.resource.data) &&
+                      (!('id' in request.resource.data) || request.resource.data.id == resource.data.id);
+
+      // Admin delete: verified admins only
+      allow delete: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------
+    // 3. Projects Collection (`projects/{projectId}`)
+    // ---------------------------------------------------------------
+    match /projects/{projectId} {
+      // Public read: allow published projects; verified admins can also read drafts
+      allow read: if isPublishedDoc() || isAdmin();
+
+      // Admin create: verified admins only, with complete schema validation
+      allow create: if isAdmin() &&
+                      isValidProject(request.resource.data) &&
+                      (!('id' in request.resource.data) || request.resource.data.id == projectId);
+
+      // Admin update: verified admins only; preserves document identity and re-validates schema
+      allow update: if isAdmin() &&
+                      isValidProject(request.resource.data) &&
+                      (!('id' in request.resource.data) || request.resource.data.id == resource.data.id);
+
+      // Admin delete: verified admins only
+      allow delete: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------
+    // 4. Skills Collection (`skills/{skillId}`)
+    // ---------------------------------------------------------------
+    match /skills/{skillId} {
+      // Public read: allow published skills; verified admins can also read drafts
+      allow read: if isPublishedDoc() || isAdmin();
+
+      // Admin create: verified admins only, with complete schema validation
+      allow create: if isAdmin() &&
+                      isValidSkill(request.resource.data) &&
+                      (!('id' in request.resource.data) || request.resource.data.id == skillId);
+
+      // Admin update: verified admins only; preserves document identity and re-validates schema
+      allow update: if isAdmin() &&
+                      isValidSkill(request.resource.data) &&
+                      (!('id' in request.resource.data) || request.resource.data.id == resource.data.id);
+
+      // Admin delete: verified admins only
+      allow delete: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------
+    // 5. Education Collection (`education/{educationId}`)
+    // ---------------------------------------------------------------
+    match /education/{educationId} {
+      // Public read: allow published education; verified admins can also read drafts
+      allow read: if isPublishedDoc() || isAdmin();
+
+      // Admin create: verified admins only, with complete schema validation
+      allow create: if isAdmin() &&
+                      isValidEducation(request.resource.data) &&
+                      (!('id' in request.resource.data) || request.resource.data.id == educationId);
+
+      // Admin update: verified admins only; preserves document identity and re-validates schema
+      allow update: if isAdmin() &&
+                      isValidEducation(request.resource.data) &&
+                      (!('id' in request.resource.data) || request.resource.data.id == resource.data.id);
+
+      // Admin delete: verified admins only
+      allow delete: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------
+    // 6. Admins Collection (`admins/{adminId}`)
+    // ---------------------------------------------------------------
+    match /admins/{adminId} {
+      // Read: allow authenticated user to read only their own admin document
+      allow read: if isAuthenticated() && request.auth.uid == adminId;
+
+      // Write: strictly forbidden client-side to prevent self-provisioning & privilege escalation.
+      // Must be provisioned server-side via Firebase Console or Firebase Admin SDK.
+      allow write: if false;
+    }
+
+    // ---------------------------------------------------------------
+    // 7. Default Root Deny
+    // ---------------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
