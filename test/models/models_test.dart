@@ -105,6 +105,39 @@ void main() {
       expect(restored.title, equals('The Healthi Indian'));
       expect(restored.category, equals('Mobile App'));
     });
+
+    test('supports flexible initialization with description, imageUrl, liveUrl, and keyFeatures', () {
+      const proj = Project(
+        title: 'Radio Spice',
+        description: 'Audio playback app with basic media controls.',
+        technologies: ['Flutter', 'GetX', 'Firebase'],
+        imageUrl: 'https://example.com/radiospice.png',
+        githubUrl: '',
+        liveUrl: 'https://play.google.com/store/apps/details?id=com.app.audio_app',
+        appleStoreUrl: 'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
+        keyFeatures: [
+          '▶️ Audio Playback',
+          '🔔 Push Notifications',
+        ],
+      );
+
+      expect(proj.title, equals('Radio Spice'));
+      expect(proj.shortDescription, equals('Audio playback app with basic media controls.'));
+      expect(proj.fullDescription, equals('Audio playback app with basic media controls.'));
+      expect(proj.thumbnailUrl, equals('https://example.com/radiospice.png'));
+      expect(proj.imageUrl, equals('https://example.com/radiospice.png'));
+      expect(proj.playStoreUrl, equals('https://play.google.com/store/apps/details?id=com.app.audio_app'));
+      expect(proj.liveUrl, equals('https://play.google.com/store/apps/details?id=com.app.audio_app'));
+      expect(proj.appStoreUrl, equals('https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716'));
+      expect(proj.appleStoreUrl, equals('https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716'));
+      expect(proj.keyFeatures.length, equals(2));
+
+      final map = proj.toMap();
+      final restored = Project.fromMap(map);
+      expect(restored.keyFeatures.length, equals(2));
+      expect(restored.imageUrl, equals(proj.imageUrl));
+      expect(restored.appleStoreUrl, equals(proj.appleStoreUrl));
+    });
   });
 
   group('Skill & Education Model Tests', () {

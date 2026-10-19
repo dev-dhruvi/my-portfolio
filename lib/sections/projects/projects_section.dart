@@ -511,6 +511,45 @@ class _ProjectDetailDialog extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
 
+                    // Key Features
+                    if (project.keyFeatures.isNotEmpty) ...[
+                      Text(
+                        'Key Features',
+                        style: AppTypography.getTitleMedium(textColor),
+                      ),
+                      const SizedBox(height: 12),
+                      ...project.keyFeatures.map((feature) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 3, right: 10),
+                                padding: const EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  color: AppColors.cyanPrimary.withOpacity(0.15),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.check_rounded,
+                                  size: 12,
+                                  color: AppColors.cyanPrimary,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  feature,
+                                  style: AppTypography.getBodyMedium(textColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      const SizedBox(height: 24),
+                    ],
+
                     // Personal Contribution
                     if (project.personalContribution.isNotEmpty) ...[
                       Text(

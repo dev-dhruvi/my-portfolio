@@ -4,29 +4,25 @@ class AppConstants {
 
   // Personal Branding & Identity (Verified from Resumes)
   static const String developerName = 'Dhruvi Patel';
-  static const String primaryRole = 'Sr. Software Engineer';
-  static const String secondaryRole = 'Sr. Flutter Developer';
+  static const String primaryRole = 'Sr. Flutter Developer';
+  static const String secondaryRole = 'Sr. Software Engineer';
   static const String tertiaryRole = 'Mobile Application Developer';
-  static const String fullRoleHeadline =
-      'Sr. Software Engineer • Sr. Flutter Developer • Mobile Application Developer';
+  static const String fullRoleHeadline = 'Sr. Flutter Developer';
   static const String email = 'dhruvi39604@gmail.com';
   static const String phone = '+91 9925589405';
   static const String location = 'Surat, Gujarat, India';
 
   // Configurable Links
-  static const String defaultGithubUrl = 'https://github.com/dhruvipatel';
-  static const String defaultLinkedinUrl =
-      'https://www.linkedin.com/in/dhruvi-patel-flutter';
+  static const String defaultGithubUrl = 'https://github.com/dhruvi-mobiledev';
+  static const String defaultLinkedinUrl = 'https://www.linkedin.com/in/duvi03';
   static const String defaultResumeUrl = 'assets/docs/resume.pdf';
-  static const String repoName = 'dhruvi-portfolio';
+  static const String repoName = 'my-portfolio';
 
   // Role Switcher items
   static const List<String> animatedRoles = [
     'Sr. Software Engineer',
     'Sr. Flutter Developer',
     'Mobile Application Developer',
-    'Cross-Platform Architect',
-    'Flutter Web Engineer',
   ];
 
   // Professional summary (Verified from latest resume)

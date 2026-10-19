@@ -28,7 +28,7 @@ class SeedData {
   static List<Experience> get initialExperiences => [
     const Experience(
       id: 'exp_1_logix',
-      company: 'Logix Built Infotech',
+      company: 'Logix Built Solutions Limited',
       role: 'Sr. Software Engineer – Flutter Developer',
       location: 'Surat, India',
       startDate: 'May 2025',
@@ -60,7 +60,7 @@ class SeedData {
     ),
     const Experience(
       id: 'exp_2_dinjan',
-      company: 'DinJan Infotech Private Limited',
+      company: 'Dinjan Infotech Private Limited',
       role: 'Flutter Developer',
       location: 'Surat, India',
       startDate: 'June 2024',
@@ -346,7 +346,7 @@ class SeedData {
           'Features a custom 20-rule AST and stack-based HTML auto-remediation engine that detects and resolves unclosed tags, orphan tables/lists, and character encoding artifacts without data loss. '
           'Integrates real-time multi-window synchronization via the HTML5 BroadcastChannel API to deliver latency-free live mobile simulation across 15+ device presets. '
           'Developed with modern AI-augmented engineering workflows for rapid system architecture design, rigorous edge-case testing, and 18+ automated test suites.',
-      category: 'Developer Tools',
+      category: 'Flutter Web',
       technologies: [
         'Flutter',
         'Dart',
@@ -384,15 +384,19 @@ class SeedData {
         'Android',
         'iOS',
       ],
-      personalContribution: 'Architected the migration to GetX, resolved UI freeze issues on launch, integrated recipe search and filter APIs, and deployed to app stores.',
-      challengesAndSolutions: 'Challenge: Laggy recipe list filtering and persistent splash screen delays. Solution: Refactored data fetching into GetX workers and implemented cached local storage with SharedPreferences.',
-      verifiedOutcomes:
-          'Successfully published on Google Play Store & Apple App Store.',
-      playStoreUrl: 'https://play.google.com/store/apps',
-      appStoreUrl: 'https://apps.apple.com',
       isFeatured: true,
       isPublished: true,
       orderIndex: 1,
+      imageUrl: 'https://play-lh.googleusercontent.com/ToQ6RrKWZYZnnHlHni9wIbBFtP_ZQH-oyw2lkKd6wo52cG4XaB4cDwr46nRmGR_hBA=w832-h470-rw',
+      githubUrl: '',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.thehealthiindian&pli=1',
+      appleStoreUrl: 'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
+      keyFeatures: [
+        'Personalized meal suggestions tailored to individual fitness and nutritional goals',
+        'A wide range of healthy vegetarian and vegan recipes, optimized for balanced macronutrient intake',
+        'Simple, user-friendly interface with category filters to help users find meals suited to their lifestyle',
+        'Complete privacy—no account creation or personal data collection needed to use the app',
+      ],
     ),
     const Project(
       id: 'proj_radio_spice',
@@ -413,11 +417,20 @@ class SeedData {
       personalContribution: 'Built static audio streaming pipelines, integrated Firebase notifications for show announcements, and created responsive media player controls.',
       challengesAndSolutions: 'Challenge: Handling audio playback transitions during incoming calls and app minimization. Solution: Implemented audio focus listeners and foreground service controllers.',
       verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
-      playStoreUrl: 'https://play.google.com/store/apps',
-      appStoreUrl: 'https://apps.apple.com',
+      imageUrl: 'https://play-lh.googleusercontent.com/7GmFn-aYqZF5dLTy0Z6fqUclM1QASJ2TLiLpN9c41xX0UODSizSKD4g_6p16N14moLw=w416-h235-rw',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.nzealand.radioSpice',
+      appStoreUrl: 'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
       isFeatured: true,
       isPublished: true,
       orderIndex: 2,
+      keyFeatures: [
+        '▶️ Audio Playback with Play/Pause control',
+        '🌐 WebView Integration for in-app browsing',
+        '📞 Contact Us Screen with Email and Ad Inquiry options',
+        '📲 WhatsApp Integration to send quick messages',
+        '📹 YouTube Access via embedded video support',
+        '🔔 Push Notifications powered by Firebase',
+      ],
     ),
     const Project(
       id: 'proj_inspire4goal',
@@ -435,8 +448,7 @@ class SeedData {
       ],
       personalContribution: 'Designed responsive quote viewports, configured background notification schedulers, and integrated dual-language English & Dutch localization strings.',
       challengesAndSolutions: 'Challenge: Exact scheduled notification delivery across differing Android OEM battery optimizations. Solution: Used exact alarm scheduling protocols with battery-exemption guidance.',
-      verifiedOutcomes:
-          'Multi-lingual production deployment with dark/light themes.',
+      verifiedOutcomes: 'Multi-lingual production deployment with dark/light themes.',
       isFeatured: true,
       isPublished: true,
       orderIndex: 3,
@@ -444,7 +456,7 @@ class SeedData {
     const Project(
       id: 'proj_fineaway',
       slug: 'fineaway',
-      title: 'FineAway',
+      title: 'Fine Away (Pty) Ltd.',
       shortDescription: 'License renewal utility app with automated OCR text scanning and cross-platform support.',
       fullDescription: 'A mobile utility application streamlining driving and business license renewals. Features optical character recognition (OCR) camera scanning to automatically read and populate document details, reducing manual typing errors. Maintained high performance across Android and iOS platforms.',
       category: 'Mobile App',
@@ -458,19 +470,28 @@ class SeedData {
       personalContribution: 'Maintained and extended codebase, integrated camera-based text scanning for instant form auto-fill, and fixed cross-platform layout discrepancies.',
       challengesAndSolutions: 'Challenge: Scanning accuracy under poor lighting conditions. Solution: Added edge-detection preprocessing and fallback manual confirmation steps.',
       verifiedOutcomes: 'Available on Google Play Store & Apple App Store.',
-      playStoreUrl: 'https://play.google.com/store/apps',
-      appStoreUrl: 'https://apps.apple.com',
       isFeatured: true,
       isPublished: true,
       orderIndex: 4,
+      imageUrl: 'https://play-lh.googleusercontent.com/Il5Brq2qC6YukW0U6k28xloNGcPDKh3pNWtAyGuQ-0QzivbNvla1yp1WUBuf91kf4_2S=w416-h235-rw',
+      githubUrl: '',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.fineaway&pcampaignid=web_share&pli=1',
+      appStoreUrl: 'https://apps.apple.com/in/app/fineaway/id1628780927',
+      keyFeatures: [
+        'Renewal Reminders: Notifies users before license expiry to avoid fines',
+        'Text Scanning: Auto-detects and extracts data from license discs',
+        'User-Friendly Interface: Simplifies license submission and tracking',
+        'Stable Infrastructure: Ensures a reliable and responsive app experience',
+        'Secure Data Handling: Keeps user and vehicle info safe',
+      ],
     ),
     const Project(
       id: 'proj_adroit_lc_banker',
       slug: 'adroit-vantage-lc-banker',
-      title: 'Adroit Vantage: LC Banker',
+      title: 'Lighthouse Canton (LC Banker)',
       shortDescription: 'Wealth management and banking application featuring interactive financial charts and calendar scheduling.',
       fullDescription: 'Part of the Adroit Vantage enterprise financial suite. LC Banker provides financial wealth managers with responsive analytics dashboards, interactive financial yield graphs, calendar scheduling for client portfolio reviews, and secure REST API integrations powered by GetX state management.',
-      category: 'FinTech',
+      category: 'Mobile App',
       technologies: [
         'Flutter',
         'GetX',
@@ -484,11 +505,20 @@ class SeedData {
       isFeatured: false,
       isPublished: true,
       orderIndex: 5,
+      imageUrl: 'https://media.cakeresume.com/image/upload/s--7U5mpGz0--/c_pad,fl_png8,h_288,w_384/v1746093250/ebf7gcahzw7bf7jywmiq.png',
+      keyFeatures: [
+        'Secure chatbox for real-time communication',
+        'Built-in task manager for priority handling',
+        'Out-of-office notification setup',
+        'KYC verification for secure identity validation',
+        'Call/meeting notes to capture critical client data',
+        'Calendar integration for scheduling events',
+      ],
     ),
     const Project(
       id: 'proj_adroit_avsocial',
       slug: 'adroit-vantage-avsocial',
-      title: 'Adroit Vantage: AVSocial',
+      title: 'AV Social',
       shortDescription: 'Internal social networking app with live feeds, real-time chat, interactive polls, and news modules.',
       fullDescription: 'An enterprise social networking application designed for organizational collaboration. Features a real-time activity feed, peer-to-peer chat, participatory employee polls, multimedia sharing, and news dissemination modules. Persists offline data using fast Hive NoSQL database.',
       category: 'Social Networking',
@@ -504,10 +534,10 @@ class SeedData {
     const Project(
       id: 'proj_adroit_wealth_mgmt',
       slug: 'adroit-vantage-wealth-management',
-      title: 'Adroit Vantage: Wealth Management',
+      title: 'Wealth Management',
       shortDescription: 'Stock trading and portfolio enhancement app with push alerts, calendar events, and real-time chat.',
       fullDescription: 'Stock trading and investment management app. Enhanced core app stability by fixing legacy chat bugs, implementing market event calendar reminders, and integrating Firebase push notifications for instant stock volatility alerts.',
-      category: 'FinTech',
+      category: 'Mobile App',
       technologies: [
         'Flutter',
         'REST APIs',
@@ -520,7 +550,7 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Real-time stock alerts not triggering while app was closed. Solution: Replaced polling with FCM high-priority data payloads.',
       verifiedOutcomes: 'Deployed to Google Play & Apple App Store.',
       playStoreUrl: 'https://play.google.com/store/apps',
-      appStoreUrl: 'https://apps.apple.com',
+      appStoreUrl: 'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
       isFeatured: false,
       isPublished: true,
       orderIndex: 7,
@@ -542,11 +572,18 @@ class SeedData {
       personalContribution: 'Implemented secure login workflows, DocuSign embedded signing sessions, PDF document rendering, and native calendar synchronization.',
       challengesAndSolutions: 'Challenge: Embedding DocuSign signing ceremonies within a smooth webview without losing mobile authentication tokens. Solution: Configured OAuth callback interceptors.',
       verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
-      playStoreUrl: 'https://play.google.com/store/apps',
-      appStoreUrl: 'https://apps.apple.com',
+      imageUrl: 'https://play-lh.googleusercontent.com/dX4JQfKfVGHp8GhJlc2zK0XCiAEdMuzwHLX9ReKbMz1bvxb_U5uwn8_7aQ3n1FU_KEvD=w416-h235-rw',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.kwneworleans.app&pcampaignid=web_share&pli=1',
+      appStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
       isFeatured: true,
       isPublished: true,
       orderIndex: 8,
+      keyFeatures: [
+        'AI Integration: Get instant advice and support with ChatGPT',
+        'Secure Login: Seamless access through Firebase Authentication',
+        'Smart Document Handling: Manage and send agreements with built-in DocuSign integration',
+        'Productivity Tools: Real-time updates, calendar sync, and networking features keep agents informed and connected',
+      ],
     ),
     const Project(
       id: 'proj_finpin',
@@ -565,7 +602,7 @@ class SeedData {
       personalContribution: 'Configured Firebase database schema, implemented Apple and Google SSO, created interactive financial timeline widgets, and set up goal tracking calculations.',
       challengesAndSolutions: 'Challenge: Complying with strict Apple Sign In requirements for iOS submission. Solution: Integrated Apple identity tokens with Firebase Auth credentials.',
       verifiedOutcomes: 'Available on the Apple App Store.',
-      appStoreUrl: 'https://apps.apple.com',
+      appStoreUrl: 'https://apps.apple.com/in/app/finpin/id6727005412',
       isFeatured: false,
       isPublished: true,
       orderIndex: 9,
@@ -576,7 +613,7 @@ class SeedData {
       title: 'Disporata',
       shortDescription: 'Location-based social discovery app featuring Google Places integration and proximity calculations.',
       fullDescription: 'A location-aware social networking app built with Flutter and FlutterFlow. Includes secure automated login, detailed profile onboarding with Google Places autocomplete, real-time geodistance calculations, and dynamic nearby user discovery feeds.',
-      category: 'Social Networking',
+      category: 'Mobile App',
       technologies: [
         'Flutter',
         'FlutterFlow',
@@ -590,6 +627,14 @@ class SeedData {
       isFeatured: false,
       isPublished: true,
       orderIndex: 10,
+      imageUrl: 'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
+      keyFeatures: [
+        'Seamless phone number authentication with auto-login and SMS verification',
+        'Profile creation with home/host country and town using Google Places API',
+        'Location tracking and distance calculation between users (miles/km)',
+        'Sorted nearby users by proximity',
+        'Push notifications triggered when users from the same country are within a 50-mile range',
+      ],
     ),
     const Project(
       id: 'proj_mdsty',
@@ -639,3 +684,306 @@ class SeedData {
     ),
   ];
 }
+
+/*
+
+  static List<Project> get initialProjects22 => [
+    const Project(
+      id: 'proj_pmp_csv_validator',
+      slug: 'pmp-csv-validator',
+      title: 'PMP CSV Validator',
+      shortDescription: 'Full-stack cross-platform dataset validation and repair suite automating QA for multi-thousand question exam banks.',
+      fullDescription:
+      'A production-grade dataset validation and repair platform engineered to automate quality assurance for multi-thousand question exam banks. '
+          'Features a custom 20-rule AST and stack-based HTML auto-remediation engine that detects and resolves unclosed tags, orphan tables/lists, and character encoding artifacts without data loss. '
+          'Integrates real-time multi-window synchronization via the HTML5 BroadcastChannel API to deliver latency-free live mobile simulation across 15+ device presets. '
+          'Developed with modern AI-augmented engineering workflows for rapid system architecture design, rigorous edge-case testing, and 18+ automated test suites.',
+      category: 'Developer Tools',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'Python',
+        'Web APIs',
+        'AST Parser',
+        'HTML5 BroadcastChannel',
+        'Automated Testing',
+      ],
+      personalContribution:
+      '• Architected and developed a full-stack cross-platform dataset validation and repair suite from scratch, automating quality assurance for multi-thousand question exam banks.\n'
+          '• Engineered a 20-rule AST and stack-based HTML auto-remediation engine, resolving unclosed tags, orphan tables/lists, and encoding artifacts.\n'
+          '• Implemented real-time multi-window synchronization using the HTML5 BroadcastChannel API to enable latency-free live mobile simulation across 15+ device presets.\n'
+          '• Leveraged modern AI-augmented engineering workflows to accelerate system design, edge-case testing, and author 18+ automated Flutter test suites.',
+      challengesAndSolutions:
+      'Challenge: Parsing malformed HTML syntax, broken table/list hierarchies, and encoding artifacts across massive CSV question banks with zero manual intervention.\n'
+          'Solution: Engineered a 20-rule AST and stack-based remediation engine that parses, balances, and repairs HTML tags dynamically while syncing live mobile simulation across 15+ device presets via HTML5 BroadcastChannel API.',
+      verifiedOutcomes: 'Automated quality assurance across multi-thousand question exam banks with 18+ automated test suites and real-time 15+ device simulation.',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 0,
+    ),
+    const Project(
+      id: 'proj_radio_spice',
+      slug: 'radio-spice',
+      title: 'Radio Spice',
+      description:
+      'Radio Spice is a simple and engaging radio app that offers static audio playback with basic media controls.',
+      category: 'Mobile App',
+      technologies: ['Flutter', 'GetX', 'Firebase'],
+      imageUrl:
+      'https://play-lh.googleusercontent.com/7GmFn-aYqZF5dLTy0Z6fqUclM1QASJ2TLiLpN9c41xX0UODSizSKD4g_6p16N14moLw=w416-h235-rw',
+      githubUrl: '',
+      liveUrl:
+      'https://play.google.com/store/apps/details?id=com.app.audio_app',
+      appleStoreUrl:
+      'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
+      keyFeatures: [
+        '▶️ Audio Playback with Play/Pause control',
+        '🌐 WebView Integration for in-app browsing',
+        '📞 Contact Us Screen with Email and Ad Inquiry options',
+        '📲 WhatsApp Integration to send quick messages',
+        '📹 YouTube Access via embedded video support',
+        '🔔 Push Notifications powered by Firebase',
+      ],
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 1,
+    ),
+    const Project(
+      id: 'proj_agents_thrive',
+      slug: 'agents-thrive',
+      title: 'Agents Thrive',
+      description:
+      'Agents Thrive is a powerful mobile solution built with FlutterFlow, designed to boost the productivity and growth of real estate professionals.',
+      category: 'FlutterFlow',
+      technologies: [
+        'FlutterFlow',
+        'Firebase Authentication',
+        'DocuSign',
+        'ChatGPT',
+      ],
+      imageUrl:
+      'https://play-lh.googleusercontent.com/dX4JQfKfVGHp8GhJlc2zK0XCiAEdMuzwHLX9ReKbMz1bvxb_U5uwn8_7aQ3n1FU_KEvD=w416-h235-rw',
+      githubUrl: '',
+      liveUrl:
+      'https://play.google.com/store/apps/details?id=com.kwneworleans.app&pcampaignid=web_share&pli=1',
+      appleStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
+      keyFeatures: [
+        'AI Integration: Get instant advice and support with ChatGPT',
+        'Secure Login: Seamless access through Firebase Authentication',
+        'Smart Document Handling: Manage and send agreements with built-in DocuSign integration',
+        'Productivity Tools: Real-time updates, calendar sync, and networking features keep agents informed and connected',
+      ],
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 2,
+    ),
+    const Project(
+      id: 'proj_finpin',
+      slug: 'finpin',
+      title: 'FinPin',
+      description:
+      'FinPin app helps users manage their finances by setting goals, tracking income and expenses, and providing insights on savings.',
+      category: 'FlutterFlow',
+      technologies: [
+        'FlutterFlow',
+        'Firebase',
+        'Google Authentication',
+        'Apple Authentication',
+      ],
+      imageUrl:
+      'https://media.cakeresume.com/image/upload/s--BEne1Duy--/c_pad,fl_png8,h_288,w_384/v1746078924/qpfzjzlauplw6tublx9o.png',
+      githubUrl: '',
+      liveUrl: '',
+      appleStoreUrl: 'https://apps.apple.com/in/app/finpin/id6727005412',
+      keyFeatures: [
+        'Timeline feature to track records based on week, month, and year',
+        'Income & Expense Goal Section with suggestions for achieving financial goals',
+        'Firebase Backend Services for secure data management',
+        'Google & Apple Authentication for seamless login',
+      ],
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 3,
+    ),
+    const Project(
+      id: 'proj_fine_away',
+      slug: 'fine-away',
+      title: 'Fine Away (Pty) Ltd.',
+      description:
+      'Fine Away is a smart utility app designed to streamline vehicle license disc renewals across Gauteng, South Africa.',
+      category: 'Mobile App',
+      technologies: ['Flutter', 'Dart', 'Text Scanning'],
+      imageUrl:
+      'https://play-lh.googleusercontent.com/Il5Brq2qC6YukW0U6k28xloNGcPDKh3pNWtAyGuQ-0QzivbNvla1yp1WUBuf91kf4_2S=w416-h235-rw',
+      githubUrl: '',
+      liveUrl:
+      'https://play.google.com/store/apps/details?id=com.app.fineaway&pcampaignid=web_share&pli=1',
+      appleStoreUrl: 'https://apps.apple.com/in/app/fineaway/id1628780927',
+      keyFeatures: [
+        'Renewal Reminders: Notifies users before license expiry to avoid fines',
+        'Text Scanning: Auto-detects and extracts data from license discs',
+        'User-Friendly Interface: Simplifies license submission and tracking',
+        'Stable Infrastructure: Ensures a reliable and responsive app experience',
+        'Secure Data Handling: Keeps user and vehicle info safe',
+      ],
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 4,
+    ),
+    const Project(
+      id: 'proj_lc_banker',
+      slug: 'lighthouse-canton-lc-banker',
+      title: 'Lighthouse Canton (LC Banker)',
+      description:
+      'Lighthouse Canton is a comprehensive wealth management app built using Flutter and Dart, designed for secure client communication.',
+      category: 'FinTech',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'GetX',
+        'REST APIs',
+        'Firebase',
+        'Git',
+        'Xcode',
+        'Agile',
+      ],
+      imageUrl:
+      'https://media.cakeresume.com/image/upload/s--7U5mpGz0--/c_pad,fl_png8,h_288,w_384/v1746093250/ebf7gcahzw7bf7jywmiq.png',
+      githubUrl: '',
+      liveUrl: '',
+      keyFeatures: [
+        'Secure chatbox for real-time communication',
+        'Built-in task manager for priority handling',
+        'Out-of-office notification setup',
+        'KYC verification for secure identity validation',
+        'Call/meeting notes to capture critical client data',
+        'Calendar integration for scheduling events',
+      ],
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 5,
+    ),
+    const Project(
+      id: 'proj_disporata',
+      slug: 'disporata',
+      title: 'Disporata',
+      description:
+      'Disporata is a cross-platform app built using FlutterFlow and Flutter. It helps users connect with others from their home country.',
+      category: 'FlutterFlow',
+      technologies: [
+        'Flutter',
+        'FlutterFlow',
+        'Firebase',
+        'Google Places API',
+        'SMS Verification',
+      ],
+      imageUrl:
+      'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
+      githubUrl: '',
+      liveUrl: '',
+      keyFeatures: [
+        'Seamless phone number authentication with auto-login and SMS verification',
+        'Profile creation with home/host country and town using Google Places API',
+        'Location tracking and distance calculation between users (miles/km)',
+        'Sorted nearby users by proximity',
+        'Push notifications triggered when users from the same country are within a 50-mile range',
+      ],
+      isFeatured: false,
+      isPublished: true,
+      orderIndex: 6,
+    ),
+    const Project(
+      id: 'proj_weather_app',
+      slug: 'weather-app',
+      title: 'Weather App',
+      description:
+      'Displays current weather conditions and forecasts based on user location or search. Integrated with a third-party weather API.',
+      category: 'Mobile App',
+      technologies: ['Flutter', 'Dart', 'HTTP', 'REST APIs', 'Provider'],
+      imageUrl:
+      'https://img.freepik.com/free-vector/flat-user-interface-concept-with-weather-widgets-web-elements-mobile-design_1284-45211.jpg',
+      githubUrl: 'https://github.com/duvi03/',
+      liveUrl: '',
+      keyFeatures: [
+        'Real-time weather updates based on current location',
+        'Search functionality for weather in different cities',
+        'Display of temperature, humidity, wind speed, and conditions',
+        'Integration with OpenWeatherMap API',
+      ],
+      isFeatured: false,
+      isPublished: true,
+      orderIndex: 7,
+    ),
+    const Project(
+      id: 'proj_ecommerce_app',
+      slug: 'ecommerce-app',
+      title: 'E-commerce App',
+      description:
+      'A cross-platform mobile storefront built with Flutter and GetX, featuring product browsing, cart management, user authentication.',
+      category: 'E-Commerce',
+      technologies: ['Flutter', 'GetX', 'Firebase Auth', 'Firestore', 'Dart'],
+      imageUrl:
+      'https://img.freepik.com/free-vector/online-grocery-store-app-template_23-2150089550.jpg',
+      githubUrl: 'https://github.com/duvi03/',
+      liveUrl: '',
+      keyFeatures: [
+        'User registration and login using Firebase Authentication',
+        'Product listing with details and images fetched from Firestore',
+        'Shopping cart functionality (add, remove, update quantity)',
+        'Simulated checkout process',
+      ],
+      isFeatured: false,
+      isPublished: true,
+      orderIndex: 8,
+    ),
+    const Project(
+      id: 'proj_task_management_app',
+      slug: 'task-management-app',
+      title: 'Task Management App',
+      description:
+      'A simple yet effective task management application allowing users to create, update, delete, and categorize tasks.',
+      category: 'Mobile App',
+      technologies: ['Flutter', 'GetX', 'Dart', 'Shared Preferences'],
+      imageUrl:
+      'https://img.freepik.com/free-vector/task-management-application_23-2148625868.jpg',
+      githubUrl: 'https://github.com/duvi03/',
+      liveUrl: '',
+      keyFeatures: [
+        'Create, read, update, and delete (CRUD) operations for tasks',
+        'Task categorization and filtering',
+        'Persistence of tasks using SharedPreferences for offline access',
+        'Clean and intuitive user interface',
+      ],
+      isFeatured: false,
+      isPublished: true,
+      orderIndex: 9,
+    ),
+    const Project(
+      id: 'proj_travel_diary_app',
+      slug: 'travel-diary-app',
+      title: 'Travel Diary App',
+      description:
+      'The Travel Diary App is a digital journaling tool designed to help users capture and relive their travel experiences.',
+      category: 'Mobile App',
+      technologies: ['Flutter', 'Dart', 'HTTP', 'REST APIs', 'Provider'],
+      imageUrl:
+      'https://img.freepik.com/free-vector/travel-onboarding-app-screens_52683-32053.jpg',
+      githubUrl: 'https://github.com/duvi03/travel-diary-app',
+      liveUrl: '',
+      keyFeatures: [
+        'Document daily experiences with journal entries',
+        'Upload and store photos and videos to enhance your stories',
+        'Tag locations to create a visual travel map',
+        'Plan itineraries with activities, bookings, and accommodations',
+        'Write offline and sync later when connected',
+        'Set privacy levels to keep entries personal or share selectively',
+        'Share memorable moments directly to social media',
+        'Organize and search entries by date, location, or category',
+      ],
+      isFeatured: false,
+      isPublished: true,
+      orderIndex: 10,
+    ),
+  ];
+* */
+
