@@ -4,6 +4,7 @@ import 'package:dhruvi_portfolio/admin/auth/admin_login_page.dart';
 import 'package:dhruvi_portfolio/core/constants/app_constants.dart';
 import 'package:dhruvi_portfolio/core/constants/seed_data.dart';
 import 'package:dhruvi_portfolio/sections/hero/hero_section.dart';
+import 'package:dhruvi_portfolio/sections/projects/projects_section.dart';
 import 'package:dhruvi_portfolio/services/auth_service.dart';
 import 'package:dhruvi_portfolio/widgets/cards/app_network_image.dart';
 import 'package:dhruvi_portfolio/widgets/cards/glass_card.dart';
@@ -79,5 +80,25 @@ void main() {
         expect(find.text('Enter administrator email'), findsOneWidget);
       },
     );
+
+    testWidgets('ProjectsSection renders PMP CSV Validator project card', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(disableAnimations: true),
+          child: MaterialApp(
+            home: Scaffold(
+              body: SingleChildScrollView(
+                child: ProjectsSection(projects: SeedData.initialProjects),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
+    });
   });
 }

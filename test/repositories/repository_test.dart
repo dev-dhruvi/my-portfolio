@@ -24,6 +24,20 @@ void main() {
         for (final proj in repo.projects) {
           expect(proj.isPublished, isTrue);
         }
+
+        // Verify PMP CSV Validator project
+        final pmpProject = repo.projects.firstWhere(
+          (p) => p.title == 'PMP CSV Validator',
+        );
+        expect(pmpProject.category, equals('Developer Tools'));
+        expect(pmpProject.technologies, contains('Python'));
+        expect(pmpProject.technologies, contains('Flutter'));
+        expect(pmpProject.technologies, contains('Web APIs'));
+        expect(pmpProject.personalContribution, contains('20-rule AST'));
+        expect(
+          pmpProject.personalContribution,
+          contains('HTML5 BroadcastChannel API'),
+        );
       },
     );
 

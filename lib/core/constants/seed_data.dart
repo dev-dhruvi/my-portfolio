@@ -277,6 +277,15 @@ class SeedData {
       isHighlighted: false,
       orderIndex: 10,
     ),
+    const Skill(
+      id: 'sk_python_automation',
+      name: 'Python & Dataset Automation',
+      category: 'Cloud & Backend',
+      iconName: 'terminal',
+      description: 'Data parsing, 20-rule AST validation pipelines, and auto-remediation scripts.',
+      isHighlighted: true,
+      orderIndex: 11,
+    ),
 
     // Architecture & Quality
     const Skill(
@@ -286,7 +295,7 @@ class SeedData {
       iconName: 'shield',
       description: 'Separation of concerns across presentation, domain, and data layers.',
       isHighlighted: true,
-      orderIndex: 11,
+      orderIndex: 12,
     ),
     const Skill(
       id: 'sk_testing',
@@ -295,7 +304,7 @@ class SeedData {
       iconName: 'check_circle',
       description: 'Test-driven validation, mocking dependencies, and regression prevention.',
       isHighlighted: true,
-      orderIndex: 12,
+      orderIndex: 13,
     ),
     const Skill(
       id: 'sk_perf_opt',
@@ -304,7 +313,7 @@ class SeedData {
       iconName: 'bolt',
       description: 'DevTools profiling, frame rendering, memory leak prevention, and tree pruning.',
       isHighlighted: false,
-      orderIndex: 13,
+      orderIndex: 14,
     ),
     const Skill(
       id: 'sk_git',
@@ -313,7 +322,7 @@ class SeedData {
       iconName: 'branch',
       description: 'Branching strategies, pull requests, code reviews, and CI/CD pipelines.',
       isHighlighted: false,
-      orderIndex: 14,
+      orderIndex: 15,
     ),
     const Skill(
       id: 'sk_integrations',
@@ -322,11 +331,44 @@ class SeedData {
       iconName: 'plug',
       description: 'Document signing, location autocomplete, and lightweight local NoSQL storage.',
       isHighlighted: false,
-      orderIndex: 15,
+      orderIndex: 16,
     ),
   ];
 
   static List<Project> get initialProjects => [
+    const Project(
+      id: 'proj_pmp_csv_validator',
+      slug: 'pmp-csv-validator',
+      title: 'PMP CSV Validator',
+      shortDescription: 'Full-stack cross-platform dataset validation and repair suite automating QA for multi-thousand question exam banks.',
+      fullDescription:
+          'A production-grade dataset validation and repair platform engineered to automate quality assurance for multi-thousand question exam banks. '
+          'Features a custom 20-rule AST and stack-based HTML auto-remediation engine that detects and resolves unclosed tags, orphan tables/lists, and character encoding artifacts without data loss. '
+          'Integrates real-time multi-window synchronization via the HTML5 BroadcastChannel API to deliver latency-free live mobile simulation across 15+ device presets. '
+          'Developed with modern AI-augmented engineering workflows for rapid system architecture design, rigorous edge-case testing, and 18+ automated test suites.',
+      category: 'Developer Tools',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'Python',
+        'Web APIs',
+        'AST Parser',
+        'HTML5 BroadcastChannel',
+        'Automated Testing',
+      ],
+      personalContribution:
+          '• Architected and developed a full-stack cross-platform dataset validation and repair suite from scratch, automating quality assurance for multi-thousand question exam banks.\n'
+          '• Engineered a 20-rule AST and stack-based HTML auto-remediation engine, resolving unclosed tags, orphan tables/lists, and encoding artifacts.\n'
+          '• Implemented real-time multi-window synchronization using the HTML5 BroadcastChannel API to enable latency-free live mobile simulation across 15+ device presets.\n'
+          '• Leveraged modern AI-augmented engineering workflows to accelerate system design, edge-case testing, and author 18+ automated Flutter test suites.',
+      challengesAndSolutions:
+          'Challenge: Parsing malformed HTML syntax, broken table/list hierarchies, and encoding artifacts across massive CSV question banks with zero manual intervention.\n'
+          'Solution: Engineered a 20-rule AST and stack-based remediation engine that parses, balances, and repairs HTML tags dynamically while syncing live mobile simulation across 15+ device presets via HTML5 BroadcastChannel API.',
+      verifiedOutcomes: 'Automated quality assurance across multi-thousand question exam banks with 18+ automated test suites and real-time 15+ device simulation.',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 0,
+    ),
     const Project(
       id: 'proj_healthi_indian',
       slug: 'the-healthi-indian',
@@ -350,7 +392,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 0,
+      orderIndex: 1,
     ),
     const Project(
       id: 'proj_radio_spice',
@@ -375,7 +417,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 1,
+      orderIndex: 2,
     ),
     const Project(
       id: 'proj_inspire4goal',
@@ -397,7 +439,7 @@ class SeedData {
           'Multi-lingual production deployment with dark/light themes.',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 2,
+      orderIndex: 3,
     ),
     const Project(
       id: 'proj_fineaway',
@@ -420,7 +462,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 3,
+      orderIndex: 4,
     ),
     const Project(
       id: 'proj_adroit_lc_banker',
@@ -441,7 +483,7 @@ class SeedData {
       verifiedOutcomes: 'Enterprise-grade wealth management solution.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 4,
+      orderIndex: 5,
     ),
     const Project(
       id: 'proj_adroit_avsocial',
@@ -457,7 +499,7 @@ class SeedData {
           'Collaborative enterprise platform with offline persistence.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 5,
+      orderIndex: 6,
     ),
     const Project(
       id: 'proj_adroit_wealth_mgmt',
@@ -481,7 +523,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 6,
+      orderIndex: 7,
     ),
     const Project(
       id: 'proj_agents_thrive',
@@ -504,7 +546,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 7,
+      orderIndex: 8,
     ),
     const Project(
       id: 'proj_finpin',
@@ -526,7 +568,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 8,
+      orderIndex: 9,
     ),
     const Project(
       id: 'proj_disporata',
@@ -547,7 +589,7 @@ class SeedData {
       verifiedOutcomes: 'Dynamic location-based discovery platform.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 9,
+      orderIndex: 10,
     ),
     const Project(
       id: 'proj_mdsty',
@@ -569,7 +611,7 @@ class SeedData {
           'Production retail app for international European market.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 10,
+      orderIndex: 11,
     ),
     const Project(
       id: 'proj_muvr',
@@ -593,7 +635,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 11,
+      orderIndex: 12,
     ),
   ];
 }

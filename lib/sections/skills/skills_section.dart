@@ -188,6 +188,9 @@ class _SkillCard extends StatelessWidget {
     if (lower.contains('getx')) {
       return Icons.bolt_rounded;
     }
+    if (lower.contains('python') || lower.contains('terminal')) {
+      return Icons.terminal_rounded;
+    }
     return Icons.widgets_outlined;
   }
 
