@@ -22,14 +22,15 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = AppBreakpoints.isMobile(context);
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isDesktop = AppBreakpoints.isDesktop(context);
     final themeController = context.watch<ThemeController>();
     final isDark = themeController.isDarkMode;
 
     return Container(
       height: 80,
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 40,
+        horizontal: isDesktop ? 40 : 20,
         vertical: 12,
       ),
       decoration: BoxDecoration(
@@ -53,68 +54,80 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Brand Logo / Initials
-              InkWell(
-                onTap: () => onNavItemSelected?.call('hero'),
-                borderRadius: BorderRadius.circular(12),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        gradient: AppColors.primaryGradient,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.violetPrimary.withOpacity(0.35),
-                            blurRadius: 16,
-                            offset: const Offset(0, 4),
+              Flexible(
+                child: InkWell(
+                  onTap: () => onNavItemSelected?.call('hero'),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          gradient: AppColors.primaryGradient,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.violetPrimary.withOpacity(0.35),
+                              blurRadius: 16,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'DP',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 18,
+                              letterSpacing: -0.5,
+                            ),
                           ),
-                        ],
+                        ),
                       ),
-                      child: const Center(
-                        child: Text(
-                          'DP',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18,
-                            letterSpacing: -0.5,
-                          ),
+                      const SizedBox(width: 12),
+                      Flexible(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppConstants.developerName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.getTitleMedium(
+                                isDark
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimaryLight,
+                              ).copyWith(fontWeight: FontWeight.w700),
+                            ),
+                            if (screenWidth >= 600)
+                              Text(
+                                screenWidth > 1150
+                                    ? 'Sr. Software Engineer • Sr. Flutter Developer'
+                                    : AppConstants.primaryRole,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.cyanPrimary,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 14),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppConstants.developerName,
-                          style: AppTypography.getTitleMedium(
-                            isDark
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimaryLight,
-                          ).copyWith(fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          'Sr. Software Engineer • Sr. Flutter Developer',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.cyanPrimary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
 
               // Desktop Navigation Menu
-              if (!isMobile) ...[
+              if (isDesktop) ...[
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     _NavLink(
                       title: 'About',
@@ -145,6 +158,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
 
                 // Right actions: Theme Toggle, Resume Download, Admin Link
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     // Theme Switcher Button
                     IconButton(
@@ -200,8 +214,9 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 ),
               ] else ...[
-                // Mobile Drawer Trigger
+                // Mobile / Tablet Drawer Trigger
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
                       tooltip: 'Switch Theme',
@@ -217,6 +232,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                       onPressed: () => themeController.toggleTheme(),
                     ),
                     IconButton(
+                      tooltip: 'Menu',
                       icon: Icon(
                         Icons.menu_rounded,
                         color: isDark ? Colors.white : Colors.black,
@@ -263,7 +279,7 @@ class _NavLinkState extends State<_NavLink> {
       child: GestureDetector(
         onTap: widget.onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: AnimatedDefaultTextStyle(
             duration: const Duration(milliseconds: 200),
             style: TextStyle(

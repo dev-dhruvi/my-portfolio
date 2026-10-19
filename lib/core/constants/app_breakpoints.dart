@@ -5,7 +5,7 @@ class AppBreakpoints {
   AppBreakpoints._();
 
   static const double mobileMax = 768;
-  static const double tabletMax = 1024;
+  static const double tabletMax = 1080;
   static const double desktopMax = 1280;
 
   static const double maxContentWidth = 1200;

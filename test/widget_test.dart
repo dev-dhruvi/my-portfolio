@@ -8,6 +8,8 @@ import 'package:dhruvi_portfolio/sections/projects/projects_section.dart';
 import 'package:dhruvi_portfolio/services/auth_service.dart';
 import 'package:dhruvi_portfolio/widgets/cards/app_network_image.dart';
 import 'package:dhruvi_portfolio/widgets/cards/glass_card.dart';
+import 'package:dhruvi_portfolio/core/theme/app_theme.dart';
+import 'package:dhruvi_portfolio/widgets/navigation/nav_bar.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -99,6 +101,86 @@ void main() {
       await tester.pump();
 
       expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
+    });
+
+    testWidgets('NavBar renders without overflow at 956px (tablet width)', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(956, 800);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      final themeController = ThemeController();
+
+      await tester.pumpWidget(
+        ChangeNotifierProvider<ThemeController>.value(
+          value: themeController,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: NavBar(),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Dhruvi Patel'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('NavBar renders without overflow at 360px (mobile width)', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(360, 800);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      final themeController = ThemeController();
+
+      await tester.pumpWidget(
+        ChangeNotifierProvider<ThemeController>.value(
+          value: themeController,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: NavBar(),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Dhruvi Patel'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('NavBar renders without overflow at 1280px (desktop width)', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1280, 800);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      final themeController = ThemeController();
+
+      await tester.pumpWidget(
+        ChangeNotifierProvider<ThemeController>.value(
+          value: themeController,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: NavBar(),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Dhruvi Patel'), findsOneWidget);
+      expect(find.text('About'), findsOneWidget);
+      expect(find.text('Skills'), findsOneWidget);
+      expect(tester.takeException(), isNull);
     });
   });
 }

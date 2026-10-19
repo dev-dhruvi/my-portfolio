@@ -1,6 +1,6 @@
-# Dhruvi Patel - Production Flutter Web Portfolio
+# Dhruvi Patel - Flutter Web Portfolio
 
-A high-performance, animated, production-ready personal developer portfolio and content management system built with **Flutter Web** and **Dart** for **Dhruvi Patel**, Sr. Flutter Developer & Mobile Application Specialist.
+A high-performance, animated, production-ready personal developer portfolio and content management system built with **Flutter Web** and **Dart**.
 
 ---
 
