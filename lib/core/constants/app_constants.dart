@@ -7,14 +7,16 @@ class AppConstants {
   static const String primaryRole = 'Sr. Flutter Developer';
   static const String secondaryRole = 'Sr. Software Engineer';
   static const String tertiaryRole = 'Mobile Application Developer';
-  static const String fullRoleHeadline = 'Sr. Flutter Developer';
+  static const String fullRoleHeadline =
+      'Sr. Software Engineer • Sr. Flutter Developer • Mobile Application Developer';
   static const String email = 'dhruvi39604@gmail.com';
   static const String phone = '+91 9925589405';
   static const String location = 'Surat, Gujarat, India';
 
   // Configurable Links
-  static const String defaultGithubUrl = 'https://github.com/dhruvi-mobiledev';
-  static const String defaultLinkedinUrl = 'https://www.linkedin.com/in/duvi03';
+  static const String defaultGithubUrl = 'https://github.com/dhruvipatel';
+  static const String defaultLinkedinUrl =
+      'https://www.linkedin.com/in/dhruvi-patel-flutter';
   static const String defaultResumeUrl = 'assets/docs/resume.pdf';
   static const String repoName = 'my-portfolio';
 
@@ -23,6 +25,8 @@ class AppConstants {
     'Sr. Software Engineer',
     'Sr. Flutter Developer',
     'Mobile Application Developer',
+    'Flutter Web Engineer',
+    'Cross-Platform Architect',
   ];
 
   // Professional summary (Verified from latest resume)

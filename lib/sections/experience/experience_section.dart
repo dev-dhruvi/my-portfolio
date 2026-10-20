@@ -298,6 +298,50 @@ class _TimelineItem extends StatelessWidget {
                       _buildDurationTag(),
                     ],
                   ),
+                if (experience.award != null &&
+                    experience.award!.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          const Color(0xFFF59E0B).withOpacity(0.18),
+                          AppColors.violetPrimary.withOpacity(0.15),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: const Color(0xFFF59E0B).withOpacity(0.45),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.emoji_events_rounded,
+                          size: 18,
+                          color: Color(0xFFFBBF24),
+                        ),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: Text(
+                            experience.award!,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFFFDE68A),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 16),
 
                 // Responsibilities Bullet List

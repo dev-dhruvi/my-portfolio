@@ -185,7 +185,7 @@ class _HeroSectionState extends State<HeroSection> {
 
         // Prominent Headline & Roles
         Text(
-          AppConstants.fullRoleHeadline,
+          AppConstants.primaryRole,
           textAlign: isCentered ? TextAlign.center : TextAlign.start,
           style: const TextStyle(
             fontSize: 16,
@@ -197,10 +197,9 @@ class _HeroSectionState extends State<HeroSection> {
         const SizedBox(height: 14),
 
         // Animated Role Text
-        Row(
-          mainAxisAlignment: isCentered
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.start,
+        Wrap(
+          alignment: isCentered ? WrapAlignment.center : WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             const Text(
               'Specializing as ',

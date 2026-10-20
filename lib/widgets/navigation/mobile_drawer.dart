@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants/app_constants.dart';
@@ -64,7 +63,7 @@ class MobileDrawer extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         const Text(
-                          AppConstants.fullRoleHeadline,
+                          AppConstants.primaryRole,
                           style: TextStyle(
                             fontSize: 11,
                             color: AppColors.cyanPrimary,
@@ -134,16 +133,6 @@ class MobileDrawer extends StatelessWidget {
                       onNavItemSelected?.call('contact');
                     },
                   ),
-                  const Divider(height: 32),
-                  _DrawerItem(
-                    icon: Icons.shield_outlined,
-                    title: 'Admin Portal',
-                    color: AppColors.violetLight,
-                    onTap: () {
-                      Navigator.pop(context);
-                      context.go('/admin');
-                    },
-                  ),
                 ],
               ),
             ),
@@ -198,21 +187,19 @@ class _DrawerItem extends StatelessWidget {
   final IconData icon;
   final String title;
   final VoidCallback onTap;
-  final Color? color;
 
   const _DrawerItem({
     required this.icon,
     required this.title,
     required this.onTap,
-    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final itemColor =
-        color ??
-        (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight);
+    final itemColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
 
     return ListTile(
       leading: Icon(icon, color: itemColor, size: 22),

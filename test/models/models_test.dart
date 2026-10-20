@@ -62,6 +62,7 @@ void main() {
         isCurrent: false,
         responsibilities: ['UI development', 'API integration'],
         technologies: ['Flutter', 'Dart'],
+        award: 'Code Craft Excellence Award (2025)',
         orderIndex: 1,
         isPublished: true,
       );
@@ -72,6 +73,7 @@ void main() {
       expect(restored.id, equals(exp.id));
       expect(restored.role, equals(exp.role));
       expect(restored.company, equals(exp.company));
+      expect(restored.award, equals('Code Craft Excellence Award (2025)'));
       expect(restored.responsibilities.length, equals(2));
       expect(restored.technologies.length, equals(2));
       expect(restored.isPublished, isTrue);
@@ -106,37 +108,35 @@ void main() {
       expect(restored.category, equals('Mobile App'));
     });
 
-    test('supports flexible initialization with description, imageUrl, liveUrl, and keyFeatures', () {
-      const proj = Project(
-        title: 'Radio Spice',
-        description: 'Audio playback app with basic media controls.',
-        technologies: ['Flutter', 'GetX', 'Firebase'],
-        imageUrl: 'https://example.com/radiospice.png',
-        githubUrl: '',
-        liveUrl: 'https://play.google.com/store/apps/details?id=com.app.audio_app',
-        appleStoreUrl: 'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
-        keyFeatures: [
-          '▶️ Audio Playback',
-          '🔔 Push Notifications',
-        ],
+    test('supports imageUrl, displayImageUrl, keyFeatures, and appleStoreUrl fallback', () {
+      final mapWithApple = {
+        'id': 'p2',
+        'slug': 'test-proj',
+        'title': 'Test Project',
+        'shortDescription': 'Short',
+        'fullDescription': 'Full',
+        'category': 'Mobile App',
+        'imageUrl': 'https://example.com/banner.png',
+        'keyFeatures': ['Feature 1', 'Feature 2'],
+        'appleStoreUrl': 'https://apps.apple.com/test',
+        'playStoreUrl': 'https://play.google.com/test',
+      };
+
+      final project = Project.fromMap(mapWithApple);
+      expect(project.imageUrl, equals('https://example.com/banner.png'));
+      expect(project.displayImageUrl, equals('https://example.com/banner.png'));
+      expect(project.keyFeatures, contains('Feature 1'));
+      expect(project.appStoreUrl, equals('https://apps.apple.com/test'));
+
+      // Test fallback to thumbnailUrl when imageUrl is empty
+      final fallbackProj = project.copyWith(
+        imageUrl: '',
+        thumbnailUrl: 'https://example.com/thumb.png',
       );
-
-      expect(proj.title, equals('Radio Spice'));
-      expect(proj.shortDescription, equals('Audio playback app with basic media controls.'));
-      expect(proj.fullDescription, equals('Audio playback app with basic media controls.'));
-      expect(proj.thumbnailUrl, equals('https://example.com/radiospice.png'));
-      expect(proj.imageUrl, equals('https://example.com/radiospice.png'));
-      expect(proj.playStoreUrl, equals('https://play.google.com/store/apps/details?id=com.app.audio_app'));
-      expect(proj.liveUrl, equals('https://play.google.com/store/apps/details?id=com.app.audio_app'));
-      expect(proj.appStoreUrl, equals('https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716'));
-      expect(proj.appleStoreUrl, equals('https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716'));
-      expect(proj.keyFeatures.length, equals(2));
-
-      final map = proj.toMap();
-      final restored = Project.fromMap(map);
-      expect(restored.keyFeatures.length, equals(2));
-      expect(restored.imageUrl, equals(proj.imageUrl));
-      expect(restored.appleStoreUrl, equals(proj.appleStoreUrl));
+      expect(
+        fallbackProj.displayImageUrl,
+        equals('https://example.com/thumb.png'),
+      );
     });
   });
 

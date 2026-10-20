@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants/app_breakpoints.dart';
@@ -23,14 +22,14 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    final isDesktop = AppBreakpoints.isDesktop(context);
+    final isCompact = AppBreakpoints.isCompactNav(context);
     final themeController = context.watch<ThemeController>();
     final isDark = themeController.isDarkMode;
 
     return Container(
       height: 80,
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 40 : 20,
+        horizontal: isCompact ? (screenWidth < 600 ? 16 : 24) : 32,
         vertical: 12,
       ),
       decoration: BoxDecoration(
@@ -53,7 +52,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Brand Logo / Initials
+              // Brand Logo / Initials (Flexible to prevent any potential overflow)
               Flexible(
                 child: InkWell(
                   onTap: () => onNavItemSelected?.call('hero'),
@@ -103,11 +102,20 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                                     : AppColors.textPrimaryLight,
                               ).copyWith(fontWeight: FontWeight.w700),
                             ),
-                            if (screenWidth >= 600)
+                            if (screenWidth >= 1200)
                               Text(
-                                screenWidth > 1150
-                                    ? 'Sr. Flutter Developer'
-                                    : AppConstants.primaryRole,
+                                'Sr. Flutter Developer',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.cyanPrimary,
+                                ),
+                              )
+                            else if (screenWidth >= 520)
+                              Text(
+                                'Sr. Flutter Developer',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -124,43 +132,50 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
 
-              // Desktop Navigation Menu
-              if (isDesktop) ...[
+              const SizedBox(width: 12),
+
+              // Desktop Navigation Menu & Actions
+              if (!isCompact) ...[
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _NavLink(
                       title: 'About',
+                      horizontalPadding: screenWidth < 1200 ? 10 : 14,
                       onTap: () => onNavItemSelected?.call('about'),
                     ),
                     _NavLink(
                       title: 'Skills',
+                      horizontalPadding: screenWidth < 1200 ? 10 : 14,
                       onTap: () => onNavItemSelected?.call('skills'),
                     ),
                     _NavLink(
                       title: 'Experience',
+                      horizontalPadding: screenWidth < 1200 ? 10 : 14,
                       onTap: () => onNavItemSelected?.call('experience'),
                     ),
                     _NavLink(
                       title: 'Projects',
+                      horizontalPadding: screenWidth < 1200 ? 10 : 14,
                       onTap: () => onNavItemSelected?.call('projects'),
                     ),
                     _NavLink(
                       title: 'Education',
+                      horizontalPadding: screenWidth < 1200 ? 10 : 14,
                       onTap: () => onNavItemSelected?.call('education'),
                     ),
                     _NavLink(
                       title: 'Contact',
+                      horizontalPadding: screenWidth < 1200 ? 10 : 14,
                       onTap: () => onNavItemSelected?.call('contact'),
                     ),
                   ],
                 ),
 
-                // Right actions: Theme Toggle, Resume Download, Admin Link
+                // Right actions: Theme Toggle, Resume Download
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Theme Switcher Button
                     IconButton(
                       tooltip: isDark
                           ? 'Switch to Light Theme'
@@ -176,21 +191,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                       onPressed: () => themeController.toggleTheme(),
                     ),
-                    const SizedBox(width: 8),
-
-                    // Admin Dashboard Button
-                    IconButton(
-                      tooltip: 'Admin Portal',
-                      icon: const Icon(
-                        Icons.shield_outlined,
-                        size: 20,
-                        color: AppColors.textMutedDark,
-                      ),
-                      onPressed: () => context.go('/admin'),
-                    ),
-                    const SizedBox(width: 12),
-
-                    // Resume Download Button
+                    const SizedBox(width: 10),
                     ElevatedButton.icon(
                       onPressed: () {
                         UrlLauncherUtil.openUrl(
@@ -198,13 +199,13 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                           context: context,
                         );
                       },
-                      icon: const Icon(Icons.download_rounded, size: 18),
+                      icon: const Icon(Icons.download_rounded, size: 16),
                       label: const Text('Resume'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.violetPrimary,
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 12,
+                          horizontal: 16,
+                          vertical: 10,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -214,12 +215,37 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 ),
               ] else ...[
-                // Mobile / Tablet Drawer Trigger
+                // Compact / Tablet / Mobile Drawer Trigger
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    if (screenWidth >= 640) ...[
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          UrlLauncherUtil.openUrl(
+                            AppConstants.defaultResumeUrl,
+                            context: context,
+                          );
+                        },
+                        icon: const Icon(Icons.download_rounded, size: 16),
+                        label: const Text('Resume'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.violetPrimary,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                    ],
                     IconButton(
-                      tooltip: 'Switch Theme',
+                      tooltip: isDark
+                          ? 'Switch to Light Theme'
+                          : 'Switch to Dark Theme',
                       icon: Icon(
                         isDark
                             ? Icons.light_mode_outlined
@@ -232,7 +258,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                       onPressed: () => themeController.toggleTheme(),
                     ),
                     IconButton(
-                      tooltip: 'Menu',
+                      tooltip: 'Open navigation menu',
                       icon: Icon(
                         Icons.menu_rounded,
                         color: isDark ? Colors.white : Colors.black,
@@ -254,8 +280,13 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
 class _NavLink extends StatefulWidget {
   final String title;
   final VoidCallback onTap;
+  final double horizontalPadding;
 
-  const _NavLink({required this.title, required this.onTap});
+  const _NavLink({
+    required this.title,
+    required this.onTap,
+    this.horizontalPadding = 14,
+  });
 
   @override
   State<_NavLink> createState() => _NavLinkState();
@@ -279,7 +310,10 @@ class _NavLinkState extends State<_NavLink> {
       child: GestureDetector(
         onTap: widget.onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: EdgeInsets.symmetric(
+            horizontal: widget.horizontalPadding,
+            vertical: 8,
+          ),
           child: AnimatedDefaultTextStyle(
             duration: const Duration(milliseconds: 200),
             style: TextStyle(

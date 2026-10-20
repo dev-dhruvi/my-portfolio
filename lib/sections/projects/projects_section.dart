@@ -273,7 +273,7 @@ class _ProjectCard extends StatelessWidget {
           Stack(
             children: [
               AppNetworkImage(
-                imageUrl: project.thumbnailUrl,
+                imageUrl: project.displayImageUrl,
                 height: 160,
                 width: double.infinity,
                 placeholderText: project.title,
@@ -499,6 +499,22 @@ class _ProjectDetailDialog extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Project Banner Image
+                    if (project.displayImageUrl.isNotEmpty) ...[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: AppNetworkImage(
+                          imageUrl: project.displayImageUrl,
+                          height: 220,
+                          width: double.infinity,
+                          placeholderText: project.title,
+                          fallbackIcon: Icons.phone_iphone_rounded,
+                          borderRadius: 14,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+
                     // Overview
                     Text(
                       'Project Overview',
@@ -518,35 +534,38 @@ class _ProjectDetailDialog extends StatelessWidget {
                         style: AppTypography.getTitleMedium(textColor),
                       ),
                       const SizedBox(height: 12),
-                      ...project.keyFeatures.map((feature) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 3, right: 10),
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  color: AppColors.cyanPrimary.withOpacity(0.15),
-                                  shape: BoxShape.circle,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: project.keyFeatures.map((feat) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 4.0,
+                                    right: 10.0,
+                                  ),
+                                  child: Icon(
+                                    Icons.check_circle_outline_rounded,
+                                    size: 16,
+                                    color: AppColors.cyanPrimary,
+                                  ),
                                 ),
-                                child: const Icon(
-                                  Icons.check_rounded,
-                                  size: 12,
-                                  color: AppColors.cyanPrimary,
+                                Expanded(
+                                  child: Text(
+                                    feat,
+                                    style: AppTypography.getBodyMedium(
+                                      secondaryTextColor,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  feature,
-                                  style: AppTypography.getBodyMedium(textColor),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
                       const SizedBox(height: 24),
                     ],
 

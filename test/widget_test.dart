@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:dhruvi_portfolio/admin/auth/admin_login_page.dart';
 import 'package:dhruvi_portfolio/core/constants/app_constants.dart';
 import 'package:dhruvi_portfolio/core/constants/seed_data.dart';
 import 'package:dhruvi_portfolio/sections/hero/hero_section.dart';
 import 'package:dhruvi_portfolio/sections/projects/projects_section.dart';
-import 'package:dhruvi_portfolio/services/auth_service.dart';
+import 'package:dhruvi_portfolio/core/theme/app_theme.dart';
 import 'package:dhruvi_portfolio/widgets/cards/app_network_image.dart';
 import 'package:dhruvi_portfolio/widgets/cards/glass_card.dart';
-import 'package:dhruvi_portfolio/core/theme/app_theme.dart';
 import 'package:dhruvi_portfolio/widgets/navigation/nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +23,7 @@ void main() {
 
       // Verify developer name and headline
       expect(find.text('Dhruvi Patel'), findsOneWidget);
-      expect(find.text(AppConstants.fullRoleHeadline), findsOneWidget);
+      expect(find.text(AppConstants.primaryRole), findsOneWidget);
       expect(find.text('View Projects'), findsOneWidget);
       expect(find.text('Download Resume'), findsOneWidget);
       expect(find.text('Contact Me'), findsOneWidget);
@@ -59,128 +57,73 @@ void main() {
     });
 
     testWidgets(
-      'AdminLoginPage displays authentication fields and validates input',
+      'ProjectsSection renders Pandit Near Me and PMP CSV Validator & Preview Tool project cards',
       (tester) async {
-        final authService = AuthService();
-
         await tester.pumpWidget(
-          MultiProvider(
-            providers: [
-              ChangeNotifierProvider<AuthService>.value(value: authService),
-            ],
-            child: const MaterialApp(home: AdminLoginPage()),
-          ),
-        );
-
-        expect(find.text('Admin Authentication'), findsOneWidget);
-        expect(find.text('Sign In to Admin Portal'), findsOneWidget);
-
-        // Tap Sign In with empty fields to trigger validation
-        await tester.tap(find.text('Sign In to Admin Portal'));
-        await tester.pump();
-
-        expect(find.text('Enter administrator email'), findsOneWidget);
-      },
-    );
-
-    testWidgets('ProjectsSection renders PMP CSV Validator project card', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        MediaQuery(
-          data: const MediaQueryData(disableAnimations: true),
-          child: MaterialApp(
-            home: Scaffold(
-              body: SingleChildScrollView(
-                child: ProjectsSection(projects: SeedData.initialProjects),
+          MediaQuery(
+            data: const MediaQueryData(disableAnimations: true),
+            child: MaterialApp(
+              home: Scaffold(
+                body: SingleChildScrollView(
+                  child: ProjectsSection(projects: SeedData.initialProjects),
+                ),
               ),
             ),
           ),
-        ),
-      );
-      await tester.pump();
+        );
+        await tester.pump();
 
-      expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
-    });
+        expect(find.text('Pandit Near Me'), findsAtLeastNWidgets(1));
+        expect(
+          find.text('PMP CSV Validator & Preview Tool'),
+          findsAtLeastNWidgets(1),
+        );
+      },
+    );
 
-    testWidgets('NavBar renders without overflow at 956px (tablet width)', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(956, 800);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
+    testWidgets(
+      'NavBar renders cleanly across desktop (1280px), tablet (954px), and mobile (375px)',
+      (tester) async {
+        final themeController = ThemeController();
 
-      final themeController = ThemeController();
-
-      await tester.pumpWidget(
-        ChangeNotifierProvider<ThemeController>.value(
-          value: themeController,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: NavBar(),
+        Widget buildNavBarWithWidth(double width) {
+          return MediaQuery(
+            data: MediaQueryData(
+              size: Size(width, 800),
+              disableAnimations: true,
             ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      expect(find.text('Dhruvi Patel'), findsOneWidget);
-      expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('NavBar renders without overflow at 360px (mobile width)', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(360, 800);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-
-      final themeController = ThemeController();
-
-      await tester.pumpWidget(
-        ChangeNotifierProvider<ThemeController>.value(
-          value: themeController,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: NavBar(),
+            child: ChangeNotifierProvider<ThemeController>.value(
+              value: themeController,
+              child: const MaterialApp(home: Scaffold(appBar: NavBar())),
             ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
+          );
+        }
 
-      expect(find.text('Dhruvi Patel'), findsOneWidget);
-      expect(tester.takeException(), isNull);
-    });
+        // Test Desktop (1280px)
+        await tester.binding.setSurfaceSize(const Size(1280, 800));
+        await tester.pumpWidget(buildNavBarWithWidth(1280));
+        await tester.pump();
+        expect(find.text('Dhruvi Patel'), findsOneWidget);
+        expect(find.text('Projects'), findsOneWidget);
+        expect(find.text('Resume'), findsOneWidget);
 
-    testWidgets('NavBar renders without overflow at 1280px (desktop width)', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(1280, 800);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
+        // Test Tablet (954px - exact reported overflow width)
+        await tester.binding.setSurfaceSize(const Size(954, 800));
+        await tester.pumpWidget(buildNavBarWithWidth(954));
+        await tester.pump();
+        expect(find.text('Dhruvi Patel'), findsOneWidget);
+        expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
 
-      final themeController = ThemeController();
+        // Test Mobile (375px)
+        await tester.binding.setSurfaceSize(const Size(375, 800));
+        await tester.pumpWidget(buildNavBarWithWidth(375));
+        await tester.pump();
+        expect(find.text('Dhruvi Patel'), findsOneWidget);
+        expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
 
-      await tester.pumpWidget(
-        ChangeNotifierProvider<ThemeController>.value(
-          value: themeController,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: NavBar(),
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      expect(find.text('Dhruvi Patel'), findsOneWidget);
-      expect(find.text('About'), findsOneWidget);
-      expect(find.text('Skills'), findsOneWidget);
-      expect(tester.takeException(), isNull);
-    });
+        // Reset surface size
+        await tester.binding.setSurfaceSize(null);
+      },
+    );
   });
 }

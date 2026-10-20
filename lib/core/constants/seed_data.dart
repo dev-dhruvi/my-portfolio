@@ -28,12 +28,13 @@ class SeedData {
   static List<Experience> get initialExperiences => [
     const Experience(
       id: 'exp_1_logix',
-      company: 'Logix Built Solutions Limited',
+      company: 'Logix Built Infotech',
       role: 'Sr. Software Engineer – Flutter Developer',
       location: 'Surat, India',
       startDate: 'May 2025',
       endDate: 'Present',
       isCurrent: false, // Preserving historical / explicit mode
+      award: '🏆 Code Craft Excellence Award (2025) – Logixbuilt Infotech',
       orderIndex: 0,
       isPublished: true,
       technologies: [
@@ -48,6 +49,7 @@ class SeedData {
         'Modular Architecture',
       ],
       responsibilities: [
+        'Honored with the Code Craft Excellence Award (2025) for exceptional code craftsmanship, modular architecture, and technical quality.',
         'Lead cross-platform application development using Flutter, Dart, GetX, and modular architecture.',
         'Implement real-time notifications using AWS IoT Core (MQTT) and Firebase Cloud Messaging (FCM).',
         'Develop booking workflows, role-based features, location services, and OTP-based verification.',
@@ -60,7 +62,7 @@ class SeedData {
     ),
     const Experience(
       id: 'exp_2_dinjan',
-      company: 'Dinjan Infotech Private Limited',
+      company: 'DinJan Infotech Private Limited',
       role: 'Flutter Developer',
       location: 'Surat, India',
       startDate: 'June 2024',
@@ -259,12 +261,11 @@ class SeedData {
     ),
     const Skill(
       id: 'sk_rest_jwt',
-      name: 'REST APIs & JWT Security',
+      name: 'Dio, REST APIs & JWT Security',
       category: 'Cloud & Backend',
       iconName: 'key',
-      description:
-          'HTTP client interceptors, token refresh, and retry mechanisms.',
-      isHighlighted: false,
+      description: 'Single-flight lock token refresh, exponential backoff retries, and interceptors.',
+      isHighlighted: true,
       orderIndex: 9,
     ),
     const Skill(
@@ -299,10 +300,10 @@ class SeedData {
     ),
     const Skill(
       id: 'sk_testing',
-      name: 'Automated Testing (Unit & Widget)',
+      name: 'Automated Testing (Mocktail & Integration)',
       category: 'Architecture & Quality',
       iconName: 'check_circle',
-      description: 'Test-driven validation, mocking dependencies, and regression prevention.',
+      description: 'Mocktail mocking, unit/widget tests, and Flutter Integration Test suites.',
       isHighlighted: true,
       orderIndex: 13,
     ),
@@ -337,37 +338,291 @@ class SeedData {
 
   static List<Project> get initialProjects => [
     const Project(
+      id: 'proj_pandits_near_me',
+      slug: 'pandit-near-me',
+      title: 'Pandit Near Me',
+      shortDescription: 'Dual-sided spiritual services marketplace with real-time AWS IoT MQTT dispatch, Kundali CustomPainter, and multilingual puja booking.',
+      fullDescription:
+          'A production-grade dual-sided on-demand marketplace application designed and developed from scratch using Flutter and clean modular architecture, supporting 50+ successful releases across Android and iOS. '
+          'Built cross-platform features for users, Pandits, and Astrologers including phone OTP verification, role-based navigation, and end-to-end puja booking with dynamic pricing and wallet discounts. '
+          'Engineered real-time booking dispatch with AWS IoT Core and MQTT over Secure WebSockets with connection lifecycle reconnection logic, paired with FCM notifications with custom audio/vibration behavior. '
+          'Features complete Pandit onboarding and KYC (Aadhaar uploads, certificate verification), dynamic Kundali and Kundali Matching with CustomPainter horoscope charts and PDF downloads, '
+          'location-aware services with Google Places, Panchang/Muhurat/Choghadiya astrology services, multilingual support (English, Hindi, Gujarati), zero-downtime updates, and resilient Dio single-flight concurrency.',
+      category: 'On-Demand Marketplace',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'GetX',
+        'Dio',
+        'AWS IoT Core (MQTT)',
+        'Firebase (FCM, Crashlytics, Analytics, Remote Config, Performance)',
+        'Google Places API',
+        'CustomPainter',
+        'PostHog',
+        'Cloudflare Turnstile',
+        'Hive',
+        'Flutter Secure Storage',
+        'Mocktail',
+        'Git',
+      ],
+      personalContribution:
+          'Role: Senior Software Engineer | Flutter Developer (May 2025 – Present)\n'
+          '• Built cross-platform application features for users, Pandits, and Astrologers, covering onboarding, authentication, profiles, service discovery, puja booking, and booking management.\n'
+          '• Implemented authentication and account management with phone OTP verification, email verification, password recovery, profile updates, account recovery, and role-based navigation.\n'
+          '• Developed end-to-end puja booking workflows, including dynamic service selection, language preferences, date and time validation, address management, pricing, wallet discounts, and booking submission.\n'
+          '• Integrated real-time booking communication using AWS IoT Core and MQTT, including signed WebSocket URL setup, topic subscriptions, connection lifecycle handling, reconnection logic, and booking event processing.\n'
+          '• Implemented push notification workflows using Firebase Cloud Messaging, custom notification interfaces, and Android/iOS notification configuration; worked on sound and vibration behavior across app states.\n'
+          '• Developed Pandit onboarding and KYC functionality, including Aadhaar image uploads, certificates, reference details, service categories, experience information, service locations, and verification status.\n'
+          '• Built Kundali and Kundali Matching features, including dynamic planetary data, custom horoscope charts using CustomPainter, Dasha details, Gun Milan results, saved records, deletion, and PDF download integration.\n'
+          '• Integrated location-aware and astrology-related services, including Google location suggestions, address autocomplete, Panchang, Muhurat, Choghadiya, horoscope, festivals, Sankalp, Adhyatm, Dharma Shiksha, and blogs.\n'
+          '• Implemented multilingual interfaces for English, Hindi, and Gujarati across relevant booking, onboarding, dashboard, and astrology screens.\n'
+          '• Improved application reliability and release readiness through reusable form validation, API error handling, pagination, Firebase Analytics events, performance traces, environment separation, Git conflict resolution, and Android/iOS build preparation.',
+      challengesAndSolutions:
+          'Challenge: Coordinating real-time dispatch over unstable mobile networks without battery drain, rendering complex Vedic astrology charts smoothly, and preventing token refresh race conditions.\n'
+          'Solution: Architected MQTT over Secure WebSockets with connection lifecycle reconnection on AWS IoT Core, built CustomPainter geometric algorithms for horoscope chart rendering, and implemented a thread-safe Single-Flight Lock Completer in Dio.',
+      verifiedOutcomes: '50+ production releases on Android & iOS, real-time MQTT dispatch, custom astrology chart engine, multilingual support (English/Hindi/Gujarati), and comprehensive KYC verification.',
+      playStoreUrl: 'https://play.google.com/store/apps',
+      appStoreUrl: 'https://apps.apple.com',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 0,
+    ),
+    const Project(
       id: 'proj_pmp_csv_validator',
       slug: 'pmp-csv-validator',
-      title: 'PMP CSV Validator',
-      shortDescription: 'Full-stack cross-platform dataset validation and repair suite automating QA for multi-thousand question exam banks.',
+      title: 'PMP CSV Validator & Preview Tool',
+      shortDescription: 'Responsive browser-based dataset validation, repair, and mobile simulation suite automating QA for PMP question banks.',
       fullDescription:
-          'A production-grade dataset validation and repair platform engineered to automate quality assurance for multi-thousand question exam banks. '
-          'Features a custom 20-rule AST and stack-based HTML auto-remediation engine that detects and resolves unclosed tags, orphan tables/lists, and character encoding artifacts without data loss. '
-          'Integrates real-time multi-window synchronization via the HTML5 BroadcastChannel API to deliver latency-free live mobile simulation across 15+ device presets. '
-          'Developed with modern AI-augmented engineering workflows for rapid system architecture design, rigorous edge-case testing, and 18+ automated test suites.',
+          'A responsive browser-based dataset validation and repair suite developed in Flutter Web to upload, inspect, validate, correct, and export PMP question datasets. '
+          'Features drag-and-drop CSV uploads, automatic delimiter and text-encoding detection with full Unicode support (Gujarati, Hindi, Sanskrit, special characters), a validation dashboard with error/warning statuses, and bulk Auto-Fix repair for HTML tags, styling, and array formats. '
+          'Includes reusable HTML rendering supporting rich text, nested lists, Base64 images, horizontally scrollable tables, and inline/block LaTeX equations via flutter_math_fork, alongside an interactive mobile simulator with device presets, TRAIN/FLIP cards, and a side-by-side Cell Inspector.',
       category: 'Flutter Web',
       technologies: [
         'Flutter',
         'Dart',
+        'Flutter Web',
+        'CSV Parsing',
+        'HTML Rendering',
+        'flutter_math_fork',
+        'Widget Testing',
         'Python',
         'Web APIs',
         'AST Parser',
         'HTML5 BroadcastChannel',
-        'Automated Testing',
       ],
       personalContribution:
-          '• Architected and developed a full-stack cross-platform dataset validation and repair suite from scratch, automating quality assurance for multi-thousand question exam banks.\n'
-          '• Engineered a 20-rule AST and stack-based HTML auto-remediation engine, resolving unclosed tags, orphan tables/lists, and encoding artifacts.\n'
-          '• Implemented real-time multi-window synchronization using the HTML5 BroadcastChannel API to enable latency-free live mobile simulation across 15+ device presets.\n'
-          '• Leveraged modern AI-augmented engineering workflows to accelerate system design, edge-case testing, and author 18+ automated Flutter test suites.',
+          'Role: Flutter Developer (Platform: Flutter Web)\n'
+          '• Developed a responsive CSV validation tool to upload, inspect, validate, correct, and export PMP question datasets directly through a browser-based interface.\n'
+          '• Implemented drag-and-drop CSV uploads, automatic delimiter and text-encoding detection, CSV column navigation, and support for Unicode content, including Gujarati, Hindi, Sanskrit, and special characters.\n'
+          '• Built a validation dashboard with error, warning, and app-compatibility statuses, issue summaries, field-level validation, and direct navigation to affected questions.\n'
+          '• Developed bulk Auto-Fix functionality to repair common HTML tag, styling, and array-format issues, with corrected CSV generation and export.\n'
+          '• Created reusable HTML rendering components supporting rich text, nested lists, Base64 images, horizontally scrollable tables, and inline/block LaTeX equations.\n'
+          '• Built an interactive mobile simulator with device presets, custom screen dimensions, question navigation, and TRAIN/FLIP card previews to verify how CSV content renders in the actual Flutter app.\n'
+          '• Implemented a side-by-side Cell Inspector to compare original HTML content with its rendered Flutter preview, including code inspection and copy actions.\n'
+          '• Optimized CSV validation performance through reusable validation patterns and improved responsive layouts across desktop, tablet, and mobile screen sizes.\n'
+          '• Added automated unit and widget tests for CSV validation, HTML rendering, arrays, tables, images, LaTeX formulas, and Auto-Fix functionality; verified the implementation using flutter analyze and flutter test.',
       challengesAndSolutions:
-          'Challenge: Parsing malformed HTML syntax, broken table/list hierarchies, and encoding artifacts across massive CSV question banks with zero manual intervention.\n'
-          'Solution: Engineered a 20-rule AST and stack-based remediation engine that parses, balances, and repairs HTML tags dynamically while syncing live mobile simulation across 15+ device presets via HTML5 BroadcastChannel API.',
-      verifiedOutcomes: 'Automated quality assurance across multi-thousand question exam banks with 18+ automated test suites and real-time 15+ device simulation.',
+          'Challenge: Parsing malformed HTML syntax, broken table/list hierarchies, LaTeX equations, and encoding artifacts across massive CSV question banks while accurately previewing on simulated mobile viewports.\n'
+          'Solution: Engineered automated validation rules and bulk Auto-Fix routines for HTML/array remediation, rendered complex math with flutter_math_fork, and built a side-by-side Cell Inspector and multi-device interactive mobile simulator in Flutter Web.',
+      verifiedOutcomes: 'Browser-based CSV dataset QA suite with Unicode/multi-language support, bulk Auto-Fix remediation, LaTeX rendering, side-by-side Cell Inspector, and multi-device mobile simulator with automated test coverage.',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 0,
+      orderIndex: 1,
+    ),
+    const Project(
+      id: 'proj_pmp_exam_prep',
+      slug: 'pmp-exam-prep',
+      title: 'PMP Exam Prep App',
+      shortDescription: 'Comprehensive certification exam simulator with interactive quizzes, referral deep linking, and performance tracking.',
+      fullDescription: 'A specialized professional certification preparation application engineered in Flutter and GetX. Features interactive quiz modes with timed examinations, question bookmarking, answer explanations, attempt tracking, and performance analytics. Integrates referral deep linking with intent preservation, guest vs. premium tiered access control with subscription paywalls, native ad lifecycle management, and smooth responsive animations across mobile viewports.',
+      category: 'EdTech',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'GetX',
+        'REST APIs',
+        'Firebase',
+        'Local Storage',
+        'Advertising SDKs (AdMob)',
+        'Deep Linking (AppLinks)',
+        'Animations',
+      ],
+      personalContribution:
+          'Role: Flutter Developer\n'
+          '• Enhanced interactive quiz experiences with question navigation, answer review, flagged questions, timers, explanations, quiz submission, and retake workflows.\n'
+          '• Implemented quiz result and performance interfaces with attempt tracking, completion states, progress indicators, and responsive loading behavior.\n'
+          '• Developed quiz interactions using scroll controllers, page transitions, animations, and dynamically adjusted layouts to improve the question-answer experience.\n'
+          '• Implemented referral deep-link handling for initial app launches and active sessions, extracting referral codes and navigating users into the registration flow.\n'
+          '• Enhanced guest and premium access flows with subscription prompts, login redirection, and access-related UI behavior.\n'
+          '• Resolved state-management, controller lifecycle, scrolling, and duplicate widget rendering issues; improved native ad loading and disposal handling.\n'
+          '• Refined profile, password validation, dictionary, image zoom and rotation, theme consistency, and responsive UI behavior.',
+      challengesAndSolutions:
+          'Challenge: Managing complex quiz controller lifecycles during rapid scrolling and page transitions while preventing memory leaks from ad SDKs and duplicate widget rendering.\n'
+          'Solution: Refactored GetX controller lifecycle bindings, decoupled scroll listeners, and implemented defensive ad instance cleanup on view disposal.',
+      verifiedOutcomes: 'Interactive certification quiz engine with full attempt analytics, referral deep linking, and smooth ad monetization.',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 2,
+    ),
+    const Project(
+      id: 'proj_nirvana',
+      slug: 'nirvana-app',
+      title: 'Nirvana App',
+      shortDescription: 'Real estate discovery and unit booking platform featuring live pricing, multi-step purchase flows, and an embedded chatbot.',
+      fullDescription: 'A premier real estate and property exploration application built with Flutter. Enables prospective buyers to explore architectural projects, zone layouts, and specific unit availability with real-time dynamic pricing. Implements a multi-step property purchase flow from unit reservation to legal agreement review, down-payment computation, PDF document inspection, terms and conditions bottom sheets, and an AI chatbot assistant embedded directly on the home dashboard.',
+      category: 'PropTech',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'REST APIs',
+        'PDF Viewer',
+        'Chatbot API',
+        'Responsive UI',
+        'Android Gradle',
+        'iOS TestFlight',
+      ],
+      personalContribution:
+          'Role: Flutter Developer\n'
+          '• Developed property discovery and booking interfaces, including project and zone listings, unit selection, dashboards, booking history, and sales screens.\n'
+          '• Integrated APIs to retrieve unit availability, unit-specific pricing, booking information, and payment-related data.\n'
+          '• Implemented a multi-step property purchase workflow covering product selection, pricing, purchaser information, agreements, and payment.\n'
+          '• Developed dynamic booking and pricing behavior, including down-payment calculations, payment summaries, and unit status handling for available, sold, booked, and reserved units.\n'
+          '• Implemented agreement and PDF viewing, terms and conditions, price information bottom sheets, and booking detail interfaces.\n'
+          '• Integrated a chatbot API into the home-screen chatbot experience.\n'
+          '• Improved mobile and horizontal tablet layouts and prepared Android builds and iOS TestFlight releases for testing.',
+      challengesAndSolutions:
+          'Challenge: Real-time synchronization of unit status (available, sold, reserved) and accurate down-payment calculation across diverse tablet and mobile orientations.\n'
+          'Solution: Engineered reactive view models with layout builders adapting to landscape tablets, and integrated legal contract PDF rendering directly in-app.',
+      verifiedOutcomes: 'End-to-end property purchase engine with interactive PDF agreements, live unit reservation status, and iOS TestFlight deployment.',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 3,
+    ),
+    const Project(
+      id: 'proj_reutbyitforme',
+      slug: 'reutbyitforme-app',
+      title: 'Reutbyitforme App',
+      shortDescription: 'Modernization of a legacy Flutter app from Flutter 3.10 to 3.32 with modern InAppWebView, FCM, and Android Gradle upgrade.',
+      fullDescription: 'An extensive legacy modernization project upgrading an enterprise mobile app from Flutter 3.10 to Flutter 3.32. Resolved breaking API deprecations, modernized null-safety constraints across all packages, upgraded Firebase Cloud Messaging to modern background/tap workflows, refactored webview interactions to flutter_inappwebview with external browser routing, and updated Android Gradle Plugin, namespace declarations, and Android embedding standards for production stability.',
+      category: 'App Migration',
+      technologies: [
+        'Flutter (3.10 to 3.32)',
+        'Dart',
+        'Firebase Core',
+        'Firebase Messaging (FCM)',
+        'flutter_inappwebview',
+        'Provider',
+        'REST APIs',
+        'Android Gradle Plugin',
+      ],
+      personalContribution:
+          'Role: Flutter Developer (Tomer Mash)\n'
+          '• Upgraded the legacy Flutter application from Flutter 3.10 to Flutter 3.32, updating incompatible dependencies and adapting deprecated APIs.\n'
+          '• Migrated the project toward null-safe, compatible packages, including Firebase, WebView, connectivity, shared preferences, URL launching, and package information libraries.\n'
+          '• Updated Firebase Messaging to support foreground notifications, notification-tap events, initial notification handling, and modern notification permission workflows.\n'
+          '• Migrated WebView functionality to updated flutter_inappwebview APIs, including WebUri, URLRequest, and revised loading callbacks.\n'
+          '• Implemented external-browser handling for links that should not remain inside the WebView.\n'
+          '• Updated Android project configuration for modern Android Gradle Plugin compatibility, namespace requirements, and Android embedding changes.\n'
+          '• Prepared updated builds for testing while investigating remaining runtime stability issues.',
+      challengesAndSolutions:
+          'Challenge: Multiple conflicting legacy transitive dependencies, deprecated Android embedding v1 issues, and broken WebView JS bridge callbacks following Flutter framework upgrades.\n'
+          'Solution: Systematically resolved dependency trees, migrated to modern Android v2 embedding with AGP namespaces, and implemented flutter_inappwebview WebUri routing with external URL dispatch.',
+      verifiedOutcomes: 'Successful migration from Flutter 3.10 to 3.32, modern push notification pipeline, and updated Android Gradle toolchain.',
+      isFeatured: false,
+      isPublished: true,
+      orderIndex: 4,
+    ),
+    const Project(
+      id: 'proj_milos_paddle',
+      slug: 'milos-paddle-app',
+      title: 'Milos Paddle App',
+      shortDescription: 'Sports reservation mobile app supporting multi-court booking, dynamic time-slot pricing, and integrated payments.',
+      fullDescription: 'A modern sports court booking mobile application tailored for paddle sports enthusiasts. Supports flexible multi-court scheduling allowing players to select concurrent courts and multi-hour time slots. Integrates live availability checks, automated multi-slot pricing algorithms, payment gateway processing, and resolution of Android Gradle/Kotlin compatibility hurdles.',
+      category: 'Sports & Booking',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'REST APIs',
+        'Payment Gateway',
+        'Time Slot Algorithms',
+        'Android Gradle',
+      ],
+      personalContribution:
+          'Role: Flutter Developer\n'
+          '• Developed multi-court booking functionality that supports selecting multiple courts and time slots.\n'
+          '• Implemented time-range selection, default slot selection, and availability-based time-slot listings.\n'
+          '• Integrated booking APIs to retrieve selected-slot information and display dynamic pricing for multiple court reservations.\n'
+          '• Integrated payment API workflows for bookings involving multiple selected court slots.\n'
+          '• Refined single-slot and multi-slot selection interfaces to support the booking flow.\n'
+          '• Investigated Android Gradle and Kotlin compatibility issues affecting APK generation.',
+      challengesAndSolutions:
+          'Challenge: Managing dynamic pricing matrix calculations for disjoint vs. contiguous multi-court bookings, alongside Kotlin compiler compatibility issues.\n'
+          'Solution: Designed stateful selection grids with real-time cost accumulation, and updated Gradle Kotlin DSL configurations for clean APK builds.',
+      verifiedOutcomes: 'Multi-court booking engine with dynamic time-slot reservation and streamlined payment checkout.',
+      isFeatured: false,
+      isPublished: true,
+      orderIndex: 5,
+    ),
+    const Project(
+      id: 'proj_minder',
+      slug: 'minder-app',
+      title: 'Minder App',
+      shortDescription: 'Mobile authentication validation, network diagnostics, and backend integration QA for production stability.',
+      fullDescription: 'A quality assurance and backend integration engineering engagement for the Minder mobile application. Focused on verifying user onboarding, registration, and authentication API contracts against production and staging backends. Conducted network latency investigations, timeout profiling, and root-cause analysis for API discrepancies.',
+      category: 'QA & Diagnostics',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'REST APIs',
+        'Network Diagnostics',
+        'Environment Configuration',
+        'API Profiling',
+      ],
+      personalContribution:
+          'Role: Flutter Developer\n'
+          '• Validated signup and login API workflows against the live application.\n'
+          '• Investigated API connectivity and timeout behavior by comparing API responses with the production app.\n'
+          '• Updated the API base URL to the development environment when required.\n'
+          '• Shared reproducible findings and supporting evidence with the backend developer to help investigate integration issues.',
+      challengesAndSolutions:
+          'Challenge: Intermittent auth timeouts occurring only under specific carrier networks and staging backend environments.\n'
+          'Solution: Built diagnostic logging interceptors, mapped request/response discrepancies between dev and prod environments, and delivered actionable bug reports to backend teams.',
+      verifiedOutcomes: 'Resolved authentication bottlenecks and improved cross-environment API reliability.',
+      isFeatured: false,
+      isPublished: true,
+      orderIndex: 6,
+    ),
+    const Project(
+      id: 'proj_ai_ui_to_code',
+      slug: 'ai-ui-to-code-research',
+      title: 'AI-Assisted UI-to-Code Research',
+      shortDescription: 'Technical R&D evaluating cutting-edge AI tools (v0, Locofy, Builder.io, CodeParrot) for Figma-to-Flutter conversion.',
+      fullDescription: 'A technical research and development initiative investigating the state of the art in AI-assisted UI-to-code conversion for Flutter development. Explored generative design pipelines, image-to-code models, and Figma automation plugins. Built real-world concept applications for travel, e-commerce, and coffee ordering to benchmark code quality, responsiveness, widget composability, and practical suitability for production Flutter architecture.',
+      category: 'R&D & Prototyping',
+      technologies: [
+        'Flutter',
+        'Figma',
+        'v0.dev',
+        'Firebase Studio',
+        'Builder.io',
+        'Locofy',
+        'Supernova',
+        'CodeParrot',
+        'Blackbox AI',
+      ],
+      personalContribution:
+          'Role: Technical R&D (June 2025)\n'
+          '• Researched AI-assisted tools for converting Figma designs and reference images into Flutter-oriented UI code.\n'
+          '• Created demonstration concepts for travel, e-commerce, and coffee applications using design references and image-based workflows.\n'
+          '• Evaluated generated UI code for design fidelity, manual adjustment requirements, and practical usefulness in Flutter development.\n'
+          '• Compared tool capabilities and limitations to assess where AI-generated UI could support prototyping and accelerate initial implementation.',
+      challengesAndSolutions:
+          'Challenge: Most AI code generation tools output deeply nested or web-centric markup that violates Flutter performance and widget composition best practices.\n'
+          'Solution: Developed an evaluation framework benchmark scoring design fidelity, widget modularity, refactoring overhead, and maintainability to formulate an optimal hybrid workflow.',
+      verifiedOutcomes: 'Comprehensive comparative assessment framework and functional prototypes across travel, e-commerce, and coffee domains.',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 7,
     ),
     const Project(
       id: 'proj_healthi_indian',
@@ -384,13 +639,18 @@ class SeedData {
         'Android',
         'iOS',
       ],
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 1,
+      personalContribution: 'Architected the migration to GetX, resolved UI freeze issues on launch, integrated recipe search and filter APIs, and deployed to app stores.',
+      challengesAndSolutions: 'Challenge: Laggy recipe list filtering and persistent splash screen delays. Solution: Refactored data fetching into GetX workers and implemented cached local storage with SharedPreferences.',
+      verifiedOutcomes:
+          'Successfully published on Google Play Store & Apple App Store.',
       imageUrl: 'https://play-lh.googleusercontent.com/ToQ6RrKWZYZnnHlHni9wIbBFtP_ZQH-oyw2lkKd6wo52cG4XaB4cDwr46nRmGR_hBA=w832-h470-rw',
       githubUrl: '',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.thehealthiindian&pli=1',
-      appleStoreUrl: 'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
+      appStoreUrl:
+          'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 8,
       keyFeatures: [
         'Personalized meal suggestions tailored to individual fitness and nutritional goals',
         'A wide range of healthy vegetarian and vegan recipes, optimized for balanced macronutrient intake',
@@ -419,10 +679,11 @@ class SeedData {
       verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
       imageUrl: 'https://play-lh.googleusercontent.com/7GmFn-aYqZF5dLTy0Z6fqUclM1QASJ2TLiLpN9c41xX0UODSizSKD4g_6p16N14moLw=w416-h235-rw',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.nzealand.radioSpice',
-      appStoreUrl: 'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
+      appStoreUrl:
+          'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 2,
+      orderIndex: 9,
       keyFeatures: [
         '▶️ Audio Playback with Play/Pause control',
         '🌐 WebView Integration for in-app browsing',
@@ -448,10 +709,11 @@ class SeedData {
       ],
       personalContribution: 'Designed responsive quote viewports, configured background notification schedulers, and integrated dual-language English & Dutch localization strings.',
       challengesAndSolutions: 'Challenge: Exact scheduled notification delivery across differing Android OEM battery optimizations. Solution: Used exact alarm scheduling protocols with battery-exemption guidance.',
-      verifiedOutcomes: 'Multi-lingual production deployment with dark/light themes.',
+      verifiedOutcomes:
+          'Multi-lingual production deployment with dark/light themes.',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 3,
+      orderIndex: 10,
     ),
     const Project(
       id: 'proj_fineaway',
@@ -470,13 +732,13 @@ class SeedData {
       personalContribution: 'Maintained and extended codebase, integrated camera-based text scanning for instant form auto-fill, and fixed cross-platform layout discrepancies.',
       challengesAndSolutions: 'Challenge: Scanning accuracy under poor lighting conditions. Solution: Added edge-detection preprocessing and fallback manual confirmation steps.',
       verifiedOutcomes: 'Available on Google Play Store & Apple App Store.',
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 4,
       imageUrl: 'https://play-lh.googleusercontent.com/Il5Brq2qC6YukW0U6k28xloNGcPDKh3pNWtAyGuQ-0QzivbNvla1yp1WUBuf91kf4_2S=w416-h235-rw',
       githubUrl: '',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.fineaway&pcampaignid=web_share&pli=1',
       appStoreUrl: 'https://apps.apple.com/in/app/fineaway/id1628780927',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 11,
       keyFeatures: [
         'Renewal Reminders: Notifies users before license expiry to avoid fines',
         'Text Scanning: Auto-detects and extracts data from license discs',
@@ -502,10 +764,10 @@ class SeedData {
       personalContribution: 'Engineered UI responsiveness across diverse tablet and phone screens, implemented financial charting components, and managed REST API integration.',
       challengesAndSolutions: 'Challenge: Rendering complex real-time financial chart animations without UI lag. Solution: Optimized canvas repaints and decoupled state notifications.',
       verifiedOutcomes: 'Enterprise-grade wealth management solution.',
+      imageUrl: 'https://media.cakeresume.com/image/upload/s--7U5mpGz0--/c_pad,fl_png8,h_288,w_384/v1746093250/ebf7gcahzw7bf7jywmiq.png',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 5,
-      imageUrl: 'https://media.cakeresume.com/image/upload/s--7U5mpGz0--/c_pad,fl_png8,h_288,w_384/v1746093250/ebf7gcahzw7bf7jywmiq.png',
+      orderIndex: 12,
       keyFeatures: [
         'Secure chatbox for real-time communication',
         'Built-in task manager for priority handling',
@@ -529,7 +791,7 @@ class SeedData {
           'Collaborative enterprise platform with offline persistence.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 6,
+      orderIndex: 13,
     ),
     const Project(
       id: 'proj_adroit_wealth_mgmt',
@@ -550,10 +812,11 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Real-time stock alerts not triggering while app was closed. Solution: Replaced polling with FCM high-priority data payloads.',
       verifiedOutcomes: 'Deployed to Google Play & Apple App Store.',
       playStoreUrl: 'https://play.google.com/store/apps',
-      appStoreUrl: 'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
+      appStoreUrl:
+          'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 7,
+      orderIndex: 14,
     ),
     const Project(
       id: 'proj_agents_thrive',
@@ -577,7 +840,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 8,
+      orderIndex: 15,
       keyFeatures: [
         'AI Integration: Get instant advice and support with ChatGPT',
         'Secure Login: Seamless access through Firebase Authentication',
@@ -605,7 +868,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com/in/app/finpin/id6727005412',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 9,
+      orderIndex: 16,
     ),
     const Project(
       id: 'proj_disporata',
@@ -624,10 +887,10 @@ class SeedData {
       personalContribution: 'Built Google Places address lookup components, implemented Haversine distance calculation algorithms, and populated nearby user grids.',
       challengesAndSolutions: 'Challenge: Battery drain from frequent GPS location updates. Solution: Applied adaptive distance-threshold geolocation listeners.',
       verifiedOutcomes: 'Dynamic location-based discovery platform.',
+      imageUrl: 'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 10,
-      imageUrl: 'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
+      orderIndex: 17,
       keyFeatures: [
         'Seamless phone number authentication with auto-login and SMS verification',
         'Profile creation with home/host country and town using Google Places API',
@@ -656,7 +919,7 @@ class SeedData {
           'Production retail app for international European market.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 11,
+      orderIndex: 18,
     ),
     const Project(
       id: 'proj_muvr',
@@ -680,310 +943,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 12,
+      orderIndex: 19,
     ),
   ];
 }
-
-/*
-
-  static List<Project> get initialProjects22 => [
-    const Project(
-      id: 'proj_pmp_csv_validator',
-      slug: 'pmp-csv-validator',
-      title: 'PMP CSV Validator',
-      shortDescription: 'Full-stack cross-platform dataset validation and repair suite automating QA for multi-thousand question exam banks.',
-      fullDescription:
-      'A production-grade dataset validation and repair platform engineered to automate quality assurance for multi-thousand question exam banks. '
-          'Features a custom 20-rule AST and stack-based HTML auto-remediation engine that detects and resolves unclosed tags, orphan tables/lists, and character encoding artifacts without data loss. '
-          'Integrates real-time multi-window synchronization via the HTML5 BroadcastChannel API to deliver latency-free live mobile simulation across 15+ device presets. '
-          'Developed with modern AI-augmented engineering workflows for rapid system architecture design, rigorous edge-case testing, and 18+ automated test suites.',
-      category: 'Developer Tools',
-      technologies: [
-        'Flutter',
-        'Dart',
-        'Python',
-        'Web APIs',
-        'AST Parser',
-        'HTML5 BroadcastChannel',
-        'Automated Testing',
-      ],
-      personalContribution:
-      '• Architected and developed a full-stack cross-platform dataset validation and repair suite from scratch, automating quality assurance for multi-thousand question exam banks.\n'
-          '• Engineered a 20-rule AST and stack-based HTML auto-remediation engine, resolving unclosed tags, orphan tables/lists, and encoding artifacts.\n'
-          '• Implemented real-time multi-window synchronization using the HTML5 BroadcastChannel API to enable latency-free live mobile simulation across 15+ device presets.\n'
-          '• Leveraged modern AI-augmented engineering workflows to accelerate system design, edge-case testing, and author 18+ automated Flutter test suites.',
-      challengesAndSolutions:
-      'Challenge: Parsing malformed HTML syntax, broken table/list hierarchies, and encoding artifacts across massive CSV question banks with zero manual intervention.\n'
-          'Solution: Engineered a 20-rule AST and stack-based remediation engine that parses, balances, and repairs HTML tags dynamically while syncing live mobile simulation across 15+ device presets via HTML5 BroadcastChannel API.',
-      verifiedOutcomes: 'Automated quality assurance across multi-thousand question exam banks with 18+ automated test suites and real-time 15+ device simulation.',
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 0,
-    ),
-    const Project(
-      id: 'proj_radio_spice',
-      slug: 'radio-spice',
-      title: 'Radio Spice',
-      description:
-      'Radio Spice is a simple and engaging radio app that offers static audio playback with basic media controls.',
-      category: 'Mobile App',
-      technologies: ['Flutter', 'GetX', 'Firebase'],
-      imageUrl:
-      'https://play-lh.googleusercontent.com/7GmFn-aYqZF5dLTy0Z6fqUclM1QASJ2TLiLpN9c41xX0UODSizSKD4g_6p16N14moLw=w416-h235-rw',
-      githubUrl: '',
-      liveUrl:
-      'https://play.google.com/store/apps/details?id=com.app.audio_app',
-      appleStoreUrl:
-      'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
-      keyFeatures: [
-        '▶️ Audio Playback with Play/Pause control',
-        '🌐 WebView Integration for in-app browsing',
-        '📞 Contact Us Screen with Email and Ad Inquiry options',
-        '📲 WhatsApp Integration to send quick messages',
-        '📹 YouTube Access via embedded video support',
-        '🔔 Push Notifications powered by Firebase',
-      ],
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 1,
-    ),
-    const Project(
-      id: 'proj_agents_thrive',
-      slug: 'agents-thrive',
-      title: 'Agents Thrive',
-      description:
-      'Agents Thrive is a powerful mobile solution built with FlutterFlow, designed to boost the productivity and growth of real estate professionals.',
-      category: 'FlutterFlow',
-      technologies: [
-        'FlutterFlow',
-        'Firebase Authentication',
-        'DocuSign',
-        'ChatGPT',
-      ],
-      imageUrl:
-      'https://play-lh.googleusercontent.com/dX4JQfKfVGHp8GhJlc2zK0XCiAEdMuzwHLX9ReKbMz1bvxb_U5uwn8_7aQ3n1FU_KEvD=w416-h235-rw',
-      githubUrl: '',
-      liveUrl:
-      'https://play.google.com/store/apps/details?id=com.kwneworleans.app&pcampaignid=web_share&pli=1',
-      appleStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
-      keyFeatures: [
-        'AI Integration: Get instant advice and support with ChatGPT',
-        'Secure Login: Seamless access through Firebase Authentication',
-        'Smart Document Handling: Manage and send agreements with built-in DocuSign integration',
-        'Productivity Tools: Real-time updates, calendar sync, and networking features keep agents informed and connected',
-      ],
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 2,
-    ),
-    const Project(
-      id: 'proj_finpin',
-      slug: 'finpin',
-      title: 'FinPin',
-      description:
-      'FinPin app helps users manage their finances by setting goals, tracking income and expenses, and providing insights on savings.',
-      category: 'FlutterFlow',
-      technologies: [
-        'FlutterFlow',
-        'Firebase',
-        'Google Authentication',
-        'Apple Authentication',
-      ],
-      imageUrl:
-      'https://media.cakeresume.com/image/upload/s--BEne1Duy--/c_pad,fl_png8,h_288,w_384/v1746078924/qpfzjzlauplw6tublx9o.png',
-      githubUrl: '',
-      liveUrl: '',
-      appleStoreUrl: 'https://apps.apple.com/in/app/finpin/id6727005412',
-      keyFeatures: [
-        'Timeline feature to track records based on week, month, and year',
-        'Income & Expense Goal Section with suggestions for achieving financial goals',
-        'Firebase Backend Services for secure data management',
-        'Google & Apple Authentication for seamless login',
-      ],
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 3,
-    ),
-    const Project(
-      id: 'proj_fine_away',
-      slug: 'fine-away',
-      title: 'Fine Away (Pty) Ltd.',
-      description:
-      'Fine Away is a smart utility app designed to streamline vehicle license disc renewals across Gauteng, South Africa.',
-      category: 'Mobile App',
-      technologies: ['Flutter', 'Dart', 'Text Scanning'],
-      imageUrl:
-      'https://play-lh.googleusercontent.com/Il5Brq2qC6YukW0U6k28xloNGcPDKh3pNWtAyGuQ-0QzivbNvla1yp1WUBuf91kf4_2S=w416-h235-rw',
-      githubUrl: '',
-      liveUrl:
-      'https://play.google.com/store/apps/details?id=com.app.fineaway&pcampaignid=web_share&pli=1',
-      appleStoreUrl: 'https://apps.apple.com/in/app/fineaway/id1628780927',
-      keyFeatures: [
-        'Renewal Reminders: Notifies users before license expiry to avoid fines',
-        'Text Scanning: Auto-detects and extracts data from license discs',
-        'User-Friendly Interface: Simplifies license submission and tracking',
-        'Stable Infrastructure: Ensures a reliable and responsive app experience',
-        'Secure Data Handling: Keeps user and vehicle info safe',
-      ],
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 4,
-    ),
-    const Project(
-      id: 'proj_lc_banker',
-      slug: 'lighthouse-canton-lc-banker',
-      title: 'Lighthouse Canton (LC Banker)',
-      description:
-      'Lighthouse Canton is a comprehensive wealth management app built using Flutter and Dart, designed for secure client communication.',
-      category: 'FinTech',
-      technologies: [
-        'Flutter',
-        'Dart',
-        'GetX',
-        'REST APIs',
-        'Firebase',
-        'Git',
-        'Xcode',
-        'Agile',
-      ],
-      imageUrl:
-      'https://media.cakeresume.com/image/upload/s--7U5mpGz0--/c_pad,fl_png8,h_288,w_384/v1746093250/ebf7gcahzw7bf7jywmiq.png',
-      githubUrl: '',
-      liveUrl: '',
-      keyFeatures: [
-        'Secure chatbox for real-time communication',
-        'Built-in task manager for priority handling',
-        'Out-of-office notification setup',
-        'KYC verification for secure identity validation',
-        'Call/meeting notes to capture critical client data',
-        'Calendar integration for scheduling events',
-      ],
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 5,
-    ),
-    const Project(
-      id: 'proj_disporata',
-      slug: 'disporata',
-      title: 'Disporata',
-      description:
-      'Disporata is a cross-platform app built using FlutterFlow and Flutter. It helps users connect with others from their home country.',
-      category: 'FlutterFlow',
-      technologies: [
-        'Flutter',
-        'FlutterFlow',
-        'Firebase',
-        'Google Places API',
-        'SMS Verification',
-      ],
-      imageUrl:
-      'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
-      githubUrl: '',
-      liveUrl: '',
-      keyFeatures: [
-        'Seamless phone number authentication with auto-login and SMS verification',
-        'Profile creation with home/host country and town using Google Places API',
-        'Location tracking and distance calculation between users (miles/km)',
-        'Sorted nearby users by proximity',
-        'Push notifications triggered when users from the same country are within a 50-mile range',
-      ],
-      isFeatured: false,
-      isPublished: true,
-      orderIndex: 6,
-    ),
-    const Project(
-      id: 'proj_weather_app',
-      slug: 'weather-app',
-      title: 'Weather App',
-      description:
-      'Displays current weather conditions and forecasts based on user location or search. Integrated with a third-party weather API.',
-      category: 'Mobile App',
-      technologies: ['Flutter', 'Dart', 'HTTP', 'REST APIs', 'Provider'],
-      imageUrl:
-      'https://img.freepik.com/free-vector/flat-user-interface-concept-with-weather-widgets-web-elements-mobile-design_1284-45211.jpg',
-      githubUrl: 'https://github.com/duvi03/',
-      liveUrl: '',
-      keyFeatures: [
-        'Real-time weather updates based on current location',
-        'Search functionality for weather in different cities',
-        'Display of temperature, humidity, wind speed, and conditions',
-        'Integration with OpenWeatherMap API',
-      ],
-      isFeatured: false,
-      isPublished: true,
-      orderIndex: 7,
-    ),
-    const Project(
-      id: 'proj_ecommerce_app',
-      slug: 'ecommerce-app',
-      title: 'E-commerce App',
-      description:
-      'A cross-platform mobile storefront built with Flutter and GetX, featuring product browsing, cart management, user authentication.',
-      category: 'E-Commerce',
-      technologies: ['Flutter', 'GetX', 'Firebase Auth', 'Firestore', 'Dart'],
-      imageUrl:
-      'https://img.freepik.com/free-vector/online-grocery-store-app-template_23-2150089550.jpg',
-      githubUrl: 'https://github.com/duvi03/',
-      liveUrl: '',
-      keyFeatures: [
-        'User registration and login using Firebase Authentication',
-        'Product listing with details and images fetched from Firestore',
-        'Shopping cart functionality (add, remove, update quantity)',
-        'Simulated checkout process',
-      ],
-      isFeatured: false,
-      isPublished: true,
-      orderIndex: 8,
-    ),
-    const Project(
-      id: 'proj_task_management_app',
-      slug: 'task-management-app',
-      title: 'Task Management App',
-      description:
-      'A simple yet effective task management application allowing users to create, update, delete, and categorize tasks.',
-      category: 'Mobile App',
-      technologies: ['Flutter', 'GetX', 'Dart', 'Shared Preferences'],
-      imageUrl:
-      'https://img.freepik.com/free-vector/task-management-application_23-2148625868.jpg',
-      githubUrl: 'https://github.com/duvi03/',
-      liveUrl: '',
-      keyFeatures: [
-        'Create, read, update, and delete (CRUD) operations for tasks',
-        'Task categorization and filtering',
-        'Persistence of tasks using SharedPreferences for offline access',
-        'Clean and intuitive user interface',
-      ],
-      isFeatured: false,
-      isPublished: true,
-      orderIndex: 9,
-    ),
-    const Project(
-      id: 'proj_travel_diary_app',
-      slug: 'travel-diary-app',
-      title: 'Travel Diary App',
-      description:
-      'The Travel Diary App is a digital journaling tool designed to help users capture and relive their travel experiences.',
-      category: 'Mobile App',
-      technologies: ['Flutter', 'Dart', 'HTTP', 'REST APIs', 'Provider'],
-      imageUrl:
-      'https://img.freepik.com/free-vector/travel-onboarding-app-screens_52683-32053.jpg',
-      githubUrl: 'https://github.com/duvi03/travel-diary-app',
-      liveUrl: '',
-      keyFeatures: [
-        'Document daily experiences with journal entries',
-        'Upload and store photos and videos to enhance your stories',
-        'Tag locations to create a visual travel map',
-        'Plan itineraries with activities, bookings, and accommodations',
-        'Write offline and sync later when connected',
-        'Set privacy levels to keep entries personal or share selectively',
-        'Share memorable moments directly to social media',
-        'Organize and search entries by date, location, or category',
-      ],
-      isFeatured: false,
-      isPublished: true,
-      orderIndex: 10,
-    ),
-  ];
-* */
-

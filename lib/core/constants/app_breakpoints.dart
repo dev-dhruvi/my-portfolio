@@ -5,7 +5,7 @@ class AppBreakpoints {
   AppBreakpoints._();
 
   static const double mobileMax = 768;
-  static const double tabletMax = 1080;
+  static const double tabletMax = 1024;
   static const double desktopMax = 1280;
 
   static const double maxContentWidth = 1200;
@@ -21,4 +21,7 @@ class AppBreakpoints {
 
   static bool isDesktop(BuildContext context) =>
       MediaQuery.sizeOf(context).width >= tabletMax;
+
+  static bool isCompactNav(BuildContext context) =>
+      MediaQuery.sizeOf(context).width < 1080;
 }

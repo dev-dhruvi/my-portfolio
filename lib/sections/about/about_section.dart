@@ -86,9 +86,11 @@ class AboutSection extends StatelessWidget {
                 const SizedBox(height: 14),
                 Text(
                   'I advocate for modular, Clean Architecture principles and strict separation of concerns using GetX '
-                  'and reactive state models. Having led and contributed to over a dozen client and enterprise applications, '
-                  'I emphasize automated unit and widget testing, robust JWT authentication, memory leak elimination, '
-                  'and CI/CD deployment pipelines targeting both the Google Play Store and Apple App Store.',
+                  'and reactive state models. Honored with the Code Craft Excellence Award (2025) at Logixbuilt Infotech '
+                  'for exceptional code quality, architectural modularity, and engineering best practices. '
+                  'Having led and contributed to over 20 client and enterprise applications, I emphasize automated unit and '
+                  'widget testing, robust JWT authentication, memory leak elimination, and CI/CD deployment pipelines '
+                  'targeting both the Google Play Store and Apple App Store.',
                   style: AppTypography.getBodyLarge(secondaryTextColor),
                 ),
               ],
@@ -116,7 +118,14 @@ class AboutSection extends StatelessWidget {
                   ),
                   _HighlightCard(
                     width: cardWidth,
-                    value: '12+ Apps',
+                    value: 'Award Winner',
+                    label: 'Code Craft Excellence 2025',
+                    icon: Icons.emoji_events_outlined,
+                    accentColor: const Color(0xFFF59E0B),
+                  ),
+                  _HighlightCard(
+                    width: cardWidth,
+                    value: '20+ Projects',
                     label: 'Built & Deployed',
                     icon: Icons.layers_outlined,
                     accentColor: AppColors.cyanPrimary,
@@ -127,13 +136,6 @@ class AboutSection extends StatelessWidget {
                     label: 'GTU & VNSGU Distinction',
                     icon: Icons.school_outlined,
                     accentColor: AppColors.bluePrimary,
-                  ),
-                  _HighlightCard(
-                    width: cardWidth,
-                    value: '100% Verified',
-                    label: 'Production History',
-                    icon: Icons.verified_user_outlined,
-                    accentColor: AppColors.success,
                   ),
                 ],
               );

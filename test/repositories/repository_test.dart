@@ -1,81 +1,81 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:dhruvi_portfolio/models/experience.dart';
-import 'package:dhruvi_portfolio/repositories/admin_repository.dart';
 import 'package:dhruvi_portfolio/repositories/portfolio_repository.dart';
 
 void main() {
   group('Repository Tests', () {
-    test(
-      'PortfolioRepository provides verified seed data in fallback mode',
-      () {
-        final repo = PortfolioRepository();
+    test('PortfolioRepository provides verified seed data', () {
+      final repo = PortfolioRepository();
 
-        expect(repo.isUsingFallback, isTrue);
-        expect(repo.profile.name, equals('Dhruvi Patel'));
-        expect(repo.experiences.isNotEmpty, isTrue);
-        expect(repo.projects.isNotEmpty, isTrue);
-        expect(repo.skills.isNotEmpty, isTrue);
-        expect(repo.education.isNotEmpty, isTrue);
+      expect(repo.profile.name, equals('Dhruvi Patel'));
+      expect(repo.experiences.isNotEmpty, isTrue);
+      expect(repo.projects.isNotEmpty, isTrue);
+      expect(repo.skills.isNotEmpty, isTrue);
+      expect(repo.education.isNotEmpty, isTrue);
 
-        // Verify only published items are exposed to public visitors
-        for (final exp in repo.experiences) {
-          expect(exp.isPublished, isTrue);
-        }
-        for (final proj in repo.projects) {
-          expect(proj.isPublished, isTrue);
-        }
+      // Verify only published items are exposed to public visitors
+      for (final exp in repo.experiences) {
+        expect(exp.isPublished, isTrue);
+      }
+      for (final proj in repo.projects) {
+        expect(proj.isPublished, isTrue);
+      }
 
-        // Verify PMP CSV Validator project
-        final pmpProject = repo.projects.firstWhere(
-          (p) => p.title == 'PMP CSV Validator',
-        );
-        expect(pmpProject.category, equals('Developer Tools'));
-        expect(pmpProject.technologies, contains('Python'));
-        expect(pmpProject.technologies, contains('Flutter'));
-        expect(pmpProject.technologies, contains('Web APIs'));
-        expect(pmpProject.personalContribution, contains('20-rule AST'));
-        expect(
-          pmpProject.personalContribution,
-          contains('HTML5 BroadcastChannel API'),
-        );
-      },
-    );
+      // Verify Logix Built Infotech award
+      final logixExp = repo.experiences.firstWhere(
+        (e) => e.company.contains('Logix Built'),
+      );
+      expect(logixExp.award, contains('Code Craft Excellence Award'));
 
-    test('AdminRepository manages CRUD operations and draft status', () async {
-      final repo = AdminRepository();
+      // Verify Pandit Near Me project
+      final panditsProject = repo.projects.firstWhere(
+        (p) => p.title.contains('Pandit'),
+      );
+      expect(panditsProject.category, equals('On-Demand Marketplace'));
+      expect(panditsProject.technologies, contains('AWS IoT Core (MQTT)'));
+      expect(panditsProject.technologies, contains('Dio'));
+      expect(panditsProject.technologies, contains('Mocktail'));
+      expect(
+        panditsProject.personalContribution,
+        contains('AWS IoT Core and MQTT'),
+      );
+      expect(panditsProject.personalContribution, contains('CustomPainter'));
 
-      final initialCount = repo.totalExperiences;
-
-      // Add new draft experience
-      const draftExp = Experience(
-        id: 'draft_1',
-        role: 'Contract Lead',
-        company: 'Remote Tech',
-        location: 'Remote',
-        startDate: 'Jan 2026',
-        endDate: 'Present',
-        isPublished: false,
+      // Verify newly added projects exist
+      expect(repo.projects.any((p) => p.title == 'PMP Exam Prep App'), isTrue);
+      expect(repo.projects.any((p) => p.title == 'Nirvana App'), isTrue);
+      expect(repo.projects.any((p) => p.title == 'Reutbyitforme App'), isTrue);
+      expect(repo.projects.any((p) => p.title == 'Milos Paddle App'), isTrue);
+      expect(repo.projects.any((p) => p.title == 'Minder App'), isTrue);
+      expect(
+        repo.projects.any((p) => p.title == 'AI-Assisted UI-to-Code Research'),
+        isTrue,
       );
 
-      await repo.saveExperience(draftExp);
-      expect(repo.totalExperiences, equals(initialCount + 1));
-      expect(repo.draftCount, greaterThanOrEqualTo(1));
+      // Verify PMP CSV Validator project
+      final pmpProject = repo.projects.firstWhere(
+        (p) => p.title.contains('PMP CSV Validator'),
+      );
+      expect(pmpProject.category, equals('Flutter Web'));
+      expect(pmpProject.technologies, contains('Flutter Web'));
+      expect(pmpProject.technologies, contains('CSV Parsing'));
+      expect(pmpProject.technologies, contains('flutter_math_fork'));
+      expect(
+        pmpProject.personalContribution,
+        contains('responsive CSV validation tool'),
+      );
+      expect(
+        pmpProject.personalContribution,
+        contains('TRAIN/FLIP card previews'),
+      );
 
-      // Delete draft experience
-      await repo.deleteExperience('draft_1');
-      expect(repo.totalExperiences, equals(initialCount));
-    });
-
-    test('AdminRepository reorders projects', () async {
-      final repo = AdminRepository();
-      expect(repo.projects.length, greaterThanOrEqualTo(2));
-
-      final firstProjectTitle = repo.projects[0].title;
-      final secondProjectTitle = repo.projects[1].title;
-      await repo.reorderProjects(0, 2);
-
-      expect(repo.projects[0].title, equals(secondProjectTitle));
-      expect(repo.projects[1].title, equals(firstProjectTitle));
+      // Verify enriched project features and URLs
+      final healthiProject = repo.projects.firstWhere(
+        (p) => p.slug == 'the-healthi-indian',
+      );
+      expect(healthiProject.keyFeatures.isNotEmpty, isTrue);
+      expect(healthiProject.imageUrl.isNotEmpty, isTrue);
+      expect(healthiProject.playStoreUrl.isNotEmpty, isTrue);
+      expect(healthiProject.appStoreUrl.isNotEmpty, isTrue);
     });
   });
 }

@@ -8,11 +8,12 @@ class Project {
   final String category;
   final List<String> technologies;
   final String thumbnailUrl;
+  final String imageUrl;
   final List<String> galleryUrls;
+  final List<String> keyFeatures;
   final String personalContribution;
   final String challengesAndSolutions;
   final String verifiedOutcomes;
-  final List<String> keyFeatures;
   final String playStoreUrl;
   final String appStoreUrl;
   final String githubUrl;
@@ -23,42 +24,36 @@ class Project {
   final DateTime? createdAt;
 
   const Project({
-    this.id = '',
-    this.slug = '',
+    required this.id,
+    required this.slug,
     required this.title,
-    String? shortDescription,
-    String? fullDescription,
-    String? description,
-    this.category = 'Mobile App',
+    required this.shortDescription,
+    required this.fullDescription,
+    required this.category,
     this.technologies = const [],
-    String? thumbnailUrl,
-    String? imageUrl,
+    this.thumbnailUrl = '',
+    this.imageUrl = '',
     this.galleryUrls = const [],
+    this.keyFeatures = const [],
     this.personalContribution = '',
     this.challengesAndSolutions = '',
     this.verifiedOutcomes = '',
-    this.keyFeatures = const [],
-    String? playStoreUrl,
-    String? liveUrl,
-    String? appStoreUrl,
-    String? appleStoreUrl,
+    this.playStoreUrl = '',
+    this.appStoreUrl = '',
     this.githubUrl = '',
     this.demoUrl = '',
     this.isFeatured = false,
     this.isPublished = true,
     this.orderIndex = 0,
     this.createdAt,
-  })  : shortDescription = shortDescription ?? description ?? '',
-        fullDescription = fullDescription ?? description ?? '',
-        thumbnailUrl = thumbnailUrl ?? imageUrl ?? '',
-        playStoreUrl = playStoreUrl ?? liveUrl ?? '',
-        appStoreUrl = appStoreUrl ?? appleStoreUrl ?? '';
+  });
 
-  String get description =>
-      shortDescription.isNotEmpty ? shortDescription : fullDescription;
-  String get imageUrl => thumbnailUrl;
-  String get liveUrl => playStoreUrl.isNotEmpty ? playStoreUrl : demoUrl;
-  String get appleStoreUrl => appStoreUrl;
+  /// Returns the effective image URL whether specified via imageUrl or thumbnailUrl
+  String get displayImageUrl {
+    if (imageUrl.isNotEmpty) return imageUrl;
+    if (thumbnailUrl.isNotEmpty) return thumbnailUrl;
+    return '';
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -70,16 +65,14 @@ class Project {
       'category': category,
       'technologies': technologies,
       'thumbnailUrl': thumbnailUrl,
-      'imageUrl': thumbnailUrl,
+      'imageUrl': imageUrl,
       'galleryUrls': galleryUrls,
+      'keyFeatures': keyFeatures,
       'personalContribution': personalContribution,
       'challengesAndSolutions': challengesAndSolutions,
       'verifiedOutcomes': verifiedOutcomes,
-      'keyFeatures': keyFeatures,
       'playStoreUrl': playStoreUrl,
       'appStoreUrl': appStoreUrl,
-      'liveUrl': playStoreUrl.isNotEmpty ? playStoreUrl : demoUrl,
-      'appleStoreUrl': appStoreUrl,
       'githubUrl': githubUrl,
       'demoUrl': demoUrl,
       'isFeatured': isFeatured,
@@ -94,18 +87,19 @@ class Project {
       id: id ?? map['id'] ?? '',
       slug: map['slug'] ?? '',
       title: map['title'] ?? '',
-      shortDescription: map['shortDescription'] ?? map['description'] ?? '',
-      fullDescription: map['fullDescription'] ?? map['description'] ?? '',
+      shortDescription: map['shortDescription'] ?? '',
+      fullDescription: map['fullDescription'] ?? '',
       category: map['category'] ?? 'Mobile App',
       technologies: List<String>.from(map['technologies'] ?? []),
-      thumbnailUrl: map['thumbnailUrl'] ?? map['imageUrl'] ?? '',
+      thumbnailUrl: map['thumbnailUrl'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
       galleryUrls: List<String>.from(map['galleryUrls'] ?? []),
+      keyFeatures: List<String>.from(map['keyFeatures'] ?? []),
       personalContribution: map['personalContribution'] ?? '',
       challengesAndSolutions: map['challengesAndSolutions'] ?? '',
       verifiedOutcomes: map['verifiedOutcomes'] ?? '',
-      keyFeatures: List<String>.from(map['keyFeatures'] ?? []),
-      playStoreUrl: map['playStoreUrl'] ?? map['liveUrl'] ?? '',
-      appStoreUrl: map['appStoreUrl'] ?? map['appleStoreUrl'] ?? '',
+      playStoreUrl: map['playStoreUrl'] ?? '',
+      appStoreUrl: map['appStoreUrl'] ?? (map['appleStoreUrl'] ?? ''),
       githubUrl: map['githubUrl'] ?? '',
       demoUrl: map['demoUrl'] ?? '',
       isFeatured: map['isFeatured'] ?? false,
@@ -123,20 +117,17 @@ class Project {
     String? title,
     String? shortDescription,
     String? fullDescription,
-    String? description,
     String? category,
     List<String>? technologies,
     String? thumbnailUrl,
     String? imageUrl,
     List<String>? galleryUrls,
+    List<String>? keyFeatures,
     String? personalContribution,
     String? challengesAndSolutions,
     String? verifiedOutcomes,
-    List<String>? keyFeatures,
     String? playStoreUrl,
-    String? liveUrl,
     String? appStoreUrl,
-    String? appleStoreUrl,
     String? githubUrl,
     String? demoUrl,
     bool? isFeatured,
@@ -148,21 +139,20 @@ class Project {
       id: id ?? this.id,
       slug: slug ?? this.slug,
       title: title ?? this.title,
-      shortDescription:
-          shortDescription ?? description ?? this.shortDescription,
-      fullDescription: fullDescription ?? description ?? this.fullDescription,
+      shortDescription: shortDescription ?? this.shortDescription,
+      fullDescription: fullDescription ?? this.fullDescription,
       category: category ?? this.category,
       technologies: technologies ?? this.technologies,
-      thumbnailUrl: thumbnailUrl ?? imageUrl ?? this.thumbnailUrl,
+      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      imageUrl: imageUrl ?? this.imageUrl,
       galleryUrls: galleryUrls ?? this.galleryUrls,
-      personalContribution:
-          personalContribution ?? this.personalContribution,
+      keyFeatures: keyFeatures ?? this.keyFeatures,
+      personalContribution: personalContribution ?? this.personalContribution,
       challengesAndSolutions:
           challengesAndSolutions ?? this.challengesAndSolutions,
       verifiedOutcomes: verifiedOutcomes ?? this.verifiedOutcomes,
-      keyFeatures: keyFeatures ?? this.keyFeatures,
-      playStoreUrl: playStoreUrl ?? liveUrl ?? this.playStoreUrl,
-      appStoreUrl: appStoreUrl ?? appleStoreUrl ?? this.appStoreUrl,
+      playStoreUrl: playStoreUrl ?? this.playStoreUrl,
+      appStoreUrl: appStoreUrl ?? this.appStoreUrl,
       githubUrl: githubUrl ?? this.githubUrl,
       demoUrl: demoUrl ?? this.demoUrl,
       isFeatured: isFeatured ?? this.isFeatured,

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../core/constants/app_breakpoints.dart';
-import '../core/theme/app_colors.dart';
 import '../repositories/portfolio_repository.dart';
 import '../widgets/animations/ambient_background.dart';
 import '../widgets/navigation/mobile_drawer.dart';
@@ -37,8 +35,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _educationKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
-
-  bool _bannerDismissed = false;
 
   @override
   void dispose() {
@@ -110,10 +106,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     controller: _scrollController,
                     child: Column(
                       children: [
-                        // Fallback / Firebase Status Banner
-                        if (portfolioRepo.isUsingFallback && !_bannerDismissed)
-                          _buildFallbackNotice(),
-
                         // Hero Section
                         Container(
                           key: _heroKey,
@@ -185,57 +177,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFallbackNotice() {
-    return Container(
-      width: double.infinity,
-      color: AppColors.violetPrimary.withOpacity(0.15),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: AppBreakpoints.maxContentWidth,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Expanded(
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.verified_outlined,
-                      size: 16,
-                      color: AppColors.cyanLight,
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Displaying verified portfolio data from authoritative resumes. Dynamic editing enabled via /admin.',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.cyanLight,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.close,
-                  size: 16,
-                  color: AppColors.cyanLight,
-                ),
-                onPressed: () => setState(() => _bannerDismissed = true),
-                tooltip: 'Dismiss notice',
-              ),
-            ],
-          ),
         ),
       ),
     );
