@@ -68,9 +68,8 @@ class AboutSection extends StatelessWidget {
               children: [
                 Text(
                   'Professional Background',
-                  style: AppTypography.getTitleMedium(textColor).copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: AppTypography.getTitleMedium(textColor)
+                      .copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -78,16 +77,14 @@ class AboutSection extends StatelessWidget {
                   'I focus on building production-grade cross-platform mobile and web applications with Flutter and Dart. '
                   'My technical journey spans end-to-end development, from designing responsive interfaces to '
                   'integrating high-concurrency REST APIs, real-time AWS IoT Core (MQTT) data pipelines, and Firebase cloud services.',
-                  style: AppTypography.getBodyMedium(secondaryTextColor).copyWith(
-                    height: 1.45,
-                  ),
+                  style: AppTypography.getBodyMedium(secondaryTextColor)
+                      .copyWith(height: 1.45),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'Engineering Philosophy & Craftsmanship',
-                  style: AppTypography.getTitleMedium(textColor).copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: AppTypography.getTitleMedium(textColor)
+                      .copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -96,9 +93,8 @@ class AboutSection extends StatelessWidget {
                   'Having led and contributed to over 20 client and enterprise applications, I emphasize automated unit and '
                   'widget testing, robust JWT authentication, memory leak elimination, and CI/CD deployment pipelines '
                   'targeting both the Google Play Store and Apple App Store.',
-                  style: AppTypography.getBodyMedium(secondaryTextColor).copyWith(
-                    height: 1.45,
-                  ),
+                  style: AppTypography.getBodyMedium(secondaryTextColor)
+                      .copyWith(height: 1.45),
                 ),
               ],
             ),

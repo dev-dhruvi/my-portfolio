@@ -113,8 +113,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                     controller: _searchController,
                     onChanged: (val) => setState(() => _searchQuery = val),
                     decoration: InputDecoration(
-                      hintText:
-                          'Search by title, tech stack...',
+                      hintText: 'Search by title, tech stack...',
                       prefixIcon: const Icon(Icons.search_rounded, size: 18),
                       suffixIcon: _searchQuery.isNotEmpty
                           ? IconButton(
@@ -147,10 +146,12 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                             selected: isSelected,
                             onSelected: (_) =>
                                 setState(() => _selectedCategory = cat),
-                            backgroundColor:
-                                isDark ? AppColors.darkCard : Colors.white,
-                            selectedColor:
-                                AppColors.violetPrimary.withOpacity(0.2),
+                            backgroundColor: isDark
+                                ? AppColors.darkCard
+                                : Colors.white,
+                            selectedColor: AppColors.violetPrimary.withOpacity(
+                              0.2,
+                            ),
                             checkmarkColor: AppColors.cyanPrimary,
                             labelStyle: TextStyle(
                               fontSize: 12.5,
@@ -216,10 +217,10 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       selected: isSelected,
                       onSelected: (_) =>
                           setState(() => _selectedCategory = cat),
-                      backgroundColor:
-                          isDark ? AppColors.darkCard : Colors.white,
-                      selectedColor:
-                          AppColors.violetPrimary.withOpacity(0.2),
+                      backgroundColor: isDark
+                          ? AppColors.darkCard
+                          : Colors.white,
+                      selectedColor: AppColors.violetPrimary.withOpacity(0.2),
                       checkmarkColor: AppColors.cyanPrimary,
                       labelStyle: TextStyle(
                         fontSize: 12.5,
@@ -591,8 +592,8 @@ class _ProjectCard extends StatelessWidget {
                                         fontSize: 10.5,
                                         fontWeight: FontWeight.w600,
                                         color: isDark
-                                          ? AppColors.cyanLight
-                                          : AppColors.cyanDark,
+                                            ? AppColors.cyanLight
+                                            : AppColors.cyanDark,
                                       ),
                                     ),
                                   ],

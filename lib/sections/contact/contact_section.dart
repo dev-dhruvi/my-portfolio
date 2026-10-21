@@ -360,9 +360,8 @@ ${_messageController.text.trim()}
           children: [
             Text(
               'Direct Message',
-              style: AppTypography.getTitleMedium(textColor).copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              style: AppTypography.getTitleMedium(textColor)
+                  .copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 3),
             Text(

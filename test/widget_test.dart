@@ -23,7 +23,7 @@ void main() {
 
       // Verify developer name and headline
       expect(find.text('Dhruvi Patel'), findsOneWidget);
-      expect(find.text(AppConstants.fullRoleHeadline), findsOneWidget);
+      expect(find.text(AppConstants.primaryRole), findsOneWidget);
       expect(find.text('View Projects'), findsOneWidget);
       expect(find.text('Download Resume'), findsOneWidget);
       expect(find.text('Contact Me'), findsOneWidget);
@@ -73,7 +73,10 @@ void main() {
         );
         await tester.pump();
 
-        expect(find.text('Pandits Near Me - Instant Puja'), findsAtLeastNWidgets(1));
+        expect(
+          find.text('Pandits Near Me - Instant Puja'),
+          findsAtLeastNWidgets(1),
+        );
         expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
       },
     );

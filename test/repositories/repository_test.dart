@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:dhruvi_portfolio/core/constants/app_constants.dart';
 import 'package:dhruvi_portfolio/repositories/portfolio_repository.dart';
 
 void main() {
@@ -50,10 +51,7 @@ void main() {
       expect(repo.projects.any((p) => p.title == 'Reutbyitforme App'), isTrue);
       expect(repo.projects.any((p) => p.title == 'Milos Paddle App'), isTrue);
       expect(repo.projects.any((p) => p.title == 'Minder App'), isTrue);
-      expect(
-        repo.projects.any((p) => p.title == 'AI-Assisted UI-to-Code Research'),
-        isTrue,
-      );
+      expect(repo.projects.any((p) => p.title == 'Muvr User App'), isTrue);
 
       // Verify PMP CSV Validator project
       final pmpProject = repo.projects.firstWhere(
@@ -91,7 +89,7 @@ void main() {
         repo.profile.linkedinUrl,
         equals('https://www.linkedin.com/in/duvi03'),
       );
-      expect(repo.profile.headline, equals('Senior Flutter Developer'));
+      expect(repo.profile.headline, equals(AppConstants.fullRoleHeadline));
     });
   });
 }

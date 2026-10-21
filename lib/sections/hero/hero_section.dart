@@ -552,9 +552,7 @@ class _SocialIconBtnState extends State<_SocialIconBtn> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final defaultBg = isDark
-        ? AppColors.darkCard
-        : const Color(0xFFF1F5F9);
+    final defaultBg = isDark ? AppColors.darkCard : const Color(0xFFF1F5F9);
     final hoverBg = isDark
         ? AppColors.violetPrimary.withOpacity(0.2)
         : AppColors.violetPrimary.withOpacity(0.12);

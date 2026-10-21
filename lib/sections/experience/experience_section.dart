@@ -360,7 +360,10 @@ class _TimelineItemState extends State<_TimelineItem> {
                     onTap: () => setState(() => _isExpanded = !_isExpanded),
                     borderRadius: BorderRadius.circular(6),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 2,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -405,13 +408,17 @@ class _TimelineItemState extends State<_TimelineItem> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          const Color(0xFFF59E0B).withOpacity(isDark ? 0.18 : 0.12),
-                          AppColors.violetPrimary.withOpacity(isDark ? 0.15 : 0.08),
+                          const Color(0xFFF59E0B)
+                              .withOpacity(isDark ? 0.18 : 0.12),
+                          AppColors.violetPrimary.withOpacity(
+                            isDark ? 0.15 : 0.08,
+                          ),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: const Color(0xFFF59E0B).withOpacity(isDark ? 0.45 : 0.4),
+                        color: const Color(0xFFF59E0B)
+                            .withOpacity(isDark ? 0.45 : 0.4),
                         width: 1,
                       ),
                     ),
