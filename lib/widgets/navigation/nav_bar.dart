@@ -104,7 +104,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                             ),
                             if (screenWidth >= 1200)
                               Text(
-                                '• Senior Flutter Developer',
+                                'Senior Flutter Developer',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -117,7 +117,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                               )
                             else if (screenWidth >= 520)
                               Text(
-                                '• Senior Flutter Developer',
+                                'Senior Flutter Developer',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

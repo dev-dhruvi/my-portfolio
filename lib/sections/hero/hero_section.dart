@@ -188,7 +188,7 @@ class _HeroSectionState extends State<HeroSection> {
         ),
         const SizedBox(height: 10),
 
-        // Prominent Single Subtitle: • Senior Flutter Developer
+        // Prominent Single Subtitle: Senior Flutter Developer
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4),
           child: Row(
@@ -207,7 +207,7 @@ class _HeroSectionState extends State<HeroSection> {
               ),
               const SizedBox(width: 10),
               Text(
-                '• Senior Flutter Developer',
+                'Senior Flutter Developer',
                 style: TextStyle(
                   fontSize: AppBreakpoints.isMobile(context) ? 20 : 26,
                   fontWeight: FontWeight.w700,

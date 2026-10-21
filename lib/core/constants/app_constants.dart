@@ -5,9 +5,7 @@ class AppConstants {
   // Personal Branding & Identity (Verified from Resumes)
   static const String developerName = 'Dhruvi Patel';
   static const String primaryRole = 'Senior Flutter Developer';
-  static const String secondaryRole = 'Senior Flutter Developer';
-  static const String tertiaryRole = 'Senior Flutter Developer';
-  static const String fullRoleHeadline = '• Senior Flutter Developer';
+  static const String fullRoleHeadline = 'Senior Software Engineer | Senior Flutter Developer | Mobile Application Developer';
   static const String email = 'dhruvi39604@gmail.com';
   static const String phone = '+91 9925589405';
   static const String location = 'Surat, Gujarat, India';

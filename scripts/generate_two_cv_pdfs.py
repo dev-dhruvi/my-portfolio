@@ -239,7 +239,7 @@ HTML_1PAGE_CONTENT = """<!DOCTYPE html>
   <header class="header">
     <div class="name-title-row">
       <h1 class="candidate-name">Dhruvi Patel</h1>
-      <div class="candidate-title">• Senior Flutter Developer</div>
+      <div class="candidate-title">Senior Flutter Developer</div>
     </div>
     <div class="contact-bar">
       <span class="contact-item">
@@ -666,7 +666,7 @@ HTML_COMPLETE_CONTENT = """<!DOCTYPE html>
   <header class="header">
     <div class="name-title-row">
       <h1 class="candidate-name">Dhruvi Patel</h1>
-      <div class="candidate-title">• Senior Flutter Developer</div>
+      <div class="candidate-title">Senior Flutter Developer</div>
     </div>
     <div class="contact-bar">
       <span class="contact-item">

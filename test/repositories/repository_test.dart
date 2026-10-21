@@ -91,7 +91,7 @@ void main() {
         repo.profile.linkedinUrl,
         equals('https://www.linkedin.com/in/duvi03'),
       );
-      expect(repo.profile.headline, equals('• Senior Flutter Developer'));
+      expect(repo.profile.headline, equals('Senior Flutter Developer'));
     });
   });
 }
