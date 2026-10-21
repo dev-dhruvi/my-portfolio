@@ -341,7 +341,7 @@ def build_docx():
     p_exp2.paragraph_format.space_after = Pt(1)
     p_exp2.paragraph_format.keep_with_next = True
 
-    r2_co = p_exp2.add_run("DinJan Infotech Pvt. Ltd.")
+    r2_co = p_exp2.add_run("Dinjan Infotech")
     r2_co.font.bold = True
     r2_co.font.size = Pt(10.5)
     r2_co.font.color.rgb = RGB_NAVY

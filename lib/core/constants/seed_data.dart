@@ -28,13 +28,13 @@ class SeedData {
   static List<Experience> get initialExperiences => [
     const Experience(
       id: 'exp_1_logix',
-      company: 'Logix Built Infotech',
+      company: 'Logix Built Solutions Limited',
       role: 'Sr. Software Engineer – Flutter Developer',
       location: 'Surat, India',
       startDate: 'May 2025',
       endDate: 'Present',
       isCurrent: false, // Preserving historical / explicit mode
-      award: '🏆 Code Craft Excellence Award (2025) – Logixbuilt Infotech',
+      award: 'Code Craft Excellence Award (2025)',
       orderIndex: 0,
       isPublished: true,
       technologies: [
@@ -43,8 +43,6 @@ class SeedData {
         'GetX',
         'AWS IoT Core (MQTT)',
         'FCM',
-        'JWT',
-        'Python',
         'Crashlytics',
         'Modular Architecture',
       ],
@@ -62,7 +60,7 @@ class SeedData {
     ),
     const Experience(
       id: 'exp_2_dinjan',
-      company: 'DinJan Infotech Private Limited',
+      company: 'Dinjan Infotech',
       role: 'Flutter Developer',
       location: 'Surat, India',
       startDate: 'June 2024',
@@ -392,7 +390,7 @@ class SeedData {
     const Project(
       id: 'proj_pmp_csv_validator',
       slug: 'pmp-csv-validator',
-      title: 'PMP CSV Validator & Preview Tool',
+      title: 'PMP CSV Validator',
       shortDescription: 'Responsive browser-based dataset validation, repair, and mobile simulation suite automating QA for PMP question banks.',
       fullDescription:
           'A responsive browser-based dataset validation and repair suite developed in Flutter Web to upload, inspect, validate, correct, and export PMP question datasets. '
@@ -640,7 +638,7 @@ class SeedData {
       shortDescription: 'Health and nutrition app offering macro-balanced vegetarian and vegan recipes.',
       fullDescription: 'A specialized health and nutrition platform offering curated, macro-balanced vegetarian and vegan recipes. Migrated application state management from setState to GetX for improved responsiveness and maintainability. Completely redesigned the user interface, resolved critical splash screen startup issues, integrated backend REST APIs, and utilized SharedPreferences for local caching of recently viewed recipes. Enhanced user engagement with real-time search and filter capabilities and deployed production builds to both Google Play Store and Apple App Store.',
       category: 'Mobile App',
-      companyName: 'DinJan Infotech Pvt. Ltd.',
+      companyName: 'Dinjan Infotech',
       technologies: [
         'Flutter',
         'GetX',
@@ -675,7 +673,7 @@ class SeedData {
       shortDescription: 'Radio streaming app with background audio playback, social integrations, and push alerts.',
       fullDescription: 'A modern live radio streaming mobile application engineered with Flutter and GetX. Features continuous background audio playback, seamless YouTube video player integration, direct WhatsApp contact links, embedded WebViews for community programming, and Firebase Cloud Messaging for instant broadcast notifications.',
       category: 'Mobile App',
-      companyName: 'DinJan Infotech Pvt. Ltd.',
+      companyName: 'Dinjan Infotech',
       technologies: [
         'Flutter',
         'GetX',
@@ -711,7 +709,7 @@ class SeedData {
       shortDescription: 'Motivational quotes app featuring scheduled notifications, dark/light themes, and bilingual support.',
       fullDescription: 'A daily motivational mobile app designed to inspire goal achievement. Features curated quote categories, REST API synchronization, background scheduled push notifications, dynamic localization supporting English and Dutch, and a polished dark and light theme switch.',
       category: 'Mobile App',
-      companyName: 'DinJan Infotech Pvt. Ltd.',
+      companyName: 'Dinjan Infotech',
       technologies: [
         'Flutter',
         'GetX',
@@ -842,7 +840,7 @@ class SeedData {
       shortDescription: 'Real estate agent productivity app featuring DocuSign e-signatures, PDF handling, and calendar sync.',
       fullDescription: 'A high-efficiency productivity mobile app for licensed real estate agents built using FlutterFlow and custom Flutter code. Features secure enterprise authentication, DocuSign document signing integration, in-app PDF previewing and annotation, productivity task tracking, and two-way calendar synchronization.',
       category: 'FlutterFlow',
-      companyName: 'DinJan Infotech Pvt. Ltd.',
+      companyName: 'Dinjan Infotech',
       technologies: [
         'FlutterFlow',
         'Flutter',
@@ -874,7 +872,7 @@ class SeedData {
       shortDescription: 'Personal finance and target tracking app with Google & Apple authentication and visual timelines.',
       fullDescription: 'A personal finance tracking application built with FlutterFlow and Firebase backend. Enables users to monitor income, categorize daily expenses, visualize savings trajectories across weekly, monthly, and yearly timelines, and establish custom financial milestone targets. Supports seamless Google and Apple single sign-on.',
       category: 'FlutterFlow',
-      companyName: 'DinJan Infotech Pvt. Ltd.',
+      companyName: 'Dinjan Infotech',
       technologies: [
         'FlutterFlow',
         'Firebase Auth',
@@ -897,7 +895,7 @@ class SeedData {
       shortDescription: 'Location-based social discovery app featuring Google Places integration and proximity calculations.',
       fullDescription: 'A location-aware social networking app built with Flutter and FlutterFlow. Includes secure automated login, detailed profile onboarding with Google Places autocomplete, real-time geodistance calculations, and dynamic nearby user discovery feeds.',
       category: 'Mobile App',
-      companyName: 'DinJan Infotech Pvt. Ltd.',
+      companyName: 'Dinjan Infotech',
       technologies: [
         'Flutter',
         'FlutterFlow',

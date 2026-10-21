@@ -20,9 +20,9 @@ void main() {
         expect(proj.isPublished, isTrue);
       }
 
-      // Verify Logix Built Infotech award
+      // Verify Logix Built Solution Limited award
       final logixExp = repo.experiences.firstWhere(
-        (e) => e.company.contains('Logix Built'),
+        (e) => e.company.contains('Logix Built Solution Limited'),
       );
       expect(logixExp.award, contains('Code Craft Excellence Award'));
 
@@ -76,7 +76,7 @@ void main() {
       final healthiProject = repo.projects.firstWhere(
         (p) => p.slug == 'the-healthi-indian',
       );
-      expect(healthiProject.companyName, equals('DinJan Infotech Pvt. Ltd.'));
+      expect(healthiProject.companyName, equals('Dinjan Infotech'));
       expect(healthiProject.keyFeatures.isNotEmpty, isTrue);
       expect(healthiProject.imageUrl.isNotEmpty, isTrue);
       expect(healthiProject.playStoreUrl.isNotEmpty, isTrue);

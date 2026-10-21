@@ -335,7 +335,7 @@ HTML_1PAGE_CONTENT = """<!DOCTYPE html>
     <div class="entry">
       <div class="entry-header">
         <div>
-          <span class="entry-title">DinJan Infotech Pvt. Ltd.</span>
+          <span class="entry-title">Dinjan Infotech</span>
           <span class="entry-role"> — Flutter Developer</span>
         </div>
         <span class="entry-meta">June 2024 – April 2025 | Surat, India</span>
@@ -772,7 +772,7 @@ HTML_COMPLETE_CONTENT = """<!DOCTYPE html>
     <div class="entry">
       <div class="entry-header">
         <div>
-          <span class="entry-title">DinJan Infotech Pvt. Ltd.</span>
+          <span class="entry-title">Dinjan Infotech</span>
           <span class="entry-role"> — Flutter Developer</span>
         </div>
         <span class="entry-meta">June 2024 – April 2025 | Surat, India</span>
@@ -886,7 +886,7 @@ HTML_COMPLETE_CONTENT = """<!DOCTYPE html>
 
     <!-- COMPANY 2: DINJAN INFOTECH -->
     <div class="company-subheading">
-      <span>DINJAN INFOTECH PVT. LTD. PROJECTS</span>
+      <span>DINJAN INFOTECH PROJECTS</span>
       <span>June 2024 – April 2025</span>
     </div>
 
