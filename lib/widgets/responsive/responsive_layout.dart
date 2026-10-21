@@ -17,9 +17,10 @@ class ResponsiveContentContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
     final isMobile = AppBreakpoints.isMobile(context);
     final defaultPadding = EdgeInsets.symmetric(
-      horizontal: isMobile ? 20.0 : 40.0,
+      horizontal: isMobile ? 16.0 : (screenWidth < 1200 ? 24.0 : 32.0),
       vertical: 0.0,
     );
 

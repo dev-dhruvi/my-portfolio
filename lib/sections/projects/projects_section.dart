@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -62,10 +64,25 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       return matchesCategory && matchesSearch;
     }).toList();
 
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    final isTablet = AppBreakpoints.isTablet(context);
+    final isDesktop = !isMobile && !isTablet;
+
+    final double? minProjectsHeight = isDesktop
+        ? math.max(680.0, screenHeight - 92.0)
+        : null;
+
+    return Container(
+      constraints: minProjectsHeight != null
+          ? BoxConstraints(minHeight: minProjectsHeight)
+          : null,
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: isDesktop
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
         children: [
           // Section Tag & Title
           Row(

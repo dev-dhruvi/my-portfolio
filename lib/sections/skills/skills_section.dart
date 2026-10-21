@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_breakpoints.dart';
@@ -22,7 +24,10 @@ class _SkillsSectionState extends State<SkillsSection> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
     final isMobile = AppBreakpoints.isMobile(context);
+    final isTablet = AppBreakpoints.isTablet(context);
+    final isDesktop = !isMobile && !isTablet;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark
         ? AppColors.textPrimaryDark
@@ -38,10 +43,21 @@ class _SkillsSectionState extends State<SkillsSection> {
         ? widget.skills
         : widget.skills.where((s) => s.category == _selectedCategory).toList();
 
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
+    final double? minSkillsHeight = isDesktop
+        ? math.max(680.0, screenHeight - 92.0)
+        : null;
+
+    return Container(
+      constraints: minSkillsHeight != null
+          ? BoxConstraints(minHeight: minSkillsHeight)
+          : null,
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: isDesktop
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
         children: [
           // Section Tag & Title
           Row(

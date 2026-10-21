@@ -32,8 +32,8 @@ class FooterSection extends StatelessWidget {
         ),
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 24 : 48,
-        vertical: isMobile ? 24 : 32,
+        horizontal: isMobile ? 20 : 36,
+        vertical: isMobile ? 12 : 14,
       ),
       child: Center(
         child: ConstrainedBox(
@@ -46,29 +46,13 @@ class FooterSection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Brand & Summary
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppConstants.developerName,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      const Text(
-                        AppConstants.fullRoleHeadline,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.cyanPrimary,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+                  const Text(
+                    AppConstants.developBy,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.cyanPrimary,
+                    ),
                   ),
 
                   // Social Icons

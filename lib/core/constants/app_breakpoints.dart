@@ -8,7 +8,7 @@ class AppBreakpoints {
   static const double tabletMax = 1024;
   static const double desktopMax = 1280;
 
-  static const double maxContentWidth = 1200;
+  static const double maxContentWidth = 1440;
   static const double compactContentWidth = 900;
 
   static bool isMobile(BuildContext context) =>

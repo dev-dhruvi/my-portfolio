@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/constants/app_breakpoints.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/profile.dart';
+import '../../widgets/animations/staggered_entrance.dart';
 import '../../widgets/cards/glass_card.dart';
 
-/// Contact section providing direct email triggers, copy actions,
-/// location verification, and functional inquiry composition.
+/// Contact section providing direct inquiry composition paired with
+/// the 3D contact character illustration.
 class ContactSection extends StatefulWidget {
   final Profile profile;
 
@@ -81,30 +80,11 @@ ${_messageController.text.trim()}
     }
   }
 
-  void _copyEmailToClipboard(BuildContext context) {
-    Clipboard.setData(ClipboardData(text: widget.profile.email));
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: AppColors.darkCard,
-        behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            const Icon(
-              Icons.check_circle_outline,
-              color: AppColors.cyanPrimary,
-              size: 20,
-            ),
-            const SizedBox(width: 10),
-            Text('Copied "${widget.profile.email}" to clipboard!'),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final isMobile = AppBreakpoints.isMobile(context);
+    final isTablet = AppBreakpoints.isTablet(context);
+    final isDesktop = !isMobile && !isTablet;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark
         ? AppColors.textPrimaryDark
@@ -113,9 +93,13 @@ ${_messageController.text.trim()}
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(
+        vertical: isDesktop ? 16 : (isMobile ? 20 : 24),
+      ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Section Tag & Header
@@ -152,197 +136,55 @@ ${_messageController.text.trim()}
             'Whether you have a full-time role, consulting project, or mobile application challenge, reach out directly.',
             style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 30),
 
-          isMobile
-              ? Column(
-                  children: [
-                    _buildContactInfo(context, textColor, secondaryTextColor),
-                    const SizedBox(height: 16),
-                    _buildContactForm(context, textColor, secondaryTextColor),
-                  ],
-                )
-              : Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: _buildContactInfo(
-                        context,
-                        textColor,
-                        secondaryTextColor,
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      flex: 6,
-                      child: _buildContactForm(
-                        context,
-                        textColor,
-                        secondaryTextColor,
-                      ),
-                    ),
-                  ],
+          // 3D Character Stage & Message Form
+          if (isMobile)
+            Column(
+              children: [
+                const StaggeredEntrance(
+                  index: 0,
+                  child: _ContactCharacterStage(isMobile: true),
                 ),
+                const SizedBox(height: 18),
+                StaggeredEntrance(
+                  index: 1,
+                  child: _buildContactForm(
+                    context,
+                    textColor,
+                    secondaryTextColor,
+                  ),
+                ),
+              ],
+            )
+          else
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Expanded(
+                  flex: 5,
+                  child: StaggeredEntrance(
+                    index: 0,
+                    child: _ContactCharacterStage(isMobile: false),
+                  ),
+                ),
+                const SizedBox(width: 32),
+                Expanded(
+                  flex: 7,
+                  child: StaggeredEntrance(
+                    index: 1,
+                    child: _buildContactForm(
+                      context,
+                      textColor,
+                      secondaryTextColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(height: 50),
         ],
       ),
-    );
-  }
-
-  Widget _buildContactInfo(
-    BuildContext context,
-    Color textColor,
-    Color secondaryTextColor,
-  ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Column(
-      children: [
-        // Email Card with Copy Action
-        GlassCard(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.violetPrimary.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  Icons.mail_outline_rounded,
-                  color: isDark ? AppColors.violetLight : AppColors.violetDark,
-                  size: 22,
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Email Address',
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        color: isDark
-                            ? AppColors.cyanPrimary
-                            : AppColors.cyanDark,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      widget.profile.email,
-                      style: TextStyle(
-                        fontSize: 13.5,
-                        fontWeight: FontWeight.w600,
-                        color: textColor,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                tooltip: 'Copy Email',
-                icon: const Icon(Icons.copy_rounded, size: 16),
-                onPressed: () => _copyEmailToClipboard(context),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-
-        // Location Card
-        GlassCard(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.cyanPrimary.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  Icons.location_on_outlined,
-                  color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
-                  size: 22,
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Location',
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        color: AppColors.cyanPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      widget.profile.location,
-                      style: TextStyle(
-                        fontSize: 13.5,
-                        fontWeight: FontWeight.w600,
-                        color: textColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-
-        // Social Profiles Card
-        GlassCard(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Professional Profiles',
-                style: TextStyle(
-                  fontSize: 13.5,
-                  fontWeight: FontWeight.w600,
-                  color: textColor,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () => UrlLauncherUtil.openUrl(
-                        widget.profile.githubUrl,
-                        context: context,
-                      ),
-                      icon: const FaIcon(FontAwesomeIcons.github, size: 15),
-                      label: const Text('GitHub'),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () => UrlLauncherUtil.openUrl(
-                        widget.profile.linkedinUrl,
-                        context: context,
-                      ),
-                      icon: const FaIcon(FontAwesomeIcons.linkedinIn, size: 15),
-                      label: const Text('LinkedIn'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 
@@ -352,7 +194,7 @@ ${_messageController.text.trim()}
     Color secondaryTextColor,
   ) {
     return GlassCard(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Form(
         key: _formKey,
         child: Column(
@@ -363,12 +205,12 @@ ${_messageController.text.trim()}
               style: AppTypography.getTitleMedium(textColor)
                   .copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 3),
+            const SizedBox(height: 4),
             Text(
               'Launches your email client directly with prefilled parameters.',
               style: TextStyle(fontSize: 12.5, color: secondaryTextColor),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
 
             // Name & Email
             Row(
@@ -409,7 +251,7 @@ ${_messageController.text.trim()}
             TextFormField(
               controller: _subjectController,
               decoration: const InputDecoration(
-                labelText: 'Subject (e.g. Flutter Opportunity)',
+                labelText: 'Subject (Optional)',
               ),
             ),
             const SizedBox(height: 12),
@@ -426,12 +268,12 @@ ${_messageController.text.trim()}
                   ? 'Please write a message'
                   : null,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
 
             // Submit Button
             SizedBox(
               width: double.infinity,
-              height: 46,
+              height: 44,
               child: ElevatedButton.icon(
                 onPressed: _isSending ? null : _sendEmail,
                 icon: _isSending
@@ -449,6 +291,114 @@ ${_messageController.text.trim()}
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.violetPrimary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ContactCharacterStage extends StatelessWidget {
+  final bool isMobile;
+
+  const _ContactCharacterStage({required this.isMobile});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: isMobile ? 250 : 280,
+          maxHeight: isMobile ? 250 : 290,
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            // Ambient glowing circular backdrop
+            Container(
+              width: isMobile ? 190 : 230,
+              height: isMobile ? 190 : 230,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    AppColors.cyanPrimary.withOpacity(isDark ? 0.35 : 0.22),
+                    AppColors.violetPrimary.withOpacity(isDark ? 0.25 : 0.12),
+                    Colors.transparent,
+                  ],
+                  stops: const [0.0, 0.65, 1.0],
+                ),
+              ),
+            ),
+            // Outer subtle glass ring
+            Container(
+              width: isMobile ? 205 : 245,
+              height: isMobile ? 205 : 245,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isDark
+                      ? Colors.white.withOpacity(0.12)
+                      : AppColors.cyanPrimary.withOpacity(0.2),
+                  width: 1.5,
+                ),
+              ),
+            ),
+            // 3D Contact anime developer illustration
+            Image.asset(
+              'assets/images/developer_character_contact.png',
+              height: isMobile ? 230 : 270,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) =>
+                  const SizedBox.shrink(),
+            ),
+            // Floating badge
+            Positioned(
+              bottom: 4,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: (isDark ? AppColors.darkCard : Colors.white)
+                      .withOpacity(0.92),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: AppColors.cyanPrimary.withOpacity(0.4),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.chat_bubble_outline_rounded,
+                      color: AppColors.cyanPrimary,
+                      size: 15,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      'Quick Response Guaranteed',
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w700,
+                        color: isDark ? Colors.white : AppColors.darkBackground,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

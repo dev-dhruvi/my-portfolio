@@ -10,6 +10,7 @@ class AppConstants {
   static const String email = 'dhruvi39604@gmail.com';
   static const String phone = '+91 9925589405';
   static const String location = 'Surat, Gujarat, India';
+  static const String developBy = 'Crafted with ♥ by Dhruvi Patel © 2026';
 
   // Configurable Links
   static const String defaultGithubUrl = 'https://github.com/dhruvi-mobiledev';
@@ -32,6 +33,12 @@ class AppConstants {
       'architecture. Experienced in leading product development from scratch, implementing '
       'real-time booking systems, optimizing performance, securing API communication, and '
       'developing automated tests for production-ready applications.';
+
+  // Short & punchy hero summary matching modern reference design
+  static const String shortSummary =
+      '4+ years shipping production Flutter apps for iOS, Android & Web, '
+      'specializing in clean architecture, real-time cloud integrations, '
+      'and high-performance mobile experiences.';
 
   // Firestore Collection Names
   static const String colProfile = 'profile';

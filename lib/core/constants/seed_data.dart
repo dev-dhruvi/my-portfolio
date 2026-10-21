@@ -957,7 +957,7 @@ class SeedData {
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/41/0d/f7/410df79e-1419-e557-cf3b-8a55556fbb02/Placeholder.mill/400x400Icon.ApSiOS01-75.webp',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 19,
+      orderIndex: 20,
     ),
   ];
 }

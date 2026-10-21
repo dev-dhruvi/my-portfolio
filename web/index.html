@@ -42,45 +42,127 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       overflow-x: hidden;
     }
-    #loading {
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #121829 0%, #090D16 75%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      width: 100vw;
-      background: radial-gradient(circle at center, #131D31 0%, #090D16 100%);
-      color: #F8FAFC;
+      z-index: 999999;
+      transition: opacity 0.4s ease-out;
     }
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 3px solid rgba(139, 92, 246, 0.2);
-      border-top-color: #8B5CF6;
-      border-right-color: #06B6D4;
+    .character-box {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float 2.2s ease-in-out infinite alternate;
+    }
+    .aura-glow {
+      position: absolute;
+      width: 190px;
+      height: 190px;
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.45) 0%, rgba(6, 182, 212, 0.2) 55%, transparent 70%);
+      animation: pulse 1.8s ease-in-out infinite alternate;
+    }
+    .ring-spin {
+      position: absolute;
+      width: 205px;
+      height: 205px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(6, 182, 212, 0.4);
+      animation: spin 12s linear infinite;
+    }
+    .character-img {
+      width: 175px;
+      height: 175px;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 10px 22px rgba(0,0,0,0.55));
+    }
+    .loader-title {
+      margin-top: 22px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.5px;
+    }
+    .loader-subtitle {
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #06B6D4;
+      letter-spacing: 0.3px;
+    }
+    .loader-bar-wrap {
+      margin-top: 18px;
+      width: 190px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .loader-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      background: linear-gradient(90deg, #8B5CF6, #06B6D4);
+      border-radius: 2px;
+      animation: loadBar 1.5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.65; }
+      100% { transform: scale(1.1); opacity: 0.95; }
     }
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      100% { transform: rotate(360deg); }
     }
-    .brand {
-      margin-top: 20px;
-      font-weight: 800;
-      font-size: 20px;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #8B5CF6, #06B6D4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    @keyframes loadBar {
+      0% { left: -50%; width: 50%; }
+      50% { width: 70%; }
+      100% { left: 100%; width: 50%; }
+    }
+    .fade-out {
+      opacity: 0;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <div id="loading">
-    <div class="spinner"></div>
-    <div class="brand">DHRUVI PATEL</div>
+  <div id="preloader">
+    <div class="character-box">
+      <div class="aura-glow"></div>
+      <div class="ring-spin"></div>
+      <img class="character-img" src="assets/assets/images/developer_character_3d.png" alt="Dhruvi Patel 3D Illustration" onerror="this.style.display='none'" />
+    </div>
+    <div class="loader-title">Dhruvi Patel</div>
+    <div class="loader-subtitle">Senior Flutter Developer</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar-fill"></div>
+    </div>
   </div>
-
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var el = document.getElementById('preloader');
+      if (el) {
+        el.classList.add('fade-out');
+        setTimeout(function() { el.remove(); }, 450);
+      }
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

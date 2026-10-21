@@ -6,7 +6,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/url_launcher_util.dart';
 
-/// Drawer navigation for mobile screens.
+/// Drawer navigation for mobile screens with modern frosted styling.
 class MobileDrawer extends StatelessWidget {
   final Function(String sectionKey)? onNavItemSelected;
 
@@ -18,7 +18,7 @@ class MobileDrawer extends StatelessWidget {
     final isDark = themeController.isDarkMode;
 
     return Drawer(
-      backgroundColor: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+      backgroundColor: isDark ? AppColors.darkCanvas : AppColors.lightCanvas,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,7 +33,14 @@ class MobileDrawer extends StatelessWidget {
                     height: 48,
                     decoration: BoxDecoration(
                       gradient: AppColors.primaryGradient,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.violetPrimary.withOpacity(0.35),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
                     child: const Center(
                       child: Text(
@@ -80,13 +87,29 @@ class MobileDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(),
+            Divider(
+              color: isDark
+                  ? AppColors.darkCardBorder
+                  : AppColors.lightCardBorder,
+              height: 1,
+            ),
 
             // Navigation Links
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 12,
+                ),
                 children: [
+                  _DrawerItem(
+                    icon: Icons.home_outlined,
+                    title: 'Home',
+                    onTap: () {
+                      Navigator.pop(context);
+                      onNavItemSelected?.call('hero');
+                    },
+                  ),
                   _DrawerItem(
                     icon: Icons.person_outline,
                     title: 'About',
@@ -144,19 +167,43 @@ class MobileDrawer extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      UrlLauncherUtil.openUrl(
-                        AppConstants.defaultResumeUrl,
-                        context: context,
-                      );
-                    },
-                    icon: const Icon(Icons.download_rounded),
-                    label: const Text('Download Resume'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      backgroundColor: AppColors.violetPrimary,
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: AppColors.primaryGradient,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.violetPrimary.withOpacity(0.3),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        UrlLauncherUtil.openUrl(
+                          AppConstants.defaultResumeUrl,
+                          context: context,
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.download_rounded,
+                        color: Colors.white,
+                      ),
+                      label: const Text(
+                        'Download CV',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(50),
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        elevation: 0,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -167,12 +214,28 @@ class MobileDrawer extends StatelessWidget {
                           ? Icons.light_mode_outlined
                           : Icons.dark_mode_outlined,
                       size: 20,
+                      color: isDark
+                          ? AppColors.cyanLight
+                          : AppColors.violetPrimary,
                     ),
                     label: Text(
                       isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
+                      style: TextStyle(
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
+                      ),
                     ),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(46),
+                      side: BorderSide(
+                        color: isDark
+                            ? AppColors.darkCardBorder
+                            : AppColors.lightCardBorder,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ],
@@ -203,17 +266,21 @@ class _DrawerItem extends StatelessWidget {
         ? AppColors.textPrimaryDark
         : AppColors.textPrimaryLight;
 
-    return ListTile(
-      leading: Icon(icon, color: itemColor, size: 22),
-      title: Text(
-        title,
-        style: TextStyle(
-          color: itemColor,
-          fontWeight: FontWeight.w500,
-          fontSize: 15,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        leading: Icon(icon, color: itemColor, size: 22),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: itemColor,
+            fontWeight: FontWeight.w600,
+            fontSize: 15,
+          ),
         ),
+        onTap: onTap,
       ),
-      onTap: onTap,
     );
   }
 }
