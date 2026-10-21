@@ -68,12 +68,15 @@ class _HeroSectionState extends State<HeroSection> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  _buildStatusBadge(isDark),
+                  const SizedBox(height: 24),
                   _buildAvatar(isDark),
                   const SizedBox(height: 32),
                   _buildHeroText(
                     context,
                     textColor,
                     secondaryTextColor,
+                    isDark,
                     isCentered: true,
                   ),
                   const SizedBox(height: 32),
@@ -93,12 +96,13 @@ class _HeroSectionState extends State<HeroSection> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildStatusBadge(),
+                      _buildStatusBadge(isDark),
                       const SizedBox(height: 16),
                       _buildHeroText(
                         context,
                         textColor,
                         secondaryTextColor,
+                        isDark,
                         isCentered: false,
                       ),
                       const SizedBox(height: 36),
@@ -117,7 +121,7 @@ class _HeroSectionState extends State<HeroSection> {
     );
   }
 
-  Widget _buildStatusBadge() {
+  Widget _buildStatusBadge(bool isDark) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
@@ -137,10 +141,10 @@ class _HeroSectionState extends State<HeroSection> {
             ),
           ),
           const SizedBox(width: 8),
-          const Text(
-            'Available for Senior Flutter Roles & Projects',
+          Text(
+            'Available for Senior Flutter Developer Roles',
             style: TextStyle(
-              color: AppColors.cyanLight,
+              color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
               fontSize: 12,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.2,
@@ -154,7 +158,8 @@ class _HeroSectionState extends State<HeroSection> {
   Widget _buildHeroText(
     BuildContext context,
     Color textColor,
-    Color secondaryTextColor, {
+    Color secondaryTextColor,
+    bool isDark, {
     required bool isCentered,
   }) {
     return Column(
@@ -168,7 +173,7 @@ class _HeroSectionState extends State<HeroSection> {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
-            color: AppColors.cyanPrimary,
+            color: isDark ? AppColors.cyanPrimary : AppColors.violetDark,
             letterSpacing: 1.0,
           ),
         ),
@@ -183,30 +188,51 @@ class _HeroSectionState extends State<HeroSection> {
         ),
         const SizedBox(height: 10),
 
-        // Prominent Headline & Roles
-        Text(
-          AppConstants.primaryRole,
-          textAlign: isCentered ? TextAlign.center : TextAlign.start,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.cyanPrimary,
-            letterSpacing: 0.2,
+        // Prominent Single Subtitle: • Senior Flutter Developer
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: isCentered
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  gradient: AppColors.primaryGradient,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                '• Senior Flutter Developer',
+                style: TextStyle(
+                  fontSize: AppBreakpoints.isMobile(context) ? 20 : 26,
+                  fontWeight: FontWeight.w700,
+                  color: isDark ? AppColors.violetLight : AppColors.violetDark,
+                  letterSpacing: 0.3,
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 8),
 
-        // Animated Role Text
+        // Animated Role Switcher
         Wrap(
           alignment: isCentered ? WrapAlignment.center : WrapAlignment.start,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            const Text(
+            Text(
               'Specializing as ',
               style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                color: AppColors.textMutedDark,
+                fontSize: AppBreakpoints.isMobile(context) ? 16 : 18,
+                fontWeight: FontWeight.w500,
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondaryLight,
               ),
             ),
             AnimatedSwitcher(
@@ -226,16 +252,16 @@ class _HeroSectionState extends State<HeroSection> {
               child: Text(
                 AppConstants.animatedRoles[_currentRoleIndex],
                 key: ValueKey<int>(_currentRoleIndex),
-                style: const TextStyle(
-                  fontSize: 20,
+                style: TextStyle(
+                  fontSize: AppBreakpoints.isMobile(context) ? 16 : 18,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.violetLight,
+                  color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
                 ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 14),
 
         // Summary statement from resume
         ConstrainedBox(

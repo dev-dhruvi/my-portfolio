@@ -31,6 +31,10 @@ void main() {
         (p) => p.title.contains('Pandit'),
       );
       expect(panditsProject.category, equals('On-Demand Marketplace'));
+      expect(
+        panditsProject.companyName,
+        equals('Logix Built Solutions Limited'),
+      );
       expect(panditsProject.technologies, contains('AWS IoT Core (MQTT)'));
       expect(panditsProject.technologies, contains('Dio'));
       expect(panditsProject.technologies, contains('Mocktail'));
@@ -72,10 +76,22 @@ void main() {
       final healthiProject = repo.projects.firstWhere(
         (p) => p.slug == 'the-healthi-indian',
       );
+      expect(healthiProject.companyName, equals('DinJan Infotech Pvt. Ltd.'));
       expect(healthiProject.keyFeatures.isNotEmpty, isTrue);
       expect(healthiProject.imageUrl.isNotEmpty, isTrue);
       expect(healthiProject.playStoreUrl.isNotEmpty, isTrue);
       expect(healthiProject.appStoreUrl.isNotEmpty, isTrue);
+
+      // Verify updated profile URLs
+      expect(
+        repo.profile.githubUrl,
+        equals('https://github.com/dhruvi-mobiledev'),
+      );
+      expect(
+        repo.profile.linkedinUrl,
+        equals('https://www.linkedin.com/in/duvi03'),
+      );
+      expect(repo.profile.headline, equals('• Senior Flutter Developer'));
     });
   });
 }

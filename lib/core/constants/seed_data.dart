@@ -349,6 +349,7 @@ class SeedData {
           'Features complete Pandit onboarding and KYC (Aadhaar uploads, certificate verification), dynamic Kundali and Kundali Matching with CustomPainter horoscope charts and PDF downloads, '
           'location-aware services with Google Places, Panchang/Muhurat/Choghadiya astrology services, multilingual support (English, Hindi, Gujarati), zero-downtime updates, and resilient Dio single-flight concurrency.',
       category: 'On-Demand Marketplace',
+      companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
         'Dart',
@@ -381,8 +382,9 @@ class SeedData {
           'Challenge: Coordinating real-time dispatch over unstable mobile networks without battery drain, rendering complex Vedic astrology charts smoothly, and preventing token refresh race conditions.\n'
           'Solution: Architected MQTT over Secure WebSockets with connection lifecycle reconnection on AWS IoT Core, built CustomPainter geometric algorithms for horoscope chart rendering, and implemented a thread-safe Single-Flight Lock Completer in Dio.',
       verifiedOutcomes: '50+ production releases on Android & iOS, real-time MQTT dispatch, custom astrology chart engine, multilingual support (English/Hindi/Gujarati), and comprehensive KYC verification.',
-      playStoreUrl: 'https://play.google.com/store/apps',
-      appStoreUrl: 'https://apps.apple.com',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.officialpanditsnearme&hl=en',
+      appStoreUrl: 'https://apps.apple.com/in/app/pandits-near-me-instant-puja/id6757301105',
+      imageUrl: 'https://play-lh.googleusercontent.com/dD40MYjW48GL3EjPeMqG8Z-GAqM0SbmG3qYGtaoYIb6uZNL0fpom6P4aYSbZrqYkynPKYT8i5CnN-XdmnF8U=s0-br30',
       isFeatured: true,
       isPublished: true,
       orderIndex: 0,
@@ -397,6 +399,7 @@ class SeedData {
           'Features drag-and-drop CSV uploads, automatic delimiter and text-encoding detection with full Unicode support (Gujarati, Hindi, Sanskrit, special characters), a validation dashboard with error/warning statuses, and bulk Auto-Fix repair for HTML tags, styling, and array formats. '
           'Includes reusable HTML rendering supporting rich text, nested lists, Base64 images, horizontally scrollable tables, and inline/block LaTeX equations via flutter_math_fork, alongside an interactive mobile simulator with device presets, TRAIN/FLIP cards, and a side-by-side Cell Inspector.',
       category: 'Flutter Web',
+      companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
         'Dart',
@@ -436,6 +439,7 @@ class SeedData {
       shortDescription: 'Comprehensive certification exam simulator with interactive quizzes, referral deep linking, and performance tracking.',
       fullDescription: 'A specialized professional certification preparation application engineered in Flutter and GetX. Features interactive quiz modes with timed examinations, question bookmarking, answer explanations, attempt tracking, and performance analytics. Integrates referral deep linking with intent preservation, guest vs. premium tiered access control with subscription paywalls, native ad lifecycle management, and smooth responsive animations across mobile viewports.',
       category: 'EdTech',
+      companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
         'Dart',
@@ -471,6 +475,7 @@ class SeedData {
       shortDescription: 'Real estate discovery and unit booking platform featuring live pricing, multi-step purchase flows, and an embedded chatbot.',
       fullDescription: 'A premier real estate and property exploration application built with Flutter. Enables prospective buyers to explore architectural projects, zone layouts, and specific unit availability with real-time dynamic pricing. Implements a multi-step property purchase flow from unit reservation to legal agreement review, down-payment computation, PDF document inspection, terms and conditions bottom sheets, and an AI chatbot assistant embedded directly on the home dashboard.',
       category: 'PropTech',
+      companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
         'Dart',
@@ -505,6 +510,7 @@ class SeedData {
       shortDescription: 'Modernization of a legacy Flutter app from Flutter 3.10 to 3.32 with modern InAppWebView, FCM, and Android Gradle upgrade.',
       fullDescription: 'An extensive legacy modernization project upgrading an enterprise mobile app from Flutter 3.10 to Flutter 3.32. Resolved breaking API deprecations, modernized null-safety constraints across all packages, upgraded Firebase Cloud Messaging to modern background/tap workflows, refactored webview interactions to flutter_inappwebview with external browser routing, and updated Android Gradle Plugin, namespace declarations, and Android embedding standards for production stability.',
       category: 'App Migration',
+      companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter (3.10 to 3.32)',
         'Dart',
@@ -539,6 +545,7 @@ class SeedData {
       shortDescription: 'Sports reservation mobile app supporting multi-court booking, dynamic time-slot pricing, and integrated payments.',
       fullDescription: 'A modern sports court booking mobile application tailored for paddle sports enthusiasts. Supports flexible multi-court scheduling allowing players to select concurrent courts and multi-hour time slots. Integrates live availability checks, automated multi-slot pricing algorithms, payment gateway processing, and resolution of Android Gradle/Kotlin compatibility hurdles.',
       category: 'Sports & Booking',
+      companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
         'Dart',
@@ -570,6 +577,7 @@ class SeedData {
       shortDescription: 'Mobile authentication validation, network diagnostics, and backend integration QA for production stability.',
       fullDescription: 'A quality assurance and backend integration engineering engagement for the Minder mobile application. Focused on verifying user onboarding, registration, and authentication API contracts against production and staging backends. Conducted network latency investigations, timeout profiling, and root-cause analysis for API discrepancies.',
       category: 'QA & Diagnostics',
+      companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
         'Dart',
@@ -599,6 +607,7 @@ class SeedData {
       shortDescription: 'Technical R&D evaluating cutting-edge AI tools (v0, Locofy, Builder.io, CodeParrot) for Figma-to-Flutter conversion.',
       fullDescription: 'A technical research and development initiative investigating the state of the art in AI-assisted UI-to-code conversion for Flutter development. Explored generative design pipelines, image-to-code models, and Figma automation plugins. Built real-world concept applications for travel, e-commerce, and coffee ordering to benchmark code quality, responsiveness, widget composability, and practical suitability for production Flutter architecture.',
       category: 'R&D & Prototyping',
+      companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
         'Figma',
@@ -631,6 +640,7 @@ class SeedData {
       shortDescription: 'Health and nutrition app offering macro-balanced vegetarian and vegan recipes.',
       fullDescription: 'A specialized health and nutrition platform offering curated, macro-balanced vegetarian and vegan recipes. Migrated application state management from setState to GetX for improved responsiveness and maintainability. Completely redesigned the user interface, resolved critical splash screen startup issues, integrated backend REST APIs, and utilized SharedPreferences for local caching of recently viewed recipes. Enhanced user engagement with real-time search and filter capabilities and deployed production builds to both Google Play Store and Apple App Store.',
       category: 'Mobile App',
+      companyName: 'DinJan Infotech Pvt. Ltd.',
       technologies: [
         'Flutter',
         'GetX',
@@ -643,7 +653,7 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Laggy recipe list filtering and persistent splash screen delays. Solution: Refactored data fetching into GetX workers and implemented cached local storage with SharedPreferences.',
       verifiedOutcomes:
           'Successfully published on Google Play Store & Apple App Store.',
-      imageUrl: 'https://play-lh.googleusercontent.com/ToQ6RrKWZYZnnHlHni9wIbBFtP_ZQH-oyw2lkKd6wo52cG4XaB4cDwr46nRmGR_hBA=w832-h470-rw',
+      imageUrl: 'https://play-lh.googleusercontent.com/mapf5xYaAPQi5qeHrXIFXezOjRQAv-rBR3f1xV-c3C4lEhf7bmadPE-3MBwervtLHuvQLiEVDcgRRBxzKdIq=s0-br30',
       githubUrl: '',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.thehealthiindian&pli=1',
       appStoreUrl:
@@ -665,6 +675,7 @@ class SeedData {
       shortDescription: 'Radio streaming app with background audio playback, social integrations, and push alerts.',
       fullDescription: 'A modern live radio streaming mobile application engineered with Flutter and GetX. Features continuous background audio playback, seamless YouTube video player integration, direct WhatsApp contact links, embedded WebViews for community programming, and Firebase Cloud Messaging for instant broadcast notifications.',
       category: 'Mobile App',
+      companyName: 'DinJan Infotech Pvt. Ltd.',
       technologies: [
         'Flutter',
         'GetX',
@@ -677,8 +688,8 @@ class SeedData {
       personalContribution: 'Built static audio streaming pipelines, integrated Firebase notifications for show announcements, and created responsive media player controls.',
       challengesAndSolutions: 'Challenge: Handling audio playback transitions during incoming calls and app minimization. Solution: Implemented audio focus listeners and foreground service controllers.',
       verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
-      imageUrl: 'https://play-lh.googleusercontent.com/7GmFn-aYqZF5dLTy0Z6fqUclM1QASJ2TLiLpN9c41xX0UODSizSKD4g_6p16N14moLw=w416-h235-rw',
-      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.nzealand.radioSpice',
+      imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f1/42/d3/f142d36c-9f2e-5c1b-be09-492bb591e524/AppIcon-1x_U007emarketing-0-6-0-0-85-220-0.png/1200x630wa.jpg',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.audio_app&pcampaignid=web_share&pli=1',
       appStoreUrl:
           'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
       isFeatured: true,
@@ -700,6 +711,7 @@ class SeedData {
       shortDescription: 'Motivational quotes app featuring scheduled notifications, dark/light themes, and bilingual support.',
       fullDescription: 'A daily motivational mobile app designed to inspire goal achievement. Features curated quote categories, REST API synchronization, background scheduled push notifications, dynamic localization supporting English and Dutch, and a polished dark and light theme switch.',
       category: 'Mobile App',
+      companyName: 'DinJan Infotech Pvt. Ltd.',
       technologies: [
         'Flutter',
         'GetX',
@@ -722,6 +734,7 @@ class SeedData {
       shortDescription: 'License renewal utility app with automated OCR text scanning and cross-platform support.',
       fullDescription: 'A mobile utility application streamlining driving and business license renewals. Features optical character recognition (OCR) camera scanning to automatically read and populate document details, reducing manual typing errors. Maintained high performance across Android and iOS platforms.',
       category: 'Mobile App',
+      companyName: 'White Orange Software',
       technologies: [
         'Flutter',
         'GetX',
@@ -732,10 +745,10 @@ class SeedData {
       personalContribution: 'Maintained and extended codebase, integrated camera-based text scanning for instant form auto-fill, and fixed cross-platform layout discrepancies.',
       challengesAndSolutions: 'Challenge: Scanning accuracy under poor lighting conditions. Solution: Added edge-detection preprocessing and fallback manual confirmation steps.',
       verifiedOutcomes: 'Available on Google Play Store & Apple App Store.',
-      imageUrl: 'https://play-lh.googleusercontent.com/Il5Brq2qC6YukW0U6k28xloNGcPDKh3pNWtAyGuQ-0QzivbNvla1yp1WUBuf91kf4_2S=w416-h235-rw',
+      imageUrl: 'https://play-lh.googleusercontent.com/EbS5uwZvXHih8tki5HayQpvWCNLfzNhZNMDYhgE0sb7SgefLvp3oUbni5l70HPBc8h3YVB_VzBy6kOvzax8n=s0-br30',
       githubUrl: '',
-      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.fineaway&pcampaignid=web_share&pli=1',
-      appStoreUrl: 'https://apps.apple.com/in/app/fineaway/id1628780927',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.fineaway&pcampaignid=web_share',
+      appStoreUrl: 'https://apps.apple.com/us/app/fineaway-app/id6467185920',
       isFeatured: true,
       isPublished: true,
       orderIndex: 11,
@@ -754,6 +767,7 @@ class SeedData {
       shortDescription: 'Wealth management and banking application featuring interactive financial charts and calendar scheduling.',
       fullDescription: 'Part of the Adroit Vantage enterprise financial suite. LC Banker provides financial wealth managers with responsive analytics dashboards, interactive financial yield graphs, calendar scheduling for client portfolio reviews, and secure REST API integrations powered by GetX state management.',
       category: 'Mobile App',
+      companyName: 'White Orange Software',
       technologies: [
         'Flutter',
         'GetX',
@@ -784,6 +798,7 @@ class SeedData {
       shortDescription: 'Internal social networking app with live feeds, real-time chat, interactive polls, and news modules.',
       fullDescription: 'An enterprise social networking application designed for organizational collaboration. Features a real-time activity feed, peer-to-peer chat, participatory employee polls, multimedia sharing, and news dissemination modules. Persists offline data using fast Hive NoSQL database.',
       category: 'Social Networking',
+      companyName: 'White Orange Software',
       technologies: ['Flutter', 'Hive DB', 'REST APIs', 'Jira', 'Git'],
       personalContribution: 'Developed live feed widgets, chat message components, poll voting calculations, and integrated local caching with Hive DB.',
       challengesAndSolutions: 'Challenge: High-throughput chat messages causing frequent rebuilds. Solution: Scoped widget rebuilds to individual chat bubble state controllers.',
@@ -800,6 +815,7 @@ class SeedData {
       shortDescription: 'Stock trading and portfolio enhancement app with push alerts, calendar events, and real-time chat.',
       fullDescription: 'Stock trading and investment management app. Enhanced core app stability by fixing legacy chat bugs, implementing market event calendar reminders, and integrating Firebase push notifications for instant stock volatility alerts.',
       category: 'Mobile App',
+      companyName: 'White Orange Software',
       technologies: [
         'Flutter',
         'REST APIs',
@@ -814,6 +830,7 @@ class SeedData {
       playStoreUrl: 'https://play.google.com/store/apps',
       appStoreUrl:
           'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
+      imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/b0/d1/44/b0d144e8-fedc-befd-0868-f5bd0a5e2aaf/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.jpg',
       isFeatured: false,
       isPublished: true,
       orderIndex: 14,
@@ -825,6 +842,7 @@ class SeedData {
       shortDescription: 'Real estate agent productivity app featuring DocuSign e-signatures, PDF handling, and calendar sync.',
       fullDescription: 'A high-efficiency productivity mobile app for licensed real estate agents built using FlutterFlow and custom Flutter code. Features secure enterprise authentication, DocuSign document signing integration, in-app PDF previewing and annotation, productivity task tracking, and two-way calendar synchronization.',
       category: 'FlutterFlow',
+      companyName: 'DinJan Infotech Pvt. Ltd.',
       technologies: [
         'FlutterFlow',
         'Flutter',
@@ -837,7 +855,8 @@ class SeedData {
       verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
       imageUrl: 'https://play-lh.googleusercontent.com/dX4JQfKfVGHp8GhJlc2zK0XCiAEdMuzwHLX9ReKbMz1bvxb_U5uwn8_7aQ3n1FU_KEvD=w416-h235-rw',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.kwneworleans.app&pcampaignid=web_share&pli=1',
-      appStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
+      appStoreUrl:
+          'https://apps.apple.com/us/app/agent-thrive-app/id6467190612',
       isFeatured: true,
       isPublished: true,
       orderIndex: 15,
@@ -855,6 +874,7 @@ class SeedData {
       shortDescription: 'Personal finance and target tracking app with Google & Apple authentication and visual timelines.',
       fullDescription: 'A personal finance tracking application built with FlutterFlow and Firebase backend. Enables users to monitor income, categorize daily expenses, visualize savings trajectories across weekly, monthly, and yearly timelines, and establish custom financial milestone targets. Supports seamless Google and Apple single sign-on.',
       category: 'FlutterFlow',
+      companyName: 'DinJan Infotech Pvt. Ltd.',
       technologies: [
         'FlutterFlow',
         'Firebase Auth',
@@ -877,6 +897,7 @@ class SeedData {
       shortDescription: 'Location-based social discovery app featuring Google Places integration and proximity calculations.',
       fullDescription: 'A location-aware social networking app built with Flutter and FlutterFlow. Includes secure automated login, detailed profile onboarding with Google Places autocomplete, real-time geodistance calculations, and dynamic nearby user discovery feeds.',
       category: 'Mobile App',
+      companyName: 'DinJan Infotech Pvt. Ltd.',
       technologies: [
         'Flutter',
         'FlutterFlow',
@@ -906,6 +927,7 @@ class SeedData {
       shortDescription: 'German e-commerce mobile application featuring MVC architecture, localized UI, and checkout flows.',
       fullDescription: 'A dedicated e-commerce mobile app crafted for the German retail market. Built on structured MVC architecture with clean REST API integration, multi-language localization (German & English), frictionless product discovery, payment gateway integration, and real-time order tracking.',
       category: 'E-Commerce',
+      companyName: 'White Orange Software',
       technologies: [
         'Flutter',
         'MVC Architecture',
@@ -928,6 +950,7 @@ class SeedData {
       shortDescription: 'On-demand moving and logistics platform with dedicated User App and Mover App.',
       fullDescription: 'An on-demand logistics booking application connecting customers with professional moving service providers. Developed both the User App and Mover App using Flutter and GetX. Managed responsive layouts across all device sizes, mentored junior engineers on state management best practices, and maintained production stability.',
       category: 'Mobile App',
+      companyName: 'White Orange Software',
       technologies: [
         'Flutter',
         'GetX',
@@ -940,7 +963,8 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
       playStoreUrl: 'https://play.google.com/store/apps',
-      appStoreUrl: 'https://apps.apple.com',
+      appStoreUrl: 'https://apps.apple.com/us/app/muvr-get-furniture-delivery/id6450030781',
+      imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/4c/26/c0/4c26c0ef-45b4-426e-6ecd-039ec9569644/Placeholder.mill/1200x630wa.jpg',
       isFeatured: true,
       isPublished: true,
       orderIndex: 19,

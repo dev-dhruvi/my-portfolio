@@ -126,9 +126,9 @@ class _EducationCard extends StatelessWidget {
                   color: AppColors.violetPrimary.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.school_rounded,
-                  color: AppColors.violetLight,
+                  color: isDark ? AppColors.violetLight : AppColors.violetDark,
                   size: 26,
                 ),
               ),
@@ -138,18 +138,20 @@ class _EducationCard extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.cyanPrimary.withOpacity(0.1),
+                  color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
+                      .withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: AppColors.cyanPrimary.withOpacity(0.25),
+                    color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
+                        .withOpacity(0.25),
                   ),
                 ),
                 child: Text(
                   '${education.startDate} – ${education.endDate}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.cyanPrimary,
+                    color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
                   ),
                 ),
               ),
@@ -164,10 +166,10 @@ class _EducationCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             education.institution,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: AppColors.violetLight,
+              color: isDark ? AppColors.violetLight : AppColors.violetDark,
             ),
           ),
           if (education.affiliation.isNotEmpty) ...[

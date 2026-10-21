@@ -225,15 +225,21 @@ class _TimelineItem extends StatelessWidget {
                         children: [
                           Text(
                             experience.company,
-                            style: const TextStyle(
-                              color: AppColors.violetLight,
+                            style: TextStyle(
+                              color: isDark
+                                  ? AppColors.violetLight
+                                  : AppColors.violetDark,
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
                             ),
                           ),
-                          const Text(
+                          Text(
                             '•',
-                            style: TextStyle(color: AppColors.textMutedDark),
+                            style: TextStyle(
+                              color: isDark
+                                  ? AppColors.textMutedDark
+                                  : AppColors.textSecondaryLight,
+                            ),
                           ),
                           Text(
                             experience.location,
@@ -270,16 +276,20 @@ class _TimelineItem extends StatelessWidget {
                               children: [
                                 Text(
                                   experience.company,
-                                  style: const TextStyle(
-                                    color: AppColors.violetLight,
+                                  style: TextStyle(
+                                    color: isDark
+                                        ? AppColors.violetLight
+                                        : AppColors.violetDark,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 15,
                                   ),
                                 ),
-                                const Text(
+                                Text(
                                   '•',
                                   style: TextStyle(
-                                    color: AppColors.textMutedDark,
+                                    color: isDark
+                                        ? AppColors.textMutedDark
+                                        : AppColors.textSecondaryLight,
                                   ),
                                 ),
                                 Text(

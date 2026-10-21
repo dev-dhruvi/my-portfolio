@@ -6,6 +6,7 @@ class Project {
   final String shortDescription;
   final String fullDescription;
   final String category;
+  final String companyName;
   final List<String> technologies;
   final String thumbnailUrl;
   final String imageUrl;
@@ -30,6 +31,7 @@ class Project {
     required this.shortDescription,
     required this.fullDescription,
     required this.category,
+    this.companyName = '',
     this.technologies = const [],
     this.thumbnailUrl = '',
     this.imageUrl = '',
@@ -63,6 +65,7 @@ class Project {
       'shortDescription': shortDescription,
       'fullDescription': fullDescription,
       'category': category,
+      'companyName': companyName,
       'technologies': technologies,
       'thumbnailUrl': thumbnailUrl,
       'imageUrl': imageUrl,
@@ -90,6 +93,7 @@ class Project {
       shortDescription: map['shortDescription'] ?? '',
       fullDescription: map['fullDescription'] ?? '',
       category: map['category'] ?? 'Mobile App',
+      companyName: map['companyName'] ?? '',
       technologies: List<String>.from(map['technologies'] ?? []),
       thumbnailUrl: map['thumbnailUrl'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
@@ -118,6 +122,7 @@ class Project {
     String? shortDescription,
     String? fullDescription,
     String? category,
+    String? companyName,
     List<String>? technologies,
     String? thumbnailUrl,
     String? imageUrl,
@@ -142,6 +147,7 @@ class Project {
       shortDescription: shortDescription ?? this.shortDescription,
       fullDescription: fullDescription ?? this.fullDescription,
       category: category ?? this.category,
+      companyName: companyName ?? this.companyName,
       technologies: technologies ?? this.technologies,
       thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
       imageUrl: imageUrl ?? this.imageUrl,

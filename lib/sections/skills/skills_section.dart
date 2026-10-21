@@ -221,7 +221,7 @@ class _SkillCard extends StatelessWidget {
                 child: Icon(
                   _getIconForSkill(skill.name),
                   size: 22,
-                  color: AppColors.violetLight,
+                  color: isDark ? AppColors.violetLight : AppColors.violetDark,
                 ),
               ),
               if (skill.isHighlighted)
@@ -231,18 +231,23 @@ class _SkillCard extends StatelessWidget {
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.cyanPrimary.withOpacity(0.12),
+                    color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
+                        .withOpacity(0.12),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: AppColors.cyanPrimary.withOpacity(0.3),
+                      color:
+                          (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
+                              .withOpacity(0.3),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'PROD VERIFIED',
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.cyanPrimary,
+                      color: isDark
+                          ? AppColors.cyanPrimary
+                          : AppColors.cyanDark,
                       letterSpacing: 0.5,
                     ),
                   ),

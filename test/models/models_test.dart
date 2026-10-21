@@ -116,6 +116,7 @@ void main() {
         'shortDescription': 'Short',
         'fullDescription': 'Full',
         'category': 'Mobile App',
+        'companyName': 'Test Company',
         'imageUrl': 'https://example.com/banner.png',
         'keyFeatures': ['Feature 1', 'Feature 2'],
         'appleStoreUrl': 'https://apps.apple.com/test',
@@ -123,6 +124,7 @@ void main() {
       };
 
       final project = Project.fromMap(mapWithApple);
+      expect(project.companyName, equals('Test Company'));
       expect(project.imageUrl, equals('https://example.com/banner.png'));
       expect(project.displayImageUrl, equals('https://example.com/banner.png'));
       expect(project.keyFeatures, contains('Feature 1'));

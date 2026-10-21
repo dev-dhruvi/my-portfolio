@@ -122,11 +122,13 @@ class FooterSection extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Engineered with Flutter Web & Dart',
                           style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.violetLight,
+                            color: isDark
+                                ? AppColors.violetLight
+                                : AppColors.violetDark,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -153,11 +155,13 @@ class FooterSection extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 8),
-                            const Text(
-                              'Engineered with Flutter Web & Dart • Dark Theme Aesthetic',
+                            Text(
+                              'Engineered with Flutter Web & Dart',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: AppColors.cyanLight,
+                                color: isDark
+                                    ? AppColors.cyanLight
+                                    : AppColors.cyanDark,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),

@@ -194,6 +194,7 @@ ${_messageController.text.trim()}
     Color textColor,
     Color secondaryTextColor,
   ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         // Email Card with Copy Action
@@ -207,9 +208,9 @@ ${_messageController.text.trim()}
                   color: AppColors.violetPrimary.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.mail_outline_rounded,
-                  color: AppColors.violetLight,
+                  color: isDark ? AppColors.violetLight : AppColors.violetDark,
                   size: 24,
                 ),
               ),
@@ -218,11 +219,13 @@ ${_messageController.text.trim()}
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Email Address',
                       style: TextStyle(
                         fontSize: 12,
-                        color: AppColors.cyanPrimary,
+                        color: isDark
+                            ? AppColors.cyanPrimary
+                            : AppColors.cyanDark,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -260,9 +263,9 @@ ${_messageController.text.trim()}
                   color: AppColors.cyanPrimary.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.location_on_outlined,
-                  color: AppColors.cyanLight,
+                  color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
                   size: 24,
                 ),
               ),

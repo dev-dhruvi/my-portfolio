@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dhruvi Patel - Senior Flutter Developer CV</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 8mm 10mm 8mm 10mm;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      font-size: 8.1pt;
+      line-height: 1.28;
+      -webkit-font-smoothing: antialiased;
+    }
+    a {
+      color: #1d4ed8;
+      text-decoration: none;
+    }
+    .header {
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+    .name-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .candidate-name {
+      font-size: 18pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1;
+    }
+    .candidate-title {
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: #2563eb;
+    }
+    .contact-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 7.9pt;
+      color: #475569;
+      margin-top: 3px;
+    }
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .contact-item svg {
+      width: 10px;
+      height: 10px;
+      fill: #2563eb;
+      flex-shrink: 0;
+    }
+    .section {
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 8.8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #0f172a;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 1.5px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .section-title svg {
+      width: 10px;
+      height: 10px;
+      fill: #2563eb;
+    }
+    .summary-text {
+      font-size: 8pt;
+      color: #334155;
+      text-align: justify;
+      line-height: 1.3;
+    }
+    .skills-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 7.7pt;
+    }
+    .skills-table td {
+      padding: 1.2px 0;
+      vertical-align: top;
+    }
+    .skill-cat {
+      width: 24%;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+    .skill-val {
+      width: 76%;
+      color: #334155;
+    }
+    .entry {
+      margin-bottom: 4.5px;
+    }
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .entry-title {
+      font-size: 8.4pt;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .entry-role {
+      font-weight: 600;
+      color: #2563eb;
+      font-size: 7.9pt;
+    }
+    .entry-meta {
+      font-size: 7.4pt;
+      font-weight: 600;
+      color: #64748b;
+      white-space: nowrap;
+    }
+    .award-pill {
+      display: inline-block;
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      font-weight: 700;
+      font-size: 7.2pt;
+      padding: 0.5px 5px;
+      border-radius: 3px;
+    }
+    ul.bullet-list {
+      margin-left: 12px;
+      padding-left: 0;
+      list-style-type: disc;
+    }
+    ul.bullet-list li {
+      font-size: 7.6pt;
+      color: #334155;
+      margin-bottom: 1.2px;
+      line-height: 1.26;
+      text-align: justify;
+    }
+    ul.bullet-list li strong {
+      color: #0f172a;
+    }
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .edu-card {
+      border-left: 2px solid #2563eb;
+      padding-left: 6px;
+    }
+    .edu-degree {
+      font-size: 8pt;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .edu-inst {
+      font-size: 7.3pt;
+      color: #475569;
+    }
+    .edu-grade {
+      font-size: 7.3pt;
+      font-weight: 700;
+      color: #166534;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="name-title-row">
+      <h1 class="candidate-name">Dhruvi Patel</h1>
+      <div class="candidate-title">• Senior Flutter Developer</div>
+    </div>
+    <div class="contact-bar">
+      <span class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Surat, Gujarat, India
+      </span>
+      <span class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        <a href="tel:+919925589405">+91 9925589405</a>
+      </span>
+      <span class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <a href="mailto:dhruvi39604@gmail.com">dhruvi39604@gmail.com</a>
+      </span>
+      <span class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+        <a href="https://www.linkedin.com/in/duvi03" target="_blank">linkedin.com/in/duvi03</a>
+      </span>
+      <span class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        <a href="https://github.com/dhruvi-mobiledev" target="_blank">github.com/dhruvi-mobiledev</a>
+      </span>
+    </div>
+  </header>
+
+  <!-- PROFESSIONAL SUMMARY -->
+  <section class="section">
+    <div class="section-title">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+      Professional Summary
+    </div>
+    <p class="summary-text">
+      <strong>Senior Flutter Developer</strong> with <strong>4+ years</strong> of hands-on experience engineering, optimizing, and deploying high-performance cross-platform mobile (Android & iOS) and web applications. Recipient of the <strong>Code Craft Excellence Award (2025)</strong> for clean modular architecture and engineering leadership. Expertise across Flutter, Dart, GetX, Clean Architecture, REST APIs with Dio, Firebase, and real-time bidirectional communication via <strong>AWS IoT Core (MQTT)</strong>. Proven record driving 50+ production releases, building automated test suites (Unit, Widget, Integration), and delivering scalable on-demand marketplace and enterprise software.
+    </p>
+  </section>
+
+  <!-- TECHNICAL SKILLS -->
+  <section class="section">
+    <div class="section-title">
+      <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+      Technical Competencies
+    </div>
+    <table class="skills-table">
+      <tr>
+        <td class="skill-cat">Languages & Frameworks:</td>
+        <td class="skill-val"><strong>Flutter (Mobile & Web)</strong>, <strong>Dart</strong>, FlutterFlow, Java, Kotlin, Python, HTML5, CSS3, JavaScript</td>
+      </tr>
+      <tr>
+        <td class="skill-cat">Architecture & State:</td>
+        <td class="skill-val"><strong>Clean & Modular Architecture</strong>, <strong>GetX State Management</strong>, BLoC Pattern, Repository Pattern, Dependency Injection</td>
+      </tr>
+      <tr>
+        <td class="skill-cat">Cloud & Real-Time Backend:</td>
+        <td class="skill-val"><strong>AWS IoT Core (MQTT over WebSockets)</strong>, Firebase (FCM, Firestore, Auth, Crashlytics, Remote Config), Dio, REST APIs, JWT</td>
+      </tr>
+      <tr>
+        <td class="skill-cat">Storage & Testing:</td>
+        <td class="skill-val">Hive DB, Flutter Secure Storage, SharedPreferences, SQLite, <strong>Mocktail</strong>, Unit/Widget/Integration Testing, DevTools Profiling</td>
+      </tr>
+      <tr>
+        <td class="skill-cat">Tooling & Integrations:</td>
+        <td class="skill-val">Git, GitHub Actions, Google Play Console, App Store Connect, Google Places API, Cloudflare Turnstile, CustomPainter, StoreKit/In-App Purchases</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- WORK EXPERIENCE -->
+  <section class="section">
+    <div class="section-title">
+      <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+      Work Experience
+    </div>
+
+    <!-- Logix Built -->
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">Logix Built Solutions Limited</span>
+          <span class="entry-role"> — Senior Software Engineer | Flutter Developer</span>
+          <span class="award-pill">🏆 Code Craft Excellence Award 2025</span>
+        </div>
+        <span class="entry-meta">May 2025 – Present | Surat, India</span>
+      </div>
+      <ul class="bullet-list">
+        <li><strong>Architecture & Real-Time Dispatch:</strong> Architected dual-sided on-demand marketplace app from scratch using Flutter, Dart, and GetX under Clean Modular Architecture; built low-latency real-time dispatch via <strong>AWS IoT Core (MQTT over WSS)</strong> and FCM with custom sound/vibration alerts.</li>
+        <li><strong>Resilient Network Layer:</strong> Implemented Dio HTTP client with exponential backoff and a thread-safe <strong>Single-Flight Lock (Completer)</strong> eliminating token-refresh race conditions.</li>
+        <li><strong>Web QA Automation & Releases:</strong> Built Flutter Web dataset validation tool with a 20-rule AST parser, auto-fixing malformed HTML without data loss; managed <strong>50+ production releases</strong> across Google Play and Apple App Store with In-App Updates and Remote Config.</li>
+        <li><strong>Automated Testing:</strong> Authored Unit, Widget, and Integration tests using <strong>Mocktail</strong> ensuring zero regressions across critical flows.</li>
+      </ul>
+    </div>
+
+    <!-- DinJan Infotech -->
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">DinJan Infotech Pvt. Ltd.</span>
+          <span class="entry-role"> — Flutter Developer</span>
+        </div>
+        <span class="entry-meta">June 2024 – April 2025 | Surat, India</span>
+      </div>
+      <ul class="bullet-list">
+        <li>Designed and developed cross-platform applications for Android and iOS using Flutter and FlutterFlow with custom interactive widgets.</li>
+        <li>Integrated secure REST APIs, centralized state handling via GetX, optimized memory/rendering performance, and mentored junior developers.</li>
+      </ul>
+    </div>
+
+    <!-- White Orange Software -->
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">White Orange Software</span>
+          <span class="entry-role"> — Mobile App Developer & Intern</span>
+        </div>
+        <span class="entry-meta">Jan 2022 – May 2024 | Surat, India</span>
+      </div>
+      <ul class="bullet-list">
+        <li>Built, optimized, and deployed scalable mobile apps using Flutter, Dart, and Android Native (Java/Kotlin); engineered enterprise HR app with real-time chat.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- KEY FEATURED PROJECTS (FLAGSHIP) -->
+  <section class="section">
+    <div class="section-title">
+      <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+      Key Commercial Projects & Live Store Links
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">Pandit Near Me</span>
+          <span style="font-size:7.4pt; color:#64748b;">(Logix Built Solutions Limited | 50+ Releases)</span>
+        </div>
+        <span class="entry-meta">
+          <a href="https://play.google.com/store/apps/details?id=com.officialpanditsnearme&hl=en" target="_blank">[Google Play]</a> •
+          <a href="https://apps.apple.com/in/app/pandits-near-me-instant-puja/id6757301105" target="_blank">[App Store]</a>
+        </span>
+      </div>
+      <ul class="bullet-list">
+        <li>Dual-sided on-demand spiritual services marketplace (Users, Pandits, Astrologers); integrated AWS IoT Core MQTT dispatch, Aadhaar KYC verification, and Kundali matching with custom geometric horoscope charts rendered via <strong>CustomPainter</strong> and PDF export.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">PMP CSV Validator & Preview Tool</span>
+          <span style="font-size:7.4pt; color:#64748b;">(Logix Built Solutions Limited | Flutter Web)</span>
+        </div>
+        <span class="entry-meta">Flutter Web QA Suite</span>
+      </div>
+      <ul class="bullet-list">
+        <li>Engineered a responsive dataset QA platform with a 20-rule AST parser repairing malformed HTML tags/tables, LaTeX rendering via <strong>flutter_math_fork</strong>, and live multi-device simulation via HTML5 BroadcastChannel API.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <div>
+          <span class="entry-title">Published Consumer & Enterprise Apps</span>
+          <span style="font-size:7.4pt; color:#64748b;">(DinJan Infotech & White Orange Software)</span>
+        </div>
+        <span class="entry-meta">Live on App Store & Google Play</span>
+      </div>
+      <ul class="bullet-list">
+        <li><strong>The Healthi Indian</strong> (<a href="https://play.google.com/store/apps/details?id=com.app.thehealthiindian&pli=1" target="_blank">Play Store</a> | <a href="https://apps.apple.com/us/app/the-healthi-indian/id6738694566" target="_blank">App Store</a>): Nutrition & recipe app with GetX and offline caching.</li>
+        <li><strong>FineAway</strong> (<a href="https://play.google.com/store/apps/details?id=com.app.fineaway&pcampaignid=web_share" target="_blank">Play Store</a> | <a href="https://apps.apple.com/us/app/fineaway-app/id6467185920" target="_blank">App Store</a>): Traffic fine resolution with OCR camera scanning.</li>
+        <li><strong>Radio Spice</strong> (<a href="https://play.google.com/store/apps/details?id=com.app.audio_app&pcampaignid=web_share&pli=1" target="_blank">Play Store</a> | <a href="https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716" target="_blank">App Store</a>), <strong>Agents Thrive</strong> (<a href="https://apps.apple.com/us/app/agent-thrive-app/id6467190612" target="_blank">App Store</a>), <strong>Muvr</strong> (<a href="https://apps.apple.com/us/app/muvr-get-furniture-delivery/id6450030781" target="_blank">App Store</a>).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION & HONORS -->
+  <section class="section">
+    <div class="section-title">
+      <svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+      Education & Honors
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-degree">Master of Computer Applications (MCA) — CGPA: 7.61 (Distinction)</div>
+        <div class="edu-inst">Sarvajanik College of Eng. & Tech., GTU • 2020 – 2022</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">Bachelor of Computer Applications (BCA) — CGPA: 7.39 (Distinction)</div>
+        <div class="edu-inst">Vivekanand College for Advance Computer & Info. Sci., VNSGU • 2017 – 2020</div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
