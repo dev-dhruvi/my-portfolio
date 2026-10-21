@@ -20,9 +20,9 @@ void main() {
         expect(proj.isPublished, isTrue);
       }
 
-      // Verify Logix Built Solution Limited award
+      // Verify Logix Built Solutions Limited award
       final logixExp = repo.experiences.firstWhere(
-        (e) => e.company.contains('Logix Built Solution Limited'),
+        (e) => e.company.contains('Logix Built Solutions Limited'),
       );
       expect(logixExp.award, contains('Code Craft Excellence Award'));
 

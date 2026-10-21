@@ -57,7 +57,7 @@ void main() {
     });
 
     testWidgets(
-      'ProjectsSection renders Pandit Near Me and PMP CSV Validator & Preview Tool project cards',
+      'ProjectsSection renders Pandit Near Me and PMP CSV Validator project cards',
       (tester) async {
         await tester.pumpWidget(
           MediaQuery(
@@ -74,10 +74,7 @@ void main() {
         await tester.pump();
 
         expect(find.text('Pandit Near Me'), findsAtLeastNWidgets(1));
-        expect(
-          find.text('PMP CSV Validator & Preview Tool'),
-          findsAtLeastNWidgets(1),
-        );
+        expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
       },
     );
 
