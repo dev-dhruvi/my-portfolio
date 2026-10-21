@@ -86,8 +86,7 @@ class AboutSection extends StatelessWidget {
                 const SizedBox(height: 14),
                 Text(
                   'I advocate for modular, Clean Architecture principles and strict separation of concerns using GetX '
-                  'and reactive state models. Honored with the Code Craft Excellence Award (2025) at Logixbuilt Infotech '
-                  'for exceptional code quality, architectural modularity, and engineering best practices. '
+                  'and reactive state models. '
                   'Having led and contributed to over 20 client and enterprise applications, I emphasize automated unit and '
                   'widget testing, robust JWT authentication, memory leak elimination, and CI/CD deployment pipelines '
                   'targeting both the Google Play Store and Apple App Store.',
@@ -118,9 +117,9 @@ class AboutSection extends StatelessWidget {
                   ),
                   _HighlightCard(
                     width: cardWidth,
-                    value: 'Award Winner',
-                    label: 'Code Craft Excellence 2025',
-                    icon: Icons.emoji_events_outlined,
+                    value: '50+ Releases',
+                    label: 'Play Store & App Store',
+                    icon: Icons.rocket_launch_outlined,
                     accentColor: const Color(0xFFF59E0B),
                   ),
                   _HighlightCard(
