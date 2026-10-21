@@ -26,7 +26,7 @@ void main() {
       );
       expect(logixExp.award, contains('Code Craft Excellence Award'));
 
-      // Verify Pandit Near Me project
+      // Verify Pandits Near Me - Instant Puja project
       final panditsProject = repo.projects.firstWhere(
         (p) => p.title.contains('Pandit'),
       );

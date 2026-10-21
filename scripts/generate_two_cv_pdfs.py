@@ -370,7 +370,7 @@ HTML_1PAGE_CONTENT = """<!DOCTYPE html>
     <div class="entry">
       <div class="entry-header">
         <div>
-          <span class="entry-title">Pandit Near Me</span>
+          <span class="entry-title">Pandits Near Me - Instant Puja</span>
           <span style="font-size:7.4pt; color:#64748b;">(Logix Built Solutions Limited | 50+ Releases)</span>
         </div>
         <span class="entry-meta">
@@ -815,10 +815,10 @@ HTML_COMPLETE_CONTENT = """<!DOCTYPE html>
       <span>May 2025 – Present</span>
     </div>
 
-    <!-- 1. Pandit Near Me -->
+    <!-- 1. Pandits Near Me - Instant Puja -->
     <div class="entry">
       <div class="entry-header">
-        <span class="entry-title">1. Pandit Near Me — Dual-Sided On-Demand Marketplace (Android & iOS | 50+ Releases)</span>
+        <span class="entry-title">1. Pandits Near Me - Instant Puja — Dual-Sided On-Demand Marketplace (Android & iOS | 50+ Releases)</span>
         <span class="entry-meta">
           <a href="https://play.google.com/store/apps/details?id=com.officialpanditsnearme&hl=en" target="_blank">[Google Play Store]</a> •
           <a href="https://apps.apple.com/in/app/pandits-near-me-instant-puja/id6757301105" target="_blank">[Apple App Store]</a>

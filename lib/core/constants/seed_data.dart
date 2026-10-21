@@ -338,7 +338,7 @@ class SeedData {
     const Project(
       id: 'proj_pandits_near_me',
       slug: 'pandit-near-me',
-      title: 'Pandit Near Me',
+      title: 'Pandits Near Me - Instant Puja',
       shortDescription: 'Dual-sided spiritual services marketplace with real-time AWS IoT MQTT dispatch, Kundali CustomPainter, and multilingual puja booking.',
       fullDescription:
           'A production-grade dual-sided on-demand marketplace application designed and developed from scratch using Flutter and clean modular architecture, supporting 50+ successful releases across Android and iOS. '

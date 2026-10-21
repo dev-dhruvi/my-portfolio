@@ -454,12 +454,12 @@ def build_docx():
     r_sl.font.size = Pt(10)
     r_sl.font.color.rgb = RGB_NAVY
 
-    # Project 1: Pandit Near Me
+    # Project 1: Pandits Near Me - Instant Puja
     p_p1 = doc.add_paragraph()
     p_p1.paragraph_format.space_before = Pt(3)
     p_p1.paragraph_format.space_after = Pt(1)
     p_p1.paragraph_format.keep_with_next = True
-    r_p1 = p_p1.add_run("1. Pandit Near Me — Dual-Sided On-Demand Marketplace (Android & iOS | 50+ Releases)")
+    r_p1 = p_p1.add_run("1. Pandits Near Me - Instant Puja — Dual-Sided On-Demand Marketplace (Android & iOS | 50+ Releases)")
     r_p1.font.bold = True
     r_p1.font.size = Pt(9.8)
     r_p1.font.color.rgb = RGB_BODY
