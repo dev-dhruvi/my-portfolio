@@ -25,7 +25,7 @@ class AboutSection extends StatelessWidget {
         : AppColors.textSecondaryLight;
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 64),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,9 +41,9 @@ class AboutSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Text(
+              const Text(
                 'ABOUT ME',
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.cyanPrimary,
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
@@ -52,50 +52,58 @@ class AboutSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           Text(
             'Specialized in Flutter, Mobile Architecture & Cloud Services',
             style: AppTypography.getDisplayMedium(textColor)
-                .copyWith(fontSize: isMobile ? 26 : 34),
+                .copyWith(fontSize: isMobile ? 24 : 28),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
 
           // Main Narrative Cards
           GlassCard(
-            padding: EdgeInsets.all(isMobile ? 20 : 32),
+            padding: EdgeInsets.all(isMobile ? 18 : 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Professional Background',
-                  style: AppTypography.getTitleLarge(textColor),
+                  style: AppTypography.getTitleMedium(textColor).copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 8),
                 Text(
                   'With over 4 years of verified software engineering experience based in Surat, Gujarat, '
                   'I focus on building production-grade cross-platform mobile and web applications with Flutter and Dart. '
                   'My technical journey spans end-to-end development, from designing responsive interfaces to '
                   'integrating high-concurrency REST APIs, real-time AWS IoT Core (MQTT) data pipelines, and Firebase cloud services.',
-                  style: AppTypography.getBodyLarge(secondaryTextColor),
+                  style: AppTypography.getBodyMedium(secondaryTextColor).copyWith(
+                    height: 1.45,
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 Text(
                   'Engineering Philosophy & Craftsmanship',
-                  style: AppTypography.getTitleLarge(textColor),
+                  style: AppTypography.getTitleMedium(textColor).copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 8),
                 Text(
                   'I advocate for modular, Clean Architecture principles and strict separation of concerns using GetX '
                   'and reactive state models. '
                   'Having led and contributed to over 20 client and enterprise applications, I emphasize automated unit and '
                   'widget testing, robust JWT authentication, memory leak elimination, and CI/CD deployment pipelines '
                   'targeting both the Google Play Store and Apple App Store.',
-                  style: AppTypography.getBodyLarge(secondaryTextColor),
+                  style: AppTypography.getBodyMedium(secondaryTextColor).copyWith(
+                    height: 1.45,
+                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 16),
 
           // Key Highlights Metric Cards
           LayoutBuilder(
@@ -174,33 +182,33 @@ class _HighlightCard extends StatelessWidget {
     return SizedBox(
       width: width,
       child: GlassCard(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: accentColor.withOpacity(0.12),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(icon, color: accentColor, size: 24),
+              child: Icon(icon, color: accentColor, size: 20),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             Text(
               value,
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.w800,
                 color: textColor,
                 letterSpacing: -0.5,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 3),
             Text(
               label,
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: secondaryTextColor,
               ),

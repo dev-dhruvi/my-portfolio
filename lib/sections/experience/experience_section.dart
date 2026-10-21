@@ -31,7 +31,7 @@ class ExperienceSection extends StatelessWidget {
         ExperienceCalculator.calculateTotalExperience(ranges);
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 64),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -58,11 +58,11 @@ class ExperienceSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           Text(
             'Work Experience & Roles',
             style: AppTypography.getDisplayMedium(textColor)
-                .copyWith(fontSize: isMobile ? 26 : 34),
+                .copyWith(fontSize: isMobile ? 24 : 28),
           ),
           const SizedBox(height: 8),
 
@@ -70,33 +70,33 @@ class ExperienceSection extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: AppColors.violetPrimary.withOpacity(0.12),
+              color: AppColors.violetPrimary.withOpacity(isDark ? 0.12 : 0.08),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: AppColors.violetPrimary.withOpacity(0.3),
+                color: AppColors.violetPrimary.withOpacity(isDark ? 0.3 : 0.25),
               ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
+                Icon(
                   Icons.access_time_rounded,
                   size: 16,
-                  color: AppColors.cyanPrimary,
+                  color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'Total Cumulative Experience: $totalExperienceFormatted (Verified intervals)',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.cyanLight,
+                    color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 36),
+          const SizedBox(height: 18),
 
           // Timeline Items
           ListView.builder(
@@ -123,7 +123,7 @@ class ExperienceSection extends StatelessWidget {
   }
 }
 
-class _TimelineItem extends StatelessWidget {
+class _TimelineItem extends StatefulWidget {
   final Experience experience;
   final bool isLast;
   final bool isMobile;
@@ -135,6 +135,13 @@ class _TimelineItem extends StatelessWidget {
   });
 
   @override
+  State<_TimelineItem> createState() => _TimelineItemState();
+}
+
+class _TimelineItemState extends State<_TimelineItem> {
+  bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark
@@ -144,10 +151,16 @@ class _TimelineItem extends StatelessWidget {
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
 
+    final responsibilities = widget.experience.responsibilities;
+    final hasManyResponsibilities = responsibilities.length > 4;
+    final displayedResponsibilities = (_isExpanded || !hasManyResponsibilities)
+        ? responsibilities
+        : responsibilities.take(4).toList();
+
     return Stack(
       children: [
         // Connecting Line from dot to bottom of item
-        if (!isLast)
+        if (!widget.isLast)
           Positioned(
             top: 26,
             bottom: 0,
@@ -199,21 +212,21 @@ class _TimelineItem extends StatelessWidget {
           ),
         ),
 
-        // Experience Card Content (drives natural unconstrained height)
+        // Experience Card Content
         Padding(
-          padding: const EdgeInsets.only(left: 48.0, bottom: 32.0),
+          padding: const EdgeInsets.only(left: 48.0, bottom: 24.0),
           child: GlassCard(
-            padding: EdgeInsets.all(isMobile ? 18 : 24),
+            padding: EdgeInsets.all(widget.isMobile ? 16 : 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Responsive Header Row/Column
-                if (isMobile)
+                if (widget.isMobile)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        experience.role,
+                        widget.experience.role,
                         style: AppTypography.getTitleLarge(textColor)
                             .copyWith(fontWeight: FontWeight.w700),
                       ),
@@ -224,7 +237,7 @@ class _TimelineItem extends StatelessWidget {
                         runSpacing: 4,
                         children: [
                           Text(
-                            experience.company,
+                            widget.experience.company,
                             style: TextStyle(
                               color: isDark
                                   ? AppColors.violetLight
@@ -242,7 +255,7 @@ class _TimelineItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            experience.location,
+                            widget.experience.location,
                             style: TextStyle(
                               color: secondaryTextColor,
                               fontSize: 13,
@@ -250,7 +263,7 @@ class _TimelineItem extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 8),
                       _buildDurationTag(),
                     ],
                   )
@@ -264,7 +277,7 @@ class _TimelineItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              experience.role,
+                              widget.experience.role,
                               style: AppTypography.getTitleLarge(textColor)
                                   .copyWith(fontWeight: FontWeight.w700),
                             ),
@@ -275,7 +288,7 @@ class _TimelineItem extends StatelessWidget {
                               runSpacing: 4,
                               children: [
                                 Text(
-                                  experience.company,
+                                  widget.experience.company,
                                   style: TextStyle(
                                     color: isDark
                                         ? AppColors.violetLight
@@ -293,7 +306,7 @@ class _TimelineItem extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  experience.location,
+                                  widget.experience.location,
                                   style: TextStyle(
                                     color: secondaryTextColor,
                                     fontSize: 13,
@@ -308,63 +321,19 @@ class _TimelineItem extends StatelessWidget {
                       _buildDurationTag(),
                     ],
                   ),
-                if (experience.award != null &&
-                    experience.award!.isNotEmpty) ...[
-                  const SizedBox(height: 12),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          const Color(0xFFF59E0B).withOpacity(0.18),
-                          AppColors.violetPrimary.withOpacity(0.15),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: const Color(0xFFF59E0B).withOpacity(0.45),
-                        width: 1,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.emoji_events_rounded,
-                          size: 18,
-                          color: Color(0xFFFBBF24),
-                        ),
-                        const SizedBox(width: 8),
-                        Flexible(
-                          child: Text(
-                            experience.award!,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFFFDE68A),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
 
                 // Responsibilities Bullet List
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: experience.responsibilities.map((resp) {
+                  children: displayedResponsibilities.map((resp) {
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
+                      padding: const EdgeInsets.only(bottom: 6.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(top: 6.0, right: 10.0),
+                            padding: EdgeInsets.only(top: 5.0, right: 8.0),
                             child: Icon(
                               Icons.arrow_right_rounded,
                               size: 18,
@@ -385,13 +354,100 @@ class _TimelineItem extends StatelessWidget {
                   }).toList(),
                 ),
 
+                // Show more / Show less toggle
+                if (hasManyResponsibilities) ...[
+                  InkWell(
+                    onTap: () => setState(() => _isExpanded = !_isExpanded),
+                    borderRadius: BorderRadius.circular(6),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            _isExpanded
+                                ? 'Show fewer responsibilities'
+                                : 'Show all ${responsibilities.length} responsibilities (+${responsibilities.length - 4} more)',
+                            style: TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w600,
+                              color: isDark
+                                  ? AppColors.cyanPrimary
+                                  : AppColors.violetPrimary,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            _isExpanded
+                                ? Icons.keyboard_arrow_up_rounded
+                                : Icons.keyboard_arrow_down_rounded,
+                            size: 16,
+                            color: isDark
+                                ? AppColors.cyanPrimary
+                                : AppColors.violetPrimary,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                ],
+
+                // Award Badge (if present)
+                if (widget.experience.award != null &&
+                    widget.experience.award!.isNotEmpty) ...[
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 7,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          const Color(0xFFF59E0B).withOpacity(isDark ? 0.18 : 0.12),
+                          AppColors.violetPrimary.withOpacity(isDark ? 0.15 : 0.08),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: const Color(0xFFF59E0B).withOpacity(isDark ? 0.45 : 0.4),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.emoji_events_rounded,
+                          size: 18,
+                          color: Color(0xFFD97706),
+                        ),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: Text(
+                            widget.experience.award!,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: isDark
+                                  ? const Color(0xFFFDE68A)
+                                  : const Color(0xFFB45309),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+
                 // Tech Stack Tags
-                if (experience.technologies.isNotEmpty) ...[
-                  const SizedBox(height: 12),
+                if (widget.experience.technologies.isNotEmpty) ...[
+                  const SizedBox(height: 10),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: experience.technologies.map((tech) {
+                    children: widget.experience.technologies.map((tech) {
                       return Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
@@ -432,7 +488,7 @@ class _TimelineItem extends StatelessWidget {
 
   Widget _buildDurationTag() {
     return Column(
-      crossAxisAlignment: isMobile
+      crossAxisAlignment: widget.isMobile
           ? CrossAxisAlignment.start
           : CrossAxisAlignment.end,
       children: [
@@ -444,7 +500,7 @@ class _TimelineItem extends StatelessWidget {
             border: Border.all(color: AppColors.cyanPrimary.withOpacity(0.25)),
           ),
           child: Text(
-            '${experience.startDate} – ${experience.endDate}',
+            '${widget.experience.startDate} – ${widget.experience.endDate}',
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -452,10 +508,10 @@ class _TimelineItem extends StatelessWidget {
             ),
           ),
         ),
-        if (experience.calculatedDuration.isNotEmpty) ...[
+        if (widget.experience.calculatedDuration.isNotEmpty) ...[
           const SizedBox(height: 4),
           Text(
-            experience.calculatedDuration,
+            widget.experience.calculatedDuration,
             style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w500,

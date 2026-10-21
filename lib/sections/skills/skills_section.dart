@@ -39,7 +39,7 @@ class _SkillsSectionState extends State<SkillsSection> {
         : widget.skills.where((s) => s.category == _selectedCategory).toList();
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 64),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,18 +66,18 @@ class _SkillsSectionState extends State<SkillsSection> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           Text(
             'Technologies & Frameworks',
             style: AppTypography.getDisplayMedium(textColor)
-                .copyWith(fontSize: isMobile ? 26 : 34),
+                .copyWith(fontSize: isMobile ? 24 : 28),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Text(
             'Verified tech stack and methodologies proven across commercial and production mobile applications.',
             style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 14),
 
           // Category Filter Chips
           SingleChildScrollView(
@@ -120,7 +120,7 @@ class _SkillsSectionState extends State<SkillsSection> {
               }).toList(),
             ),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 16),
 
           // Grid of Skills
           LayoutBuilder(
@@ -205,7 +205,7 @@ class _SkillCard extends StatelessWidget {
         : AppColors.textSecondaryLight;
 
     return GlassCard(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -213,27 +213,27 @@ class _SkillCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: AppColors.violetPrimary.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
                   _getIconForSkill(skill.name),
-                  size: 22,
+                  size: 20,
                   color: isDark ? AppColors.violetLight : AppColors.violetDark,
                 ),
               ),
               if (skill.isHighlighted)
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
+                    horizontal: 7,
+                    vertical: 2.5,
                   ),
                   decoration: BoxDecoration(
                     color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
                         .withOpacity(0.12),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color:
                           (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
@@ -243,7 +243,7 @@ class _SkillCard extends StatelessWidget {
                   child: Text(
                     'PROD VERIFIED',
                     style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 9.5,
                       fontWeight: FontWeight.w700,
                       color: isDark
                           ? AppColors.cyanPrimary
@@ -254,23 +254,25 @@ class _SkillCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 10),
           Text(
             skill.name,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 15,
               fontWeight: FontWeight.w700,
               color: textColor,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
           Text(
             skill.description.isNotEmpty ? skill.description : skill.category,
             style: TextStyle(
-              fontSize: 13,
-              height: 1.4,
+              fontSize: 12.5,
+              height: 1.35,
               color: secondaryTextColor,
             ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

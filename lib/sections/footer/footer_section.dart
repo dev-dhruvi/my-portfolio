@@ -18,9 +18,6 @@ class FooterSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = AppBreakpoints.isMobile(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final secondaryTextColor = isDark
-        ? AppColors.textSecondaryDark
-        : AppColors.textSecondaryLight;
 
     return Container(
       decoration: BoxDecoration(
@@ -36,7 +33,7 @@ class FooterSection extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 24 : 48,
-        vertical: 36,
+        vertical: isMobile ? 24 : 32,
       ),
       child: Center(
         child: ConstrainedBox(
@@ -106,69 +103,6 @@ class FooterSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
-              const Divider(),
-              const SizedBox(height: 20),
-
-              // Bottom Attribution & Tech Note
-              isMobile
-                  ? Column(
-                      children: [
-                        Text(
-                          '© ${DateTime.now().year} Dhruvi Patel. All rights reserved.',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: secondaryTextColor,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Engineered with Flutter Web & Dart',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: isDark
-                                ? AppColors.violetLight
-                                : AppColors.violetDark,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '© ${DateTime.now().year} Dhruvi Patel. All rights reserved.',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: secondaryTextColor,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 8,
-                              height: 8,
-                              decoration: const BoxDecoration(
-                                color: AppColors.cyanPrimary,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              'Engineered with Flutter Web & Dart',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: isDark
-                                    ? AppColors.cyanLight
-                                    : AppColors.cyanDark,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
             ],
           ),
         ),

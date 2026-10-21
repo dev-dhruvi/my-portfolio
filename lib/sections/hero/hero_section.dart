@@ -25,6 +25,7 @@ class HeroSection extends StatefulWidget {
 class _HeroSectionState extends State<HeroSection> {
   int _currentRoleIndex = 0;
   Timer? _roleTimer;
+  bool _isBioExpanded = false;
 
   @override
   void initState() {
@@ -60,9 +61,9 @@ class _HeroSectionState extends State<HeroSection> {
 
     return Container(
       constraints: (!isMobile && !isTablet)
-          ? const BoxConstraints(minHeight: 650)
+          ? const BoxConstraints(minHeight: 580)
           : null,
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 64),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 32),
       child: isMobile || isTablet
           ? SingleChildScrollView(
               child: Column(
@@ -263,15 +264,69 @@ class _HeroSectionState extends State<HeroSection> {
         ),
         const SizedBox(height: 14),
 
-        // Summary statement from resume
+        // Summary statement from resume with Read More / Read Less
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 580),
-          child: Text(
-            widget.profile.bio,
-            textAlign: isCentered ? TextAlign.center : TextAlign.start,
-            style: AppTypography.getBodyLarge(secondaryTextColor),
-            maxLines: 5,
-            overflow: TextOverflow.ellipsis,
+          child: Column(
+            crossAxisAlignment: isCentered
+                ? CrossAxisAlignment.center
+                : CrossAxisAlignment.start,
+            children: [
+              AnimatedSize(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                alignment: isCentered ? Alignment.topCenter : Alignment.topLeft,
+                child: Text(
+                  widget.profile.bio,
+                  textAlign: isCentered ? TextAlign.center : TextAlign.start,
+                  style: AppTypography.getBodyLarge(secondaryTextColor),
+                  maxLines: _isBioExpanded ? null : 4,
+                  overflow: _isBioExpanded
+                      ? TextOverflow.visible
+                      : TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(height: 6),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    _isBioExpanded = !_isBioExpanded;
+                  });
+                },
+                borderRadius: BorderRadius.circular(6),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 2,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        _isBioExpanded ? 'Read Less' : 'Read More',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: isDark
+                              ? AppColors.cyanPrimary
+                              : AppColors.violetPrimary,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        _isBioExpanded
+                            ? Icons.keyboard_arrow_up_rounded
+                            : Icons.keyboard_arrow_down_rounded,
+                        size: 16,
+                        color: isDark
+                            ? AppColors.cyanPrimary
+                            : AppColors.violetPrimary,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -279,6 +334,8 @@ class _HeroSectionState extends State<HeroSection> {
   }
 
   Widget _buildActionButtons(BuildContext context, {required bool isCentered}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Wrap(
       alignment: isCentered ? WrapAlignment.center : WrapAlignment.start,
       spacing: 16,
@@ -321,11 +378,32 @@ class _HeroSectionState extends State<HeroSection> {
         // Contact Me Button
         TextButton.icon(
           onPressed: () => widget.onNavigate?.call('contact'),
-          icon: const Icon(Icons.mail_outline_rounded, size: 18),
-          label: const Text('Contact Me'),
+          icon: Icon(
+            Icons.mail_outline_rounded,
+            size: 18,
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+          ),
+          label: Text(
+            'Contact Me',
+            style: TextStyle(
+              color: isDark
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           style: TextButton.styleFrom(
-            foregroundColor: AppColors.textPrimaryDark,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(
+                color: isDark
+                    ? AppColors.darkCardBorder
+                    : AppColors.lightCardBorder,
+              ),
+            ),
           ),
         ),
       ],
@@ -472,6 +550,29 @@ class _SocialIconBtnState extends State<_SocialIconBtn> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final defaultBg = isDark
+        ? AppColors.darkCard
+        : const Color(0xFFF1F5F9);
+    final hoverBg = isDark
+        ? AppColors.violetPrimary.withOpacity(0.2)
+        : AppColors.violetPrimary.withOpacity(0.12);
+
+    final defaultBorder = isDark
+        ? AppColors.darkCardBorder
+        : AppColors.lightCardBorder;
+    final hoverBorder = isDark
+        ? AppColors.violetPrimary
+        : AppColors.violetPrimary;
+
+    final defaultIconColor = isDark
+        ? Colors.white70
+        : AppColors.textPrimaryLight;
+    final hoverIconColor = isDark
+        ? AppColors.cyanLight
+        : AppColors.violetPrimary;
+
     return Tooltip(
       message: widget.tooltip,
       child: MouseRegion(
@@ -485,21 +586,17 @@ class _SocialIconBtnState extends State<_SocialIconBtn> {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: _isHovered
-                  ? AppColors.violetPrimary.withOpacity(0.2)
-                  : AppColors.darkCardBorder,
+              color: _isHovered ? hoverBg : defaultBg,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: _isHovered
-                    ? AppColors.violetPrimary
-                    : Colors.white.withOpacity(0.1),
+                color: _isHovered ? hoverBorder : defaultBorder,
               ),
             ),
             child: Center(
               child: IconTheme(
                 data: IconThemeData(
                   size: 18,
-                  color: _isHovered ? AppColors.cyanLight : Colors.white70,
+                  color: _isHovered ? hoverIconColor : defaultIconColor,
                 ),
                 child: widget.icon,
               ),

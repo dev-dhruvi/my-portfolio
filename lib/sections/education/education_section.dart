@@ -25,7 +25,7 @@ class EducationSection extends StatelessWidget {
         : AppColors.textSecondaryLight;
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 64),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

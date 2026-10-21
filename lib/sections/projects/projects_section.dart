@@ -63,7 +63,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     }).toList();
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 64),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -90,92 +90,165 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           Text(
             'Production Applications & Client Projects',
             style: AppTypography.getDisplayMedium(textColor)
-                .copyWith(fontSize: isMobile ? 26 : 34),
+                .copyWith(fontSize: isMobile ? 24 : 28),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Text(
             'Curated projects verified from professional portfolio, showcasing Flutter, GetX, and FlutterFlow implementations.',
             style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 14),
 
-          // Search & Filter Bar
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: (val) => setState(() => _searchQuery = val),
-                  decoration: InputDecoration(
-                    hintText:
-                        'Search by title, tech stack (e.g. GetX, Firebase)...',
-                    prefixIcon: const Icon(Icons.search_rounded, size: 20),
-                    suffixIcon: _searchQuery.isNotEmpty
-                        ? IconButton(
-                            icon: const Icon(Icons.clear_rounded, size: 18),
-                            onPressed: () {
-                              _searchController.clear();
-                              setState(() => _searchQuery = '');
-                            },
-                          )
-                        : null,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-
-          // Category Chips
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: categories.map((cat) {
-                final isSelected = _selectedCategory == cat;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: FilterChip(
-                    label: Text(cat),
-                    selected: isSelected,
-                    onSelected: (_) => setState(() => _selectedCategory = cat),
-                    backgroundColor: isDark ? AppColors.darkCard : Colors.white,
-                    selectedColor: AppColors.violetPrimary.withOpacity(0.2),
-                    checkmarkColor: AppColors.cyanPrimary,
-                    labelStyle: TextStyle(
-                      fontSize: 13,
-                      fontWeight: isSelected
-                          ? FontWeight.w600
-                          : FontWeight.w500,
-                      color: isSelected
-                          ? AppColors.cyanPrimary
-                          : (isDark
-                                ? AppColors.textSecondaryDark
-                                : AppColors.textSecondaryLight),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        color: isSelected
-                            ? AppColors.violetPrimary
-                            : (isDark
-                                  ? AppColors.darkCardBorder
-                                  : AppColors.lightCardBorder),
+          // Search & Filter Controls (Side-by-side on desktop, stacked on mobile)
+          if (!isMobile)
+            Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: TextField(
+                    controller: _searchController,
+                    onChanged: (val) => setState(() => _searchQuery = val),
+                    decoration: InputDecoration(
+                      hintText:
+                          'Search by title, tech stack...',
+                      prefixIcon: const Icon(Icons.search_rounded, size: 18),
+                      suffixIcon: _searchQuery.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.clear_rounded, size: 16),
+                              onPressed: () {
+                                _searchController.clear();
+                                setState(() => _searchQuery = '');
+                              },
+                            )
+                          : null,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 10,
                       ),
                     ),
                   ),
-                );
-              }).toList(),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  flex: 7,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: categories.map((cat) {
+                        final isSelected = _selectedCategory == cat;
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: FilterChip(
+                            label: Text(cat),
+                            selected: isSelected,
+                            onSelected: (_) =>
+                                setState(() => _selectedCategory = cat),
+                            backgroundColor:
+                                isDark ? AppColors.darkCard : Colors.white,
+                            selectedColor:
+                                AppColors.violetPrimary.withOpacity(0.2),
+                            checkmarkColor: AppColors.cyanPrimary,
+                            labelStyle: TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                              color: isSelected
+                                  ? AppColors.cyanPrimary
+                                  : (isDark
+                                        ? AppColors.textSecondaryDark
+                                        : AppColors.textSecondaryLight),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: BorderSide(
+                                color: isSelected
+                                    ? AppColors.violetPrimary
+                                    : (isDark
+                                          ? AppColors.darkCardBorder
+                                          : AppColors.lightCardBorder),
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          else ...[
+            TextField(
+              controller: _searchController,
+              onChanged: (val) => setState(() => _searchQuery = val),
+              decoration: InputDecoration(
+                hintText: 'Search by title, tech...',
+                prefixIcon: const Icon(Icons.search_rounded, size: 18),
+                suffixIcon: _searchQuery.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear_rounded, size: 16),
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() => _searchQuery = '');
+                        },
+                      )
+                    : null,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 28),
+            const SizedBox(height: 10),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: categories.map((cat) {
+                  final isSelected = _selectedCategory == cat;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: FilterChip(
+                      label: Text(cat),
+                      selected: isSelected,
+                      onSelected: (_) =>
+                          setState(() => _selectedCategory = cat),
+                      backgroundColor:
+                          isDark ? AppColors.darkCard : Colors.white,
+                      selectedColor:
+                          AppColors.violetPrimary.withOpacity(0.2),
+                      checkmarkColor: AppColors.cyanPrimary,
+                      labelStyle: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.w500,
+                        color: isSelected
+                            ? AppColors.cyanPrimary
+                            : (isDark
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.textSecondaryLight),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(
+                          color: isSelected
+                              ? AppColors.violetPrimary
+                              : (isDark
+                                    ? AppColors.darkCardBorder
+                                    : AppColors.lightCardBorder),
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+          const SizedBox(height: 16),
 
           // Projects Grid
           if (filteredProjects.isEmpty)
@@ -206,28 +279,46 @@ class _ProjectsSectionState extends State<ProjectsSection> {
           else
             LayoutBuilder(
               builder: (context, constraints) {
-                final double cardWidth = isMobile
-                    ? constraints.maxWidth
-                    : (constraints.maxWidth > 1050
-                          ? (constraints.maxWidth - (2 * 20)) / 3
-                          : (constraints.maxWidth - 20) / 2);
+                final int crossAxisCount = isMobile
+                    ? 1
+                    : (constraints.maxWidth > 1050 ? 3 : 2);
 
-                return Wrap(
-                  spacing: 20,
-                  runSpacing: 20,
-                  children: filteredProjects.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final project = entry.value;
+                final List<List<MapEntry<int, Project>>> rows = [];
+                final entries = filteredProjects.asMap().entries.toList();
+                for (var i = 0; i < entries.length; i += crossAxisCount) {
+                  final end = (i + crossAxisCount < entries.length)
+                      ? i + crossAxisCount
+                      : entries.length;
+                  rows.add(entries.sublist(i, end));
+                }
 
-                    return SizedBox(
-                      width: cardWidth,
-                      height: 490,
-                      child: StaggeredEntrance(
-                        index: index,
-                        child: _ProjectCard(
-                          project: project,
-                          onTap: () =>
-                              _showProjectDetailDialog(context, project),
+                return Column(
+                  children: rows.map((rowEntries) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            for (int i = 0; i < crossAxisCount; i++) ...[
+                              if (i > 0) const SizedBox(width: 20),
+                              if (i < rowEntries.length)
+                                Expanded(
+                                  child: StaggeredEntrance(
+                                    index: rowEntries[i].key,
+                                    child: _ProjectCard(
+                                      project: rowEntries[i].value,
+                                      onTap: () => _showProjectDetailDialog(
+                                        context,
+                                        rowEntries[i].value,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              else
+                                const Expanded(child: SizedBox()),
+                            ],
+                          ],
                         ),
                       ),
                     );
@@ -270,12 +361,12 @@ class _ProjectCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Project Thumbnail Header (fixed 160px height)
+          // Project Thumbnail Header
           Stack(
             children: [
               AppNetworkImage(
                 imageUrl: project.displayImageUrl,
-                height: 160,
+                height: 145,
                 width: double.infinity,
                 placeholderText: project.title,
                 fallbackIcon: Icons.phone_iphone_rounded,
@@ -344,218 +435,227 @@ class _ProjectCard extends StatelessWidget {
             ],
           ),
 
-          // Card Body (Expanded to fill card uniformly)
+          // Card Body (Fills card uniformly with flexible spacing)
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Company Name (if present)
-                  if (project.companyName.isNotEmpty) ...[
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.apartment_rounded,
-                          size: 13,
-                          color: isDark
-                              ? AppColors.violetLight
-                              : AppColors.violetPrimary,
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            project.companyName,
-                            style: TextStyle(
-                              fontSize: 11.5,
-                              fontWeight: FontWeight.w600,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Company Name (if present)
+                      if (project.companyName.isNotEmpty) ...[
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.apartment_rounded,
+                              size: 13,
                               color: isDark
                                   ? AppColors.violetLight
-                                  : AppColors.violetDark,
+                                  : AppColors.violetPrimary,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                  ],
-
-                  // Project Title
-                  Text(
-                    project.title,
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                      color: textColor,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 6),
-
-                  // Short Description (clamped to 2 lines for uniform layout)
-                  Text(
-                    project.shortDescription,
-                    style: TextStyle(
-                      fontSize: 12.5,
-                      height: 1.45,
-                      color: secondaryTextColor,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Technologies Chips (clamped to 3 for single-line fit)
-                  Wrap(
-                    spacing: 6,
-                    runSpacing: 4,
-                    children: project.technologies.take(3).map((tech) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? AppColors.darkCardHover
-                              : const Color(0xFFF1F5F9),
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(
-                            color: isDark
-                                ? AppColors.darkCardBorder
-                                : AppColors.lightCardBorder,
-                          ),
-                        ),
-                        child: Text(
-                          tech,
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                            color: isDark
-                                ? AppColors.textSecondaryDark
-                                : AppColors.textSecondaryLight,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-
-                  const Spacer(),
-
-                  // Action Footer with Store Links & Details
-                  Row(
-                    children: [
-                      // Google Play Pill
-                      if (project.playStoreUrl.isNotEmpty) ...[
-                        InkWell(
-                          onTap: () =>
-                              UrlLauncherUtil.openUrl(project.playStoreUrl),
-                          borderRadius: BorderRadius.circular(6),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 7,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color:
-                                  (isDark
-                                          ? AppColors.cyanPrimary
-                                          : AppColors.cyanDark)
-                                      .withOpacity(0.12),
-                              borderRadius: BorderRadius.circular(6),
-                              border: Border.all(
-                                color:
-                                    (isDark
-                                            ? AppColors.cyanPrimary
-                                            : AppColors.cyanDark)
-                                        .withOpacity(0.3),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.play_arrow_rounded,
-                                  size: 14,
-                                  color: isDark
-                                      ? AppColors.cyanLight
-                                      : AppColors.cyanDark,
-                                ),
-                                const SizedBox(width: 3),
-                                Text(
-                                  'Play Store',
-                                  style: TextStyle(
-                                    fontSize: 10.5,
-                                    fontWeight: FontWeight.w600,
-                                    color: isDark
-                                        ? AppColors.cyanLight
-                                        : AppColors.cyanDark,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                      ],
-
-                      // App Store Pill
-                      if (project.appStoreUrl.isNotEmpty) ...[
-                        InkWell(
-                          onTap: () =>
-                              UrlLauncherUtil.openUrl(project.appStoreUrl),
-                          borderRadius: BorderRadius.circular(6),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 7,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color:
-                                  (isDark
-                                          ? AppColors.violetPrimary
-                                          : AppColors.violetDark)
-                                      .withOpacity(0.12),
-                              borderRadius: BorderRadius.circular(6),
-                              border: Border.all(
-                                color:
-                                    (isDark
-                                            ? AppColors.violetPrimary
-                                            : AppColors.violetDark)
-                                        .withOpacity(0.3),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.apple,
-                                  size: 14,
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                project.companyName,
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                  fontWeight: FontWeight.w600,
                                   color: isDark
                                       ? AppColors.violetLight
                                       : AppColors.violetDark,
                                 ),
-                                const SizedBox(width: 3),
-                                Text(
-                                  'App Store',
-                                  style: TextStyle(
-                                    fontSize: 10.5,
-                                    fontWeight: FontWeight.w600,
-                                    color: isDark
-                                        ? AppColors.violetLight
-                                        : AppColors.violetDark,
-                                  ),
-                                ),
-                              ],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
+                          ],
                         ),
+                        const SizedBox(height: 6),
                       ],
 
-                      const Spacer(),
+                      // Project Title
+                      Text(
+                        project.title,
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: textColor,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 6),
+
+                      // Short Description (clamped to 2 lines for uniform layout)
+                      Text(
+                        project.shortDescription,
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          height: 1.45,
+                          color: secondaryTextColor,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Technologies Chips (clamped to 3 for single-line fit)
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 4,
+                        children: project.technologies.take(3).map((tech) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? AppColors.darkCardHover
+                                  : const Color(0xFFF1F5F9),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(
+                                color: isDark
+                                    ? AppColors.darkCardBorder
+                                    : AppColors.lightCardBorder,
+                              ),
+                            ),
+                            child: Text(
+                              tech,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: isDark
+                                    ? AppColors.textSecondaryDark
+                                    : AppColors.textSecondaryLight,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Action Footer with Store Links & Details
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Google Play Pill
+                          if (project.playStoreUrl.isNotEmpty) ...[
+                            InkWell(
+                              onTap: () =>
+                                  UrlLauncherUtil.openUrl(project.playStoreUrl),
+                              borderRadius: BorderRadius.circular(6),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 7,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      (isDark
+                                              ? AppColors.cyanPrimary
+                                              : AppColors.cyanDark)
+                                          .withOpacity(0.12),
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all(
+                                    color:
+                                        (isDark
+                                                ? AppColors.cyanPrimary
+                                                : AppColors.cyanDark)
+                                            .withOpacity(0.3),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.play_arrow_rounded,
+                                      size: 14,
+                                      color: isDark
+                                          ? AppColors.cyanLight
+                                          : AppColors.cyanDark,
+                                    ),
+                                    const SizedBox(width: 3),
+                                    Text(
+                                      'Play Store',
+                                      style: TextStyle(
+                                        fontSize: 10.5,
+                                        fontWeight: FontWeight.w600,
+                                        color: isDark
+                                          ? AppColors.cyanLight
+                                          : AppColors.cyanDark,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                          ],
+
+                          // App Store Pill
+                          if (project.appStoreUrl.isNotEmpty) ...[
+                            InkWell(
+                              onTap: () =>
+                                  UrlLauncherUtil.openUrl(project.appStoreUrl),
+                              borderRadius: BorderRadius.circular(6),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 7,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      (isDark
+                                              ? AppColors.violetPrimary
+                                              : AppColors.violetDark)
+                                          .withOpacity(0.12),
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all(
+                                    color:
+                                        (isDark
+                                                ? AppColors.violetPrimary
+                                                : AppColors.violetDark)
+                                            .withOpacity(0.3),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.apple,
+                                      size: 14,
+                                      color: isDark
+                                          ? AppColors.violetLight
+                                          : AppColors.violetDark,
+                                    ),
+                                    const SizedBox(width: 3),
+                                    Text(
+                                      'App Store',
+                                      style: TextStyle(
+                                        fontSize: 10.5,
+                                        fontWeight: FontWeight.w600,
+                                        color: isDark
+                                            ? AppColors.violetLight
+                                            : AppColors.violetDark,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
 
                       // View Case Study button
                       Row(

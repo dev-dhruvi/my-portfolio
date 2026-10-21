@@ -114,7 +114,7 @@ ${_messageController.text.trim()}
         : AppColors.textSecondaryLight;
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 64),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,24 +141,24 @@ ${_messageController.text.trim()}
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           Text(
             "Let's Build Something Exceptional",
             style: AppTypography.getDisplayMedium(textColor)
-                .copyWith(fontSize: isMobile ? 26 : 34),
+                .copyWith(fontSize: isMobile ? 24 : 28),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Text(
             'Whether you have a full-time role, consulting project, or mobile application challenge, reach out directly.',
             style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
-          const SizedBox(height: 36),
+          const SizedBox(height: 16),
 
           isMobile
               ? Column(
                   children: [
                     _buildContactInfo(context, textColor, secondaryTextColor),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     _buildContactForm(context, textColor, secondaryTextColor),
                   ],
                 )
@@ -173,7 +173,7 @@ ${_messageController.text.trim()}
                         secondaryTextColor,
                       ),
                     ),
-                    const SizedBox(width: 32),
+                    const SizedBox(width: 24),
                     Expanded(
                       flex: 6,
                       child: _buildContactForm(
@@ -199,11 +199,11 @@ ${_messageController.text.trim()}
       children: [
         // Email Card with Copy Action
         GlassCard(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: AppColors.violetPrimary.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(10),
@@ -211,10 +211,10 @@ ${_messageController.text.trim()}
                 child: Icon(
                   Icons.mail_outline_rounded,
                   color: isDark ? AppColors.violetLight : AppColors.violetDark,
-                  size: 24,
+                  size: 22,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +222,7 @@ ${_messageController.text.trim()}
                     Text(
                       'Email Address',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 11.5,
                         color: isDark
                             ? AppColors.cyanPrimary
                             : AppColors.cyanDark,
@@ -233,7 +233,7 @@ ${_messageController.text.trim()}
                     Text(
                       widget.profile.email,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 13.5,
                         fontWeight: FontWeight.w600,
                         color: textColor,
                       ),
@@ -244,21 +244,21 @@ ${_messageController.text.trim()}
               ),
               IconButton(
                 tooltip: 'Copy Email',
-                icon: const Icon(Icons.copy_rounded, size: 18),
+                icon: const Icon(Icons.copy_rounded, size: 16),
                 onPressed: () => _copyEmailToClipboard(context),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
 
         // Location Card
         GlassCard(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: AppColors.cyanPrimary.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(10),
@@ -266,10 +266,10 @@ ${_messageController.text.trim()}
                 child: Icon(
                   Icons.location_on_outlined,
                   color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
-                  size: 24,
+                  size: 22,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +277,7 @@ ${_messageController.text.trim()}
                     const Text(
                       'Location',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 11.5,
                         color: AppColors.cyanPrimary,
                         fontWeight: FontWeight.w600,
                       ),
@@ -286,7 +286,7 @@ ${_messageController.text.trim()}
                     Text(
                       widget.profile.location,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 13.5,
                         fontWeight: FontWeight.w600,
                         color: textColor,
                       ),
@@ -297,23 +297,23 @@ ${_messageController.text.trim()}
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
 
         // Social Profiles Card
         GlassCard(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Professional Profiles',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 13.5,
                   fontWeight: FontWeight.w600,
                   color: textColor,
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -322,18 +322,18 @@ ${_messageController.text.trim()}
                         widget.profile.githubUrl,
                         context: context,
                       ),
-                      icon: const FaIcon(FontAwesomeIcons.github, size: 16),
+                      icon: const FaIcon(FontAwesomeIcons.github, size: 15),
                       label: const Text('GitHub'),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () => UrlLauncherUtil.openUrl(
                         widget.profile.linkedinUrl,
                         context: context,
                       ),
-                      icon: const FaIcon(FontAwesomeIcons.linkedinIn, size: 16),
+                      icon: const FaIcon(FontAwesomeIcons.linkedinIn, size: 15),
                       label: const Text('LinkedIn'),
                     ),
                   ),
@@ -352,7 +352,7 @@ ${_messageController.text.trim()}
     Color secondaryTextColor,
   ) {
     return GlassCard(
-      padding: const EdgeInsets.all(28),
+      padding: const EdgeInsets.all(20),
       child: Form(
         key: _formKey,
         child: Column(
@@ -360,14 +360,16 @@ ${_messageController.text.trim()}
           children: [
             Text(
               'Direct Message',
-              style: AppTypography.getTitleLarge(textColor),
+              style: AppTypography.getTitleMedium(textColor).copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 3),
             Text(
               'Launches your email client directly with prefilled parameters.',
-              style: TextStyle(fontSize: 13, color: secondaryTextColor),
+              style: TextStyle(fontSize: 12.5, color: secondaryTextColor),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 14),
 
             // Name & Email
             Row(
@@ -381,7 +383,7 @@ ${_messageController.text.trim()}
                         : null,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 12),
                 Expanded(
                   child: TextFormField(
                     controller: _emailController,
@@ -402,7 +404,7 @@ ${_messageController.text.trim()}
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
 
             // Subject
             TextFormField(
@@ -411,7 +413,7 @@ ${_messageController.text.trim()}
                 labelText: 'Subject (e.g. Flutter Opportunity)',
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
 
             // Message
             TextFormField(
@@ -420,17 +422,17 @@ ${_messageController.text.trim()}
                 labelText: 'Message *',
                 alignLabelWithHint: true,
               ),
-              maxLines: 4,
+              maxLines: 3,
               validator: (val) => val == null || val.trim().isEmpty
                   ? 'Please write a message'
                   : null,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
 
             // Submit Button
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 46,
               child: ElevatedButton.icon(
                 onPressed: _isSending ? null : _sendEmail,
                 icon: _isSending

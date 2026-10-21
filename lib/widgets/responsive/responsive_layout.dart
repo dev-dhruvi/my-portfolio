@@ -20,7 +20,7 @@ class ResponsiveContentContainer extends StatelessWidget {
     final isMobile = AppBreakpoints.isMobile(context);
     final defaultPadding = EdgeInsets.symmetric(
       horizontal: isMobile ? 20.0 : 40.0,
-      vertical: 24.0,
+      vertical: 0.0,
     );
 
     return Center(
