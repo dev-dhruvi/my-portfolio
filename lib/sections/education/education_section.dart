@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../core/constants/app_breakpoints.dart';
 import '../../core/theme/app_colors.dart';
@@ -10,11 +11,30 @@ import '../../widgets/animations/staggered_entrance.dart';
 import '../../widgets/cards/glass_card.dart';
 
 /// Education section presenting verified degrees, universities, honors,
-/// and academic foundation accompanied by the graduate character illustration.
+/// and academic foundation accompanied by the 3D graduate character illustration,
+/// enhanced with continuous floating animations and hover micro-interactions.
 class EducationSection extends StatelessWidget {
   final List<Education> education;
 
   const EducationSection({super.key, required this.education});
+
+  Widget _wrapFloating(
+    Widget child, {
+    required double begin,
+    required double end,
+    required Duration duration,
+    required bool disableAnimations,
+  }) {
+    if (disableAnimations) return child;
+    return child
+        .animate(onPlay: (controller) => controller.repeat(reverse: true))
+        .moveY(
+          begin: begin,
+          end: end,
+          duration: duration,
+          curve: Curves.easeInOut,
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +43,9 @@ class EducationSection extends StatelessWidget {
     final isTablet = AppBreakpoints.isTablet(context);
     final isDesktop = !isMobile && !isTablet;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final disableAnimations =
+        MediaQuery.maybeOf(context)?.disableAnimations ?? false;
+
     final textColor = isDark
         ? AppColors.textPrimaryDark
         : AppColors.textPrimaryLight;
@@ -83,25 +106,34 @@ class EducationSection extends StatelessWidget {
             'Formal computer applications degrees with distinctions across university curricula.',
             style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
 
-          // Education Cards & 3D Graduate Character Stage
+          // Education Cards & 3D Graduate Character Stage with Floating Animations
           if (isMobile)
             Column(
               children: [
-                const StaggeredEntrance(
-                  index: 0,
-                  child: _EducationCharacterStage(isMobile: true),
+                _wrapFloating(
+                  const _EducationCharacterStage(isMobile: true),
+                  begin: -8,
+                  end: 8,
+                  duration: const Duration(milliseconds: 2400),
+                  disableAnimations: disableAnimations,
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 20),
                 ...education.asMap().entries.map((entry) {
                   final index = entry.key;
                   final edu = entry.value;
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
+                    padding: const EdgeInsets.only(bottom: 18),
                     child: StaggeredEntrance(
                       index: index + 1,
-                      child: _EducationCard(education: edu),
+                      child: _wrapFloating(
+                        _EducationCard(education: edu),
+                        begin: index == 0 ? 6 : -6,
+                        end: index == 0 ? -6 : 6,
+                        duration: Duration(milliseconds: 2700 + (index * 400)),
+                        disableAnimations: disableAnimations,
+                      ),
                     ),
                   );
                 }),
@@ -111,29 +143,56 @@ class EducationSection extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // Left Card (e.g. MCA Degree) with Floating Up-and-Down Motion
                 if (education.isNotEmpty)
                   Expanded(
                     flex: 7,
                     child: StaggeredEntrance(
                       index: 0,
-                      child: _EducationCard(education: education[0]),
+                      slideOffset: -0.1,
+                      child: _wrapFloating(
+                        _EducationCard(education: education[0]),
+                        begin: 8,
+                        end: -8,
+                        duration: const Duration(milliseconds: 2800),
+                        disableAnimations: disableAnimations,
+                      ),
                     ),
                   ),
-                const SizedBox(width: 20),
-                const Expanded(
+
+                const SizedBox(width: 22),
+
+                // Center: 3D Graduate Character Stage with Floating Animation
+                Expanded(
                   flex: 6,
                   child: StaggeredEntrance(
                     index: 1,
-                    child: _EducationCharacterStage(isMobile: false),
+                    child: _wrapFloating(
+                      const _EducationCharacterStage(isMobile: false),
+                      begin: -10,
+                      end: 10,
+                      duration: const Duration(milliseconds: 2400),
+                      disableAnimations: disableAnimations,
+                    ),
                   ),
                 ),
-                const SizedBox(width: 20),
+
+                const SizedBox(width: 22),
+
+                // Right Card (e.g. BCA Degree) with Floating Up-and-Down Motion
                 if (education.length > 1)
                   Expanded(
                     flex: 7,
                     child: StaggeredEntrance(
                       index: 2,
-                      child: _EducationCard(education: education[1]),
+                      slideOffset: 0.1,
+                      child: _wrapFloating(
+                        _EducationCard(education: education[1]),
+                        begin: -8,
+                        end: 8,
+                        duration: const Duration(milliseconds: 3100),
+                        disableAnimations: disableAnimations,
+                      ),
                     ),
                   ),
               ],
@@ -152,6 +211,8 @@ class _EducationCharacterStage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final disableAnimations =
+        MediaQuery.maybeOf(context)?.disableAnimations ?? false;
 
     return Center(
       child: Container(
@@ -163,62 +224,89 @@ class _EducationCharacterStage extends StatelessWidget {
           alignment: Alignment.center,
           clipBehavior: Clip.none,
           children: [
-            // Ambient glowing backdrop
+            // Ambient Aura Glow behind character
             Container(
-              width: isMobile ? 200 : 250,
-              height: isMobile ? 200 : 250,
+              width: isMobile ? 200 : 240,
+              height: isMobile ? 200 : 240,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    AppColors.violetPrimary.withOpacity(isDark ? 0.35 : 0.22),
-                    const Color(0xFFF59E0B).withOpacity(isDark ? 0.2 : 0.1),
+                    AppColors.cyanPrimary.withOpacity(isDark ? 0.32 : 0.18),
+                    AppColors.violetPrimary.withOpacity(isDark ? 0.22 : 0.12),
                     Colors.transparent,
                   ],
-                  stops: const [0.0, 0.65, 1.0],
+                  stops: const [0.0, 0.55, 1.0],
                 ),
               ),
             ),
-            // Outer subtle glass ring
-            Container(
-              width: isMobile ? 215 : 265,
-              height: isMobile ? 215 : 265,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: isDark
-                      ? Colors.white.withOpacity(0.12)
-                      : AppColors.violetPrimary.withOpacity(0.2),
-                  width: 1.5,
+
+            // Dashed rotating halo ring
+            if (!disableAnimations)
+              Positioned.fill(
+                child: Center(
+                  child: Container(
+                    width: isMobile ? 215 : 255,
+                    height: isMobile ? 215 : 255,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.cyanPrimary.withOpacity(isDark ? 0.25 : 0.2),
+                        width: 1.5,
+                      ),
+                    ),
+                  )
+                      .animate(onPlay: (controller) => controller.repeat())
+                      .rotate(
+                        duration: const Duration(seconds: 18),
+                        curve: Curves.linear,
+                      ),
                 ),
               ),
-            ),
-            // 3D Graduate anime developer illustration
-            Image.asset(
-              'assets/images/developer_character_graduate.png',
-              height: isMobile ? 245 : 300,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) =>
-                  const SizedBox.shrink(),
-            ),
-            // Floating distinction honors badge at bottom of character
+
+            // 3D Anime Graduate Character Asset
             Positioned(
-              bottom: 4,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 6,
+              bottom: 8,
+              child: Image.asset(
+                'assets/images/developer_character_graduate.png',
+                height: isMobile ? 220 : 270,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  width: isMobile ? 180 : 220,
+                  height: isMobile ? 180 : 220,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: AppColors.primaryGradient,
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.school_rounded,
+                      size: 64,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
+              ),
+            ),
+
+            // Floating Distinction Honors Badge
+            Positioned(
+              bottom: -4,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
                 decoration: BoxDecoration(
-                  color: (isDark ? AppColors.darkCard : Colors.white)
-                      .withOpacity(0.92),
+                  color: isDark
+                      ? AppColors.darkCard.withOpacity(0.92)
+                      : Colors.white.withOpacity(0.95),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: const Color(0xFFF59E0B).withOpacity(0.4),
+                    color: const Color(0xFFF59E0B).withOpacity(0.5),
+                    width: 1.2,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: const Color(0xFFF59E0B).withOpacity(0.2),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),
@@ -252,10 +340,17 @@ class _EducationCharacterStage extends StatelessWidget {
   }
 }
 
-class _EducationCard extends StatelessWidget {
+class _EducationCard extends StatefulWidget {
   final Education education;
 
   const _EducationCard({required this.education});
+
+  @override
+  State<_EducationCard> createState() => _EducationCardState();
+}
+
+class _EducationCardState extends State<_EducationCard> {
+  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -267,117 +362,153 @@ class _EducationCard extends StatelessWidget {
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
 
-    return GlassCard(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.violetPrimary.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  Icons.school_rounded,
-                  color: isDark ? AppColors.violetLight : AppColors.violetDark,
-                  size: 24,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
-                      .withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
-                        .withOpacity(0.25),
-                  ),
-                ),
-                child: Text(
-                  '${education.startDate} – ${education.endDate}',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Text(
-            education.degree,
-            style: AppTypography.getTitleLarge(textColor)
-                .copyWith(fontWeight: FontWeight.w700, fontSize: 18),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            education.institution,
-            style: TextStyle(
-              fontSize: 13.5,
-              fontWeight: FontWeight.w600,
-              color: isDark ? AppColors.violetLight : AppColors.violetDark,
-            ),
-          ),
-          if (education.affiliation.isNotEmpty) ...[
-            const SizedBox(height: 2),
-            Text(
-              education.affiliation,
-              style: TextStyle(fontSize: 12.5, color: secondaryTextColor),
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 240),
+        curve: Curves.easeOutCubic,
+        transform: Matrix4.identity()..scale(_isHovered ? 1.018 : 1.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: (isDark ? AppColors.violetPrimary : AppColors.cyanPrimary)
+                  .withOpacity(_isHovered ? 0.32 : 0.06),
+              blurRadius: _isHovered ? 24 : 10,
+              offset: Offset(0, _isHovered ? 8 : 4),
             ),
           ],
-          const SizedBox(height: 12),
-
-          // Distinction / CGPA Badge
-          if (education.honors.isNotEmpty)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: AppColors.success.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.success.withOpacity(0.3)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
+        ),
+        child: GlassCard(
+          padding: const EdgeInsets.all(22),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.star_rounded,
-                    size: 15,
-                    color: AppColors.success,
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 260),
+                    padding: const EdgeInsets.all(11),
+                    decoration: BoxDecoration(
+                      color: _isHovered
+                          ? AppColors.violetPrimary.withOpacity(0.24)
+                          : AppColors.violetPrimary.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: _isHovered
+                          ? [
+                              BoxShadow(
+                                color: AppColors.violetPrimary.withOpacity(0.35),
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: Icon(
+                      Icons.school_rounded,
+                      color: isDark
+                          ? AppColors.violetLight
+                          : AppColors.violetDark,
+                      size: 24,
+                    ),
                   ),
-                  const SizedBox(width: 5),
-                  Text(
-                    education.honors,
-                    style: const TextStyle(
-                      fontSize: 11.5,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.success,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4.5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
+                          .withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
+                            .withOpacity(0.3),
+                      ),
+                    ),
+                    child: Text(
+                      '${widget.education.startDate} – ${widget.education.endDate}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: isDark
+                            ? AppColors.cyanPrimary
+                            : AppColors.cyanDark,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-          if (education.description.isNotEmpty) ...[
-            const SizedBox(height: 10),
-            Text(
-              education.description,
-              style: TextStyle(
-                fontSize: 12.5,
-                height: 1.45,
-                color: secondaryTextColor,
+              const SizedBox(height: 16),
+              Text(
+                widget.education.degree,
+                style: AppTypography.getTitleLarge(textColor)
+                    .copyWith(fontWeight: FontWeight.w700, fontSize: 18),
               ),
-            ),
-          ],
-        ],
+              const SizedBox(height: 5),
+              Text(
+                widget.education.institution,
+                style: TextStyle(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? AppColors.violetLight : AppColors.violetDark,
+                ),
+              ),
+              if (widget.education.affiliation.isNotEmpty) ...[
+                const SizedBox(height: 2),
+                Text(
+                  widget.education.affiliation,
+                  style: TextStyle(fontSize: 12.5, color: secondaryTextColor),
+                ),
+              ],
+              const SizedBox(height: 12),
+
+              // Distinction / CGPA Badge
+              if (widget.education.honors.isNotEmpty)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: AppColors.success.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.success.withOpacity(0.35)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.star_rounded,
+                        size: 15,
+                        color: AppColors.success,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        widget.education.honors,
+                        style: const TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.success,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              if (widget.education.description.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                Text(
+                  widget.education.description,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    height: 1.45,
+                    color: secondaryTextColor,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
       ),
     );
   }

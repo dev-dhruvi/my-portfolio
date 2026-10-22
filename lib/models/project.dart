@@ -21,6 +21,7 @@ class Project {
   final String demoUrl;
   final bool isFeatured;
   final bool isPublished;
+  final bool isStatusActive;
   final int orderIndex;
   final DateTime? createdAt;
 
@@ -46,6 +47,7 @@ class Project {
     this.demoUrl = '',
     this.isFeatured = false,
     this.isPublished = true,
+    this.isStatusActive = true,
     this.orderIndex = 0,
     this.createdAt,
   });
@@ -80,6 +82,7 @@ class Project {
       'demoUrl': demoUrl,
       'isFeatured': isFeatured,
       'isPublished': isPublished,
+      'is_status_active': isStatusActive,
       'orderIndex': orderIndex,
       'createdAt': createdAt?.toIso8601String(),
     };
@@ -108,6 +111,10 @@ class Project {
       demoUrl: map['demoUrl'] ?? '',
       isFeatured: map['isFeatured'] ?? false,
       isPublished: map['isPublished'] ?? true,
+      isStatusActive: map['is_status_active'] ??
+          map['isStatusActive'] ??
+          map['isPublished'] ??
+          true,
       orderIndex: (map['orderIndex'] as num?)?.toInt() ?? 0,
       createdAt: map['createdAt'] != null
           ? DateTime.tryParse(map['createdAt'])
@@ -137,6 +144,7 @@ class Project {
     String? demoUrl,
     bool? isFeatured,
     bool? isPublished,
+    bool? isStatusActive,
     int? orderIndex,
     DateTime? createdAt,
   }) {
@@ -163,6 +171,7 @@ class Project {
       demoUrl: demoUrl ?? this.demoUrl,
       isFeatured: isFeatured ?? this.isFeatured,
       isPublished: isPublished ?? this.isPublished,
+      isStatusActive: isStatusActive ?? this.isStatusActive,
       orderIndex: orderIndex ?? this.orderIndex,
       createdAt: createdAt ?? this.createdAt,
     );

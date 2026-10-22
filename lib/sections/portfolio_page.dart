@@ -40,7 +40,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   int _aboutAnimationTrigger = 0;
   bool _isAboutInView = false;
-  bool _showAppLoader = true;
+  // On web, the preloader in web/index.html seamlessly handles the initial Flutter
+  // bootstrap state. Setting _showAppLoader to false eliminates the redundant 2.1-second
+  // secondary delay, letting recruiters instantly view the Hero section.
+  bool _showAppLoader = false;
 
   @override
   void initState() {

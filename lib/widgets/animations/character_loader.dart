@@ -16,7 +16,7 @@ class CharacterLoader extends StatefulWidget {
   const CharacterLoader({
     super.key,
     required this.onFinished,
-    this.duration = const Duration(milliseconds: 2100),
+    this.duration = const Duration(milliseconds: 600),
   });
 
   @override

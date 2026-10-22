@@ -11,6 +11,7 @@ import '../../models/project.dart';
 import '../../widgets/animations/staggered_entrance.dart';
 import '../../widgets/cards/app_network_image.dart';
 import '../../widgets/cards/glass_card.dart';
+import '../../widgets/navigation/dynamic_scroll_indicators.dart';
 
 /// Interactive project gallery with search, category filtering,
 /// responsive card grid, and full-detail dialogs.
@@ -27,11 +28,49 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   String _selectedCategory = 'All';
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
+  late final PageController _projectPageController;
+  late final ValueNotifier<int> _activePageNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _projectPageController = PageController();
+    _activePageNotifier = ValueNotifier<int>(0);
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _projectPageController.dispose();
+    _activePageNotifier.dispose();
     super.dispose();
+  }
+
+  void _onCategoryChanged(String category) {
+    if (_selectedCategory == category) return;
+    setState(() => _selectedCategory = category);
+    if (_projectPageController.hasClients) {
+      _projectPageController.jumpToPage(0);
+    }
+    _activePageNotifier.value = 0;
+  }
+
+  void _onSearchChanged(String query) {
+    setState(() => _searchQuery = query);
+    if (_projectPageController.hasClients) {
+      _projectPageController.jumpToPage(0);
+    }
+    _activePageNotifier.value = 0;
+  }
+
+  void _animateToPage(int pageIndex) {
+    if (_projectPageController.hasClients) {
+      _projectPageController.animateToPage(
+        pageIndex,
+        duration: const Duration(milliseconds: 380),
+        curve: Curves.easeInOutCubic,
+      );
+    }
   }
 
   @override
@@ -53,6 +92,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
 
     // Filter projects
     final filteredProjects = widget.projects.where((project) {
+      if (!project.isStatusActive) return false;
       final matchesCategory =
           _selectedCategory == 'All' || project.category == _selectedCategory;
       final q = _searchQuery.toLowerCase();
@@ -128,7 +168,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                   flex: 5,
                   child: TextField(
                     controller: _searchController,
-                    onChanged: (val) => setState(() => _searchQuery = val),
+                    onChanged: _onSearchChanged,
                     decoration: InputDecoration(
                       hintText: 'Search by title, tech stack...',
                       prefixIcon: const Icon(Icons.search_rounded, size: 18),
@@ -137,7 +177,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                               icon: const Icon(Icons.clear_rounded, size: 16),
                               onPressed: () {
                                 _searchController.clear();
-                                setState(() => _searchQuery = '');
+                                _onSearchChanged('');
                               },
                             )
                           : null,
@@ -162,7 +202,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                             label: Text(cat),
                             selected: isSelected,
                             onSelected: (_) =>
-                                setState(() => _selectedCategory = cat),
+                                _onCategoryChanged(cat),
                             backgroundColor: isDark
                                 ? AppColors.darkCard
                                 : Colors.white,
@@ -202,7 +242,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
           else ...[
             TextField(
               controller: _searchController,
-              onChanged: (val) => setState(() => _searchQuery = val),
+              onChanged: _onSearchChanged,
               decoration: InputDecoration(
                 hintText: 'Search by title, tech...',
                 prefixIcon: const Icon(Icons.search_rounded, size: 18),
@@ -211,7 +251,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                         icon: const Icon(Icons.clear_rounded, size: 16),
                         onPressed: () {
                           _searchController.clear();
-                          setState(() => _searchQuery = '');
+                          _onSearchChanged('');
                         },
                       )
                     : null,
@@ -233,7 +273,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       label: Text(cat),
                       selected: isSelected,
                       onSelected: (_) =>
-                          setState(() => _selectedCategory = cat),
+                          _onCategoryChanged(cat),
                       backgroundColor: isDark
                           ? AppColors.darkCard
                           : Colors.white,
@@ -297,50 +337,82 @@ class _ProjectsSectionState extends State<ProjectsSection> {
           else
             LayoutBuilder(
               builder: (context, constraints) {
-                final int crossAxisCount = isMobile
-                    ? 1
-                    : (constraints.maxWidth > 1050 ? 3 : 2);
+                final int itemsPerPage = constraints.maxWidth > 1050
+                    ? 3
+                    : ((constraints.maxWidth >= 600 || constraints.maxWidth == 0)
+                        ? 2
+                        : 1);
 
-                final List<List<MapEntry<int, Project>>> rows = [];
-                final entries = filteredProjects.asMap().entries.toList();
-                for (var i = 0; i < entries.length; i += crossAxisCount) {
-                  final end = (i + crossAxisCount < entries.length)
-                      ? i + crossAxisCount
-                      : entries.length;
-                  rows.add(entries.sublist(i, end));
+                final List<List<Project>> pages = [];
+                for (var i = 0; i < filteredProjects.length; i += itemsPerPage) {
+                  final end = (i + itemsPerPage < filteredProjects.length)
+                      ? i + itemsPerPage
+                      : filteredProjects.length;
+                  pages.add(filteredProjects.sublist(i, end));
                 }
 
+                final pageCount = pages.length;
+
                 return Column(
-                  children: rows.map((rowEntries) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            for (int i = 0; i < crossAxisCount; i++) ...[
-                              if (i > 0) const SizedBox(width: 20),
-                              if (i < rowEntries.length)
-                                Expanded(
-                                  child: StaggeredEntrance(
-                                    index: rowEntries[i].key,
-                                    child: _ProjectCard(
-                                      project: rowEntries[i].value,
-                                      onTap: () => _showProjectDetailDialog(
-                                        context,
-                                        rowEntries[i].value,
+                  children: [
+                    SizedBox(
+                      height: isMobile ? 470 : 445,
+                      child: PageView.builder(
+                        controller: _projectPageController,
+                        itemCount: pageCount,
+                        onPageChanged: (pageIndex) {
+                          _activePageNotifier.value = pageIndex;
+                        },
+                        itemBuilder: (context, pageIndex) {
+                          final pageItems = pages[pageIndex];
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                for (int i = 0; i < itemsPerPage; i++) ...[
+                                  if (i > 0) const SizedBox(width: 18),
+                                  if (i < pageItems.length)
+                                    Expanded(
+                                      child: StaggeredEntrance(
+                                        index: i,
+                                        child: _ProjectCard(
+                                          project: pageItems[i],
+                                          onTap: () => _showProjectDetailDialog(
+                                            context,
+                                            pageItems[i],
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                )
-                              else
-                                const Expanded(child: SizedBox()),
-                            ],
-                          ],
-                        ),
+                                    )
+                                  else
+                                    const Expanded(child: SizedBox.shrink()),
+                                ],
+                              ],
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  }).toList(),
+                    ),
+
+                    // Dynamic Indicator Dots
+                    ValueListenableBuilder<int>(
+                      valueListenable: _activePageNotifier,
+                      builder: (context, activeIndex, _) {
+                        final int safeIndex = activeIndex
+                            .clamp(0, math.max(0, pageCount - 1))
+                            .toInt();
+                        return DynamicScrollIndicators(
+                          pageCount: pageCount,
+                          activeIndex: safeIndex,
+                          onDotTapped: _animateToPage,
+                          onPrevious: () => _animateToPage(safeIndex - 1),
+                          onNext: () => _animateToPage(safeIndex + 1),
+                        );
+                      },
+                    ),
+                  ],
                 );
               },
             ),
@@ -563,9 +635,12 @@ class _ProjectCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
                           // Google Play Pill
                           if (project.playStoreUrl.isNotEmpty) ...[
                             InkWell(
@@ -674,32 +749,35 @@ class _ProjectCard extends StatelessWidget {
                           ],
                         ],
                       ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
 
-                      // View Case Study button
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Details',
-                            style: TextStyle(
-                              fontSize: 12.5,
-                              fontWeight: FontWeight.w600,
-                              color: isDark
-                                  ? AppColors.cyanLight
-                                  : AppColors.violetPrimary,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            size: 15,
-                            color: isDark
-                                ? AppColors.cyanLight
-                                : AppColors.violetPrimary,
-                          ),
-                        ],
+                  // View Case Study button
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Details',
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
+                          color: isDark
+                              ? AppColors.cyanLight
+                              : AppColors.violetPrimary,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 15,
+                        color: isDark
+                            ? AppColors.cyanLight
+                            : AppColors.violetPrimary,
                       ),
                     ],
+                  ),
+                ],
                   ),
                 ],
               ),

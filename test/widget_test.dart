@@ -99,6 +99,40 @@ void main() {
     );
 
     testWidgets(
+      'ProjectsSection indicator dots and arrow buttons navigate without lifecycle errors',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(1280, 800),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: ProjectsSection(projects: SeedData.initialProjects),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        final nextButton = find.byIcon(Icons.chevron_right_rounded);
+        if (nextButton.evaluate().isNotEmpty) {
+          await tester.tap(nextButton.first);
+          await tester.pumpAndSettle();
+        }
+
+        final prevButton = find.byIcon(Icons.chevron_left_rounded);
+        if (prevButton.evaluate().isNotEmpty) {
+          await tester.tap(prevButton.first);
+          await tester.pumpAndSettle();
+        }
+      },
+    );
+
+    testWidgets(
       'NavBar renders cleanly across desktop (1280px), tablet (954px), and mobile (375px)',
       (tester) async {
         final themeController = ThemeController();

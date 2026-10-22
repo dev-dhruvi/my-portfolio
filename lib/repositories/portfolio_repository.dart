@@ -22,7 +22,8 @@ class PortfolioRepository extends ChangeNotifier {
   Profile get profile => _profile;
   List<Experience> get experiences =>
       _experiences.where((e) => e.isPublished).toList();
-  List<Project> get projects => _projects.where((p) => p.isPublished).toList();
+  List<Project> get projects =>
+      _projects.where((p) => p.isPublished && p.isStatusActive).toList();
   List<Skill> get skills => _skills.where((s) => s.isPublished).toList();
   List<Education> get education =>
       _education.where((e) => e.isPublished).toList();

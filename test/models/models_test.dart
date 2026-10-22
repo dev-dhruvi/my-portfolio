@@ -140,6 +140,34 @@ void main() {
         equals('https://example.com/thumb.png'),
       );
     });
+
+    test('supports is_status_active flag in serialization and parsing', () {
+      final activeMap = {
+        'id': 'p_active',
+        'slug': 'active-proj',
+        'title': 'Active Project',
+        'shortDescription': 'Active',
+        'fullDescription': 'Active Project Description',
+        'category': 'Mobile App',
+        'is_status_active': true,
+      };
+      final activeProject = Project.fromMap(activeMap);
+      expect(activeProject.isStatusActive, isTrue);
+      expect(activeProject.toMap()['is_status_active'], isTrue);
+
+      final inactiveMap = {
+        'id': 'p_inactive',
+        'slug': 'inactive-proj',
+        'title': 'Inactive Project',
+        'shortDescription': 'Inactive',
+        'fullDescription': 'Inactive Project Description',
+        'category': 'Mobile App',
+        'is_status_active': false,
+      };
+      final inactiveProject = Project.fromMap(inactiveMap);
+      expect(inactiveProject.isStatusActive, isFalse);
+      expect(inactiveProject.toMap()['is_status_active'], isFalse);
+    });
   });
 
   group('Skill & Education Model Tests', () {

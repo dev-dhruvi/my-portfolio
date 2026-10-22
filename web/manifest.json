@@ -1,12 +1,12 @@
 {
-    "name": "dhruvi_portfolio",
-    "short_name": "dhruvi_portfolio",
+    "name": "Dhruvi Patel | Senior Flutter Developer",
+    "short_name": "Dhruvi Patel",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#090D16",
+    "theme_color": "#8B5CF6",
+    "description": "Personal developer portfolio of Dhruvi Patel, Senior Software Engineer and Senior Flutter Developer specializing in cross-platform mobile apps, Flutter Web, GetX, Firebase, and AWS IoT.",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {
