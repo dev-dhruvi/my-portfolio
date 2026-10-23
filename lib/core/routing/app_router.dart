@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../sections/portfolio_page.dart';
+import '../../sections/projects/all_projects_page.dart';
 
 /// Centralized router configuration for Dhruvi Patel's portfolio.
 class AppRouter {
@@ -16,6 +17,12 @@ class AppRouter {
           path: '/',
           name: 'home',
           builder: (context, state) => const PortfolioPage(),
+        ),
+        // Dedicated All Projects Directory Page
+        GoRoute(
+          path: '/projects',
+          name: 'projects',
+          builder: (context, state) => const AllProjectsPage(),
         ),
       ],
       errorBuilder: (context, state) => Scaffold(

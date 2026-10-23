@@ -7,6 +7,7 @@ import 'package:dhruvi_portfolio/sections/about/about_section.dart';
 import 'package:dhruvi_portfolio/sections/education/education_section.dart';
 import 'package:dhruvi_portfolio/sections/contact/contact_section.dart';
 import 'package:dhruvi_portfolio/sections/projects/projects_section.dart';
+import 'package:dhruvi_portfolio/sections/projects/all_projects_page.dart';
 import 'package:dhruvi_portfolio/sections/experience/experience_section.dart';
 import 'package:dhruvi_portfolio/widgets/animations/character_loader.dart';
 import 'package:dhruvi_portfolio/core/theme/app_theme.dart';
@@ -78,11 +79,18 @@ void main() {
     testWidgets(
       'ProjectsSection renders Pandits Near Me - Instant Puja and PMP CSV Validator project cards',
       (tester) async {
+        tester.view.physicalSize = const Size(1280, 800);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(() => tester.view.resetPhysicalSize());
+
         await tester.pumpWidget(
-          MediaQuery(
-            data: const MediaQueryData(disableAnimations: true),
-            child: MaterialApp(
-              home: Scaffold(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(1280, 800),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
                 body: SingleChildScrollView(
                   child: ProjectsSection(projects: SeedData.initialProjects),
                 ),
@@ -96,6 +104,13 @@ void main() {
           find.text('Pandits Near Me - Instant Puja'),
           findsAtLeastNWidgets(1),
         );
+
+        // On desktop single-row slider (3 cards/page), advance to page 1 for PMP CSV Validator
+        final nextButton = find.byTooltip('Next page');
+        if (nextButton.evaluate().isNotEmpty) {
+          await tester.tap(nextButton.first);
+          await tester.pumpAndSettle();
+        }
         expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
       },
     );
@@ -443,6 +458,30 @@ void main() {
         expect(find.text('Play Store & App Store'), findsOneWidget);
         expect(find.text('Built & Deployed'), findsOneWidget);
         expect(find.text('GTU & VNSGU Distinction'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+
+    testWidgets(
+      'AllProjectsPage renders header, project directory, and back button cleanly',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(1280, 800),
+                disableAnimations: true,
+              ),
+              child: AllProjectsPage(projects: SeedData.initialProjects),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('All Projects'), findsOneWidget);
+        expect(find.text('PROJECT DIRECTORY'), findsOneWidget);
+        expect(find.text('Pandits Near Me - Instant Puja'), findsAtLeastNWidgets(1));
+        expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );
