@@ -108,95 +108,148 @@ class EducationSection extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
-          // Education Cards & 3D Graduate Character Stage with Floating Animations
-          if (isMobile)
-            Column(
-              children: [
-                _wrapFloating(
-                  const _EducationCharacterStage(isMobile: true),
-                  begin: -8,
-                  end: 8,
-                  duration: const Duration(milliseconds: 2400),
-                  disableAnimations: disableAnimations,
-                ),
-                const SizedBox(height: 20),
-                ...education.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final edu = entry.value;
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 18),
-                    child: StaggeredEntrance(
-                      index: index + 1,
-                      child: _wrapFloating(
-                        _EducationCard(education: edu),
-                        begin: index == 0 ? 6 : -6,
-                        end: index == 0 ? -6 : 6,
-                        duration: Duration(milliseconds: 2700 + (index * 400)),
-                        disableAnimations: disableAnimations,
+          // Responsive Education Layout Strategy:
+          // Desktop (> 1050dp): 3-column row (MCA Card - Graduate Stage - BCA Card)
+          // Tablet (650-1050dp): 2-tier layout (Stage top, degree cards side-by-side row below)
+          // Mobile (< 650dp): Adaptive single-column stack
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final isDesktopLayout = constraints.maxWidth >= 1050;
+              final isTabletLayout =
+                  constraints.maxWidth >= 650 && constraints.maxWidth < 1050;
+
+              if (isDesktopLayout) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (education.isNotEmpty)
+                      Expanded(
+                        flex: 7,
+                        child: StaggeredEntrance(
+                          index: 0,
+                          slideOffset: -0.1,
+                          child: _wrapFloating(
+                            _EducationCard(education: education[0]),
+                            begin: 8,
+                            end: -8,
+                            duration: const Duration(milliseconds: 2800),
+                            disableAnimations: disableAnimations,
+                          ),
+                        ),
+                      ),
+                    const SizedBox(width: 22),
+                    Expanded(
+                      flex: 6,
+                      child: StaggeredEntrance(
+                        index: 1,
+                        child: _wrapFloating(
+                          const _EducationCharacterStage(isMobile: false),
+                          begin: -10,
+                          end: 10,
+                          duration: const Duration(milliseconds: 2400),
+                          disableAnimations: disableAnimations,
+                        ),
                       ),
                     ),
-                  );
-                }),
-              ],
-            )
-          else
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Left Card (e.g. MCA Degree) with Floating Up-and-Down Motion
-                if (education.isNotEmpty)
-                  Expanded(
-                    flex: 7,
-                    child: StaggeredEntrance(
-                      index: 0,
-                      slideOffset: -0.1,
-                      child: _wrapFloating(
-                        _EducationCard(education: education[0]),
-                        begin: 8,
-                        end: -8,
-                        duration: const Duration(milliseconds: 2800),
-                        disableAnimations: disableAnimations,
+                    const SizedBox(width: 22),
+                    if (education.length > 1)
+                      Expanded(
+                        flex: 7,
+                        child: StaggeredEntrance(
+                          index: 2,
+                          slideOffset: 0.1,
+                          child: _wrapFloating(
+                            _EducationCard(education: education[1]),
+                            begin: -8,
+                            end: 8,
+                            duration: const Duration(milliseconds: 3100),
+                            disableAnimations: disableAnimations,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-
-                const SizedBox(width: 22),
-
-                // Center: 3D Graduate Character Stage with Floating Animation
-                Expanded(
-                  flex: 6,
-                  child: StaggeredEntrance(
-                    index: 1,
-                    child: _wrapFloating(
-                      const _EducationCharacterStage(isMobile: false),
-                      begin: -10,
-                      end: 10,
+                  ],
+                );
+              } else if (isTabletLayout) {
+                return Column(
+                  children: [
+                    _wrapFloating(
+                      const _EducationCharacterStage(isMobile: true),
+                      begin: -8,
+                      end: 8,
                       duration: const Duration(milliseconds: 2400),
                       disableAnimations: disableAnimations,
                     ),
-                  ),
-                ),
-
-                const SizedBox(width: 22),
-
-                // Right Card (e.g. BCA Degree) with Floating Up-and-Down Motion
-                if (education.length > 1)
-                  Expanded(
-                    flex: 7,
-                    child: StaggeredEntrance(
-                      index: 2,
-                      slideOffset: 0.1,
-                      child: _wrapFloating(
-                        _EducationCard(education: education[1]),
-                        begin: -8,
-                        end: 8,
-                        duration: const Duration(milliseconds: 3100),
-                        disableAnimations: disableAnimations,
-                      ),
+                    const SizedBox(height: 24),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (education.isNotEmpty)
+                          Expanded(
+                            child: StaggeredEntrance(
+                              index: 0,
+                              child: _wrapFloating(
+                                _EducationCard(education: education[0]),
+                                begin: 6,
+                                end: -6,
+                                duration: const Duration(milliseconds: 2800),
+                                disableAnimations: disableAnimations,
+                              ),
+                            ),
+                          ),
+                        if (education.length > 1) ...[
+                          const SizedBox(width: 18),
+                          Expanded(
+                            child: StaggeredEntrance(
+                              index: 1,
+                              child: _wrapFloating(
+                                _EducationCard(education: education[1]),
+                                begin: -6,
+                                end: 6,
+                                duration: const Duration(milliseconds: 3100),
+                                disableAnimations: disableAnimations,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
-                  ),
-              ],
-            ),
+                  ],
+                );
+              } else {
+                return Column(
+                  children: [
+                    _wrapFloating(
+                      const _EducationCharacterStage(isMobile: true),
+                      begin: -8,
+                      end: 8,
+                      duration: const Duration(milliseconds: 2400),
+                      disableAnimations: disableAnimations,
+                    ),
+                    const SizedBox(height: 20),
+                    ...education.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final edu = entry.value;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 18),
+                        child: StaggeredEntrance(
+                          index: index + 1,
+                          child: _wrapFloating(
+                            _EducationCard(education: edu),
+                            begin: index == 0 ? 6 : -6,
+                            end: index == 0 ? -6 : 6,
+                            duration: Duration(
+                              milliseconds: 2700 + (index * 400),
+                            ),
+                            disableAnimations: disableAnimations,
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
+                );
+              }
+            },
+          ),
         ],
       ),
     );
@@ -215,11 +268,13 @@ class _EducationCharacterStage extends StatelessWidget {
         MediaQuery.maybeOf(context)?.disableAnimations ?? false;
 
     return Center(
-      child: Container(
-        constraints: BoxConstraints(
-          maxWidth: isMobile ? 260 : 310,
-          maxHeight: isMobile ? 270 : 330,
-        ),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: isMobile ? 260 : 310,
+            maxHeight: isMobile ? 270 : 330,
+          ),
         child: Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
@@ -335,6 +390,7 @@ class _EducationCharacterStage extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -484,12 +540,14 @@ class _EducationCardState extends State<_EducationCard> {
                         color: AppColors.success,
                       ),
                       const SizedBox(width: 5),
-                      Text(
-                        widget.education.honors,
-                        style: const TextStyle(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.success,
+                      Flexible(
+                        child: Text(
+                          widget.education.honors,
+                          style: const TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.success,
+                          ),
                         ),
                       ),
                     ],

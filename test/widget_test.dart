@@ -13,6 +13,8 @@ import 'package:dhruvi_portfolio/core/theme/app_theme.dart';
 import 'package:dhruvi_portfolio/widgets/cards/app_network_image.dart';
 import 'package:dhruvi_portfolio/widgets/cards/glass_card.dart';
 import 'package:dhruvi_portfolio/widgets/navigation/nav_bar.dart';
+import 'package:dhruvi_portfolio/widgets/navigation/dynamic_scroll_indicators.dart';
+import 'package:dhruvi_portfolio/sections/footer/footer_section.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -332,6 +334,83 @@ void main() {
         await tester.pump(const Duration(milliseconds: 1100));
         await tester.pump(const Duration(milliseconds: 500));
         expect(finished, isTrue);
+      },
+    );
+
+    testWidgets(
+      'DynamicScrollIndicators renders without overflow across narrow constraints (288px, 368px)',
+      (tester) async {
+        for (final width in [288.0, 368.0, 240.0]) {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: Center(
+                  child: SizedBox(
+                    width: width,
+                    child: DynamicScrollIndicators(
+                      pageCount: 17,
+                      activeIndex: 3,
+                      onDotTapped: (_) {},
+                      onPrevious: () {},
+                      onNext: () {},
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.pump();
+          expect(tester.takeException(), isNull);
+        }
+      },
+    );
+
+    testWidgets(
+      'FooterSection renders without overflow on narrow constraints (280px, 368px)',
+      (tester) async {
+        for (final width in [280.0, 320.0, 368.0]) {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: Center(
+                  child: SizedBox(
+                    width: width,
+                    child: FooterSection(profile: SeedData.initialProfile),
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.pump();
+          expect(tester.takeException(), isNull);
+        }
+      },
+    );
+
+    testWidgets(
+      'HeroSection status badge and header render without overflow on narrow 320px screen',
+      (tester) async {
+        tester.view.physicalSize = const Size(320, 800);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(() => tester.view.resetPhysicalSize());
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(320, 800),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: HeroSection(profile: SeedData.initialProfile),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(tester.takeException(), isNull);
       },
     );
   });

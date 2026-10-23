@@ -427,13 +427,13 @@ class SeedData {
           'Solution: Engineered automated validation rules and bulk Auto-Fix routines for HTML/array remediation, rendered complex math with flutter_math_fork, and built a side-by-side Cell Inspector and multi-device interactive mobile simulator in Flutter Web.',
       verifiedOutcomes: 'Browser-based CSV dataset QA suite with Unicode/multi-language support, bulk Auto-Fix remediation, LaTeX rendering, side-by-side Cell Inspector, and multi-device mobile simulator with automated test coverage.',
       isFeatured: true,
-      isPublished: true,
+      isPublished: false,
       orderIndex: 1,
     ),
     const Project(
       id: 'proj_pmp_exam_prep',
       slug: 'pmp-exam-prep',
-      title: 'PMP Exam Prep App',
+      title: 'PMP Exam Prep',
       shortDescription: 'Comprehensive certification exam simulator with interactive quizzes, referral deep linking, and performance tracking.',
       fullDescription: 'A specialized professional certification preparation application engineered in Flutter and GetX. Features interactive quiz modes with timed examinations, question bookmarking, answer explanations, attempt tracking, and performance analytics. Integrates referral deep linking with intent preservation, guest vs. premium tiered access control with subscription paywalls, native ad lifecycle management, and smooth responsive animations across mobile viewports.',
       category: 'EdTech',
@@ -464,12 +464,13 @@ class SeedData {
       verifiedOutcomes: 'Interactive certification quiz engine with full attempt analytics, referral deep linking, and smooth ad monetization.',
       isFeatured: true,
       isPublished: true,
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.pmp.examprep",
       orderIndex: 2,
     ),
     const Project(
       id: 'proj_nirvana',
       slug: 'nirvana-app',
-      title: 'Nirvana App',
+      title: 'My Nirvana Portal',
       shortDescription: 'Real estate discovery and unit booking platform featuring live pricing, multi-step purchase flows, and an embedded chatbot.',
       fullDescription: 'A premier real estate and property exploration application built with Flutter. Enables prospective buyers to explore architectural projects, zone layouts, and specific unit availability with real-time dynamic pricing. Implements a multi-step property purchase flow from unit reservation to legal agreement review, down-payment computation, PDF document inspection, terms and conditions bottom sheets, and an AI chatbot assistant embedded directly on the home dashboard.',
       category: 'PropTech',
@@ -499,12 +500,14 @@ class SeedData {
       verifiedOutcomes: 'End-to-end property purchase engine with interactive PDF agreements, live unit reservation status, and iOS TestFlight deployment.',
       isFeatured: true,
       isPublished: true,
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.cscp.mynirvana",
+      appStoreUrl: "https://apps.apple.com/my/app/my-nirvana/id1555172257",
       orderIndex: 3,
     ),
     const Project(
       id: 'proj_reutbyitforme',
       slug: 'reutbyitforme-app',
-      title: 'Reutbyitforme App',
+      title: 'Reut, buy me',
       shortDescription: 'Modernization of a legacy Flutter app from Flutter 3.10 to 3.32 with modern InAppWebView, FCM, and Android Gradle upgrade.',
       fullDescription: 'An extensive legacy modernization project upgrading an enterprise mobile app from Flutter 3.10 to Flutter 3.32. Resolved breaking API deprecations, modernized null-safety constraints across all packages, upgraded Firebase Cloud Messaging to modern background/tap workflows, refactored webview interactions to flutter_inappwebview with external browser routing, and updated Android Gradle Plugin, namespace declarations, and Android embedding standards for production stability.',
       category: 'App Migration',
@@ -534,12 +537,13 @@ class SeedData {
       verifiedOutcomes: 'Successful migration from Flutter 3.10 to 3.32, modern push notification pipeline, and updated Android Gradle toolchain.',
       isFeatured: false,
       isPublished: true,
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.reuttomer.reut_buy_it_for_me",
       orderIndex: 4,
     ),
     const Project(
       id: 'proj_milos_paddle',
       slug: 'milos-paddle-app',
-      title: 'Milos Paddle App',
+      title: 'Milos Padel',
       shortDescription: 'Sports reservation mobile app supporting multi-court booking, dynamic time-slot pricing, and integrated payments.',
       fullDescription: 'A modern sports court booking mobile application tailored for paddle sports enthusiasts. Supports flexible multi-court scheduling allowing players to select concurrent courts and multi-hour time slots. Integrates live availability checks, automated multi-slot pricing algorithms, payment gateway processing, and resolution of Android Gradle/Kotlin compatibility hurdles.',
       category: 'Sports & Booking',
@@ -566,6 +570,8 @@ class SeedData {
       verifiedOutcomes: 'Multi-court booking engine with dynamic time-slot reservation and streamlined payment checkout.',
       isFeatured: false,
       isPublished: true,
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.milos.padel",
+      appStoreUrl: "https://apps.apple.com/id/app/milos-padel/id6737511643",
       orderIndex: 5,
     ),
     const Project(
@@ -596,6 +602,7 @@ class SeedData {
       verifiedOutcomes: 'Resolved authentication bottlenecks and improved cross-environment API reliability.',
       isFeatured: false,
       isPublished: true,
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.minder_app",
       orderIndex: 6,
     ),
     const Project(
@@ -624,7 +631,7 @@ class SeedData {
           'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 8,
+      orderIndex: 7,
       keyFeatures: [
         'Personalized meal suggestions tailored to individual fitness and nutritional goals',
         'A wide range of healthy vegetarian and vegan recipes, optimized for balanced macronutrient intake',
@@ -658,7 +665,7 @@ class SeedData {
           'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 9,
+      orderIndex: 8,
       keyFeatures: [
         '▶️ Audio Playback with Play/Pause control',
         '🌐 WebView Integration for in-app browsing',
@@ -689,7 +696,7 @@ class SeedData {
           'Multi-lingual production deployment with dark/light themes.',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 10,
+      orderIndex: 9,
     ),
     const Project(
       id: 'proj_fineaway',
@@ -715,7 +722,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com/us/app/fineaway-app/id6467185920',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 11,
+      orderIndex: 10,
       keyFeatures: [
         'Renewal Reminders: Notifies users before license expiry to avoid fines',
         'Text Scanning: Auto-detects and extracts data from license discs',
@@ -745,7 +752,7 @@ class SeedData {
       imageUrl: 'https://media.cakeresume.com/image/upload/s--7U5mpGz0--/c_pad,fl_png8,h_288,w_384/v1746093250/ebf7gcahzw7bf7jywmiq.png',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 12,
+      orderIndex: 11,
       keyFeatures: [
         'Secure chatbox for real-time communication',
         'Built-in task manager for priority handling',
@@ -770,7 +777,7 @@ class SeedData {
           'Collaborative enterprise platform with offline persistence.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 13,
+      orderIndex: 12,
     ),
     const Project(
       id: 'proj_adroit_wealth_mgmt',
@@ -796,7 +803,7 @@ class SeedData {
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/b0/d1/44/b0d144e8-fedc-befd-0868-f5bd0a5e2aaf/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.jpg',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 14,
+      orderIndex: 13,
     ),
     const Project(
       id: 'proj_agents_thrive',
@@ -822,7 +829,7 @@ class SeedData {
       appStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 15,
+      orderIndex: 14,
       keyFeatures: [
         'AI Integration: Get instant advice and support with ChatGPT',
         'Secure Login: Seamless access through Firebase Authentication',
@@ -850,7 +857,7 @@ class SeedData {
       verifiedOutcomes: 'Available on the Apple App Store.',
       isFeatured: false,
       isPublished: false,
-      orderIndex: 16,
+      orderIndex: 15,
     ),
     const Project(
       id: 'proj_disporata',
@@ -873,7 +880,7 @@ class SeedData {
       imageUrl: 'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 17,
+      orderIndex: 16,
       keyFeatures: [
         'Seamless phone number authentication with auto-login and SMS verification',
         'Profile creation with home/host country and town using Google Places API',
@@ -903,7 +910,7 @@ class SeedData {
           'Production retail app for international European market.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 18,
+      orderIndex: 17,
     ),
     const Project(
       id: 'proj_muvr-user',
@@ -930,7 +937,7 @@ class SeedData {
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/4c/26/c0/4c26c0ef-45b4-426e-6ecd-039ec9569644/Placeholder.mill/400x400Icon.ApSiOS01-75.webp',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 19,
+      orderIndex: 18,
     ),
     const Project(
       id: 'proj_muvr',
@@ -957,7 +964,7 @@ class SeedData {
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/41/0d/f7/410df79e-1419-e557-cf3b-8a55556fbb02/Placeholder.mill/400x400Icon.ApSiOS01-75.webp',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 20,
+      orderIndex: 19,
     ),
   ];
 }

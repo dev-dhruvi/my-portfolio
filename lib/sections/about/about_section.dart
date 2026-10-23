@@ -132,10 +132,12 @@ class AboutSection extends StatelessWidget {
           // Key Highlights Metric Cards with Animated Counting Numbers
           LayoutBuilder(
             builder: (context, constraints) {
-              final double cardWidth = isMobile
-                  ? constraints.maxWidth
-                  : (constraints.maxWidth - (3 * 16)) / 4;
-
+                            // Responsive column count based on available width:
+              // Mobile (< 600px): 1 column, Tablet (600px - 1000px): 2 columns, Desktop (> 1000px): 4 columns
+              final int columns = constraints.maxWidth < 600
+                  ? 1
+                  : (constraints.maxWidth < 1000 ? 2 : 4);
+              final double cardWidth = (constraints.maxWidth - ((columns - 1) * 16)) / columns;
               return Wrap(
                 spacing: 16,
                 runSpacing: 16,
@@ -291,101 +293,106 @@ class _AboutCharacterStage extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Center(
-      child: Container(
-        constraints: BoxConstraints(
-          maxWidth: isMobile ? 260 : 320,
-          maxHeight: isMobile ? 280 : 340,
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            // Ambient soft glowing backdrop
-            Container(
-              width: isMobile ? 210 : 260,
-              height: isMobile ? 210 : 260,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    AppColors.violetPrimary.withOpacity(isDark ? 0.35 : 0.22),
-                    AppColors.cyanPrimary.withOpacity(isDark ? 0.2 : 0.1),
-                    Colors.transparent,
-                  ],
-                  stops: const [0.0, 0.65, 1.0],
-                ),
-              ),
-            ),
-            // Outer subtle glass accent ring
-            Container(
-              width: isMobile ? 225 : 275,
-              height: isMobile ? 225 : 275,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: isDark
-                      ? Colors.white.withOpacity(0.12)
-                      : AppColors.violetPrimary.withOpacity(0.2),
-                  width: 1.5,
-                ),
-              ),
-            ),
-            // 3D Business anime developer illustration
-            Image.asset(
-              'assets/images/developer_character_business.png',
-              height: isMobile ? 250 : 310,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) =>
-                  const SizedBox.shrink(),
-            ),
-            // Floating badge at bottom of character
-            Positioned(
-              bottom: 4,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 6,
-                ),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: isMobile ? 260 : 320,
+            maxHeight: isMobile ? 280 : 340,
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              // Ambient soft glowing backdrop
+              Container(
+                width: isMobile ? 210 : 260,
+                height: isMobile ? 210 : 260,
                 decoration: BoxDecoration(
-                  color: (isDark ? AppColors.darkCard : Colors.white)
-                      .withOpacity(0.92),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: AppColors.violetPrimary.withOpacity(0.35),
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      AppColors.violetPrimary.withOpacity(isDark ? 0.35 : 0.22),
+                      AppColors.cyanPrimary.withOpacity(isDark ? 0.2 : 0.1),
+                      Colors.transparent,
+                    ],
+                    stops: const [0.0, 0.65, 1.0],
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: const BoxDecoration(
-                        color: AppColors.success,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Clean Architecture Specialist',
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        fontWeight: FontWeight.w700,
-                        color: isDark ? Colors.white : AppColors.darkBackground,
-                      ),
-                    ),
-                  ],
                 ),
               ),
-            ),
-          ],
+              // Outer subtle glass accent ring
+              Container(
+                width: isMobile ? 225 : 275,
+                height: isMobile ? 225 : 275,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isDark
+                        ? Colors.white.withOpacity(0.12)
+                        : AppColors.violetPrimary.withOpacity(0.2),
+                    width: 1.5,
+                  ),
+                ),
+              ),
+              // 3D Business anime developer illustration
+              Image.asset(
+                'assets/images/developer_character_business.png',
+                height: isMobile ? 250 : 310,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox.shrink(),
+              ),
+              // Floating badge at bottom of character
+              Positioned(
+                bottom: 4,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: (isDark ? AppColors.darkCard : Colors.white)
+                        .withOpacity(0.92),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: isDark
+                          ? AppColors.darkCardBorder
+                          : AppColors.lightCardBorder,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(isDark ? 0.3 : 0.08),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: AppColors.success,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Clean Architecture Specialist',
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700,
+                          color: isDark ? Colors.white : AppColors.darkBackground,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -440,29 +447,32 @@ class _HighlightCard extends StatelessWidget {
               child: Icon(icon, color: accentColor, size: 20),
             ),
             const SizedBox(height: 10),
-            if (numericTarget != null)
-              _AnimatedCounterText(
-                key: ValueKey('counter_${numericTarget}_$animationTrigger'),
-                targetValue: numericTarget!,
-                suffix: suffix,
-                fallbackText: value,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  color: textColor,
-                  letterSpacing: -0.5,
-                ),
-              )
-            else
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  color: textColor,
-                  letterSpacing: -0.5,
-                ),
-              ),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: numericTarget != null
+                  ? _AnimatedCounterText(
+                      key: ValueKey('counter__'),
+                      targetValue: numericTarget!,
+                      suffix: suffix,
+                      fallbackText: value,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: textColor,
+                        letterSpacing: -0.5,
+                      ),
+                    )
+                  : Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: textColor,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+            ),
             const SizedBox(height: 3),
             Text(
               label,

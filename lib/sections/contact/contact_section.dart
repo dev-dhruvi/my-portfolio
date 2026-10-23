@@ -195,38 +195,38 @@ ${_messageController.text.trim()}
   ) {
     return GlassCard(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Direct Message',
-              style: AppTypography.getTitleMedium(textColor)
-                  .copyWith(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Launches your email client directly with prefilled parameters.',
-              style: TextStyle(fontSize: 12.5, color: secondaryTextColor),
-            ),
-            const SizedBox(height: 12),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final isNarrow = constraints.maxWidth < 480;
 
-            // Name & Email
-            Row(
+          return Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: TextFormField(
+                Text(
+                  'Direct Message',
+                  style: AppTypography.getTitleMedium(textColor)
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Launches your email client directly with prefilled parameters.',
+                  style: TextStyle(fontSize: 12.5, color: secondaryTextColor),
+                ),
+                const SizedBox(height: 12),
+
+                // Name & Email (stacked on narrow viewports, side-by-side on wider)
+                if (isNarrow) ...[
+                  TextFormField(
                     controller: _nameController,
                     decoration: const InputDecoration(labelText: 'Your Name *'),
                     validator: (val) => val == null || val.trim().isEmpty
                         ? 'Enter your name'
                         : null,
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TextFormField(
+                  const SizedBox(height: 12),
+                  TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(
                       labelText: 'Your Email *',
@@ -242,60 +242,97 @@ ${_messageController.text.trim()}
                       return null;
                     },
                   ),
+                ] else
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _nameController,
+                          decoration:
+                              const InputDecoration(labelText: 'Your Name *'),
+                          validator: (val) => val == null || val.trim().isEmpty
+                              ? 'Enter your name'
+                              : null,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                            labelText: 'Your Email *',
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (val) {
+                            if (val == null || val.trim().isEmpty) {
+                              return 'Enter your email';
+                            }
+                            if (!val.contains('@')) {
+                              return 'Enter a valid email';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 12),
+
+                // Subject
+                TextFormField(
+                  controller: _subjectController,
+                  decoration: const InputDecoration(
+                    labelText: 'Subject (Optional)',
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                // Message
+                TextFormField(
+                  controller: _messageController,
+                  decoration: const InputDecoration(
+                    labelText: 'Message *',
+                    alignLabelWithHint: true,
+                  ),
+                  maxLines: 3,
+                  validator: (val) => val == null || val.trim().isEmpty
+                      ? 'Please write a message'
+                      : null,
+                ),
+                const SizedBox(height: 14),
+
+                // Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 46,
+                  child: ElevatedButton.icon(
+                    onPressed: _isSending ? null : _sendEmail,
+                    icon: _isSending
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Icon(Icons.send_rounded, size: 18),
+                    label: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        _isSending ? 'Preparing...' : 'Send Message via Email',
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.violetPrimary,
+                    ),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-
-            // Subject
-            TextFormField(
-              controller: _subjectController,
-              decoration: const InputDecoration(
-                labelText: 'Subject (Optional)',
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // Message
-            TextFormField(
-              controller: _messageController,
-              decoration: const InputDecoration(
-                labelText: 'Message *',
-                alignLabelWithHint: true,
-              ),
-              maxLines: 3,
-              validator: (val) => val == null || val.trim().isEmpty
-                  ? 'Please write a message'
-                  : null,
-            ),
-            const SizedBox(height: 14),
-
-            // Submit Button
-            SizedBox(
-              width: double.infinity,
-              height: 44,
-              child: ElevatedButton.icon(
-                onPressed: _isSending ? null : _sendEmail,
-                icon: _isSending
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    : const Icon(Icons.send_rounded, size: 18),
-                label: Text(
-                  _isSending ? 'Preparing...' : 'Send Message via Email',
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.violetPrimary,
-                ),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -311,98 +348,107 @@ class _ContactCharacterStage extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Center(
-      child: Container(
-        constraints: BoxConstraints(
-          maxWidth: isMobile ? 250 : 280,
-          maxHeight: isMobile ? 250 : 290,
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            // Ambient glowing circular backdrop
-            Container(
-              width: isMobile ? 190 : 230,
-              height: isMobile ? 190 : 230,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    AppColors.cyanPrimary.withOpacity(isDark ? 0.35 : 0.22),
-                    AppColors.violetPrimary.withOpacity(isDark ? 0.25 : 0.12),
-                    Colors.transparent,
-                  ],
-                  stops: const [0.0, 0.65, 1.0],
-                ),
-              ),
-            ),
-            // Outer subtle glass ring
-            Container(
-              width: isMobile ? 205 : 245,
-              height: isMobile ? 205 : 245,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: isDark
-                      ? Colors.white.withOpacity(0.12)
-                      : AppColors.cyanPrimary.withOpacity(0.2),
-                  width: 1.5,
-                ),
-              ),
-            ),
-            // 3D Contact anime developer illustration
-            Image.asset(
-              'assets/images/developer_character_contact.png',
-              height: isMobile ? 230 : 270,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) =>
-                  const SizedBox.shrink(),
-            ),
-            // Floating badge
-            Positioned(
-              bottom: 4,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 6,
-                ),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: isMobile ? 250 : 280,
+            maxHeight: isMobile ? 250 : 290,
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              // Ambient glowing circular backdrop
+              Container(
+                width: isMobile ? 190 : 230,
+                height: isMobile ? 190 : 230,
                 decoration: BoxDecoration(
-                  color: (isDark ? AppColors.darkCard : Colors.white)
-                      .withOpacity(0.92),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: AppColors.cyanPrimary.withOpacity(0.4),
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      AppColors.cyanPrimary.withOpacity(isDark ? 0.35 : 0.22),
+                      AppColors.violetPrimary.withOpacity(isDark ? 0.25 : 0.12),
+                      Colors.transparent,
+                    ],
+                    stops: const [0.0, 0.65, 1.0],
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.chat_bubble_outline_rounded,
-                      color: AppColors.cyanPrimary,
-                      size: 15,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Quick Response Guaranteed',
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        fontWeight: FontWeight.w700,
-                        color: isDark ? Colors.white : AppColors.darkBackground,
-                      ),
-                    ),
-                  ],
                 ),
               ),
-            ),
-          ],
+              // Outer subtle glass ring
+              Container(
+                width: isMobile ? 205 : 245,
+                height: isMobile ? 205 : 245,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isDark
+                        ? Colors.white.withOpacity(0.12)
+                        : AppColors.cyanPrimary.withOpacity(0.2),
+                    width: 1.5,
+                  ),
+                ),
+              ),
+              // 3D Cartoon Contact character
+              Image.asset(
+                'assets/images/developer_character_contact.png',
+                height: isMobile ? 230 : 270,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox.shrink(),
+              ),
+              // Bottom Floating Response pill
+              Positioned(
+                bottom: 2,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: (isDark ? AppColors.darkCard : Colors.white)
+                        .withOpacity(0.92),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: isDark
+                          ? AppColors.darkCardBorder
+                          : AppColors.lightCardBorder,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(isDark ? 0.3 : 0.08),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: AppColors.cyanPrimary,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Quick Response Guaranteed',
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700,
+                          color:
+                              isDark ? Colors.white : AppColors.darkBackground,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

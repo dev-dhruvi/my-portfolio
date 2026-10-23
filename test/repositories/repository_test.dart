@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dhruvi_portfolio/core/constants/app_constants.dart';
+import 'package:dhruvi_portfolio/core/constants/seed_data.dart';
 import 'package:dhruvi_portfolio/repositories/portfolio_repository.dart';
 
 void main() {
@@ -46,16 +47,16 @@ void main() {
       expect(panditsProject.personalContribution, contains('CustomPainter'));
 
       // Verify newly added projects exist
-      expect(repo.projects.any((p) => p.title == 'PMP Exam Prep App'), isTrue);
-      expect(repo.projects.any((p) => p.title == 'Nirvana App'), isTrue);
-      expect(repo.projects.any((p) => p.title == 'Reutbyitforme App'), isTrue);
-      expect(repo.projects.any((p) => p.title == 'Milos Paddle App'), isTrue);
+      expect(repo.projects.any((p) => p.title.contains('PMP Exam Prep')), isTrue);
+      expect(repo.projects.any((p) => p.title.contains('Nirvana')), isTrue);
+      expect(repo.projects.any((p) => p.title.contains('Reut')), isTrue);
+      expect(repo.projects.any((p) => p.title.contains('Milos')), isTrue);
       expect(repo.projects.any((p) => p.title == 'Minder App'), isTrue);
       expect(repo.projects.any((p) => p.title == 'Muvr User App'), isTrue);
 
-      // Verify PMP CSV Validator project
-      final pmpProject = repo.projects.firstWhere(
-        (p) => p.title.contains('PMP CSV Validator'),
+      // Verify PMP CSV Validator project in seed data
+      final pmpProject = SeedData.initialProjects.firstWhere(
+        (p) => p.id == 'proj_pmp_csv_validator',
       );
       expect(pmpProject.category, equals('Flutter Web'));
       expect(pmpProject.technologies, contains('Flutter Web'));

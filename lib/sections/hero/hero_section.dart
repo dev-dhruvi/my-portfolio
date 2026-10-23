@@ -168,7 +168,10 @@ class _HeroSectionState extends State<HeroSection> {
             child: StaggeredEntrance(
               index: 1,
               slideOffset: 0.1,
-              child: _buildCharacterStageDesktop(isDark, disableAnimations),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: _buildCharacterStageDesktop(isDark, disableAnimations),
+              ),
             ),
           ),
         ),
@@ -198,7 +201,10 @@ class _HeroSectionState extends State<HeroSection> {
           StaggeredEntrance(
             index: 1,
             slideOffset: 0.1,
-            child: _buildCharacterStageTablet(isDark, disableAnimations),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: _buildCharacterStageTablet(isDark, disableAnimations),
+            ),
           ),
           const SizedBox(height: 28),
           StaggeredEntrance(
@@ -243,7 +249,10 @@ class _HeroSectionState extends State<HeroSection> {
           StaggeredEntrance(
             index: 1,
             slideOffset: 0.1,
-            child: _buildCharacterStageMobile(isDark),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: _buildCharacterStageMobile(isDark),
+            ),
           ),
           const SizedBox(height: 22),
           StaggeredEntrance(
@@ -314,13 +323,19 @@ class _HeroSectionState extends State<HeroSection> {
         children: [
           dot,
           const SizedBox(width: 8),
-          Text(
-            'Available for Senior Flutter Developer Roles',
-            style: TextStyle(
-              color: isDark ? AppColors.cyanLight : AppColors.violetPrimary,
-              fontSize: 12.5,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.3,
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                'Available for Senior Flutter Developer Roles',
+                maxLines: 1,
+                style: TextStyle(
+                  color: isDark ? AppColors.cyanLight : AppColors.violetPrimary,
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.3,
+                ),
+              ),
             ),
           ),
         ],
@@ -398,7 +413,11 @@ class _HeroSectionState extends State<HeroSection> {
               ),
             ),
             const SizedBox(width: 10),
-            AnimatedSwitcher(
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: isCentered ? Alignment.center : Alignment.centerLeft,
+                child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 400),
               transitionBuilder: (child, animation) {
                 return FadeTransition(
@@ -420,6 +439,8 @@ class _HeroSectionState extends State<HeroSection> {
                   fontWeight: FontWeight.w700,
                   color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
                 ),
+              ),
+            ),
               ),
             ),
           ],
@@ -455,12 +476,18 @@ class _HeroSectionState extends State<HeroSection> {
                     color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
                   ),
                   const SizedBox(width: 6),
-                  Text(
-                    AppConstants.location,
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: isCentered ? Alignment.center : Alignment.centerLeft,
+                      child: Text(
+                        AppConstants.location,
                     style: TextStyle(
                       fontSize: 13.5,
                       fontWeight: FontWeight.w500,
                       color: secondaryTextColor,
+                    ),
+                  ),
                     ),
                   ),
                 ],
@@ -513,12 +540,15 @@ class _HeroSectionState extends State<HeroSection> {
                   children: [
                     Icon(Icons.download_rounded, size: 18, color: Colors.white),
                     SizedBox(width: 8),
-                    Text(
-                      'Download CV',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14.5,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Download CV',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.5,
+                        ),
                       ),
                     ),
                   ],
@@ -574,14 +604,17 @@ class _HeroSectionState extends State<HeroSection> {
                           : AppColors.violetPrimary,
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      'View Projects',
-                      style: TextStyle(
-                        color: isDark
-                            ? AppColors.cyanPrimary
-                            : AppColors.violetPrimary,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14.5,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'View Projects',
+                        style: TextStyle(
+                          color: isDark
+                              ? AppColors.cyanPrimary
+                              : AppColors.violetPrimary,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.5,
+                        ),
                       ),
                     ),
                   ],

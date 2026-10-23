@@ -32,7 +32,7 @@ class FooterSection extends StatelessWidget {
         ),
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 36,
+        horizontal: isMobile ? 16 : 36,
         vertical: isMobile ? 12 : 14,
       ),
       child: Center(
@@ -40,54 +40,78 @@ class FooterSection extends StatelessWidget {
           constraints: const BoxConstraints(
             maxWidth: AppBreakpoints.maxContentWidth,
           ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isNarrow = constraints.maxWidth < 560;
+
+              final brandText = FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: isNarrow ? Alignment.center : Alignment.centerLeft,
+                child: const Text(
+                  AppConstants.developBy,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.cyanPrimary,
+                  ),
+                ),
+              );
+
+              final socialIcons = Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Brand & Summary
-                  const Text(
-                    AppConstants.developBy,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.cyanPrimary,
+                  IconButton(
+                    tooltip: 'GitHub',
+                    icon: const FaIcon(FontAwesomeIcons.github, size: 18),
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () => UrlLauncherUtil.openUrl(
+                      profile.githubUrl,
+                      context: context,
                     ),
                   ),
-
-                  // Social Icons
-                  Row(
-                    children: [
-                      IconButton(
-                        tooltip: 'GitHub',
-                        icon: const FaIcon(FontAwesomeIcons.github, size: 18),
-                        onPressed: () => UrlLauncherUtil.openUrl(
-                          profile.githubUrl,
-                          context: context,
-                        ),
-                      ),
-                      IconButton(
-                        tooltip: 'LinkedIn',
-                        icon: const FaIcon(
-                          FontAwesomeIcons.linkedinIn,
-                          size: 18,
-                        ),
-                        onPressed: () => UrlLauncherUtil.openUrl(
-                          profile.linkedinUrl,
-                          context: context,
-                        ),
-                      ),
-                      IconButton(
-                        tooltip: 'Email',
-                        icon: const Icon(Icons.mail_rounded, size: 20),
-                        onPressed: () =>
-                            UrlLauncherUtil.openEmail(profile.email),
-                      ),
-                    ],
+                  IconButton(
+                    tooltip: 'LinkedIn',
+                    icon: const FaIcon(
+                      FontAwesomeIcons.linkedinIn,
+                      size: 18,
+                    ),
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () => UrlLauncherUtil.openUrl(
+                      profile.linkedinUrl,
+                      context: context,
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: 'Email',
+                    icon: const Icon(Icons.mail_rounded, size: 20),
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () =>
+                        UrlLauncherUtil.openEmail(profile.email),
                   ),
                 ],
-              ),
-            ],
+              );
+
+              if (isNarrow) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    socialIcons,
+                    const SizedBox(height: 6),
+                    brandText,
+                  ],
+                );
+              }
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: brandText),
+                  const SizedBox(width: 12),
+                  socialIcons,
+                ],
+              );
+            },
           ),
         ),
       ),

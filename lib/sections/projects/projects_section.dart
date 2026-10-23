@@ -1086,7 +1086,10 @@ class _ProjectDetailDialog extends StatelessWidget {
                         context: context,
                       ),
                       icon: const FaIcon(FontAwesomeIcons.googlePlay, size: 16),
-                      label: const Text('Google Play'),
+                      label: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('Google Play'),
+                      ),
                     ),
                   if (project.appStoreUrl.isNotEmpty)
                     OutlinedButton.icon(
@@ -1098,7 +1101,10 @@ class _ProjectDetailDialog extends StatelessWidget {
                         FontAwesomeIcons.appStoreIos,
                         size: 16,
                       ),
-                      label: const Text('App Store'),
+                      label: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('App Store'),
+                      ),
                     ),
                   if (project.githubUrl.isNotEmpty)
                     OutlinedButton.icon(
@@ -1107,7 +1113,10 @@ class _ProjectDetailDialog extends StatelessWidget {
                         context: context,
                       ),
                       icon: const FaIcon(FontAwesomeIcons.github, size: 16),
-                      label: const Text('Source Code'),
+                      label: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('Source Code'),
+                      ),
                     ),
                   if (project.demoUrl.isNotEmpty)
                     ElevatedButton.icon(
@@ -1116,7 +1125,10 @@ class _ProjectDetailDialog extends StatelessWidget {
                         context: context,
                       ),
                       icon: const Icon(Icons.open_in_new_rounded, size: 16),
-                      label: const Text('Live Demo'),
+                      label: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('Live Demo'),
+                      ),
                     ),
                 ],
               ),
