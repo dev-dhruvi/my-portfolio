@@ -332,10 +332,14 @@ class AboutSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(7),
                   decoration: BoxDecoration(
-                    color: AppColors.violetPrimary.withOpacity(isDark ? 0.22 : 0.12),
+                    color: AppColors.violetPrimary.withOpacity(
+                      isDark ? 0.22 : 0.12,
+                    ),
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: AppColors.violetPrimary.withOpacity(isDark ? 0.4 : 0.25),
+                      color: AppColors.violetPrimary.withOpacity(
+                        isDark ? 0.4 : 0.25,
+                      ),
                       width: 1,
                     ),
                   ),
@@ -500,10 +504,11 @@ class _AboutCharacterStage extends StatelessWidget {
                     vertical: 7,
                   ),
                   decoration: BoxDecoration(
-                    color: (isDark
-                            ? AppColors.darkSurface
-                            : AppColors.lightSurface)
-                        .withOpacity(0.85),
+                    color:
+                        (isDark
+                                ? AppColors.darkSurface
+                                : AppColors.lightSurface)
+                            .withOpacity(0.85),
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(
                       color: isDark
@@ -536,7 +541,9 @@ class _AboutCharacterStage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w700,
-                            color: isDark ? Colors.white : AppColors.darkBackground,
+                            color: isDark
+                                ? Colors.white
+                                : AppColors.darkBackground,
                           ),
                         ),
                       ),

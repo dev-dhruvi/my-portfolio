@@ -275,122 +275,132 @@ class _EducationCharacterStage extends StatelessWidget {
             maxWidth: isMobile ? 260 : 310,
             maxHeight: isMobile ? 270 : 330,
           ),
-        child: Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            // Ambient Aura Glow behind character
-            Container(
-              width: isMobile ? 200 : 240,
-              height: isMobile ? 200 : 240,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    AppColors.cyanPrimary.withOpacity(isDark ? 0.32 : 0.18),
-                    AppColors.violetPrimary.withOpacity(isDark ? 0.22 : 0.12),
-                    Colors.transparent,
-                  ],
-                  stops: const [0.0, 0.55, 1.0],
+          child: Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              // Ambient Aura Glow behind character
+              Container(
+                width: isMobile ? 200 : 240,
+                height: isMobile ? 200 : 240,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      AppColors.cyanPrimary.withOpacity(isDark ? 0.32 : 0.18),
+                      AppColors.violetPrimary.withOpacity(isDark ? 0.22 : 0.12),
+                      Colors.transparent,
+                    ],
+                    stops: const [0.0, 0.55, 1.0],
+                  ),
                 ),
               ),
-            ),
 
-            // Dashed rotating halo ring
-            if (!disableAnimations)
-              Positioned.fill(
-                child: Center(
-                  child: Container(
-                    width: isMobile ? 215 : 255,
-                    height: isMobile ? 215 : 255,
+              // Dashed rotating halo ring
+              if (!disableAnimations)
+                Positioned.fill(
+                  child: Center(
+                    child:
+                        Container(
+                              width: isMobile ? 215 : 255,
+                              height: isMobile ? 215 : 255,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.cyanPrimary.withOpacity(
+                                    isDark ? 0.25 : 0.2,
+                                  ),
+                                  width: 1.5,
+                                ),
+                              ),
+                            )
+                            .animate(
+                              onPlay: (controller) => controller.repeat(),
+                            )
+                            .rotate(
+                              duration: const Duration(seconds: 18),
+                              curve: Curves.linear,
+                            ),
+                  ),
+                ),
+
+              // 3D Anime Graduate Character Asset
+              Positioned(
+                bottom: 8,
+                child: Image.asset(
+                  'assets/images/developer_character_graduate.png',
+                  height: isMobile ? 220 : 270,
+                  fit: BoxFit.contain,
+                  filterQuality: FilterQuality.high,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: isMobile ? 180 : 220,
+                    height: isMobile ? 180 : 220,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: AppColors.cyanPrimary.withOpacity(isDark ? 0.25 : 0.2),
-                        width: 1.5,
+                      gradient: AppColors.primaryGradient,
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.school_rounded,
+                        size: 64,
+                        color: Colors.white,
                       ),
                     ),
-                  )
-                      .animate(onPlay: (controller) => controller.repeat())
-                      .rotate(
-                        duration: const Duration(seconds: 18),
-                        curve: Curves.linear,
-                      ),
+                  ),
                 ),
               ),
 
-            // 3D Anime Graduate Character Asset
-            Positioned(
-              bottom: 8,
-              child: Image.asset(
-                'assets/images/developer_character_graduate.png',
-                height: isMobile ? 220 : 270,
-                fit: BoxFit.contain,
-                filterQuality: FilterQuality.high,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  width: isMobile ? 180 : 220,
-                  height: isMobile ? 180 : 220,
+              // Floating Distinction Honors Badge
+              Positioned(
+                bottom: -4,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 7,
+                  ),
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: AppColors.primaryGradient,
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.school_rounded,
-                      size: 64,
-                      color: Colors.white,
+                    color: isDark
+                        ? AppColors.darkCard.withOpacity(0.92)
+                        : Colors.white.withOpacity(0.95),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: const Color(0xFFF59E0B).withOpacity(0.5),
+                      width: 1.2,
                     ),
-                  ),
-                ),
-              ),
-            ),
-
-            // Floating Distinction Honors Badge
-            Positioned(
-              bottom: -4,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? AppColors.darkCard.withOpacity(0.92)
-                      : Colors.white.withOpacity(0.95),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xFFF59E0B).withOpacity(0.5),
-                    width: 1.2,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFFF59E0B).withOpacity(0.2),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.workspace_premium_rounded,
-                      color: Color(0xFFF59E0B),
-                      size: 16,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Distinction Honors (MCA & BCA)',
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        fontWeight: FontWeight.w700,
-                        color: isDark ? Colors.white : AppColors.darkBackground,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFF59E0B).withOpacity(0.2),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.workspace_premium_rounded,
+                        color: Color(0xFFF59E0B),
+                        size: 16,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Distinction Honors (MCA & BCA)',
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700,
+                          color: isDark
+                              ? Colors.white
+                              : AppColors.darkBackground,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -456,7 +466,9 @@ class _EducationCardState extends State<_EducationCard> {
                       boxShadow: _isHovered
                           ? [
                               BoxShadow(
-                                color: AppColors.violetPrimary.withOpacity(0.35),
+                                color: AppColors.violetPrimary.withOpacity(
+                                  0.35,
+                                ),
                                 blurRadius: 10,
                                 offset: const Offset(0, 3),
                               ),
@@ -477,12 +489,16 @@ class _EducationCardState extends State<_EducationCard> {
                       vertical: 4.5,
                     ),
                     decoration: BoxDecoration(
-                      color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
-                          .withOpacity(0.1),
+                      color:
+                          (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
+                              .withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: (isDark ? AppColors.cyanPrimary : AppColors.cyanDark)
-                            .withOpacity(0.3),
+                        color:
+                            (isDark
+                                    ? AppColors.cyanPrimary
+                                    : AppColors.cyanDark)
+                                .withOpacity(0.3),
                       ),
                     ),
                     child: Text(
@@ -525,11 +541,16 @@ class _EducationCardState extends State<_EducationCard> {
               // Distinction / CGPA Badge
               if (widget.education.honors.isNotEmpty)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.success.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.success.withOpacity(0.35)),
+                    border: Border.all(
+                      color: AppColors.success.withOpacity(0.35),
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

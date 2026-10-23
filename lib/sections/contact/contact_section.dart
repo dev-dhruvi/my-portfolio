@@ -248,8 +248,9 @@ ${_messageController.text.trim()}
                       Expanded(
                         child: TextFormField(
                           controller: _nameController,
-                          decoration:
-                              const InputDecoration(labelText: 'Your Name *'),
+                          decoration: const InputDecoration(
+                            labelText: 'Your Name *',
+                          ),
                           validator: (val) => val == null || val.trim().isEmpty
                               ? 'Enter your name'
                               : null,
@@ -439,8 +440,9 @@ class _ContactCharacterStage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w700,
-                          color:
-                              isDark ? Colors.white : AppColors.darkBackground,
+                          color: isDark
+                              ? Colors.white
+                              : AppColors.darkBackground,
                         ),
                       ),
                     ],

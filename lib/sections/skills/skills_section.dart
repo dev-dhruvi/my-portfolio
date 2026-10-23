@@ -195,9 +195,10 @@ class _SkillsSectionState extends State<SkillsSection> {
                 // Dynamically determine how many items comfortably fit per viewport page
                 final int itemsPerPage = constraints.maxWidth > 1050
                     ? 3
-                    : ((constraints.maxWidth >= 600 || constraints.maxWidth == 0)
-                        ? 2
-                        : 1);
+                    : ((constraints.maxWidth >= 600 ||
+                              constraints.maxWidth == 0)
+                          ? 2
+                          : 1);
 
                 // Chunk skills into responsive pages
                 final List<List<Skill>> pages = [];
@@ -224,7 +225,9 @@ class _SkillsSectionState extends State<SkillsSection> {
                           final pageItems = pages[pageIndex];
 
                           return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 2.0,
+                            ),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
@@ -234,9 +237,7 @@ class _SkillsSectionState extends State<SkillsSection> {
                                     Expanded(
                                       child: StaggeredEntrance(
                                         index: i,
-                                        child: _SkillCard(
-                                          skill: pageItems[i],
-                                        ),
+                                        child: _SkillCard(skill: pageItems[i]),
                                       ),
                                     )
                                   else
@@ -367,7 +368,9 @@ class _SkillCardState extends State<_SkillCard> {
                           boxShadow: _isHovered
                               ? [
                                   BoxShadow(
-                                    color: AppColors.violetPrimary.withOpacity(0.35),
+                                    color: AppColors.violetPrimary.withOpacity(
+                                      0.35,
+                                    ),
                                     blurRadius: 10,
                                     offset: const Offset(0, 2),
                                   ),
@@ -389,16 +392,18 @@ class _SkillCardState extends State<_SkillCard> {
                             vertical: 3.5,
                           ),
                           decoration: BoxDecoration(
-                            color: (isDark
-                                    ? AppColors.cyanPrimary
-                                    : AppColors.cyanDark)
-                                .withOpacity(0.14),
+                            color:
+                                (isDark
+                                        ? AppColors.cyanPrimary
+                                        : AppColors.cyanDark)
+                                    .withOpacity(0.14),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: (isDark
-                                      ? AppColors.cyanPrimary
-                                      : AppColors.cyanDark)
-                                  .withOpacity(0.32),
+                              color:
+                                  (isDark
+                                          ? AppColors.cyanPrimary
+                                          : AppColors.cyanDark)
+                                      .withOpacity(0.32),
                             ),
                           ),
                           child: Row(

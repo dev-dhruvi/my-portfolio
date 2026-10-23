@@ -480,7 +480,10 @@ void main() {
 
         expect(find.text('All Projects'), findsOneWidget);
         expect(find.text('PROJECT DIRECTORY'), findsOneWidget);
-        expect(find.text('Pandits Near Me - Instant Puja'), findsAtLeastNWidgets(1));
+        expect(
+          find.text('Pandits Near Me - Instant Puja'),
+          findsAtLeastNWidgets(1),
+        );
         expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
         expect(tester.takeException(), isNull);
       },

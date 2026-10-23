@@ -72,10 +72,7 @@ class FooterSection extends StatelessWidget {
                   ),
                   IconButton(
                     tooltip: 'LinkedIn',
-                    icon: const FaIcon(
-                      FontAwesomeIcons.linkedinIn,
-                      size: 18,
-                    ),
+                    icon: const FaIcon(FontAwesomeIcons.linkedinIn, size: 18),
                     visualDensity: VisualDensity.compact,
                     onPressed: () => UrlLauncherUtil.openUrl(
                       profile.linkedinUrl,
@@ -86,8 +83,7 @@ class FooterSection extends StatelessWidget {
                     tooltip: 'Email',
                     icon: const Icon(Icons.mail_rounded, size: 20),
                     visualDensity: VisualDensity.compact,
-                    onPressed: () =>
-                        UrlLauncherUtil.openEmail(profile.email),
+                    onPressed: () => UrlLauncherUtil.openEmail(profile.email),
                   ),
                 ],
               );
@@ -95,11 +91,7 @@ class FooterSection extends StatelessWidget {
               if (isNarrow) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    socialIcons,
-                    const SizedBox(height: 6),
-                    brandText,
-                  ],
+                  children: [socialIcons, const SizedBox(height: 6), brandText],
                 );
               }
 

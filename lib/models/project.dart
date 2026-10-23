@@ -111,7 +111,8 @@ class Project {
       demoUrl: map['demoUrl'] ?? '',
       isFeatured: map['isFeatured'] ?? false,
       isPublished: map['isPublished'] ?? true,
-      isStatusActive: map['is_status_active'] ??
+      isStatusActive:
+          map['is_status_active'] ??
           map['isStatusActive'] ??
           map['isPublished'] ??
           true,

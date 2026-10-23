@@ -23,8 +23,9 @@ class ExperienceSection extends StatefulWidget {
 }
 
 class _ExperienceSectionState extends State<ExperienceSection> {
-  final ValueNotifier<double> _scrollProgressNotifier =
-      ValueNotifier<double>(0.0);
+  final ValueNotifier<double> _scrollProgressNotifier = ValueNotifier<double>(
+    0.0,
+  );
   ScrollPosition? _scrollPosition;
 
   @override
@@ -72,8 +73,8 @@ class _ExperienceSectionState extends State<ExperienceSection> {
     final totalScrollTravel = boxHeight + (screenHeight * 0.35);
     final distanceScrolled = enterThreshold - globalPos.dy;
 
-    final progress =
-        (distanceScrolled / math.max(1.0, totalScrollTravel)).clamp(0.0, 1.0);
+    final progress = (distanceScrolled / math.max(1.0, totalScrollTravel))
+        .clamp(0.0, 1.0);
     _scrollProgressNotifier.value = progress;
   }
 
@@ -436,10 +437,7 @@ class _TimelineAxisPainter extends CustomPainter {
     // 3. Sharp active gradient line
     final fillPaint = Paint()
       ..shader = LinearGradient(
-        colors: [
-          activeColor1,
-          activeColor2,
-        ],
+        colors: [activeColor1, activeColor2],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ).createShader(Rect.fromLTRB(x - 2, startY, x + 2, currentY))
@@ -496,7 +494,8 @@ class _TimelineNode extends StatelessWidget {
     return ValueListenableBuilder<double>(
       valueListenable: progressNotifier,
       builder: (context, progress, _) {
-        final isActive = progress >= threshold ||
+        final isActive =
+            progress >= threshold ||
             (MediaQuery.maybeDisableAnimationsOf(context) ?? false);
 
         return AnimatedContainer(
@@ -538,8 +537,8 @@ class _TimelineNode extends StatelessWidget {
               color: isActive
                   ? (isDark ? AppColors.cyanLight : AppColors.cyanDark)
                   : (isDark
-                      ? AppColors.textMutedDark
-                      : AppColors.textSecondaryLight),
+                        ? AppColors.textMutedDark
+                        : AppColors.textSecondaryLight),
             ),
           ),
         );
@@ -590,8 +589,9 @@ class _TimelineDateBadge extends StatelessWidget {
         right: isLeft ? 20.0 : 16.0,
       ),
       child: Column(
-        crossAxisAlignment:
-            isLeft ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isLeft
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           // Milestone Phase Pill
@@ -605,9 +605,7 @@ class _TimelineDateBadge extends StatelessWidget {
                 ],
               ),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: AppColors.cyanPrimary.withOpacity(0.3),
-              ),
+              border: Border.all(color: AppColors.cyanPrimary.withOpacity(0.3)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -672,10 +670,7 @@ class _TimelineDateBadge extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 experience.location,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: secondaryTextColor,
-                ),
+                style: TextStyle(fontSize: 12, color: secondaryTextColor),
               ),
             ],
           ),
@@ -691,10 +686,7 @@ class _ExperienceCard extends StatefulWidget {
   final Experience experience;
   final bool isMobile;
 
-  const _ExperienceCard({
-    required this.experience,
-    this.isMobile = false,
-  });
+  const _ExperienceCard({required this.experience, this.isMobile = false});
 
   @override
   State<_ExperienceCard> createState() => _ExperienceCardState();
@@ -707,10 +699,12 @@ class _ExperienceCardState extends State<_ExperienceCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor =
-        isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
-    final secondaryTextColor =
-        isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final textColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
+    final secondaryTextColor = isDark
+        ? AppColors.textSecondaryDark
+        : AppColors.textSecondaryLight;
 
     final responsibilities = widget.experience.responsibilities;
     const maxInitialItems = 3;
@@ -733,8 +727,9 @@ class _ExperienceCardState extends State<_ExperienceCard> {
           boxShadow: _isHovered
               ? [
                   BoxShadow(
-                    color: AppColors.violetPrimary
-                        .withOpacity(isDark ? 0.25 : 0.15),
+                    color: AppColors.violetPrimary.withOpacity(
+                      isDark ? 0.25 : 0.15,
+                    ),
                     blurRadius: 18,
                     spreadRadius: 1,
                     offset: const Offset(0, 6),
@@ -760,9 +755,9 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                           widget.experience.role,
                           style: AppTypography.getTitleLarge(textColor)
                               .copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: widget.isMobile ? 16 : 17.5,
-                          ),
+                                fontWeight: FontWeight.w700,
+                                fontSize: widget.isMobile ? 16 : 17.5,
+                              ),
                         ),
                         const SizedBox(height: 4),
                         Wrap(
@@ -831,9 +826,9 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                             style:
                                 AppTypography.getBodyMedium(secondaryTextColor)
                                     .copyWith(
-                              fontSize: widget.isMobile ? 12 : 12.5,
-                              height: 1.4,
-                            ),
+                                      fontSize: widget.isMobile ? 12 : 12.5,
+                                      height: 1.4,
+                                    ),
                           ),
                         ),
                       ],
@@ -934,9 +929,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
           decoration: BoxDecoration(
             color: AppColors.cyanPrimary.withOpacity(0.1),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: AppColors.cyanPrimary.withOpacity(0.25),
-            ),
+            border: Border.all(color: AppColors.cyanPrimary.withOpacity(0.25)),
           ),
           child: Text(
             widget.experience.endDate,

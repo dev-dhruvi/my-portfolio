@@ -80,16 +80,19 @@ class DynamicScrollIndicators extends StatelessWidget {
                           height: 8,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
-                            gradient: isActive ? AppColors.primaryGradient : null,
+                            gradient: isActive
+                                ? AppColors.primaryGradient
+                                : null,
                             color: isActive
                                 ? null
                                 : (isDark
-                                    ? Colors.white.withOpacity(0.2)
-                                    : Colors.black.withOpacity(0.16)),
+                                      ? Colors.white.withOpacity(0.2)
+                                      : Colors.black.withOpacity(0.16)),
                             boxShadow: isActive
                                 ? [
                                     BoxShadow(
-                                      color: AppColors.violetPrimary.withOpacity(0.45),
+                                      color: AppColors.violetPrimary
+                                          .withOpacity(0.45),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
                                     ),

@@ -47,7 +47,10 @@ void main() {
       expect(panditsProject.personalContribution, contains('CustomPainter'));
 
       // Verify newly added projects exist
-      expect(repo.projects.any((p) => p.title.contains('PMP Exam Prep')), isTrue);
+      expect(
+        repo.projects.any((p) => p.title.contains('PMP Exam Prep')),
+        isTrue,
+      );
       expect(repo.projects.any((p) => p.title.contains('Nirvana')), isTrue);
       expect(repo.projects.any((p) => p.title.contains('Reut')), isTrue);
       expect(repo.projects.any((p) => p.title.contains('Milos')), isTrue);

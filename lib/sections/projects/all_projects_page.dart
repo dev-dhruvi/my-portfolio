@@ -80,8 +80,10 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
         final isMobile = AppBreakpoints.isMobile(context);
         final batchSize = isMobile ? 4 : 6;
         setState(() {
-          _displayedCount =
-              math.min(_displayedCount + batchSize, allProjects.length);
+          _displayedCount = math.min(
+            _displayedCount + batchSize,
+            allProjects.length,
+          );
           _isLoadingMore = false;
         });
       }
@@ -109,14 +111,17 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
     final isTablet = AppBreakpoints.isTablet(context);
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor =
-        isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
-    final secondaryTextColor =
-        isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final textColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
+    final secondaryTextColor = isDark
+        ? AppColors.textSecondaryDark
+        : AppColors.textSecondaryLight;
 
     final allProjects = _getAllActiveProjects();
-    final displayedProjects =
-        allProjects.take(math.min(_displayedCount, allProjects.length)).toList();
+    final displayedProjects = allProjects
+        .take(math.min(_displayedCount, allProjects.length))
+        .toList();
     final bool hasReachedEnd = _displayedCount >= allProjects.length;
 
     return Scaffold(
@@ -244,9 +249,8 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                   const SizedBox(height: 10),
                   Text(
                     'All Client & Production Projects',
-                    style: AppTypography.getDisplayMedium(textColor).copyWith(
-                      fontSize: isMobile ? 24 : 32,
-                    ),
+                    style: AppTypography.getDisplayMedium(textColor)
+                        .copyWith(fontSize: isMobile ? 24 : 32),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -264,8 +268,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: displayedProjects.length,
-                      separatorBuilder: (_, _) =>
-                          const SizedBox(height: 18),
+                      separatorBuilder: (_, _) => const SizedBox(height: 18),
                       itemBuilder: (context, index) {
                         final project = displayedProjects[index];
                         return _AnimatedCardWrapper(
@@ -286,11 +289,11 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                       itemCount: displayedProjects.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 18,
-                        mainAxisSpacing: 18,
-                        mainAxisExtent: 315,
-                      ),
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 18,
+                            mainAxisSpacing: 18,
+                            mainAxisExtent: 315,
+                          ),
                       itemBuilder: (context, index) {
                         final project = displayedProjects[index];
                         return _AnimatedCardWrapper(
@@ -311,11 +314,11 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                       itemCount: displayedProjects.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 18,
-                        mainAxisSpacing: 18,
-                        mainAxisExtent: 315,
-                      ),
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 18,
+                            mainAxisSpacing: 18,
+                            mainAxisExtent: 315,
+                          ),
                       itemBuilder: (context, index) {
                         final project = displayedProjects[index];
                         return _AnimatedCardWrapper(
@@ -368,9 +371,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: (isDark
-                                  ? AppColors.darkCard
-                                  : Colors.white)
+                          color: (isDark ? AppColors.darkCard : Colors.white)
                               .withOpacity(0.9),
                           borderRadius: BorderRadius.circular(24),
                           border: Border.all(
@@ -380,7 +381,9 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(isDark ? 0.2 : 0.04),
+                              color: Colors.black.withOpacity(
+                                isDark ? 0.2 : 0.04,
+                              ),
                               blurRadius: 10,
                               offset: const Offset(0, 3),
                             ),
@@ -443,10 +446,7 @@ class _AnimatedCardWrapper extends StatelessWidget {
       builder: (context, value, child) {
         return Transform.translate(
           offset: Offset(0, 24 * (1.0 - value)),
-          child: Opacity(
-            opacity: value.clamp(0.0, 1.0),
-            child: child,
-          ),
+          child: Opacity(opacity: value.clamp(0.0, 1.0), child: child),
         );
       },
       child: child,

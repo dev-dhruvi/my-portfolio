@@ -65,9 +65,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     try {
       context.push('/projects');
     } catch (_) {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const AllProjectsPage()),
-      );
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => const AllProjectsPage()));
     }
   }
 
@@ -78,10 +77,12 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     final isDesktop = !isMobile && !isTablet;
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor =
-        isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
-    final secondaryTextColor =
-        isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final textColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
+    final secondaryTextColor = isDark
+        ? AppColors.textSecondaryDark
+        : AppColors.textSecondaryLight;
 
     // Filter active projects
     final activeProjects = widget.projects.where((project) {
@@ -106,8 +107,9 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment:
-            isDesktop ? MainAxisAlignment.center : MainAxisAlignment.start,
+        mainAxisAlignment: isDesktop
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
         children: [
           // Section Tag & Title
           Row(
@@ -206,8 +208,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       _animateToPage(index, desktopPageCount),
                   onPrevious: () =>
                       _animateToPage(safeIndex - 1, desktopPageCount),
-                  onNext: () =>
-                      _animateToPage(safeIndex + 1, desktopPageCount),
+                  onNext: () => _animateToPage(safeIndex + 1, desktopPageCount),
                 );
               },
             ),
@@ -392,9 +393,7 @@ class _DesktopSingleRowProjectSliderState
                         ),
                       )
                     else
-                      const Expanded(
-                        child: SizedBox.shrink(),
-                      ),
+                      const Expanded(child: SizedBox.shrink()),
                   ],
                 ],
               ),
@@ -672,8 +671,9 @@ class _ViewMoreButtonState extends State<ViewMoreButton> {
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: AppColors.violetPrimary
-                    .withOpacity(_isHovered ? 0.45 : 0.25),
+                color: AppColors.violetPrimary.withOpacity(
+                  _isHovered ? 0.45 : 0.25,
+                ),
                 blurRadius: _isHovered ? 20 : 12,
                 offset: Offset(0, _isHovered ? 6 : 3),
               ),
@@ -732,10 +732,12 @@ class _ProjectCardState extends State<ProjectCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor =
-        isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
-    final secondaryTextColor =
-        isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final textColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
+    final secondaryTextColor = isDark
+        ? AppColors.textSecondaryDark
+        : AppColors.textSecondaryLight;
     final project = widget.project;
 
     return MouseRegion(
@@ -754,19 +756,15 @@ class _ProjectCardState extends State<ProjectCard> {
           ),
           decoration: BoxDecoration(
             color: isDark
-                ? (_isHovered
-                    ? const Color(0xFF17172E)
-                    : AppColors.darkCard)
-                : (_isHovered
-                    ? const Color(0xFFF8FAFC)
-                    : AppColors.lightCard),
+                ? (_isHovered ? const Color(0xFF17172E) : AppColors.darkCard)
+                : (_isHovered ? const Color(0xFFF8FAFC) : AppColors.lightCard),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: _isHovered
                   ? AppColors.violetPrimary.withOpacity(0.85)
                   : (isDark
-                      ? AppColors.darkCardBorder
-                      : AppColors.lightCardBorder),
+                        ? AppColors.darkCardBorder
+                        : AppColors.lightCardBorder),
               width: _isHovered ? 1.5 : 1.0,
             ),
             boxShadow: [
@@ -969,8 +967,9 @@ class _ProjectCardState extends State<ProjectCard> {
                             Wrap(
                               spacing: 5,
                               runSpacing: 4,
-                              children:
-                                  project.technologies.take(3).map((tech) {
+                              children: project.technologies.take(3).map((
+                                tech,
+                              ) {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 6,
@@ -1026,17 +1025,21 @@ class _ProjectCardState extends State<ProjectCard> {
                                             vertical: 3,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: (isDark
-                                                    ? AppColors.cyanPrimary
-                                                    : AppColors.cyanDark)
-                                                .withOpacity(0.12),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                            color:
+                                                (isDark
+                                                        ? AppColors.cyanPrimary
+                                                        : AppColors.cyanDark)
+                                                    .withOpacity(0.12),
+                                            borderRadius: BorderRadius.circular(
+                                              5,
+                                            ),
                                             border: Border.all(
-                                              color: (isDark
-                                                      ? AppColors.cyanPrimary
-                                                      : AppColors.cyanDark)
-                                                  .withOpacity(0.3),
+                                              color:
+                                                  (isDark
+                                                          ? AppColors
+                                                                .cyanPrimary
+                                                          : AppColors.cyanDark)
+                                                      .withOpacity(0.3),
                                             ),
                                           ),
                                           child: Row(
@@ -1079,17 +1082,23 @@ class _ProjectCardState extends State<ProjectCard> {
                                             vertical: 3,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: (isDark
-                                                    ? AppColors.violetPrimary
-                                                    : AppColors.violetDark)
-                                                .withOpacity(0.12),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                            color:
+                                                (isDark
+                                                        ? AppColors
+                                                              .violetPrimary
+                                                        : AppColors.violetDark)
+                                                    .withOpacity(0.12),
+                                            borderRadius: BorderRadius.circular(
+                                              5,
+                                            ),
                                             border: Border.all(
-                                              color: (isDark
-                                                      ? AppColors.violetPrimary
-                                                      : AppColors.violetDark)
-                                                  .withOpacity(0.3),
+                                              color:
+                                                  (isDark
+                                                          ? AppColors
+                                                                .violetPrimary
+                                                          : AppColors
+                                                                .violetDark)
+                                                      .withOpacity(0.3),
                                             ),
                                           ),
                                           child: Row(
@@ -1134,8 +1143,8 @@ class _ProjectCardState extends State<ProjectCard> {
                                     color: _isHovered
                                         ? AppColors.cyanPrimary
                                         : (isDark
-                                            ? AppColors.cyanLight
-                                            : AppColors.violetPrimary),
+                                              ? AppColors.cyanLight
+                                              : AppColors.violetPrimary),
                                   ),
                                 ),
                                 const SizedBox(width: 3),
@@ -1147,8 +1156,8 @@ class _ProjectCardState extends State<ProjectCard> {
                                     color: _isHovered
                                         ? AppColors.cyanPrimary
                                         : (isDark
-                                            ? AppColors.cyanLight
-                                            : AppColors.violetPrimary),
+                                              ? AppColors.cyanLight
+                                              : AppColors.violetPrimary),
                                   ),
                                 ),
                               ],
@@ -1176,10 +1185,12 @@ class ProjectDetailDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor =
-        isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
-    final secondaryTextColor =
-        isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final textColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
+    final secondaryTextColor = isDark
+        ? AppColors.textSecondaryDark
+        : AppColors.textSecondaryLight;
     final isMobile = AppBreakpoints.isMobile(context);
 
     return Dialog(

@@ -418,29 +418,31 @@ class _HeroSectionState extends State<HeroSection> {
                 fit: BoxFit.scaleDown,
                 alignment: isCentered ? Alignment.center : Alignment.centerLeft,
                 child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 400),
-              transitionBuilder: (child, animation) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, 0.25),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
+                  duration: const Duration(milliseconds: 400),
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, 0.25),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: Text(
+                    AppConstants.animatedRoles[_currentRoleIndex],
+                    key: ValueKey<int>(_currentRoleIndex),
+                    style: TextStyle(
+                      fontSize: isMobile ? 18 : 22,
+                      fontWeight: FontWeight.w700,
+                      color: isDark
+                          ? AppColors.cyanPrimary
+                          : AppColors.cyanDark,
+                    ),
                   ),
-                );
-              },
-              child: Text(
-                AppConstants.animatedRoles[_currentRoleIndex],
-                key: ValueKey<int>(_currentRoleIndex),
-                style: TextStyle(
-                  fontSize: isMobile ? 18 : 22,
-                  fontWeight: FontWeight.w700,
-                  color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
                 ),
-              ),
-            ),
               ),
             ),
           ],
@@ -479,15 +481,17 @@ class _HeroSectionState extends State<HeroSection> {
                   Flexible(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      alignment: isCentered ? Alignment.center : Alignment.centerLeft,
+                      alignment: isCentered
+                          ? Alignment.center
+                          : Alignment.centerLeft,
                       child: Text(
                         AppConstants.location,
-                    style: TextStyle(
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w500,
-                      color: secondaryTextColor,
-                    ),
-                  ),
+                        style: TextStyle(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w500,
+                          color: secondaryTextColor,
+                        ),
+                      ),
                     ),
                   ),
                 ],

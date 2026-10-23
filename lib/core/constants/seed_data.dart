@@ -407,7 +407,7 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Real-time stock alerts not triggering while app was closed. Solution: Replaced polling with FCM high-priority data payloads.',
       verifiedOutcomes: 'Deployed to Google Play & Apple App Store.',
       appStoreUrl:
-      'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
+          'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/b0/d1/44/b0d144e8-fedc-befd-0868-f5bd0a5e2aaf/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.jpg',
       isFeatured: false,
       isPublished: true,
@@ -418,7 +418,7 @@ class SeedData {
       slug: 'muvr-user-app',
       title: 'Muvr User App',
       shortDescription:
-      'On-demand moving and logistics platform with dedicated User App.',
+          'On-demand moving and logistics platform with dedicated User App.',
       fullDescription: 'An on-demand logistics booking application connecting customers with professional moving service providers. Developed both the User App and Mover App using Flutter and GetX. Managed responsive layouts across all device sizes, mentored junior engineers on state management best practices, and maintained production stability.',
       category: 'Mobile App',
       companyName: 'White Orange Software',
@@ -434,7 +434,7 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
       appStoreUrl:
-      'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
+          'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/4c/26/c0/4c26c0ef-45b4-426e-6ecd-039ec9569644/Placeholder.mill/400x400Icon.ApSiOS01-75.webp',
       isFeatured: true,
       isPublished: true,
@@ -459,11 +459,11 @@ class SeedData {
       personalContribution: 'Architected the migration to GetX, resolved UI freeze issues on launch, integrated recipe search and filter APIs, and deployed to app stores.',
       challengesAndSolutions: 'Challenge: Laggy recipe list filtering and persistent splash screen delays. Solution: Refactored data fetching into GetX workers and implemented cached local storage with SharedPreferences.',
       verifiedOutcomes:
-      'Successfully published on Google Play Store & Apple App Store.',
+          'Successfully published on Google Play Store & Apple App Store.',
       imageUrl: 'https://play-lh.googleusercontent.com/8nteAV4V8jELN5nHTGWKR4XZpKpbR5FA31agItrvYrBEwUuDLmYuPAXF7Pz5X8eKuH-ske7pZPs41jmVm-6c=w832-h470-rw',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.thehealthiindian',
       appStoreUrl:
-      'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
+          'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
       isFeatured: true,
       isPublished: true,
       orderIndex: 7,
@@ -497,7 +497,7 @@ class SeedData {
       imageUrl: 'https://play-lh.googleusercontent.com/sFcN7Jo7Y9zs4gVZNXoNjbYF7ZySPMzYlt9kYGWN2SSll-j_jzFkMmH074LF6FfuQL66DlFlcR0tvoh3k54IOA=w832-h470-rw',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.nzealand.radioSpice',
       appStoreUrl:
-      'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
+          'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
       isFeatured: true,
       isPublished: true,
       orderIndex: 8,
@@ -587,7 +587,8 @@ class SeedData {
       verifiedOutcomes: 'Interactive certification quiz engine with full attempt analytics, referral deep linking, and smooth ad monetization.',
       isFeatured: true,
       isPublished: true,
-      playStoreUrl: "https://play.google.com/store/apps/details?id=com.pmp.examprep",
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.pmp.examprep",
       orderIndex: 2,
     ),
     const Project(
@@ -623,7 +624,8 @@ class SeedData {
       verifiedOutcomes: 'End-to-end property purchase engine with interactive PDF agreements, live unit reservation status, and iOS TestFlight deployment.',
       isFeatured: true,
       isPublished: true,
-      playStoreUrl: "https://play.google.com/store/apps/details?id=com.cscp.mynirvana",
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.cscp.mynirvana",
       appStoreUrl: "https://apps.apple.com/my/app/my-nirvana/id1555172257",
       orderIndex: 3,
     ),
@@ -693,7 +695,8 @@ class SeedData {
       verifiedOutcomes: 'Multi-court booking engine with dynamic time-slot reservation and streamlined payment checkout.',
       isFeatured: false,
       isPublished: true,
-      playStoreUrl: "https://play.google.com/store/apps/details?id=com.milos.padel",
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.milos.padel",
       appStoreUrl: "https://apps.apple.com/id/app/milos-padel/id6737511643",
       orderIndex: 5,
     ),
@@ -725,7 +728,8 @@ class SeedData {
       verifiedOutcomes: 'Resolved authentication bottlenecks and improved cross-environment API reliability.',
       isFeatured: false,
       isPublished: true,
-      playStoreUrl: "https://play.google.com/store/apps/details?id=com.minder_app",
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.minder_app",
       orderIndex: 6,
     ),
 
