@@ -456,7 +456,7 @@ class _ProjectCard extends StatelessWidget {
             children: [
               AppNetworkImage(
                 imageUrl: project.displayImageUrl,
-                height: 145,
+                height: 245,
                 width: double.infinity,
                 placeholderText: project.title,
                 fallbackIcon: Icons.phone_iphone_rounded,

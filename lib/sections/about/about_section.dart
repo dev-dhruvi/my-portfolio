@@ -68,13 +68,15 @@ class AboutSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
-                'ABOUT ME',
-                style: TextStyle(
-                  color: AppColors.cyanPrimary,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  letterSpacing: 1.5,
+              Flexible(
+                child: Text(
+                  'ABOUT ME',
+                  style: const TextStyle(
+                    color: AppColors.cyanPrimary,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    letterSpacing: 1.5,
+                  ),
                 ),
               ),
             ],
@@ -127,17 +129,130 @@ class AboutSection extends StatelessWidget {
                 ),
               ],
             ),
-          const SizedBox(height: 20),
+
+          // Key Highlights Header (Mobile view matching reference design)
+          if (isMobile) ...[
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Container(
+                  width: 3.5,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    'Key Highlights',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: textColor,
+                      letterSpacing: -0.4,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'A quick look at my journey, achievements and contributions in the tech world.',
+              style: TextStyle(
+                fontSize: 13,
+                height: 1.45,
+                color: secondaryTextColor,
+              ),
+            ),
+            const SizedBox(height: 14),
+          ] else
+            const SizedBox(height: 20),
 
           // Key Highlights Metric Cards with Animated Counting Numbers
           LayoutBuilder(
             builder: (context, constraints) {
-                            // Responsive column count based on available width:
-              // Mobile (< 600px): 1 column, Tablet (600px - 1000px): 2 columns, Desktop (> 1000px): 4 columns
-              final int columns = constraints.maxWidth < 600
-                  ? 1
-                  : (constraints.maxWidth < 1000 ? 2 : 4);
-              final double cardWidth = (constraints.maxWidth - ((columns - 1) * 16)) / columns;
+              if (isMobile || constraints.maxWidth < 600) {
+                // Mobile UI: Exact 2 x 2 grid with centered content, matching reference screenshot
+                final card1 = _HighlightCard(
+                  key: ValueKey('highlight_exp_$animationTrigger'),
+                  value: '4+ Years',
+                  numericTarget: 4,
+                  suffix: '+ Years',
+                  label: 'Hands-on Experience',
+                  icon: Icons.trending_up_rounded,
+                  accentColor: AppColors.violetPrimary,
+                  animationTrigger: animationTrigger,
+                  isCentered: true,
+                );
+                final card2 = _HighlightCard(
+                  key: ValueKey('highlight_releases_$animationTrigger'),
+                  value: '50+ Releases',
+                  numericTarget: 50,
+                  suffix: '+ Releases',
+                  label: 'Play Store & App Store',
+                  icon: Icons.rocket_launch_rounded,
+                  accentColor: const Color(0xFFF59E0B),
+                  animationTrigger: animationTrigger,
+                  isCentered: true,
+                );
+                final card3 = _HighlightCard(
+                  key: ValueKey('highlight_projects_$animationTrigger'),
+                  value: '20+ Projects',
+                  numericTarget: 20,
+                  suffix: '+ Projects',
+                  label: 'Built & Deployed',
+                  icon: Icons.layers_rounded,
+                  accentColor: AppColors.cyanPrimary,
+                  animationTrigger: animationTrigger,
+                  isCentered: true,
+                );
+                final card4 = _HighlightCard(
+                  key: ValueKey('highlight_edu_$animationTrigger'),
+                  value: 'MCA & BCA',
+                  numericTarget: null,
+                  suffix: '',
+                  label: 'GTU & VNSGU Distinction',
+                  icon: Icons.school_rounded,
+                  accentColor: AppColors.bluePrimary,
+                  animationTrigger: animationTrigger,
+                  isCentered: true,
+                );
+
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(child: card1),
+                          const SizedBox(width: 12),
+                          Expanded(child: card2),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(child: card3),
+                          const SizedBox(width: 12),
+                          Expanded(child: card4),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              // Tablet (600px - 1000px): 2 columns, Desktop (> 1000px): 4 columns
+              final int columns = constraints.maxWidth < 1000 ? 2 : 4;
+              final double cardWidth =
+                  (constraints.maxWidth - ((columns - 1) * 16)) / columns;
+
               return Wrap(
                 spacing: 16,
                 runSpacing: 16,
@@ -152,6 +267,7 @@ class AboutSection extends StatelessWidget {
                     icon: Icons.timeline_rounded,
                     accentColor: AppColors.violetPrimary,
                     animationTrigger: animationTrigger,
+                    isCentered: false,
                   ),
                   _HighlightCard(
                     key: ValueKey('highlight_releases_$animationTrigger'),
@@ -163,6 +279,7 @@ class AboutSection extends StatelessWidget {
                     icon: Icons.rocket_launch_outlined,
                     accentColor: const Color(0xFFF59E0B),
                     animationTrigger: animationTrigger,
+                    isCentered: false,
                   ),
                   _HighlightCard(
                     key: ValueKey('highlight_projects_$animationTrigger'),
@@ -174,6 +291,7 @@ class AboutSection extends StatelessWidget {
                     icon: Icons.layers_outlined,
                     accentColor: AppColors.cyanPrimary,
                     animationTrigger: animationTrigger,
+                    isCentered: false,
                   ),
                   _HighlightCard(
                     key: ValueKey('highlight_edu_$animationTrigger'),
@@ -185,6 +303,7 @@ class AboutSection extends StatelessWidget {
                     icon: Icons.school_outlined,
                     accentColor: AppColors.bluePrimary,
                     animationTrigger: animationTrigger,
+                    isCentered: false,
                   ),
                 ],
               );
@@ -207,10 +326,37 @@ class AboutSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Professional Background',
-            style: AppTypography.getTitleMedium(textColor)
-                .copyWith(fontWeight: FontWeight.w700),
+          Row(
+            children: [
+              if (isMobile) ...[
+                Container(
+                  padding: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    color: AppColors.violetPrimary.withOpacity(isDark ? 0.22 : 0.12),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: AppColors.violetPrimary.withOpacity(isDark ? 0.4 : 0.25),
+                      width: 1,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.person_outline_rounded,
+                    size: 18,
+                    color: AppColors.violetLight,
+                  ),
+                ),
+                const SizedBox(width: 10),
+              ],
+              Flexible(
+                child: Text(
+                  'Professional Background',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.getTitleMedium(textColor)
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 8),
           Text(
@@ -320,71 +466,78 @@ class _AboutCharacterStage extends StatelessWidget {
                   ),
                 ),
               ),
-              // Outer subtle glass accent ring
-              Container(
-                width: isMobile ? 225 : 275,
-                height: isMobile ? 225 : 275,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: isDark
-                        ? Colors.white.withOpacity(0.12)
-                        : AppColors.violetPrimary.withOpacity(0.2),
-                    width: 1.5,
+
+              // 3D Anime Character - Senior Software Engineer
+              Positioned(
+                bottom: 0,
+                child: Image.asset(
+                  'assets/images/developer_character_business.png',
+                  height: isMobile ? 260 : 320,
+                  fit: BoxFit.contain,
+                  filterQuality: FilterQuality.high,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: isMobile ? 180 : 220,
+                    height: isMobile ? 220 : 280,
+                    decoration: BoxDecoration(
+                      color: AppColors.violetPrimary.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: const Icon(
+                      Icons.person_rounded,
+                      size: 64,
+                      color: AppColors.violetPrimary,
+                    ),
                   ),
                 ),
               ),
-              // 3D Business anime developer illustration
-              Image.asset(
-                'assets/images/developer_character_business.png',
-                height: isMobile ? 250 : 310,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) =>
-                    const SizedBox.shrink(),
-              ),
-              // Floating badge at bottom of character
+
+              // Floating Badge: Clean Architecture Specialist
               Positioned(
-                bottom: 4,
+                bottom: 8,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 14,
-                    vertical: 6,
+                    vertical: 7,
                   ),
                   decoration: BoxDecoration(
-                    color: (isDark ? AppColors.darkCard : Colors.white)
-                        .withOpacity(0.92),
-                    borderRadius: BorderRadius.circular(20),
+                    color: (isDark
+                            ? AppColors.darkSurface
+                            : AppColors.lightSurface)
+                        .withOpacity(0.85),
+                    borderRadius: BorderRadius.circular(30),
                     border: Border.all(
                       color: isDark
-                          ? AppColors.darkCardBorder
-                          : AppColors.lightCardBorder,
+                          ? AppColors.violetPrimary.withOpacity(0.4)
+                          : AppColors.violetPrimary.withOpacity(0.25),
+                      width: 1,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(isDark ? 0.3 : 0.08),
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
+                        color: AppColors.violetPrimary.withOpacity(0.25),
+                        blurRadius: 16,
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                          color: AppColors.success,
-                          shape: BoxShape.circle,
-                        ),
+                      const Icon(
+                        Icons.verified_rounded,
+                        size: 15,
+                        color: AppColors.cyanPrimary,
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        'Clean Architecture Specialist',
-                        style: TextStyle(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w700,
-                          color: isDark ? Colors.white : AppColors.darkBackground,
+                      Flexible(
+                        child: Text(
+                          'Clean Architecture Specialist',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w700,
+                            color: isDark ? Colors.white : AppColors.darkBackground,
+                          ),
                         ),
                       ),
                     ],
@@ -400,7 +553,7 @@ class _AboutCharacterStage extends StatelessWidget {
 }
 
 class _HighlightCard extends StatelessWidget {
-  final double width;
+  final double? width;
   final String value;
   final int? numericTarget;
   final String suffix;
@@ -408,10 +561,11 @@ class _HighlightCard extends StatelessWidget {
   final IconData icon;
   final Color accentColor;
   final int animationTrigger;
+  final bool isCentered;
 
   const _HighlightCard({
     super.key,
-    required this.width,
+    this.width,
     required this.value,
     this.numericTarget,
     this.suffix = '',
@@ -419,6 +573,7 @@ class _HighlightCard extends StatelessWidget {
     required this.icon,
     required this.accentColor,
     this.animationTrigger = 0,
+    this.isCentered = false,
   });
 
   @override
@@ -431,61 +586,131 @@ class _HighlightCard extends StatelessWidget {
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
 
-    return SizedBox(
-      width: width,
-      child: GlassCard(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: accentColor.withOpacity(0.12),
-                borderRadius: BorderRadius.circular(8),
+    final cardContent = isCentered
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: accentColor.withOpacity(isDark ? 0.16 : 0.12),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: accentColor.withOpacity(isDark ? 0.32 : 0.22),
+                    width: 1,
+                  ),
+                ),
+                child: Icon(icon, color: accentColor, size: 24),
               ),
-              child: Icon(icon, color: accentColor, size: 20),
-            ),
-            const SizedBox(height: 10),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: numericTarget != null
-                  ? _AnimatedCounterText(
-                      key: ValueKey('counter__'),
-                      targetValue: numericTarget!,
-                      suffix: suffix,
-                      fallbackText: value,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: textColor,
-                        letterSpacing: -0.5,
+              const SizedBox(height: 12),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.center,
+                child: numericTarget != null
+                    ? _AnimatedCounterText(
+                        key: ValueKey('counter_${label}_$animationTrigger'),
+                        targetValue: numericTarget!,
+                        suffix: suffix,
+                        fallbackText: value,
+                        isCentered: true,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: textColor,
+                          letterSpacing: -0.5,
+                        ),
+                      )
+                    : Text(
+                        value,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: textColor,
+                          letterSpacing: -0.5,
+                        ),
                       ),
-                    )
-                  : Text(
-                      value,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: textColor,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-            ),
-            const SizedBox(height: 3),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: secondaryTextColor,
               ),
-            ),
-          ],
-        ),
+              const SizedBox(height: 6),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: secondaryTextColor,
+                  height: 1.3,
+                ),
+              ),
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: accentColor.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, color: accentColor, size: 20),
+              ),
+              const SizedBox(height: 10),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: numericTarget != null
+                    ? _AnimatedCounterText(
+                        key: ValueKey('counter__'),
+                        targetValue: numericTarget!,
+                        suffix: suffix,
+                        fallbackText: value,
+                        isCentered: false,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: textColor,
+                          letterSpacing: -0.5,
+                        ),
+                      )
+                    : Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: textColor,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: secondaryTextColor,
+                ),
+              ),
+            ],
+          );
+
+    final card = GlassCard(
+      padding: EdgeInsets.symmetric(
+        horizontal: isCentered ? 12 : 16,
+        vertical: isCentered ? 18 : 14,
       ),
+      child: cardContent,
     );
+
+    if (width != null) {
+      return SizedBox(width: width, child: card);
+    }
+    return card;
   }
 }
 
@@ -494,6 +719,7 @@ class _AnimatedCounterText extends StatelessWidget {
   final String suffix;
   final String fallbackText;
   final TextStyle style;
+  final bool isCentered;
 
   const _AnimatedCounterText({
     super.key,
@@ -501,6 +727,7 @@ class _AnimatedCounterText extends StatelessWidget {
     required this.suffix,
     required this.fallbackText,
     required this.style,
+    this.isCentered = false,
   });
 
   @override
@@ -508,7 +735,11 @@ class _AnimatedCounterText extends StatelessWidget {
     final disableAnimations =
         MediaQuery.maybeOf(context)?.disableAnimations ?? false;
     if (disableAnimations) {
-      return Text('$targetValue$suffix', style: style);
+      return Text(
+        '$targetValue$suffix',
+        style: style,
+        textAlign: isCentered ? TextAlign.center : TextAlign.start,
+      );
     }
 
     return TweenAnimationBuilder<double>(
@@ -521,10 +752,14 @@ class _AnimatedCounterText extends StatelessWidget {
             : (value / targetValue).clamp(0.0, 1.0);
         return Transform.scale(
           scale: 0.94 + (0.06 * progress),
-          alignment: Alignment.centerLeft,
+          alignment: isCentered ? Alignment.center : Alignment.centerLeft,
           child: Opacity(
             opacity: (0.35 + 0.65 * progress).clamp(0.0, 1.0),
-            child: Text('${value.toInt()}$suffix', style: style),
+            child: Text(
+              '${value.toInt()}$suffix',
+              style: style,
+              textAlign: isCentered ? TextAlign.center : TextAlign.start,
+            ),
           ),
         );
       },

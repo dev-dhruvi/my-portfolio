@@ -413,5 +413,38 @@ void main() {
         expect(tester.takeException(), isNull);
       },
     );
+
+    testWidgets(
+      'AboutSection Key Highlights renders 2x2 grid with equal height cards on mobile',
+      (tester) async {
+        tester.view.physicalSize = const Size(375, 812);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(() => tester.view.resetPhysicalSize());
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(375, 812),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: AboutSection(profile: SeedData.initialProfile),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('Key Highlights'), findsOneWidget);
+        expect(find.text('Hands-on Experience'), findsOneWidget);
+        expect(find.text('Play Store & App Store'), findsOneWidget);
+        expect(find.text('Built & Deployed'), findsOneWidget);
+        expect(find.text('GTU & VNSGU Distinction'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
   });
 }
