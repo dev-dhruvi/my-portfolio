@@ -88,18 +88,21 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
     final allProjects = _getAllActiveProjects();
     final int totalProjects = allProjects.length;
     final int itemsPerPage = _getItemsPerPage(context);
-    final int pageCount =
-        totalProjects == 0 ? 1 : (totalProjects / itemsPerPage).ceil();
-    final int safeCurrentPage =
-        _currentPage.clamp(0, math.max(0, pageCount - 1));
+    final int pageCount = totalProjects == 0
+        ? 1
+        : (totalProjects / itemsPerPage).ceil();
+    final int safeCurrentPage = _currentPage.clamp(
+      0,
+      math.max(0, pageCount - 1),
+    );
 
     final int startIndex = safeCurrentPage * itemsPerPage;
     final int endIndex = math.min(startIndex + itemsPerPage, totalProjects);
     final List<Project> displayedProjects = _showAll
         ? allProjects
         : (totalProjects == 0
-            ? <Project>[]
-            : allProjects.sublist(startIndex, endIndex));
+              ? <Project>[]
+              : allProjects.sublist(startIndex, endIndex));
 
     return Scaffold(
       appBar: AppBar(
@@ -351,8 +354,9 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                               vertical: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: (isDark ? AppColors.darkCard : Colors.white)
-                                  .withOpacity(0.9),
+                              color:
+                                  (isDark ? AppColors.darkCard : Colors.white)
+                                      .withOpacity(0.9),
                               borderRadius: BorderRadius.circular(24),
                               border: Border.all(
                                 color: isDark
@@ -453,22 +457,26 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
                 ),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor:
-                      isDark ? AppColors.cyanLight : AppColors.cyanDark,
-                  disabledForegroundColor:
-                      isDark ? Colors.white24 : Colors.black26,
+                  foregroundColor: isDark
+                      ? AppColors.cyanLight
+                      : AppColors.cyanDark,
+                  disabledForegroundColor: isDark
+                      ? Colors.white24
+                      : Colors.black26,
                   side: BorderSide(
                     color: hasPrev
                         ? (isDark
-                            ? AppColors.cyanPrimary.withOpacity(0.4)
-                            : AppColors.violetPrimary.withOpacity(0.3))
+                              ? AppColors.cyanPrimary.withOpacity(0.4)
+                              : AppColors.violetPrimary.withOpacity(0.3))
                         : (isDark ? Colors.white12 : Colors.black12),
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 10,
+                  ),
                 ),
               ),
 
@@ -486,8 +494,9 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                         height: 38,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          gradient:
-                              isSelected ? AppColors.primaryGradient : null,
+                          gradient: isSelected
+                              ? AppColors.primaryGradient
+                              : null,
                           color: isSelected
                               ? null
                               : (isDark ? AppColors.darkCard : Colors.white),
@@ -496,8 +505,8 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                             color: isSelected
                                 ? Colors.transparent
                                 : (isDark
-                                    ? AppColors.darkCardBorder
-                                    : AppColors.lightCardBorder),
+                                      ? AppColors.darkCardBorder
+                                      : AppColors.lightCardBorder),
                             width: 1,
                           ),
                           boxShadow: isSelected
@@ -537,22 +546,26 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                 ),
                 icon: const Icon(Icons.arrow_forward_ios_rounded, size: 13),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor:
-                      isDark ? AppColors.cyanLight : AppColors.cyanDark,
-                  disabledForegroundColor:
-                      isDark ? Colors.white24 : Colors.black26,
+                  foregroundColor: isDark
+                      ? AppColors.cyanLight
+                      : AppColors.cyanDark,
+                  disabledForegroundColor: isDark
+                      ? Colors.white24
+                      : Colors.black26,
                   side: BorderSide(
                     color: hasNext
                         ? (isDark
-                            ? AppColors.cyanPrimary.withOpacity(0.4)
-                            : AppColors.violetPrimary.withOpacity(0.3))
+                              ? AppColors.cyanPrimary.withOpacity(0.4)
+                              : AppColors.violetPrimary.withOpacity(0.3))
                         : (isDark ? Colors.white12 : Colors.black12),
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 10,
+                  ),
                 ),
               ),
             ],

@@ -238,7 +238,9 @@ class _SkillsSectionState extends State<SkillsSection> {
                 size: 14.5,
                 color: isSelected
                     ? Colors.white
-                    : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
+                    : (isDark
+                          ? const Color(0xFF94A3B8)
+                          : const Color(0xFF64748B)),
               ),
               const SizedBox(width: 7),
             ],
@@ -249,7 +251,9 @@ class _SkillsSectionState extends State<SkillsSection> {
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                 color: isSelected
                     ? Colors.white
-                    : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
+                    : (isDark
+                          ? const Color(0xFF94A3B8)
+                          : const Color(0xFF64748B)),
               ),
             ),
           ],
@@ -285,11 +289,7 @@ class _SkillsSectionState extends State<SkillsSection> {
         // Category Header (Icon + Title)
         Row(
           children: [
-            Icon(
-              categoryIcon,
-              size: 19,
-              color: AppColors.cyanPrimary,
-            ),
+            Icon(categoryIcon, size: 19, color: AppColors.cyanPrimary),
             const SizedBox(width: 8),
             Text(
               categoryName,
@@ -360,14 +360,25 @@ class _SkillBrandCardState extends State<_SkillBrandCard> {
     final id = skill.id.toLowerCase();
     final name = skill.name.toLowerCase();
 
-    if (id == 'sk_flutter' || (name.contains('flutter') && !name.contains('flow'))) {
+    if (id == 'sk_flutter' ||
+        (name.contains('flutter') && !name.contains('flow'))) {
       return 'Flutter';
     }
-    if (id == 'sk_dart' || name == 'dart') return 'Dart';
-    if (id == 'sk_getx' || name.contains('getx')) return 'GetX';
-    if (id == 'sk_flutterflow' || name.contains('flutterflow')) return 'FlutterFlow';
-    if (id == 'sk_android' || name.contains('android')) return 'Android Studio';
-    if (id == 'sk_ios' || name.contains('ios')) return 'iOS';
+    if (id == 'sk_dart' || name == 'dart') {
+      return 'Dart';
+    }
+    if (id == 'sk_getx' || name.contains('getx')) {
+      return 'GetX';
+    }
+    if (id == 'sk_flutterflow' || name.contains('flutterflow')) {
+      return 'FlutterFlow';
+    }
+    if (id == 'sk_android' || name.contains('android')) {
+      return 'Android Studio';
+    }
+    if (id == 'sk_ios' || name.contains('ios')) {
+      return 'iOS';
+    }
 
     if (id == 'sk_firebase_auth' ||
         (name.contains('firebase') &&
@@ -375,18 +386,40 @@ class _SkillBrandCardState extends State<_SkillBrandCard> {
             !name.contains('crashlytics'))) {
       return 'Firebase';
     }
-    if (id == 'sk_fcm' || name.contains('fcm')) return 'FCM';
-    if (id == 'sk_aws_iot' || name.contains('aws')) return 'AWS IoT';
-    if (id == 'sk_rest_jwt' || name.contains('rest')) return 'REST APIs';
-    if (id == 'sk_crashlytics' || name.contains('crashlytics')) return 'Crashlytics';
-    if (id == 'sk_python_automation' || name.contains('python')) return 'Python';
+    if (id == 'sk_fcm' || name.contains('fcm')) {
+      return 'FCM';
+    }
+    if (id == 'sk_aws_iot' || name.contains('aws')) {
+      return 'AWS IoT';
+    }
+    if (id == 'sk_rest_jwt' || name.contains('rest')) {
+      return 'REST APIs';
+    }
+    if (id == 'sk_crashlytics' || name.contains('crashlytics')) {
+      return 'Crashlytics';
+    }
+    if (id == 'sk_python_automation' || name.contains('python')) {
+      return 'Python';
+    }
 
-    if (id == 'sk_clean_arch' || name.contains('clean')) return 'Clean Architecture';
-    if (id == 'sk_testing' || name.contains('testing')) return 'Testing';
-    if (id == 'sk_perf_opt' || name.contains('perf')) return 'Performance';
-    if (id == 'sk_git' || name.contains('git')) return 'Git';
-    if (id == 'sk_integrations' || name.contains('integration')) return 'Integrations';
-    if (id == 'sk_hive' || name.contains('hive')) return 'Hive DB';
+    if (id == 'sk_clean_arch' || name.contains('clean')) {
+      return 'Clean Architecture';
+    }
+    if (id == 'sk_testing' || name.contains('testing')) {
+      return 'Testing';
+    }
+    if (id == 'sk_perf_opt' || name.contains('perf')) {
+      return 'Performance';
+    }
+    if (id == 'sk_git' || name.contains('git')) {
+      return 'Git';
+    }
+    if (id == 'sk_integrations' || name.contains('integration')) {
+      return 'Integrations';
+    }
+    if (id == 'sk_hive' || name.contains('hive')) {
+      return 'Hive DB';
+    }
 
     return skill.name;
   }
@@ -420,9 +453,7 @@ class _SkillBrandCardState extends State<_SkillBrandCard> {
         decoration: BoxDecoration(
           color: const Color(0xFF0F172A).withOpacity(0.95),
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: AppColors.cyanPrimary.withOpacity(0.4),
-          ),
+          border: Border.all(color: AppColors.cyanPrimary.withOpacity(0.4)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.3),
@@ -434,23 +465,21 @@ class _SkillBrandCardState extends State<_SkillBrandCard> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutCubic,
-          transform: Matrix4.translationValues(
-            0,
-            _isHovered ? -4.0 : 0.0,
-            0,
-          ),
+          transform: Matrix4.translationValues(0, _isHovered ? -4.0 : 0.0, 0),
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
           decoration: BoxDecoration(
             color: isDark
-                ? (_isHovered ? const Color(0xFF131B34) : const Color(0xFF0B1020))
+                ? (_isHovered
+                      ? const Color(0xFF131B34)
+                      : const Color(0xFF0B1020))
                 : (_isHovered ? const Color(0xFFF8FAFC) : Colors.white),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: _isHovered
                   ? AppColors.cyanPrimary.withOpacity(0.85)
                   : (isDark
-                      ? const Color(0xFF1E2848)
-                      : const Color(0xFFE2E8F0)),
+                        ? const Color(0xFF1E2848)
+                        : const Color(0xFFE2E8F0)),
               width: _isHovered ? 1.5 : 1.0,
             ),
             boxShadow: [

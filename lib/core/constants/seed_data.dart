@@ -224,8 +224,7 @@ class SeedData {
       name: 'iOS App Deployment',
       category: 'Mobile & Frameworks',
       iconName: 'apple',
-      description:
-          'Configure iOS builds, signing, provisioning, and App Store releases.',
+      description: 'Configure iOS builds, signing, provisioning, and App Store releases.',
       isHighlighted: false,
       orderIndex: 5,
     ),
@@ -236,8 +235,7 @@ class SeedData {
       name: 'Firebase Authentication & Firestore',
       category: 'Cloud & Backend',
       iconName: 'fire',
-      description:
-          'Implement authentication and cloud-based data storage.',
+      description: 'Implement authentication and cloud-based data storage.',
       isHighlighted: true,
       orderIndex: 6,
     ),
@@ -256,8 +254,7 @@ class SeedData {
       name: 'AWS IoT Core & MQTT',
       category: 'Cloud & Backend',
       iconName: 'cloud',
-      description:
-          'Enable real-time, bidirectional messaging through MQTT.',
+      description: 'Enable real-time, bidirectional messaging through MQTT.',
       isHighlighted: true,
       orderIndex: 8,
     ),
@@ -266,8 +263,7 @@ class SeedData {
       name: 'Dio, REST APIs & JWT',
       category: 'Cloud & Backend',
       iconName: 'key',
-      description:
-          'Integrate APIs with authentication, interceptors, and error handling.',
+      description: 'Integrate APIs with authentication, interceptors, and error handling.',
       isHighlighted: true,
       orderIndex: 9,
     ),
@@ -308,8 +304,7 @@ class SeedData {
       name: 'Automated Testing',
       category: 'Architecture & Quality',
       iconName: 'check_circle',
-      description:
-          'Write unit, widget, and integration tests using Flutter testing tools.',
+      description: 'Write unit, widget, and integration tests using Flutter testing tools.',
       isHighlighted: false,
       orderIndex: 13,
     ),
@@ -318,8 +313,7 @@ class SeedData {
       name: 'Performance Optimization',
       category: 'Architecture & Quality',
       iconName: 'bolt',
-      description:
-          'Profile rendering, investigate memory issues, and improve app performance.',
+      description: 'Profile rendering, investigate memory issues, and improve app performance.',
       isHighlighted: false,
       orderIndex: 14,
     ),
@@ -328,8 +322,7 @@ class SeedData {
       name: 'Git & Version Control',
       category: 'Architecture & Quality',
       iconName: 'branch',
-      description:
-          'Manage branches, collaborate through pull requests, and review code.',
+      description: 'Manage branches, collaborate through pull requests, and review code.',
       isHighlighted: false,
       orderIndex: 15,
     ),
@@ -338,8 +331,7 @@ class SeedData {
       name: 'Third-Party Integrations & Local Storage',
       category: 'Architecture & Quality',
       iconName: 'plug',
-      description:
-          'Integrate DocuSign and Google Places, and manage local data with Hive.',
+      description: 'Integrate DocuSign and Google Places, and manage local data with Hive.',
       isHighlighted: false,
       orderIndex: 16,
     ),

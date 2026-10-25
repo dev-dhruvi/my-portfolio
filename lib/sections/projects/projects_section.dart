@@ -975,9 +975,7 @@ class _ProjectCardState extends State<ProjectCard> {
                   Wrap(
                     spacing: 5,
                     runSpacing: 4,
-                    children: project.technologies.take(3).map((
-                      tech,
-                    ) {
+                    children: project.technologies.take(3).map((tech) {
                       return Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 6,
@@ -1039,14 +1037,11 @@ class _ProjectCardState extends State<ProjectCard> {
                                               ? AppColors.cyanPrimary
                                               : AppColors.cyanDark)
                                           .withOpacity(0.12),
-                                  borderRadius: BorderRadius.circular(
-                                    5,
-                                  ),
+                                  borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
                                     color:
                                         (isDark
-                                                ? AppColors
-                                                      .cyanPrimary
+                                                ? AppColors.cyanPrimary
                                                 : AppColors.cyanDark)
                                             .withOpacity(0.3),
                                   ),
@@ -1093,20 +1088,15 @@ class _ProjectCardState extends State<ProjectCard> {
                                 decoration: BoxDecoration(
                                   color:
                                       (isDark
-                                              ? AppColors
-                                                    .violetPrimary
+                                              ? AppColors.violetPrimary
                                               : AppColors.violetDark)
                                           .withOpacity(0.12),
-                                  borderRadius: BorderRadius.circular(
-                                    5,
-                                  ),
+                                  borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
                                     color:
                                         (isDark
-                                                ? AppColors
-                                                      .violetPrimary
-                                                : AppColors
-                                                      .violetDark)
+                                                ? AppColors.violetPrimary
+                                                : AppColors.violetDark)
                                             .withOpacity(0.3),
                                   ),
                                 ),
@@ -1190,7 +1180,9 @@ class _ProjectCardState extends State<ProjectCard> {
             decoration: BoxDecoration(
               color: isDark
                   ? (_isHovered ? const Color(0xFF17172E) : AppColors.darkCard)
-                  : (_isHovered ? const Color(0xFFF8FAFC) : AppColors.lightCard),
+                  : (_isHovered
+                        ? const Color(0xFFF8FAFC)
+                        : AppColors.lightCard),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: _isHovered
@@ -1231,7 +1223,9 @@ class _ProjectCardState extends State<ProjectCard> {
               borderRadius: BorderRadius.circular(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: isBoundedHeight ? MainAxisSize.max : MainAxisSize.min,
+                mainAxisSize: isBoundedHeight
+                    ? MainAxisSize.max
+                    : MainAxisSize.min,
                 children: [
                   // Project Thumbnail Header with Floating Badges
                   Stack(
@@ -1297,7 +1291,9 @@ class _ProjectCardState extends State<ProjectCard> {
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.violetPrimary.withOpacity(0.4),
+                                  color: AppColors.violetPrimary.withOpacity(
+                                    0.4,
+                                  ),
                                   blurRadius: 6,
                                   offset: const Offset(0, 2),
                                 ),
