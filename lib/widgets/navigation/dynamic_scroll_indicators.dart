@@ -5,13 +5,14 @@ import '../../core/theme/app_colors.dart';
 /// Highly responsive, animated pagination indicator dots row.
 /// Features dynamic dot count calculated from active viewport capacity,
 /// expanding active indicator pill with neon gradient glow,
-/// and smooth left/right arrow step navigation.
+/// and optional left/right arrow step navigation.
 class DynamicScrollIndicators extends StatelessWidget {
   final int pageCount;
   final int activeIndex;
   final ValueChanged<int> onDotTapped;
   final VoidCallback? onPrevious;
   final VoidCallback? onNext;
+  final bool showArrows;
 
   const DynamicScrollIndicators({
     super.key,
@@ -20,6 +21,7 @@ class DynamicScrollIndicators extends StatelessWidget {
     required this.onDotTapped,
     this.onPrevious,
     this.onNext,
+    this.showArrows = true,
   });
 
   @override
@@ -43,18 +45,20 @@ class DynamicScrollIndicators extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Previous Arrow Step
-            IconButton(
-              icon: const Icon(Icons.arrow_back_ios_rounded, size: 14),
-              onPressed: hasPrev ? onPrevious : null,
-              color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
-              disabledColor: isDark ? Colors.white24 : Colors.black12,
-              tooltip: 'Previous page',
-              splashRadius: 18,
-              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-              padding: EdgeInsets.zero,
-            ),
-            const SizedBox(width: 4),
+            // Previous Arrow Step (optional)
+            if (showArrows) ...[
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_rounded, size: 14),
+                onPressed: hasPrev ? onPrevious : null,
+                color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
+                disabledColor: isDark ? Colors.white24 : Colors.black12,
+                tooltip: 'Previous page',
+                splashRadius: 18,
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                padding: EdgeInsets.zero,
+              ),
+              const SizedBox(width: 4),
+            ],
 
             // Dynamic Indicator Dots
             Flexible(
@@ -106,19 +110,21 @@ class DynamicScrollIndicators extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 4),
 
-            // Next Arrow Step
-            IconButton(
-              icon: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
-              onPressed: hasNext ? onNext : null,
-              color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
-              disabledColor: isDark ? Colors.white24 : Colors.black12,
-              tooltip: 'Next page',
-              splashRadius: 18,
-              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-              padding: EdgeInsets.zero,
-            ),
+            // Next Arrow Step (optional)
+            if (showArrows) ...[
+              const SizedBox(width: 4),
+              IconButton(
+                icon: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
+                onPressed: hasNext ? onNext : null,
+                color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
+                disabledColor: isDark ? Colors.white24 : Colors.black12,
+                tooltip: 'Next page',
+                splashRadius: 18,
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                padding: EdgeInsets.zero,
+              ),
+            ],
           ],
         ),
       ),

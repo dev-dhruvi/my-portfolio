@@ -168,14 +168,14 @@ class SeedData {
   ];
 
   static List<Skill> get initialSkills => [
-    // Core Mobile & Frameworks
+    // Mobile & Frameworks
     const Skill(
       id: 'sk_flutter',
       name: 'Flutter (Mobile & Web)',
       category: 'Mobile & Frameworks',
       iconName: 'flutter',
       description:
-          'High-performance cross-platform apps for iOS, Android, and Web.',
+          'Build responsive cross-platform apps for Android, iOS, and Web.',
       isHighlighted: true,
       orderIndex: 0,
     ),
@@ -185,7 +185,7 @@ class SeedData {
       category: 'Mobile & Frameworks',
       iconName: 'code',
       description:
-          'Type-safe asynchronous programming, isolates, and FFI interop.',
+          'Write type-safe, maintainable code with asynchronous programming.',
       isHighlighted: true,
       orderIndex: 1,
     ),
@@ -194,7 +194,8 @@ class SeedData {
       name: 'GetX State Management',
       category: 'Mobile & Frameworks',
       iconName: 'layers',
-      description: 'Reactive state management, route management, and dependency injection.',
+      description:
+          'Manage reactive state, navigation, and dependency injection.',
       isHighlighted: true,
       orderIndex: 2,
     ),
@@ -204,7 +205,7 @@ class SeedData {
       category: 'Mobile & Frameworks',
       iconName: 'palette',
       description:
-          'Rapid UI scaffolding, custom widget coding, and API integrations.',
+          'Build app interfaces with custom widgets and API integrations.',
       isHighlighted: false,
       orderIndex: 3,
     ),
@@ -214,7 +215,7 @@ class SeedData {
       category: 'Mobile & Frameworks',
       iconName: 'android',
       description:
-          'Native Android build tooling, lifecycle handling, and Gradle.',
+          'Configure Android builds, Gradle, and platform-specific features.',
       isHighlighted: false,
       orderIndex: 4,
     ),
@@ -223,18 +224,20 @@ class SeedData {
       name: 'iOS App Deployment',
       category: 'Mobile & Frameworks',
       iconName: 'apple',
-      description: 'Xcode configuration, certificates, provisioning profiles, and App Store.',
+      description:
+          'Configure iOS builds, signing, provisioning, and App Store releases.',
       isHighlighted: false,
       orderIndex: 5,
     ),
 
-    // Backend & Cloud Services
+    // Cloud & Backend
     const Skill(
       id: 'sk_firebase_auth',
       name: 'Firebase Authentication & Firestore',
       category: 'Cloud & Backend',
       iconName: 'fire',
-      description: 'Secure identity management, real-time database, and offline caching.',
+      description:
+          'Implement authentication and cloud-based data storage.',
       isHighlighted: true,
       orderIndex: 6,
     ),
@@ -243,8 +246,9 @@ class SeedData {
       name: 'Firebase Cloud Messaging (FCM)',
       category: 'Cloud & Backend',
       iconName: 'bell',
-      description: 'Push notification payloads, topic subscription, and background handlers.',
-      isHighlighted: true,
+      description:
+          'Integrate push notifications and background message handling.',
+      isHighlighted: false,
       orderIndex: 7,
     ),
     const Skill(
@@ -253,16 +257,17 @@ class SeedData {
       category: 'Cloud & Backend',
       iconName: 'cloud',
       description:
-          'Real-time telemetry, bi-directional MQTT broker communication.',
+          'Enable real-time, bidirectional messaging through MQTT.',
       isHighlighted: true,
       orderIndex: 8,
     ),
     const Skill(
       id: 'sk_rest_jwt',
-      name: 'Dio, REST APIs & JWT Security',
+      name: 'Dio, REST APIs & JWT',
       category: 'Cloud & Backend',
       iconName: 'key',
-      description: 'Single-flight lock token refresh, exponential backoff retries, and interceptors.',
+      description:
+          'Integrate APIs with authentication, interceptors, and error handling.',
       isHighlighted: true,
       orderIndex: 9,
     ),
@@ -272,7 +277,7 @@ class SeedData {
       category: 'Cloud & Backend',
       iconName: 'chart',
       description:
-          'Real-time crash tracking, diagnostic logging, and event funnels.',
+          'Monitor application crashes, diagnose issues, and track events.',
       isHighlighted: false,
       orderIndex: 10,
     ),
@@ -281,8 +286,9 @@ class SeedData {
       name: 'Python & Dataset Automation',
       category: 'Cloud & Backend',
       iconName: 'terminal',
-      description: 'Data parsing, 20-rule AST validation pipelines, and auto-remediation scripts.',
-      isHighlighted: true,
+      description:
+          'Automate dataset validation, data processing, and error correction.',
+      isHighlighted: false,
       orderIndex: 11,
     ),
 
@@ -292,25 +298,28 @@ class SeedData {
       name: 'Clean & Modular Architecture',
       category: 'Architecture & Quality',
       iconName: 'shield',
-      description: 'Separation of concerns across presentation, domain, and data layers.',
+      description:
+          'Structure applications with clear separation of responsibilities.',
       isHighlighted: true,
       orderIndex: 12,
     ),
     const Skill(
       id: 'sk_testing',
-      name: 'Automated Testing (Mocktail & Integration)',
+      name: 'Automated Testing',
       category: 'Architecture & Quality',
       iconName: 'check_circle',
-      description: 'Mocktail mocking, unit/widget tests, and Flutter Integration Test suites.',
-      isHighlighted: true,
+      description:
+          'Write unit, widget, and integration tests using Flutter testing tools.',
+      isHighlighted: false,
       orderIndex: 13,
     ),
     const Skill(
       id: 'sk_perf_opt',
-      name: 'Performance Profiling & Optimization',
+      name: 'Performance Optimization',
       category: 'Architecture & Quality',
       iconName: 'bolt',
-      description: 'DevTools profiling, frame rendering, memory leak prevention, and tree pruning.',
+      description:
+          'Profile rendering, investigate memory issues, and improve app performance.',
       isHighlighted: false,
       orderIndex: 14,
     ),
@@ -319,18 +328,30 @@ class SeedData {
       name: 'Git & Version Control',
       category: 'Architecture & Quality',
       iconName: 'branch',
-      description: 'Branching strategies, pull requests, code reviews, and CI/CD pipelines.',
+      description:
+          'Manage branches, collaborate through pull requests, and review code.',
       isHighlighted: false,
       orderIndex: 15,
     ),
     const Skill(
       id: 'sk_integrations',
-      name: 'DocuSign, Google Places & Hive DB',
+      name: 'Third-Party Integrations & Local Storage',
       category: 'Architecture & Quality',
       iconName: 'plug',
-      description: 'Document signing, location autocomplete, and lightweight local NoSQL storage.',
+      description:
+          'Integrate DocuSign and Google Places, and manage local data with Hive.',
       isHighlighted: false,
       orderIndex: 16,
+    ),
+    const Skill(
+      id: 'sk_hive',
+      name: 'Hive DB & Local Storage',
+      category: 'Architecture & Quality',
+      iconName: 'database',
+      description:
+          'Manage offline key-value NoSQL storage and local state with Hive.',
+      isHighlighted: false,
+      orderIndex: 17,
     ),
   ];
 

@@ -9,6 +9,7 @@ import 'package:dhruvi_portfolio/sections/contact/contact_section.dart';
 import 'package:dhruvi_portfolio/sections/projects/projects_section.dart';
 import 'package:dhruvi_portfolio/sections/projects/all_projects_page.dart';
 import 'package:dhruvi_portfolio/sections/experience/experience_section.dart';
+import 'package:dhruvi_portfolio/sections/skills/skills_section.dart';
 import 'package:dhruvi_portfolio/widgets/animations/character_loader.dart';
 import 'package:dhruvi_portfolio/core/theme/app_theme.dart';
 import 'package:dhruvi_portfolio/widgets/cards/app_network_image.dart';
@@ -105,18 +106,27 @@ void main() {
           findsAtLeastNWidgets(1),
         );
 
-        // On desktop single-row slider (3 cards/page), advance to page 1 for PMP CSV Validator
-        final nextButton = find.byTooltip('Next page');
-        if (nextButton.evaluate().isNotEmpty) {
-          await tester.tap(nextButton.first);
+        // On desktop single-row slider (4 cards/page), advance to page 1 for PMP CSV Validator
+        final dots = find.descendant(
+          of: find.byType(DynamicScrollIndicators),
+          matching: find.byType(InkWell),
+        );
+        if (dots.evaluate().length > 1) {
+          await tester.tap(dots.at(1));
           await tester.pumpAndSettle();
+        } else {
+          final nextButton = find.byTooltip('Next page');
+          if (nextButton.evaluate().isNotEmpty) {
+            await tester.tap(nextButton.first);
+            await tester.pumpAndSettle();
+          }
         }
         expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
       },
     );
 
     testWidgets(
-      'ProjectsSection indicator dots and arrow buttons navigate without lifecycle errors',
+      'ProjectsSection indicator dots navigate without lifecycle errors',
       (tester) async {
         await tester.pumpWidget(
           MaterialApp(
@@ -135,15 +145,14 @@ void main() {
         );
         await tester.pump();
 
-        final nextButton = find.byIcon(Icons.chevron_right_rounded);
-        if (nextButton.evaluate().isNotEmpty) {
-          await tester.tap(nextButton.first);
+        final dots = find.descendant(
+          of: find.byType(DynamicScrollIndicators),
+          matching: find.byType(InkWell),
+        );
+        if (dots.evaluate().length > 1) {
+          await tester.tap(dots.at(1));
           await tester.pumpAndSettle();
-        }
-
-        final prevButton = find.byIcon(Icons.chevron_left_rounded);
-        if (prevButton.evaluate().isNotEmpty) {
-          await tester.tap(prevButton.first);
+          await tester.tap(dots.first);
           await tester.pumpAndSettle();
         }
       },
@@ -463,7 +472,7 @@ void main() {
     );
 
     testWidgets(
-      'AllProjectsPage renders header, project directory, and back button cleanly',
+      'AllProjectsPage renders header, project directory, and back button cleanly on desktop',
       (tester) async {
         await tester.pumpWidget(
           MaterialApp(
@@ -485,6 +494,98 @@ void main() {
           findsAtLeastNWidgets(1),
         );
         expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+
+    testWidgets(
+      'AllProjectsPage renders vertical listview with pagination on mobile without errors',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(375, 812),
+                disableAnimations: true,
+              ),
+              child: AllProjectsPage(projects: SeedData.initialProjects),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('All Projects'), findsOneWidget);
+        expect(find.text('PROJECT DIRECTORY'), findsOneWidget);
+        expect(
+          find.text('Pandits Near Me - Instant Puja'),
+          findsAtLeastNWidgets(1),
+        );
+        expect(find.byType(ListView), findsOneWidget);
+        expect(find.text('Previous'), findsOneWidget);
+        expect(find.text('Next'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+
+    testWidgets(
+      'SkillsSection renders tech stack, filter tabs, and skill cards on desktop, tablet, and mobile',
+      (tester) async {
+        // Desktop test (1440px)
+        tester.view.physicalSize = const Size(1440, 900);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(() => tester.view.resetPhysicalSize());
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(1440, 900),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: SkillsSection(skills: SeedData.initialSkills),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('MY TECH STACK'), findsOneWidget);
+        expect(find.text('Technologies'), findsOneWidget);
+        expect(find.text('All'), findsOneWidget);
+        expect(find.text('Mobile & Frameworks'), findsAtLeastNWidgets(1));
+        expect(find.text('Cloud & Backend'), findsAtLeastNWidgets(1));
+        expect(find.text('Architecture & Quality'), findsAtLeastNWidgets(1));
+        expect(find.text('Flutter'), findsOneWidget);
+        expect(find.text('Dart'), findsOneWidget);
+        expect(find.text('Firebase'), findsOneWidget);
+
+        // Filter tab interaction: tap on 'Mobile & Frameworks'
+        await tester.tap(find.text('Mobile & Frameworks').first);
+        await tester.pump();
+        expect(find.text('Flutter'), findsOneWidget);
+
+        // Mobile test (375px)
+        tester.view.physicalSize = const Size(375, 812);
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(375, 812),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: SkillsSection(skills: SeedData.initialSkills),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(find.text('MY TECH STACK'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );

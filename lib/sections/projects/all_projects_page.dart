@@ -15,8 +15,8 @@ import '../../widgets/responsive/responsive_layout.dart';
 import 'projects_section.dart';
 
 /// Dedicated page displaying the complete portfolio of client & production projects.
-/// Features responsive multi-column layouts (1-col mobile, 2-col tablet, 3-col web),
-/// smooth incremental pagination when scrolling down, and card entrance animations.
+/// Features responsive multi-column layouts (1-col mobile, 3-col tablet, 4-col web),
+/// interactive page pagination with numbered controls, and "View All" toggle mode.
 class AllProjectsPage extends StatefulWidget {
   final List<Project>? projects;
 
@@ -28,66 +28,33 @@ class AllProjectsPage extends StatefulWidget {
 
 class _AllProjectsPageState extends State<AllProjectsPage> {
   final ScrollController _scrollController = ScrollController();
-  int _displayedCount = 6;
-  bool _isLoadingMore = false;
-  bool _hasInitializedCount = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_onScroll);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_hasInitializedCount) {
-      _hasInitializedCount = true;
-      final isMobile = AppBreakpoints.isMobile(context);
-      final isTablet = AppBreakpoints.isTablet(context);
-      // Initial page capacity: 9 on desktop (3x3), 6 on tablet (2x3), 5 on mobile
-      _displayedCount = isMobile ? 5 : (isTablet ? 6 : 9);
-    }
-  }
+  int _currentPage = 0;
+  bool _showAll = false;
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
   }
 
-  void _onScroll() {
-    if (!_scrollController.hasClients || _isLoadingMore) return;
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-
-    // Trigger load more when 250px from bottom
-    if (currentScroll >= maxScroll - 250) {
-      _loadMore();
-    }
+  int _getItemsPerPage(BuildContext context) {
+    if (AppBreakpoints.isMobile(context)) return 6;
+    if (AppBreakpoints.isTablet(context)) return 9; // 3 columns x 3 rows
+    return 12; // 4 columns x 3 rows on desktop
   }
 
-  void _loadMore() {
-    final allProjects = _getAllActiveProjects();
-    if (_displayedCount >= allProjects.length) return;
-
-    setState(() => _isLoadingMore = true);
-
-    // Smooth delay for natural scrolling pagination feel
-    Future.delayed(const Duration(milliseconds: 320), () {
-      if (mounted) {
-        final isMobile = AppBreakpoints.isMobile(context);
-        final batchSize = isMobile ? 4 : 6;
-        setState(() {
-          _displayedCount = math.min(
-            _displayedCount + batchSize,
-            allProjects.length,
-          );
-          _isLoadingMore = false;
-        });
-      }
+  void _goToPage(int page) {
+    if (page == _currentPage) return;
+    setState(() {
+      _currentPage = page;
     });
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 380),
+        curve: Curves.easeInOutCubic,
+      );
+    }
   }
 
   List<Project> _getAllActiveProjects() {
@@ -119,10 +86,20 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
         : AppColors.textSecondaryLight;
 
     final allProjects = _getAllActiveProjects();
-    final displayedProjects = allProjects
-        .take(math.min(_displayedCount, allProjects.length))
-        .toList();
-    final bool hasReachedEnd = _displayedCount >= allProjects.length;
+    final int totalProjects = allProjects.length;
+    final int itemsPerPage = _getItemsPerPage(context);
+    final int pageCount =
+        totalProjects == 0 ? 1 : (totalProjects / itemsPerPage).ceil();
+    final int safeCurrentPage =
+        _currentPage.clamp(0, math.max(0, pageCount - 1));
+
+    final int startIndex = safeCurrentPage * itemsPerPage;
+    final int endIndex = math.min(startIndex + itemsPerPage, totalProjects);
+    final List<Project> displayedProjects = _showAll
+        ? allProjects
+        : (totalProjects == 0
+            ? <Project>[]
+            : allProjects.sublist(startIndex, endIndex));
 
     return Scaffold(
       appBar: AppBar(
@@ -236,7 +213,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           ),
                         ),
                         child: Text(
-                          '${allProjects.length} Projects',
+                          '$totalProjects Projects',
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -260,10 +237,23 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                   const SizedBox(height: 28),
 
                   // Responsive Multi-Device Listing Layouts:
-                  // Mobile: Vertical listing of cards
-                  // Tablet: 2-column GridView style
-                  // Web / Desktop: 3-column GridView style
-                  if (isMobile)
+                  // Mobile: Vertical listing of cards (1 col)
+                  // Tablet: 3-column GridView style
+                  // Web / Desktop: 4-column GridView style
+                  if (displayedProjects.isEmpty)
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 48),
+                        child: Text(
+                          'No projects found.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: secondaryTextColor,
+                          ),
+                        ),
+                      ),
+                    )
+                  else if (isMobile)
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -289,10 +279,10 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                       itemCount: displayedProjects.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
+                            crossAxisCount: 3,
                             crossAxisSpacing: 18,
                             mainAxisSpacing: 18,
-                            mainAxisExtent: 315,
+                            mainAxisExtent: 380,
                           ),
                       itemBuilder: (context, index) {
                         final project = displayedProjects[index];
@@ -314,10 +304,10 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                       itemCount: displayedProjects.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
+                            crossAxisCount: 4,
                             crossAxisSpacing: 18,
                             mainAxisSpacing: 18,
-                            mainAxisExtent: 315,
+                            mainAxisExtent: 385,
                           ),
                       itemBuilder: (context, index) {
                         final project = displayedProjects[index];
@@ -333,90 +323,278 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                       },
                     ),
 
-                  // Pagination Loading Indicator
-                  if (_isLoadingMore)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 32),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              width: 26,
-                              height: 26,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2.5,
-                                color: AppColors.cyanPrimary,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              'Loading more projects...',
-                              style: TextStyle(
-                                fontSize: 12.5,
-                                color: secondaryTextColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                  // Pagination Controls Bar (Page 1, 2, 3...)
+                  if (!_showAll && pageCount > 1) ...[
+                    const SizedBox(height: 36),
+                    _buildPaginationBar(
+                      context,
+                      currentPage: safeCurrentPage,
+                      pageCount: pageCount,
+                      startIndex: startIndex,
+                      endIndex: endIndex,
+                      totalCount: totalProjects,
+                      isDark: isDark,
+                      textColor: textColor,
+                      secondaryTextColor: secondaryTextColor,
                     ),
+                  ],
 
-                  // Reached End Indicator
-                  if (hasReachedEnd && allProjects.isNotEmpty) ...[
+                  // "Show All" Mode Status & Switch back
+                  if (_showAll) ...[
                     const SizedBox(height: 36),
                     Center(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: (isDark ? AppColors.darkCard : Colors.white)
-                              .withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: isDark
-                                ? AppColors.darkCardBorder
-                                : AppColors.lightCardBorder,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: (isDark ? AppColors.darkCard : Colors.white)
+                                  .withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(
+                                color: isDark
+                                    ? AppColors.darkCardBorder
+                                    : AppColors.lightCardBorder,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(
+                                    isDark ? 0.2 : 0.04,
+                                  ),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.verified_rounded,
+                                  size: 16,
+                                  color: AppColors.cyanPrimary,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  "Showing all $totalProjects projects",
+                                  style: TextStyle(
+                                    fontSize: 12.5,
+                                    fontWeight: FontWeight.w600,
+                                    color: textColor,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(
-                                isDark ? 0.2 : 0.04,
-                              ),
-                              blurRadius: 10,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.verified_rounded,
+                          const SizedBox(height: 12),
+                          TextButton.icon(
+                            onPressed: () {
+                              setState(() => _showAll = false);
+                              _goToPage(0);
+                            },
+                            icon: const Icon(
+                              Icons.splitscreen_rounded,
                               size: 16,
-                              color: AppColors.cyanPrimary,
                             ),
-                            const SizedBox(width: 8),
-                            Text(
-                              "You've viewed all ${allProjects.length} projects",
-                              style: TextStyle(
-                                fontSize: 12.5,
-                                fontWeight: FontWeight.w600,
-                                color: textColor,
-                              ),
+                            label: const Text('Switch to Paginated View'),
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.cyanPrimary,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 48),
                   ],
+
+                  const SizedBox(height: 48),
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildPaginationBar(
+    BuildContext context, {
+    required int currentPage,
+    required int pageCount,
+    required int startIndex,
+    required int endIndex,
+    required int totalCount,
+    required bool isDark,
+    required Color textColor,
+    required Color secondaryTextColor,
+  }) {
+    final hasPrev = currentPage > 0;
+    final hasNext = currentPage < pageCount - 1;
+
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Row of Previous, Page Numbers, Next
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              // Previous Page Button
+              OutlinedButton.icon(
+                onPressed: hasPrev ? () => _goToPage(currentPage - 1) : null,
+                icon: const Icon(Icons.arrow_back_ios_rounded, size: 13),
+                label: const Text(
+                  'Previous',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor:
+                      isDark ? AppColors.cyanLight : AppColors.cyanDark,
+                  disabledForegroundColor:
+                      isDark ? Colors.white24 : Colors.black26,
+                  side: BorderSide(
+                    color: hasPrev
+                        ? (isDark
+                            ? AppColors.cyanPrimary.withOpacity(0.4)
+                            : AppColors.violetPrimary.withOpacity(0.3))
+                        : (isDark ? Colors.white12 : Colors.black12),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                ),
+              ),
+
+              // Page Number Chips
+              for (int i = 0; i < pageCount; i++) ...[
+                Builder(
+                  builder: (context) {
+                    final isSelected = i == currentPage;
+                    return InkWell(
+                      onTap: () => _goToPage(i),
+                      borderRadius: BorderRadius.circular(10),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        width: 38,
+                        height: 38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          gradient:
+                              isSelected ? AppColors.primaryGradient : null,
+                          color: isSelected
+                              ? null
+                              : (isDark ? AppColors.darkCard : Colors.white),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: isSelected
+                                ? Colors.transparent
+                                : (isDark
+                                    ? AppColors.darkCardBorder
+                                    : AppColors.lightCardBorder),
+                            width: 1,
+                          ),
+                          boxShadow: isSelected
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.violetPrimary.withOpacity(
+                                      0.4,
+                                    ),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ]
+                              : null,
+                        ),
+                        child: Text(
+                          '${i + 1}',
+                          style: TextStyle(
+                            fontSize: 13.5,
+                            fontWeight: isSelected
+                                ? FontWeight.w800
+                                : FontWeight.w600,
+                            color: isSelected ? Colors.white : textColor,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+
+              // Next Page Button
+              OutlinedButton.icon(
+                onPressed: hasNext ? () => _goToPage(currentPage + 1) : null,
+                label: const Text(
+                  'Next',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+                icon: const Icon(Icons.arrow_forward_ios_rounded, size: 13),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor:
+                      isDark ? AppColors.cyanLight : AppColors.cyanDark,
+                  disabledForegroundColor:
+                      isDark ? Colors.white24 : Colors.black26,
+                  side: BorderSide(
+                    color: hasNext
+                        ? (isDark
+                            ? AppColors.cyanPrimary.withOpacity(0.4)
+                            : AppColors.violetPrimary.withOpacity(0.3))
+                        : (isDark ? Colors.white12 : Colors.black12),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 14),
+
+          // Showing X of Y Info + Toggle "View All"
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 6,
+            children: [
+              Text(
+                'Showing ${startIndex + 1}–$endIndex of $totalCount projects (Page ${currentPage + 1} of $pageCount)',
+                style: TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w500,
+                  color: secondaryTextColor,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() => _showAll = true);
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                  child: Text(
+                    'View All Projects',
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.cyanPrimary,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
