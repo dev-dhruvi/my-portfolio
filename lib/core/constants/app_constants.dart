@@ -9,6 +9,10 @@ class AppConstants {
       'Senior Software Engineer | Senior Flutter Developer | Mobile Application Developer';
   static const String email = 'dhruvi39604@gmail.com';
   static const String phone = '+91 9925589405';
+  static const String whatsappNumber = '919925589405';
+  static const String whatsappDefaultText = 'Hi, I visited your portfolio';
+  static const String whatsappUrl =
+      'https://wa.me/919925589405?text=Hi%2C%20I%20visited%20your%20portfolio';
   static const String location = 'Surat, Gujarat, India';
   static const String developBy = 'Crafted with ♥ by Dhruvi Patel © 2026';
 

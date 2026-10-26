@@ -286,9 +286,13 @@ void main() {
         await tester.pump();
 
         expect(find.text('GET IN TOUCH'), findsOneWidget);
-        expect(find.text('Quick Response Guaranteed'), findsOneWidget);
-        expect(find.text('Direct Message'), findsOneWidget);
-        expect(find.text('Send Message via Email'), findsOneWidget);
+        expect(find.text('Send me a message'), findsOneWidget);
+        expect(find.text('Open Email App'), findsOneWidget);
+        expect(find.text('Email Me'), findsOneWidget);
+        expect(find.text('Chat on WhatsApp'), findsOneWidget);
+        expect(find.text('Available for new opportunities'), findsOneWidget);
+        expect(find.text('Usually replies within a day'), findsOneWidget);
+        expect(find.text("Let's Connect"), findsOneWidget);
       },
     );
 

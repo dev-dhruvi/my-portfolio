@@ -48,4 +48,16 @@ class UrlLauncherUtil {
       return false;
     }
   }
+
+  static Future<bool> openWhatsApp(
+    String phone, {
+    String text = 'Hi, I visited your portfolio',
+    BuildContext? context,
+  }) async {
+    final cleanPhone = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    final encodedText = Uri.encodeComponent(text);
+    final url =
+        'https://wa.me/$cleanPhone${encodedText.isNotEmpty ? '?text=$encodedText' : ''}';
+    return await openUrl(url, context: context);
+  }
 }
