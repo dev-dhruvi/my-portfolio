@@ -14,7 +14,7 @@ class AppConstants {
   static const String whatsappUrl =
       'https://wa.me/919925589405?text=Hi%2C%20I%20visited%20your%20portfolio';
   static const String location = 'Surat, Gujarat, India';
-  static const String developBy = 'Crafted with ♥ by Dhruvi Patel © 2026';
+  static const String developBy = 'Crafted with 👩‍💻 by Dhruvi Patel © 2026';
 
   // Configurable Links
   static const String defaultGithubUrl = 'https://github.com/dhruvi-mobiledev';

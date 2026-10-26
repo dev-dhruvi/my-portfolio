@@ -594,46 +594,6 @@ class _TimelineDateBadge extends StatelessWidget {
             : CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Milestone Phase Pill
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  AppColors.violetPrimary.withOpacity(isDark ? 0.16 : 0.10),
-                  AppColors.cyanPrimary.withOpacity(isDark ? 0.16 : 0.10),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.cyanPrimary.withOpacity(0.3)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  experience.isCurrent
-                      ? Icons.bolt_rounded
-                      : Icons.verified_outlined,
-                  size: 13,
-                  color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  experience.isCurrent
-                      ? 'Current Focus'
-                      : 'Milestone 0${index + 1}',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
-                    color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-
           // Date Interval Text
           Text(
             '${experience.startDate} – ${experience.endDate}',
@@ -644,18 +604,6 @@ class _TimelineDateBadge extends StatelessWidget {
               color: isDark ? Colors.white : AppColors.textPrimaryLight,
             ),
           ),
-          if (experience.calculatedDuration.isNotEmpty) ...[
-            const SizedBox(height: 4),
-            Text(
-              experience.calculatedDuration,
-              textAlign: isLeft ? TextAlign.end : TextAlign.start,
-              style: TextStyle(
-                fontSize: 12.5,
-                fontWeight: FontWeight.w600,
-                color: isDark ? AppColors.cyanPrimary : AppColors.violetPrimary,
-              ),
-            ),
-          ],
           const SizedBox(height: 6),
 
           // Location badge
@@ -674,6 +622,18 @@ class _TimelineDateBadge extends StatelessWidget {
               ),
             ],
           ),
+          if (experience.calculatedDuration.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              experience.calculatedDuration,
+              textAlign: isLeft ? TextAlign.end : TextAlign.start,
+              style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w600,
+                color: isDark ? AppColors.cyanPrimary : AppColors.violetPrimary,
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -784,7 +744,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                               ),
                             ),
                             Text(
-                              widget.experience.location,
+                              widget.experience.locationType ?? "On-Site",
                               style: TextStyle(
                                 color: secondaryTextColor,
                                 fontSize: widget.isMobile ? 12 : 12.5,
