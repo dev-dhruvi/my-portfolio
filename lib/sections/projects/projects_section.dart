@@ -1466,7 +1466,11 @@ class ProjectDetailDialog extends StatelessWidget {
                   ),
                   IconButton(
                     icon: const Icon(Icons.close_rounded),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      if (Navigator.of(context).canPop()) {
+                        Navigator.of(context).pop();
+                      }
+                    },
                   ),
                 ],
               ),

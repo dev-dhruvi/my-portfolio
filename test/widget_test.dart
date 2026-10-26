@@ -15,6 +15,7 @@ import 'package:dhruvi_portfolio/core/theme/app_theme.dart';
 import 'package:dhruvi_portfolio/widgets/cards/app_network_image.dart';
 import 'package:dhruvi_portfolio/widgets/cards/glass_card.dart';
 import 'package:dhruvi_portfolio/widgets/navigation/nav_bar.dart';
+import 'package:dhruvi_portfolio/widgets/navigation/mobile_drawer.dart';
 import 'package:dhruvi_portfolio/widgets/navigation/dynamic_scroll_indicators.dart';
 import 'package:dhruvi_portfolio/sections/footer/footer_section.dart';
 import 'package:provider/provider.dart';
@@ -592,6 +593,50 @@ void main() {
         expect(find.text('MY TECH STACK'), findsOneWidget);
         expect(find.text('Mobile Development'), findsOneWidget);
         expect(find.text('Flutter'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+
+    testWidgets(
+      'MobileDrawer opens, displays nav items, and tapping item closes drawer safely without route errors',
+      (tester) async {
+        String? selectedSection;
+        final themeController = ThemeController();
+
+        await tester.pumpWidget(
+          ChangeNotifierProvider<ThemeController>.value(
+            value: themeController,
+            child: MaterialApp(
+              home: Scaffold(
+                drawer: MobileDrawer(
+                  onNavItemSelected: (key) => selectedSection = key,
+                ),
+                body: Builder(
+                  builder: (context) => ElevatedButton(
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    child: const Text('Open'),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        // Open the drawer
+        await tester.tap(find.text('Open'));
+        await tester.pumpAndSettle();
+
+        // Verify items exist
+        expect(find.text('Experience'), findsOneWidget);
+        expect(find.text('Projects'), findsOneWidget);
+
+        // Tap Experience item
+        await tester.tap(find.text('Experience'));
+        await tester.pumpAndSettle();
+
+        // Verify callback was invoked and no exception was thrown
+        expect(selectedSection, equals('experience'));
         expect(tester.takeException(), isNull);
       },
     );

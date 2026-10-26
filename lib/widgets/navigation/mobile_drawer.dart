@@ -12,6 +12,15 @@ class MobileDrawer extends StatelessWidget {
 
   const MobileDrawer({super.key, this.onNavItemSelected});
 
+  void _closeDrawer(BuildContext context) {
+    final scaffold = Scaffold.maybeOf(context);
+    if (scaffold != null && scaffold.isDrawerOpen) {
+      scaffold.closeDrawer();
+    } else if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeController = context.watch<ThemeController>();
@@ -106,7 +115,7 @@ class MobileDrawer extends StatelessWidget {
                     icon: Icons.home_outlined,
                     title: 'Home',
                     onTap: () {
-                      Navigator.pop(context);
+                      _closeDrawer(context);
                       onNavItemSelected?.call('hero');
                     },
                   ),
@@ -114,7 +123,7 @@ class MobileDrawer extends StatelessWidget {
                     icon: Icons.person_outline,
                     title: 'About',
                     onTap: () {
-                      Navigator.pop(context);
+                      _closeDrawer(context);
                       onNavItemSelected?.call('about');
                     },
                   ),
@@ -122,7 +131,7 @@ class MobileDrawer extends StatelessWidget {
                     icon: Icons.code_rounded,
                     title: 'Skills',
                     onTap: () {
-                      Navigator.pop(context);
+                      _closeDrawer(context);
                       onNavItemSelected?.call('skills');
                     },
                   ),
@@ -130,7 +139,7 @@ class MobileDrawer extends StatelessWidget {
                     icon: Icons.work_outline_rounded,
                     title: 'Experience',
                     onTap: () {
-                      Navigator.pop(context);
+                      _closeDrawer(context);
                       onNavItemSelected?.call('experience');
                     },
                   ),
@@ -138,7 +147,7 @@ class MobileDrawer extends StatelessWidget {
                     icon: Icons.grid_view_rounded,
                     title: 'Projects',
                     onTap: () {
-                      Navigator.pop(context);
+                      _closeDrawer(context);
                       onNavItemSelected?.call('projects');
                     },
                   ),
@@ -146,7 +155,7 @@ class MobileDrawer extends StatelessWidget {
                     icon: Icons.school_outlined,
                     title: 'Education',
                     onTap: () {
-                      Navigator.pop(context);
+                      _closeDrawer(context);
                       onNavItemSelected?.call('education');
                     },
                   ),
@@ -154,7 +163,7 @@ class MobileDrawer extends StatelessWidget {
                     icon: Icons.mail_outline_rounded,
                     title: 'Contact',
                     onTap: () {
-                      Navigator.pop(context);
+                      _closeDrawer(context);
                       onNavItemSelected?.call('contact');
                     },
                   ),
@@ -181,7 +190,7 @@ class MobileDrawer extends StatelessWidget {
                     ),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        Navigator.pop(context);
+                        _closeDrawer(context);
                         UrlLauncherUtil.openUrl(
                           AppConstants.defaultResumeUrl,
                           context: context,
