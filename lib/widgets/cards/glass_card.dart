@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../animations/interactive_3d_card.dart';
 
 /// Reusable glassmorphic card with subtle gradient, thin border,
-/// and smooth hover elevation effects.
+/// optional 3D tilt with specular sheen, and smooth hover elevation effects.
 class GlassCard extends StatefulWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
@@ -13,6 +14,7 @@ class GlassCard extends StatefulWidget {
   final Color? customBackgroundColor;
   final Color? customBorderColor;
   final bool enableHoverEffect;
+  final bool enable3D;
 
   const GlassCard({
     super.key,
@@ -24,6 +26,7 @@ class GlassCard extends StatefulWidget {
     this.customBackgroundColor,
     this.customBorderColor,
     this.enableHoverEffect = true,
+    this.enable3D = false,
   });
 
   @override
@@ -78,6 +81,14 @@ class _GlassCardState extends State<GlassCard> {
       ),
       child: widget.child,
     );
+
+    if (widget.enable3D) {
+      return Interactive3DCard(
+        borderRadius: BorderRadius.circular(widget.borderRadius),
+        onTap: widget.onTap,
+        child: cardContent,
+      );
+    }
 
     if (widget.onTap != null || widget.enableHoverEffect) {
       return MouseRegion(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../models/skill.dart';
+import '../../widgets/animations/animated_text_effects.dart';
+import '../../widgets/animations/interactive_3d_card.dart';
 
 /// Grouped-chip skills section displaying technology stack across:
 /// - Desktop (≥1024px): 3-column category cards
@@ -336,22 +338,18 @@ class SkillsSection extends StatelessWidget {
                       WidgetSpan(
                         alignment: PlaceholderAlignment.baseline,
                         baseline: TextBaseline.alphabetic,
-                        child: ShaderMask(
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [
-                              Color(0xFF06B6D4), // Cyan
-                              Color(0xFF8B5CF6), // Violet
-                              Color(0xFFD946EF), // Magenta
-                            ],
-                          ).createShader(bounds),
-                          child: Text(
-                            'Technologies',
-                            style: TextStyle(
-                              fontSize: isMobile ? 26 : 34,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white,
-                              letterSpacing: -0.5,
-                            ),
+                        child: ShimmerGradientText(
+                          'Technologies',
+                          colors: const [
+                            Color(0xFF06B6D4), // Cyan
+                            Color(0xFF8B5CF6), // Violet
+                            Color(0xFFD946EF), // Magenta
+                            Color(0xFF06B6D4), // Cyan
+                          ],
+                          style: TextStyle(
+                            fontSize: isMobile ? 26 : 34,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.5,
                           ),
                         ),
                       ),
@@ -460,7 +458,7 @@ class _CategoryGroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final cardContent = Container(
       padding: EdgeInsets.all(isMobile ? 18 : 22),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF0B1020) : Colors.white,
@@ -545,6 +543,17 @@ class _CategoryGroupCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+
+    if (isMobile) {
+      return cardContent;
+    }
+
+    return Interactive3DCard(
+      maxTiltAngle: 0.07,
+      hoverScale: 1.015,
+      borderRadius: BorderRadius.circular(20),
+      child: cardContent,
     );
   }
 }

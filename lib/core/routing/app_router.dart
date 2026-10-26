@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../sections/portfolio_page.dart';
 import '../../sections/projects/all_projects_page.dart';
+import 'app_route_transitions.dart';
 
 /// Centralized router configuration for Dhruvi Patel's portfolio.
 class AppRouter {
@@ -12,17 +13,23 @@ class AppRouter {
     return GoRouter(
       initialLocation: '/',
       routes: [
-        // Public Portfolio Root
+        // Public Portfolio Root (smooth fadeThrough transition)
         GoRoute(
           path: '/',
           name: 'home',
-          builder: (context, state) => const PortfolioPage(),
+          pageBuilder: (context, state) => AppRouteTransitions.fadeThrough(
+            state: state,
+            child: const PortfolioPage(),
+          ),
         ),
-        // Dedicated All Projects Directory Page
+        // Dedicated All Projects Directory Page (smooth slideUp transition)
         GoRoute(
           path: '/projects',
           name: 'projects',
-          builder: (context, state) => const AllProjectsPage(),
+          pageBuilder: (context, state) => AppRouteTransitions.slideUp(
+            state: state,
+            child: const AllProjectsPage(),
+          ),
         ),
       ],
       errorBuilder: (context, state) => Scaffold(

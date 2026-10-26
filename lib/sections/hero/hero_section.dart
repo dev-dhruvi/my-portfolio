@@ -11,6 +11,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/profile.dart';
+import '../../widgets/animations/animated_text_effects.dart';
 import '../../widgets/animations/staggered_entrance.dart';
 
 /// Redesigned Hero Section featuring 3D anime cartoon character illustration,
@@ -377,17 +378,12 @@ class _HeroSectionState extends State<HeroSection> {
               WidgetSpan(
                 alignment: PlaceholderAlignment.baseline,
                 baseline: TextBaseline.alphabetic,
-                child: ShaderMask(
-                  shaderCallback: (bounds) =>
-                      AppColors.primaryGradient.createShader(bounds),
-                  child: Text(
-                    AppConstants.developerName,
-                    style: TextStyle(
-                      fontSize: isMobile ? 32 : (screenWidth < 1100 ? 44 : 52),
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      letterSpacing: -1.2,
-                    ),
+                child: ShimmerGradientText(
+                  AppConstants.developerName,
+                  style: TextStyle(
+                    fontSize: isMobile ? 32 : (screenWidth < 1100 ? 44 : 52),
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -1.2,
                   ),
                 ),
               ),

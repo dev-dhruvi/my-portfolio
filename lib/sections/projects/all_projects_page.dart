@@ -351,6 +351,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           child: ProjectCard(
                             project: project,
                             isDesktopOrTablet: true,
+                            enable3D: true,
                             onTap: () => _showDetailDialog(context, project),
                           ),
                         );
@@ -376,6 +377,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           child: ProjectCard(
                             project: project,
                             isDesktopOrTablet: true,
+                            enable3D: true,
                             onTap: () => _showDetailDialog(context, project),
                           ),
                         );

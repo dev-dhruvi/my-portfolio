@@ -10,6 +10,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/project.dart';
+import '../../widgets/animations/interactive_3d_card.dart';
 import '../../widgets/animations/staggered_entrance.dart';
 import '../../widgets/cards/app_network_image.dart';
 import '../../widgets/navigation/dynamic_scroll_indicators.dart';
@@ -400,6 +401,7 @@ class _Tablet2x2ProjectSliderState extends State<_Tablet2x2ProjectSlider> {
                   child: ProjectCard(
                     project: project,
                     isDesktopOrTablet: true,
+                    enable3D: true,
                     onTap: () => widget.onProjectTap(project),
                   ),
                 );
@@ -526,6 +528,7 @@ class _DesktopSingleRowProjectSliderState
                           child: ProjectCard(
                             project: pageItems[c],
                             isDesktopOrTablet: true,
+                            enable3D: true,
                             onTap: () => widget.onProjectTap(pageItems[c]),
                           ),
                         ),
@@ -870,12 +873,14 @@ class ProjectCard extends StatefulWidget {
   final Project project;
   final VoidCallback onTap;
   final bool isDesktopOrTablet;
+  final bool enable3D;
 
   const ProjectCard({
     super.key,
     required this.project,
     required this.onTap,
     this.isDesktopOrTablet = true,
+    this.enable3D = false,
   });
 
   @override
@@ -1337,6 +1342,13 @@ class _ProjectCardState extends State<ProjectCard> {
         // On mobile touch viewports, skip MouseRegion entirely to avoid scheduler assertion collisions
         if (!widget.isDesktopOrTablet) {
           return cardContent;
+        }
+
+        if (widget.enable3D) {
+          return Interactive3DCard(
+            borderRadius: BorderRadius.circular(16),
+            child: cardContent,
+          );
         }
 
         return MouseRegion(

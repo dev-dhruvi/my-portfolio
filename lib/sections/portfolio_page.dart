@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../repositories/portfolio_repository.dart';
 import '../widgets/animations/ambient_background.dart';
 import '../widgets/animations/character_loader.dart';
+import '../widgets/animations/scroll_visibility_revealer.dart';
 import '../widgets/navigation/mobile_drawer.dart';
 import '../widgets/navigation/nav_bar.dart';
 import '../widgets/responsive/responsive_layout.dart';
@@ -205,9 +206,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         key: _aboutKey,
                         padding: const EdgeInsets.only(top: 80),
                         child: ResponsiveContentContainer(
-                          child: AboutSection(
-                            profile: profile,
-                            animationTrigger: _aboutAnimationTrigger,
+                          child: ScrollVisibilityRevealer(
+                            child: AboutSection(
+                              profile: profile,
+                              animationTrigger: _aboutAnimationTrigger,
+                            ),
                           ),
                         ),
                       ),
@@ -217,7 +220,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         key: _skillsKey,
                         padding: const EdgeInsets.only(top: 75),
                         child: ResponsiveContentContainer(
-                          child: SkillsSection(skills: skills),
+                          child: ScrollVisibilityRevealer(
+                            child: SkillsSection(skills: skills),
+                          ),
                         ),
                       ),
 
@@ -226,7 +231,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         key: _experienceKey,
                         padding: const EdgeInsets.only(top: 75),
                         child: ResponsiveContentContainer(
-                          child: ExperienceSection(experiences: experiences),
+                          child: ScrollVisibilityRevealer(
+                            child: ExperienceSection(experiences: experiences),
+                          ),
                         ),
                       ),
 
@@ -235,7 +242,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         key: _projectsKey,
                         padding: const EdgeInsets.only(top: 75),
                         child: ResponsiveContentContainer(
-                          child: ProjectsSection(projects: projects),
+                          child: ScrollVisibilityRevealer(
+                            child: ProjectsSection(projects: projects),
+                          ),
                         ),
                       ),
 
@@ -244,7 +253,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         key: _educationKey,
                         padding: const EdgeInsets.only(top: 75),
                         child: ResponsiveContentContainer(
-                          child: EducationSection(education: education),
+                          child: ScrollVisibilityRevealer(
+                            child: EducationSection(education: education),
+                          ),
                         ),
                       ),
 
@@ -253,7 +264,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         key: _contactKey,
                         padding: const EdgeInsets.only(top: 40),
                         child: ResponsiveContentContainer(
-                          child: ContactSection(profile: profile),
+                          child: ScrollVisibilityRevealer(
+                            child: ContactSection(profile: profile),
+                          ),
                         ),
                       ),
 
