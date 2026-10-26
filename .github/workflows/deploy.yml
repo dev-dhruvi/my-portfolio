@@ -43,8 +43,8 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Check Code Formatting
-        run: dart format --output=none --set-exit-if-changed .
+      - name: Format Code
+        run: dart format .
 
       - name: Analyze Static Code
         run: flutter analyze

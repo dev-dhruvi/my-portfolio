@@ -9,7 +9,7 @@ import '../../models/skill.dart';
 /// - Tablet (768px): 3 cards per row (3x2 grid)
 /// - Mobile (375px): 2 cards per row (2x3 grid)
 ///
-/// Features interactive category filter tabs (All, Mobile & Frameworks,
+/// Features interactive category filter tabs (Mobile & Frameworks,
 /// Cloud & Backend, Architecture & Quality), custom brand icons,
 /// and smooth glowing hover transitions.
 class SkillsSection extends StatefulWidget {
@@ -22,7 +22,7 @@ class SkillsSection extends StatefulWidget {
 }
 
 class _SkillsSectionState extends State<SkillsSection> {
-  String _selectedCategory = 'All';
+  String _selectedCategory = 'Mobile & Frameworks';
 
   static const List<String> _categoryOrder = [
     'Mobile & Frameworks',
@@ -59,9 +59,7 @@ class _SkillsSectionState extends State<SkillsSection> {
         : AppColors.textSecondaryLight;
 
     // Filter categories to render
-    final List<String> activeCategories = _selectedCategory == 'All'
-        ? _categoryOrder
-        : [_selectedCategory];
+    final List<String> activeCategories = [_selectedCategory];
 
     return Container(
       width: double.infinity,
@@ -141,18 +139,11 @@ class _SkillsSectionState extends State<SkillsSection> {
             ),
             const SizedBox(height: 22),
 
-            // Category Filter Pills Bar (All, Mobile & Frameworks, Cloud & Backend, Architecture & Quality)
+            // Category Filter Pills Bar (Mobile & Frameworks, Cloud & Backend, Architecture & Quality)
             Wrap(
               spacing: 10,
               runSpacing: 10,
               children: [
-                _buildFilterTab(
-                  label: 'All',
-                  icon: null,
-                  isSelected: _selectedCategory == 'All',
-                  isDark: isDark,
-                  onTap: () => _onCategoryChanged('All'),
-                ),
                 for (final cat in _categoryOrder)
                   _buildFilterTab(
                     label: cat,

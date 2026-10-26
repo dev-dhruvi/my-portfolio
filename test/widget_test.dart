@@ -494,12 +494,15 @@ void main() {
           findsAtLeastNWidgets(1),
         );
         expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
+        expect(find.text('Previous'), findsOneWidget);
+        expect(find.text('Next'), findsOneWidget);
+        expect(find.text('View All Projects'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );
 
     testWidgets(
-      'AllProjectsPage renders vertical listview with pagination on mobile without errors',
+      'AllProjectsPage renders vertical listview with scroll pagination on mobile without previous/next buttons',
       (tester) async {
         await tester.pumpWidget(
           MaterialApp(
@@ -521,8 +524,10 @@ void main() {
           findsAtLeastNWidgets(1),
         );
         expect(find.byType(ListView), findsOneWidget);
-        expect(find.text('Previous'), findsOneWidget);
-        expect(find.text('Next'), findsOneWidget);
+        expect(find.text('Previous'), findsNothing);
+        expect(find.text('Next'), findsNothing);
+        expect(find.textContaining('Showing 6 of'), findsOneWidget);
+        expect(find.text('Load More'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );
@@ -554,18 +559,16 @@ void main() {
 
         expect(find.text('MY TECH STACK'), findsOneWidget);
         expect(find.text('Technologies'), findsOneWidget);
-        expect(find.text('All'), findsOneWidget);
         expect(find.text('Mobile & Frameworks'), findsAtLeastNWidgets(1));
         expect(find.text('Cloud & Backend'), findsAtLeastNWidgets(1));
         expect(find.text('Architecture & Quality'), findsAtLeastNWidgets(1));
         expect(find.text('Flutter'), findsOneWidget);
         expect(find.text('Dart'), findsOneWidget);
-        expect(find.text('Firebase'), findsOneWidget);
 
-        // Filter tab interaction: tap on 'Mobile & Frameworks'
-        await tester.tap(find.text('Mobile & Frameworks').first);
+        // Filter tab interaction: tap on 'Cloud & Backend'
+        await tester.tap(find.text('Cloud & Backend').first);
         await tester.pump();
-        expect(find.text('Flutter'), findsOneWidget);
+        expect(find.text('Firebase'), findsOneWidget);
 
         // Mobile test (375px)
         tester.view.physicalSize = const Size(375, 812);
