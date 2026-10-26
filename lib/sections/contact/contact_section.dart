@@ -287,7 +287,7 @@ ${_messageController.text.trim()}
               ],
             ),
 
-          const SizedBox(height: 48),
+          const SizedBox(height: 25),
         ],
       ),
     );
@@ -313,34 +313,55 @@ ${_messageController.text.trim()}
         const SizedBox(height: 24),
 
         // Two-Option Direct Contact Buttons: Email Me + Chat on WhatsApp
-        if (isMobile)
-          Column(
-            children: [
-              _buildDirectEmailButton(isDark, textColor, secondaryTextColor),
-              const SizedBox(height: 12),
-              _buildWhatsAppButton(isDark, textColor, secondaryTextColor),
-            ],
-          )
-        else
-          Row(
-            children: [
-              Expanded(
-                child: _buildDirectEmailButton(
-                  isDark,
-                  textColor,
-                  secondaryTextColor,
-                ),
+        Row(
+          children: [
+            Expanded(
+              child: _buildDirectEmailButton(
+                isDark,
+                textColor,
+                secondaryTextColor,
+                isMobile,
               ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: _buildWhatsAppButton(
-                  isDark,
-                  textColor,
-                  secondaryTextColor,
-                ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: _buildWhatsAppButton(
+                isDark,
+                textColor,
+                secondaryTextColor,
+                isMobile,
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
+        // if (isMobile)
+        //   Column(
+        //     children: [
+        //       _buildDirectEmailButton(isDark, textColor, secondaryTextColor),
+        //       const SizedBox(height: 12),
+        //       _buildWhatsAppButton(isDark, textColor, secondaryTextColor),
+        //     ],
+        //   )
+        // else
+        //   Row(
+        //     children: [
+        //       Expanded(
+        //         child: _buildDirectEmailButton(
+        //           isDark,
+        //           textColor,
+        //           secondaryTextColor,
+        //         ),
+        //       ),
+        //       const SizedBox(width: 14),
+        //       Expanded(
+        //         child: _buildWhatsAppButton(
+        //           isDark,
+        //           textColor,
+        //           secondaryTextColor,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
         const SizedBox(height: 18),
 
         // Status & Availability Indicators Row
@@ -418,6 +439,7 @@ ${_messageController.text.trim()}
     bool isDark,
     Color textColor,
     Color secondaryTextColor,
+    bool isMobile,
   ) {
     return _InteractiveContactActionCard(
       onTap: _openDirectEmail,
@@ -444,8 +466,8 @@ ${_messageController.text.trim()}
           color: Color(0xFFA78BFA),
         ),
       ),
-      title: 'Email Me',
-      subtitle: 'Open your mail app',
+      title: isMobile ? "Email" : 'Email Me',
+      subtitle: isMobile ? "" : 'Open your mail app',
     );
   }
 
@@ -454,6 +476,7 @@ ${_messageController.text.trim()}
     bool isDark,
     Color textColor,
     Color secondaryTextColor,
+    bool isMobile,
   ) {
     return _InteractiveContactActionCard(
       onTap: _openWhatsApp,
@@ -476,8 +499,8 @@ ${_messageController.text.trim()}
         ),
         child: const Center(child: _WhatsAppIconWidget(size: 20)),
       ),
-      title: 'Chat on WhatsApp',
-      subtitle: 'Quick response',
+      title: isMobile ? "WhatsApp" : 'Chat on WhatsApp',
+      subtitle: isMobile ? "" : 'Quick response',
       titleColor: isDark ? Colors.white : const Color(0xFF065F46),
       subtitleColor: isDark ? const Color(0xFF6EE7B7) : const Color(0xFF047857),
     );
@@ -830,7 +853,7 @@ ${_messageController.text.trim()}
                   child: Text(
                     'Your default email app will open with your message ready to send.',
                     style: TextStyle(fontSize: 12, color: secondaryTextColor),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                   ),
                 ),
               ],
@@ -982,26 +1005,30 @@ class _InteractiveContactActionCardState
                         letterSpacing: -0.1,
                       ),
                     ),
-                    const SizedBox(height: 1),
-                    Text(
-                      widget.subtitle,
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        color:
-                            widget.subtitleColor ??
-                            (widget.isDark
-                                ? const Color(0xFF94A3B8)
-                                : const Color(0xFF64748B)),
+                    if (widget.subtitle.isNotEmpty &&
+                        widget.subtitle != "") ...[
+                      const SizedBox(height: 1),
+                      Text(
+                        widget.subtitle,
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          color:
+                              widget.subtitleColor ??
+                              (widget.isDark
+                                  ? const Color(0xFF94A3B8)
+                                  : const Color(0xFF64748B)),
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
-              Icon(
-                Icons.arrow_forward_rounded,
-                size: 16,
-                color: widget.accentColor.withOpacity(_isHovered ? 1.0 : 0.7),
-              ),
+              if (widget.subtitle.isNotEmpty && widget.subtitle != "")
+                Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 16,
+                  color: widget.accentColor.withOpacity(_isHovered ? 1.0 : 0.7),
+                ),
             ],
           ),
         ),

@@ -49,10 +49,6 @@ class EducationSection extends StatelessWidget {
     final textColor = isDark
         ? AppColors.textPrimaryDark
         : AppColors.textPrimaryLight;
-    final secondaryTextColor = isDark
-        ? AppColors.textSecondaryDark
-        : AppColors.textSecondaryLight;
-
     final double? minEducationHeight = isDesktop
         ? math.max(620.0, screenHeight - 92.0)
         : null;
@@ -100,11 +96,6 @@ class EducationSection extends StatelessWidget {
             'Education & Qualifications',
             style: AppTypography.getDisplayMedium(textColor)
                 .copyWith(fontSize: isMobile ? 26 : 32),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Formal computer applications degrees with distinctions across university curricula.',
-            style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
           const SizedBox(height: 24),
 

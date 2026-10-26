@@ -30,7 +30,7 @@ class AllProjectsPage extends StatefulWidget {
 class _AllProjectsPageState extends State<AllProjectsPage> {
   final ScrollController _scrollController = ScrollController();
   int _currentPage = 0;
-  bool _showAll = false;
+  final bool _showAll = false;
 
   // Mobile scroll pagination state
   static const int _mobilePageSize = 6;
@@ -258,28 +258,6 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           letterSpacing: 1.5,
                         ),
                       ),
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.violetPrimary.withOpacity(0.12),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: AppColors.violetPrimary.withOpacity(0.3),
-                          ),
-                        ),
-                        child: Text(
-                          '$totalProjects Projects',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.cyanLight,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -415,26 +393,6 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                       ),
                       const SizedBox(height: 18),
                     ],
-                    _buildDesktopTabletStatusBar(
-                      context,
-                      startIndex: startIndex,
-                      endIndex: endIndex,
-                      totalCount: totalProjects,
-                      currentPage: safeCurrentPage,
-                      pageCount: pageCount,
-                      showAll: _showAll,
-                      isDark: isDark,
-                      textColor: textColor,
-                      secondaryTextColor: secondaryTextColor,
-                      onToggleShowAll: () {
-                        setState(() {
-                          _showAll = !_showAll;
-                          if (!_showAll) {
-                            _goToPage(0);
-                          }
-                        });
-                      },
-                    ),
                   ],
 
                   const SizedBox(height: 48),
@@ -576,123 +534,6 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
     );
   }
 
-  /// Polished glass status capsule & interactive toggle button for web and tablet views.
-  /// Solves the unstyled text hyperlink from Image 2 with a refined cyber-glass pill.
-  Widget _buildDesktopTabletStatusBar(
-    BuildContext context, {
-    required int startIndex,
-    required int endIndex,
-    required int totalCount,
-    required int currentPage,
-    required int pageCount,
-    required bool showAll,
-    required bool isDark,
-    required Color textColor,
-    required Color secondaryTextColor,
-    required VoidCallback onToggleShowAll,
-  }) {
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: (isDark ? const Color(0xFF0F172A) : Colors.white).withOpacity(
-            0.88,
-          ),
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(
-            color: isDark ? const Color(0xFF1E2848) : const Color(0xFFE2E8F0),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.25 : 0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 14,
-          runSpacing: 8,
-          children: [
-            // Status Info with Icon
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  showAll ? Icons.verified_rounded : Icons.layers_rounded,
-                  size: 15,
-                  color: AppColors.cyanPrimary,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  showAll
-                      ? 'Showing all $totalCount projects'
-                      : 'Showing ${startIndex + 1}–$endIndex of $totalCount projects (Page ${currentPage + 1} of $pageCount)',
-                  style: TextStyle(
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.w600,
-                    color: textColor,
-                  ),
-                ),
-              ],
-            ),
-
-            // Subtle vertical separator
-            Container(
-              width: 1,
-              height: 16,
-              color: isDark ? Colors.white12 : Colors.black12,
-            ),
-
-            // Interactive Pill Button (clean cyber-styled action)
-            InkWell(
-              onTap: onToggleShowAll,
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 5,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.cyanPrimary.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: AppColors.cyanPrimary.withOpacity(0.35),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      showAll
-                          ? Icons.splitscreen_rounded
-                          : Icons.grid_view_rounded,
-                      size: 13,
-                      color: AppColors.cyanLight,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      showAll
-                          ? 'Switch to Paginated View'
-                          : 'View All Projects',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.cyanLight,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   /// Mobile infinite scroll-driven loading footer & progress capsule.
   Widget _buildMobilePaginationFooter(
     BuildContext context, {
@@ -780,27 +621,27 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      hasMore ? Icons.layers_rounded : Icons.verified_rounded,
-                      size: 15,
-                      color: AppColors.cyanPrimary,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      hasMore
-                          ? 'Showing $displayedCount of $totalCount projects'
-                          : 'All $totalCount projects loaded',
-                      style: TextStyle(
-                        fontSize: 12.5,
-                        fontWeight: FontWeight.w600,
-                        color: textColor,
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisSize: MainAxisSize.min,
+                //   children: [
+                //     Icon(
+                //       hasMore ? Icons.layers_rounded : Icons.verified_rounded,
+                //       size: 15,
+                //       color: AppColors.cyanPrimary,
+                //     ),
+                //     const SizedBox(width: 8),
+                //     Text(
+                //       hasMore
+                //           ? 'Showing $displayedCount of $totalCount projects'
+                //           : 'All $totalCount projects loaded',
+                //       style: TextStyle(
+                //         fontSize: 12.5,
+                //         fontWeight: FontWeight.w600,
+                //         color: textColor,
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 if (hasMore) ...[
                   const SizedBox(height: 8),
                   // Progress indicator
@@ -845,7 +686,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                     ),
                   ),
                 ] else ...[
-                  const SizedBox(height: 6),
+                  // const SizedBox(height: 6),
                   InkWell(
                     onTap: () {
                       _scrollController.animateTo(
@@ -869,7 +710,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           Text(
                             'Back to Top',
                             style: TextStyle(
-                              fontSize: 11.5,
+                              fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: AppColors.cyanLight,
                             ),

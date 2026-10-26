@@ -103,10 +103,6 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     final textColor = isDark
         ? AppColors.textPrimaryDark
         : AppColors.textPrimaryLight;
-    final secondaryTextColor = isDark
-        ? AppColors.textSecondaryDark
-        : AppColors.textSecondaryLight;
-
     // Filter active projects
     final activeProjects = widget.projects.where((project) {
       return project.isStatusActive;
@@ -167,11 +163,6 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             'Production Applications & Client Projects',
             style: AppTypography.getDisplayMedium(textColor)
                 .copyWith(fontSize: isMobile ? 24 : 28),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Curated projects verified from professional portfolio, showcasing Flutter, GetX, and FlutterFlow implementations.',
-            style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
           const SizedBox(height: 24),
 
@@ -1236,7 +1227,7 @@ class _ProjectCardState extends State<ProjectCard> {
                   Stack(
                     children: [
                       SizedBox(
-                        height: widget.isDesktopOrTablet ? 135 : 185,
+                        height: widget.isDesktopOrTablet ? 145 : 230,
                         width: double.infinity,
                         child: ClipRRect(
                           borderRadius: const BorderRadius.vertical(
@@ -1248,7 +1239,7 @@ class _ProjectCardState extends State<ProjectCard> {
                             curve: Curves.easeOutCubic,
                             child: AppNetworkImage(
                               imageUrl: project.displayImageUrl,
-                              height: widget.isDesktopOrTablet ? 135 : 185,
+                              height: widget.isDesktopOrTablet ? 145 : 230,
                               width: double.infinity,
                               placeholderText: project.title,
                               fallbackIcon: Icons.phone_iphone_rounded,
