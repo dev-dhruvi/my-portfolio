@@ -533,7 +533,7 @@ void main() {
     );
 
     testWidgets(
-      'SkillsSection renders tech stack, filter tabs, and skill cards on desktop, tablet, and mobile',
+      'SkillsSection renders grouped-chip tech stack across desktop, tablet, and mobile',
       (tester) async {
         // Desktop test (1440px)
         tester.view.physicalSize = const Size(1440, 900);
@@ -559,16 +559,13 @@ void main() {
 
         expect(find.text('MY TECH STACK'), findsOneWidget);
         expect(find.text('Technologies'), findsOneWidget);
-        expect(find.text('Mobile & Frameworks'), findsAtLeastNWidgets(1));
-        expect(find.text('Cloud & Backend'), findsAtLeastNWidgets(1));
-        expect(find.text('Architecture & Quality'), findsAtLeastNWidgets(1));
+        expect(find.text('Mobile Development'), findsOneWidget);
+        expect(find.text('Backend & Integrations'), findsOneWidget);
+        expect(find.text('Architecture & Tools'), findsOneWidget);
         expect(find.text('Flutter'), findsOneWidget);
         expect(find.text('Dart'), findsOneWidget);
-
-        // Filter tab interaction: tap on 'Cloud & Backend'
-        await tester.tap(find.text('Cloud & Backend').first);
-        await tester.pump();
         expect(find.text('Firebase'), findsOneWidget);
+        expect(find.text('Clean Architecture'), findsOneWidget);
 
         // Mobile test (375px)
         tester.view.physicalSize = const Size(375, 812);
@@ -589,6 +586,8 @@ void main() {
         );
         await tester.pump();
         expect(find.text('MY TECH STACK'), findsOneWidget);
+        expect(find.text('Mobile Development'), findsOneWidget);
+        expect(find.text('Flutter'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );
