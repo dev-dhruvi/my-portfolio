@@ -45,6 +45,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   int _aboutAnimationTrigger = 0;
   bool _isAboutInView = false;
+  String _activeSection = 'hero';
   // On web, the preloader in web/index.html seamlessly handles the initial Flutter
   // bootstrap state. Setting _showAppLoader to false eliminates the redundant 2.1-second
   // secondary delay, letting recruiters instantly view the Hero section.
@@ -58,13 +59,58 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
+
+    final scrollOffset = _scrollController.offset;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+
+    // 1. Detect active section for navigation pills and indicators
+    String detectedSection = _activeSection;
+
+    if (scrollOffset <= 60) {
+      detectedSection = 'hero';
+    } else if (scrollOffset >= maxScroll - 120) {
+      detectedSection = 'contact';
+    } else {
+      // Evaluate sections from bottom to top to identify the currently active viewport section
+      final sectionMap = <String, GlobalKey>{
+        'contact': _contactKey,
+        'education': _educationKey,
+        'about': _aboutKey,
+        'skills': _skillsKey,
+        'experience': _experienceKey,
+        'projects': _projectsKey,
+        'hero': _heroKey,
+      };
+
+      const double activationThreshold = 140.0;
+      for (final entry in sectionMap.entries) {
+        final ctx = entry.value.currentContext;
+        if (ctx != null) {
+          final renderBox = ctx.findRenderObject() as RenderBox?;
+          if (renderBox != null && renderBox.hasSize) {
+            final globalDy = renderBox.localToGlobal(Offset.zero).dy;
+            if (globalDy <= activationThreshold) {
+              detectedSection = entry.key;
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    if (detectedSection != _activeSection) {
+      setState(() {
+        _activeSection = detectedSection;
+      });
+    }
+
+    // 2. Trigger counter animation when the About section enters the active viewport range
     final aboutContext = _aboutKey.currentContext;
     if (aboutContext != null) {
       final renderBox = aboutContext.findRenderObject() as RenderBox?;
       if (renderBox != null && renderBox.hasSize) {
         final position = renderBox.localToGlobal(Offset.zero);
         final screenHeight = MediaQuery.sizeOf(context).height;
-        // Trigger counter animation when the About section enters the active viewport range
         final inView =
             position.dy < screenHeight * 0.75 &&
             (position.dy + renderBox.size.height) > screenHeight * 0.25;
@@ -88,6 +134,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   void _scrollToSection(String sectionKey) {
+    if (_activeSection != sectionKey) {
+      setState(() {
+        _activeSection = sectionKey;
+      });
+    }
+
     if (sectionKey == 'hero') {
       _scrollController.animateTo(
         0,
@@ -95,17 +147,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
         curve: Curves.easeInOutCubic,
       );
       return;
-    }
-
-    if (sectionKey == 'contact') {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 700),
-          curve: Curves.easeInOutCubic,
-        );
-        return;
-      }
     }
 
     if (sectionKey == 'about') {
@@ -180,7 +221,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
     return Scaffold(
       key: _scaffoldKey,
-      drawer: MobileDrawer(onNavItemSelected: _scrollToSection),
+      drawer: MobileDrawer(
+        onNavItemSelected: _scrollToSection,
+        activeSection: _activeSection,
+      ),
       body: Stack(
         children: [
           // Main Scrollable Portfolio Sections & Canvas
@@ -196,7 +240,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       // 1. Hero Section
                       Container(
                         key: _heroKey,
-                        padding: const EdgeInsets.only(top: 92),
+                        padding: const EdgeInsets.only(top: 88),
                         child: ResponsiveContentContainer(
                           child: HeroSection(
                             profile: profile,
@@ -208,7 +252,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       // 2. Featured Projects Section (Promoted to Section 2 for maximum recruiter impact)
                       Container(
                         key: _projectsKey,
-                        padding: const EdgeInsets.only(top: 75),
+                        padding: const EdgeInsets.only(top: 88),
                         child: ResponsiveContentContainer(
                           child: ScrollVisibilityRevealer(
                             child: ProjectsSection(projects: projects),
@@ -219,7 +263,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       // 3. Experience & Achievements Section
                       Container(
                         key: _experienceKey,
-                        padding: const EdgeInsets.only(top: 75),
+                        padding: const EdgeInsets.only(top: 88),
                         child: ResponsiveContentContainer(
                           child: ScrollVisibilityRevealer(
                             child: ExperienceSection(experiences: experiences),
@@ -230,7 +274,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       // 4. Technical Skills Section
                       Container(
                         key: _skillsKey,
-                        padding: const EdgeInsets.only(top: 75),
+                        padding: const EdgeInsets.only(top: 88),
                         child: ResponsiveContentContainer(
                           child: ScrollVisibilityRevealer(
                             child: SkillsSection(skills: skills),
@@ -241,7 +285,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       // 5. About Me Section
                       Container(
                         key: _aboutKey,
-                        padding: const EdgeInsets.only(top: 80),
+                        padding: const EdgeInsets.only(top: 88),
                         child: ResponsiveContentContainer(
                           child: ScrollVisibilityRevealer(
                             child: AboutSection(
@@ -255,7 +299,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       // 6. Education Section
                       Container(
                         key: _educationKey,
-                        padding: const EdgeInsets.only(top: 75),
+                        padding: const EdgeInsets.only(top: 88),
                         child: ResponsiveContentContainer(
                           child: ScrollVisibilityRevealer(
                             child: EducationSection(education: education),
@@ -266,7 +310,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       // 7. Contact & Resume Section
                       Container(
                         key: _contactKey,
-                        padding: const EdgeInsets.only(top: 40),
+                        padding: const EdgeInsets.only(top: 88),
                         child: ResponsiveContentContainer(
                           child: ScrollVisibilityRevealer(
                             child: ContactSection(profile: profile),
@@ -295,6 +339,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   right: 0,
                   child: SafeArea(
                     child: NavBar(
+                      activeSection: _activeSection,
                       onNavItemSelected: _scrollToSection,
                       onOpenDrawer: () =>
                           _scaffoldKey.currentState?.openDrawer(),

@@ -641,5 +641,106 @@ void main() {
         expect(tester.takeException(), isNull);
       },
     );
+
+    testWidgets(
+      'NavBar displays activeSection state and Contact pill on desktop',
+      (tester) async {
+        final themeController = ThemeController();
+        String? navigatedSection;
+
+        await tester.binding.setSurfaceSize(const Size(1280, 800));
+        await tester.pumpWidget(
+          ChangeNotifierProvider<ThemeController>.value(
+            value: themeController,
+            child: MaterialApp(
+              home: MediaQuery(
+                data: const MediaQueryData(
+                  size: Size(1280, 800),
+                  disableAnimations: true,
+                ),
+                child: Scaffold(
+                  appBar: NavBar(
+                    activeSection: 'contact',
+                    onNavItemSelected: (key) => navigatedSection = key,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        // Verify Contact pill exists on desktop
+        expect(find.text('Contact'), findsOneWidget);
+
+        // Tap Contact pill
+        await tester.tap(find.text('Contact'));
+        await tester.pump();
+        expect(navigatedSection, equals('contact'));
+
+        // Tap phone icon button
+        navigatedSection = null;
+        await tester.tap(find.byIcon(Icons.phone_in_talk_rounded));
+        await tester.pump();
+        expect(navigatedSection, equals('contact'));
+
+        await tester.binding.setSurfaceSize(null);
+      },
+    );
+
+    testWidgets(
+      'HeroSection renders cleanly without overflow on laptop viewports (1366x768 and 1280x720)',
+      (tester) async {
+        // Standard laptop resolution (1366x768)
+        await tester.binding.setSurfaceSize(const Size(1366, 768));
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(1366, 768),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: HeroSection(profile: SeedData.initialProfile),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('Dhruvi Patel'), findsOneWidget);
+        expect(find.text('View My Projects'), findsOneWidget);
+        expect(find.text('Contact Me'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+
+        // Compact laptop resolution (1280x720)
+        await tester.binding.setSurfaceSize(const Size(1280, 720));
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(1280, 720),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: HeroSection(profile: SeedData.initialProfile),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('Dhruvi Patel'), findsOneWidget);
+        expect(find.text('View My Projects'), findsOneWidget);
+        expect(find.text('Contact Me'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+
+        await tester.binding.setSurfaceSize(null);
+      },
+    );
   });
 }

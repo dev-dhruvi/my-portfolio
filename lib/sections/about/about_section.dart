@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_breakpoints.dart';
@@ -23,7 +21,6 @@ class AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.sizeOf(context).height;
     final isMobile = AppBreakpoints.isMobile(context);
     final isTablet = AppBreakpoints.isTablet(context);
     final isDesktop = !isMobile && !isTablet;
@@ -35,26 +32,15 @@ class AboutSection extends StatelessWidget {
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
 
-    // Minimum height ensures the About section occupies the full desktop viewport
-    // with its content centered vertically, eliminating bleed from previous or following sections.
-    final double? minAboutHeight = isDesktop
-        ? math.max(620.0, screenHeight - 92.0)
-        : null;
-
     return Container(
-      constraints: minAboutHeight != null
-          ? BoxConstraints(minHeight: minAboutHeight)
-          : null,
-      alignment: Alignment.center,
+      alignment: Alignment.topLeft,
       padding: EdgeInsets.symmetric(
-        vertical: isDesktop ? 16 : (isMobile ? 24 : 28),
+        vertical: isDesktop ? 24 : (isMobile ? 20 : 24),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: isDesktop
-            ? MainAxisAlignment.center
-            : MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Section Tag & Title
           Row(

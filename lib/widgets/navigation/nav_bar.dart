@@ -13,8 +13,14 @@ import '../../core/theme/app_theme.dart';
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
   final Function(String sectionKey)? onNavItemSelected;
   final VoidCallback? onOpenDrawer;
+  final String activeSection;
 
-  const NavBar({super.key, this.onNavItemSelected, this.onOpenDrawer});
+  const NavBar({
+    super.key,
+    this.onNavItemSelected,
+    this.onOpenDrawer,
+    this.activeSection = 'hero',
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(88);
@@ -35,7 +41,9 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isCompact ? (screenWidth < 600 ? 12 : 20) : 32,
+        horizontal: isCompact
+            ? (screenWidth < 360 ? 8 : (screenWidth < 600 ? 12 : 20))
+            : 32,
         vertical: 14,
       ),
       child: Center(
@@ -49,7 +57,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
               filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: isCompact ? 14 : 20,
+                  horizontal: isCompact ? (screenWidth < 360 ? 10 : 14) : 20,
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
@@ -132,27 +140,38 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                         children: [
                           _NavPill(
                             title: 'Home',
+                            isActive: activeSection == 'hero',
                             onTap: () => onNavItemSelected?.call('hero'),
                           ),
                           _NavPill(
                             title: 'Projects',
+                            isActive: activeSection == 'projects',
                             onTap: () => onNavItemSelected?.call('projects'),
                           ),
                           _NavPill(
                             title: 'Experience',
+                            isActive: activeSection == 'experience',
                             onTap: () => onNavItemSelected?.call('experience'),
                           ),
                           _NavPill(
                             title: 'Skills',
+                            isActive: activeSection == 'skills',
                             onTap: () => onNavItemSelected?.call('skills'),
                           ),
                           _NavPill(
                             title: 'About',
+                            isActive: activeSection == 'about',
                             onTap: () => onNavItemSelected?.call('about'),
                           ),
                           _NavPill(
                             title: 'Education',
+                            isActive: activeSection == 'education',
                             onTap: () => onNavItemSelected?.call('education'),
+                          ),
+                          _NavPill(
+                            title: 'Contact',
+                            isActive: activeSection == 'contact',
+                            onTap: () => onNavItemSelected?.call('contact'),
                           ),
                         ],
                       ),
@@ -161,19 +180,37 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // Call Icon Button
+                          // Call Icon Button with active state
                           Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: isDark
-                                  ? Colors.white.withOpacity(0.08)
-                                  : Colors.black.withOpacity(0.04),
+                              color: activeSection == 'contact'
+                                  ? (isDark
+                                        ? AppColors.violetPrimary.withOpacity(
+                                            0.35,
+                                          )
+                                        : AppColors.violetPrimary.withOpacity(
+                                            0.20,
+                                          ))
+                                  : (isDark
+                                        ? Colors.white.withOpacity(0.08)
+                                        : Colors.black.withOpacity(0.04)),
+                              border: activeSection == 'contact'
+                                  ? Border.all(
+                                      color: isDark
+                                          ? AppColors.cyanLight
+                                          : AppColors.violetPrimary,
+                                      width: 1.2,
+                                    )
+                                  : null,
                             ),
                             child: IconButton(
-                              tooltip: 'Contact / Call',
+                              tooltip: activeSection == 'contact'
+                                  ? 'Contact Section (Active)'
+                                  : 'Contact / Call',
                               icon: Icon(
                                 Icons.phone_in_talk_rounded,
-                                color: isDark
+                                color: (activeSection == 'contact' || isDark)
                                     ? AppColors.cyanLight
                                     : AppColors.violetDark,
                                 size: 18,
@@ -215,21 +252,40 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          IconButton(
-                            tooltip: 'Contact / Call',
-                            icon: Icon(
-                              Icons.phone_in_talk_rounded,
-                              color: isDark
-                                  ? AppColors.cyanLight
-                                  : AppColors.violetDark,
-                              size: 20,
+                          Container(
+                            decoration: activeSection == 'contact'
+                                ? BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color:
+                                        (isDark
+                                                ? AppColors.violetPrimary
+                                                : AppColors.violetPrimary)
+                                            .withOpacity(0.25),
+                                  )
+                                : null,
+                            child: IconButton(
+                              tooltip: 'Contact / Call',
+                              visualDensity: screenWidth < 360
+                                  ? VisualDensity.compact
+                                  : VisualDensity.standard,
+                              icon: Icon(
+                                Icons.phone_in_talk_rounded,
+                                color: (activeSection == 'contact' || isDark)
+                                    ? AppColors.cyanLight
+                                    : AppColors.violetDark,
+                                size: screenWidth < 360 ? 18 : 20,
+                              ),
+                              onPressed: () =>
+                                  onNavItemSelected?.call('contact'),
                             ),
-                            onPressed: () => onNavItemSelected?.call('contact'),
                           ),
                           IconButton(
                             tooltip: isDark
                                 ? 'Switch to Light Theme'
                                 : 'Switch to Dark Theme',
+                            visualDensity: screenWidth < 360
+                                ? VisualDensity.compact
+                                : VisualDensity.standard,
                             icon: Icon(
                               isDark
                                   ? Icons.light_mode_rounded
@@ -237,16 +293,19 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                               color: isDark
                                   ? AppColors.cyanLight
                                   : AppColors.violetDark,
-                              size: 20,
+                              size: screenWidth < 360 ? 18 : 20,
                             ),
                             onPressed: () => themeController.toggleTheme(),
                           ),
                           IconButton(
                             tooltip: 'Open navigation menu',
+                            visualDensity: screenWidth < 360
+                                ? VisualDensity.compact
+                                : VisualDensity.standard,
                             icon: Icon(
                               Icons.menu_rounded,
                               color: isDark ? Colors.white : Colors.black87,
-                              size: 26,
+                              size: screenWidth < 360 ? 22 : 26,
                             ),
                             onPressed: onOpenDrawer,
                           ),
@@ -266,9 +325,14 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
 
 class _NavPill extends StatefulWidget {
   final String title;
+  final bool isActive;
   final VoidCallback onTap;
 
-  const _NavPill({required this.title, required this.onTap});
+  const _NavPill({
+    required this.title,
+    this.isActive = false,
+    required this.onTap,
+  });
 
   @override
   State<_NavPill> createState() => _NavPillState();
@@ -280,34 +344,54 @@ class _NavPillState extends State<_NavPill> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isHighlighted = widget.isActive || _isHovered;
 
-    final textColor = _isHovered
+    final textColor = isHighlighted
         ? (isDark ? AppColors.cyanLight : AppColors.violetPrimary)
         : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight);
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-          decoration: BoxDecoration(
-            color: _isHovered
-                ? (isDark
-                      ? AppColors.violetPrimary.withOpacity(0.18)
-                      : AppColors.violetPrimary.withOpacity(0.10))
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Text(
-            widget.title,
-            style: TextStyle(
-              fontSize: 13.5,
-              fontWeight: _isHovered ? FontWeight.w700 : FontWeight.w500,
-              color: textColor,
+    return Semantics(
+      button: true,
+      label:
+          '${widget.title} navigation${widget.isActive ? ", current section" : ""}',
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: GestureDetector(
+          onTap: widget.onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+            decoration: BoxDecoration(
+              color: widget.isActive
+                  ? (isDark
+                        ? AppColors.violetPrimary.withOpacity(0.24)
+                        : AppColors.violetPrimary.withOpacity(0.14))
+                  : (_isHovered
+                        ? (isDark
+                              ? AppColors.violetPrimary.withOpacity(0.18)
+                              : AppColors.violetPrimary.withOpacity(0.10))
+                        : Colors.transparent),
+              borderRadius: BorderRadius.circular(20),
+              border: widget.isActive
+                  ? Border.all(
+                      color:
+                          (isDark
+                                  ? AppColors.cyanLight
+                                  : AppColors.violetPrimary)
+                              .withOpacity(0.4),
+                      width: 1.2,
+                    )
+                  : null,
+            ),
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                fontSize: 13.5,
+                fontWeight: isHighlighted ? FontWeight.w700 : FontWeight.w500,
+                color: textColor,
+              ),
             ),
           ),
         ),

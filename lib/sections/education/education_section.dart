@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -38,7 +36,6 @@ class EducationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.sizeOf(context).height;
     final isMobile = AppBreakpoints.isMobile(context);
     final isTablet = AppBreakpoints.isTablet(context);
     final isDesktop = !isMobile && !isTablet;
@@ -49,24 +46,15 @@ class EducationSection extends StatelessWidget {
     final textColor = isDark
         ? AppColors.textPrimaryDark
         : AppColors.textPrimaryLight;
-    final double? minEducationHeight = isDesktop
-        ? math.max(620.0, screenHeight - 92.0)
-        : null;
-
     return Container(
-      constraints: minEducationHeight != null
-          ? BoxConstraints(minHeight: minEducationHeight)
-          : null,
-      alignment: Alignment.center,
+      alignment: Alignment.topLeft,
       padding: EdgeInsets.symmetric(
-        vertical: isDesktop ? 16 : (isMobile ? 24 : 28),
+        vertical: isDesktop ? 24 : (isMobile ? 20 : 24),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: isDesktop
-            ? MainAxisAlignment.center
-            : MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Section Tag & Header
           Row(

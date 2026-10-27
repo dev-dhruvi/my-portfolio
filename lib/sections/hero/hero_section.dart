@@ -74,9 +74,10 @@ class _HeroSectionState extends State<HeroSection> {
         : AppColors.textSecondaryLight;
 
     // Minimum height ensures the Hero section cleanly fills the full first viewport
-    // on desktop screens so the About section lands cleanly below the fold.
+    // on desktop screens so the following section lands cleanly below the fold,
+    // without forcing excessive height that pushes CTAs below the fold on standard laptops.
     final double? minHeroHeight = (!isMobile && !isTablet)
-        ? math.max(680.0, screenHeight - 92.0)
+        ? math.max(460.0, screenHeight - 88.0)
         : null;
 
     return Container(
@@ -85,7 +86,9 @@ class _HeroSectionState extends State<HeroSection> {
           : null,
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 20 : (isTablet ? 28 : 36),
+        vertical: isMobile
+            ? 20
+            : (isTablet ? 24 : (screenHeight < 800 ? 14 : 26)),
         horizontal: isMobile ? 8 : 16,
       ),
       child: isMobile
@@ -124,6 +127,9 @@ class _HeroSectionState extends State<HeroSection> {
     bool isDark,
     bool disableAnimations,
   ) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    final isCompactHeight = screenHeight < 800;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -138,7 +144,7 @@ class _HeroSectionState extends State<HeroSection> {
                 index: 0,
                 child: _buildStatusBadge(isDark, disableAnimations),
               ),
-              const SizedBox(height: 18),
+              SizedBox(height: isCompactHeight ? 12 : 18),
               StaggeredEntrance(
                 index: 1,
                 child: _buildHeroText(
@@ -149,7 +155,7 @@ class _HeroSectionState extends State<HeroSection> {
                   isCentered: false,
                 ),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: isCompactHeight ? 20 : 30),
               StaggeredEntrance(
                 index: 2,
                 child: _buildActionButtons(context, isCentered: false),
@@ -167,9 +173,12 @@ class _HeroSectionState extends State<HeroSection> {
             child: StaggeredEntrance(
               index: 1,
               slideOffset: 0.1,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: _buildCharacterStageDesktop(isDark, disableAnimations),
+              child: SizedBox(
+                height: (screenHeight - 160.0).clamp(360.0, 480.0),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: _buildCharacterStageDesktop(isDark, disableAnimations),
+                ),
               ),
             ),
           ),
@@ -188,42 +197,45 @@ class _HeroSectionState extends State<HeroSection> {
     bool isDark,
     bool disableAnimations,
   ) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          StaggeredEntrance(
-            index: 0,
-            child: _buildStatusBadge(isDark, disableAnimations),
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        StaggeredEntrance(
+          index: 0,
+          child: _buildStatusBadge(isDark, disableAnimations),
+        ),
+        const SizedBox(height: 20),
+        StaggeredEntrance(
+          index: 1,
+          slideOffset: 0.1,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: _buildCharacterStageTablet(isDark, disableAnimations),
           ),
-          const SizedBox(height: 20),
-          StaggeredEntrance(
-            index: 1,
-            slideOffset: 0.1,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: _buildCharacterStageTablet(isDark, disableAnimations),
-            ),
+        ),
+        const SizedBox(height: 28),
+        StaggeredEntrance(
+          index: 2,
+          child: _buildHeroText(
+            context,
+            textColor,
+            secondaryTextColor,
+            isDark,
+            isCentered: true,
           ),
-          const SizedBox(height: 28),
-          StaggeredEntrance(
-            index: 2,
-            child: _buildHeroText(
-              context,
-              textColor,
-              secondaryTextColor,
-              isDark,
-              isCentered: true,
-            ),
-          ),
-          const SizedBox(height: 28),
-          StaggeredEntrance(
-            index: 3,
-            child: _buildActionButtons(context, isCentered: true),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 28),
+        StaggeredEntrance(
+          index: 3,
+          child: _buildActionButtons(context, isCentered: true),
+        ),
+      ],
     );
+
+    if (Scrollable.maybeOf(context) != null) {
+      return content;
+    }
+    return SingleChildScrollView(child: content);
   }
 
   // ===========================================================================
@@ -236,42 +248,45 @@ class _HeroSectionState extends State<HeroSection> {
     bool isDark,
     bool disableAnimations,
   ) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          StaggeredEntrance(
-            index: 0,
-            child: _buildStatusBadge(isDark, disableAnimations),
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        StaggeredEntrance(
+          index: 0,
+          child: _buildStatusBadge(isDark, disableAnimations),
+        ),
+        const SizedBox(height: 18),
+        StaggeredEntrance(
+          index: 1,
+          slideOffset: 0.1,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: _buildCharacterStageMobile(isDark),
           ),
-          const SizedBox(height: 18),
-          StaggeredEntrance(
-            index: 1,
-            slideOffset: 0.1,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: _buildCharacterStageMobile(isDark),
-            ),
+        ),
+        const SizedBox(height: 22),
+        StaggeredEntrance(
+          index: 2,
+          child: _buildHeroText(
+            context,
+            textColor,
+            secondaryTextColor,
+            isDark,
+            isCentered: true,
           ),
-          const SizedBox(height: 22),
-          StaggeredEntrance(
-            index: 2,
-            child: _buildHeroText(
-              context,
-              textColor,
-              secondaryTextColor,
-              isDark,
-              isCentered: true,
-            ),
-          ),
-          const SizedBox(height: 24),
-          StaggeredEntrance(
-            index: 3,
-            child: _buildActionButtons(context, isCentered: true),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 24),
+        StaggeredEntrance(
+          index: 3,
+          child: _buildActionButtons(context, isCentered: true),
+        ),
+      ],
     );
+
+    if (Scrollable.maybeOf(context) != null) {
+      return content;
+    }
+    return SingleChildScrollView(child: content);
   }
 
   // ===========================================================================
@@ -353,7 +368,11 @@ class _HeroSectionState extends State<HeroSection> {
     required bool isCentered,
   }) {
     final screenWidth = MediaQuery.sizeOf(context).width;
+    final screenHeight = MediaQuery.sizeOf(context).height;
     final isMobile = screenWidth < AppBreakpoints.mobileMax;
+    final double headlineFontSize = isMobile
+        ? (screenWidth < 360 ? 25.0 : 32.0)
+        : ((screenWidth < 1200 || screenHeight < 800) ? 38.0 : 48.0);
 
     return Column(
       crossAxisAlignment: isCentered
@@ -418,9 +437,7 @@ class _HeroSectionState extends State<HeroSection> {
           textAlign: isCentered ? TextAlign.center : TextAlign.start,
           text: TextSpan(
             style: TextStyle(
-              fontSize: isMobile
-                  ? (screenWidth < 360 ? 25.0 : 32.0)
-                  : (screenWidth < 1100 ? 44.0 : 52.0),
+              fontSize: headlineFontSize,
               fontWeight: FontWeight.w900,
               color: textColor,
               letterSpacing: -1.2,
@@ -440,9 +457,7 @@ class _HeroSectionState extends State<HeroSection> {
                     Color(0xFF06B6D4), // Cyan
                   ],
                   style: TextStyle(
-                    fontSize: isMobile
-                        ? (screenWidth < 360 ? 25.0 : 32.0)
-                        : (screenWidth < 1100 ? 44.0 : 52.0),
+                    fontSize: headlineFontSize,
                     fontWeight: FontWeight.w900,
                     letterSpacing: -1.2,
                   ),

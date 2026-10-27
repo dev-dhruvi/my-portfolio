@@ -80,7 +80,6 @@ class _ExperienceSectionState extends State<ExperienceSection> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.sizeOf(context).height;
     final isMobile = AppBreakpoints.isMobile(context);
     final isTablet = AppBreakpoints.isTablet(context);
     final isDesktop = !isMobile && !isTablet;
@@ -96,24 +95,15 @@ class _ExperienceSectionState extends State<ExperienceSection> {
     final totalExperienceFormatted =
         ExperienceCalculator.calculateTotalExperience(ranges);
 
-    final double? minExperienceHeight = isDesktop
-        ? math.max(600.0, screenHeight - 75.0)
-        : null;
-
     return Container(
-      constraints: minExperienceHeight != null
-          ? BoxConstraints(minHeight: minExperienceHeight)
-          : null,
-      alignment: Alignment.center,
+      alignment: Alignment.topLeft,
       padding: EdgeInsets.symmetric(
-        vertical: isDesktop ? 16 : (isMobile ? 20 : 24),
+        vertical: isDesktop ? 24 : (isMobile ? 20 : 24),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: isDesktop
-            ? MainAxisAlignment.center
-            : MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Section Tag & Header
           Row(

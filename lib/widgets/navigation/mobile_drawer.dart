@@ -9,8 +9,13 @@ import '../../core/utils/url_launcher_util.dart';
 /// Drawer navigation for mobile screens with modern frosted styling.
 class MobileDrawer extends StatelessWidget {
   final Function(String sectionKey)? onNavItemSelected;
+  final String activeSection;
 
-  const MobileDrawer({super.key, this.onNavItemSelected});
+  const MobileDrawer({
+    super.key,
+    this.onNavItemSelected,
+    this.activeSection = 'hero',
+  });
 
   void _closeDrawer(BuildContext context) {
     final scaffold = Scaffold.maybeOf(context);
@@ -114,6 +119,7 @@ class MobileDrawer extends StatelessWidget {
                   _DrawerItem(
                     icon: Icons.home_outlined,
                     title: 'Home',
+                    isActive: activeSection == 'hero',
                     onTap: () {
                       _closeDrawer(context);
                       onNavItemSelected?.call('hero');
@@ -122,6 +128,7 @@ class MobileDrawer extends StatelessWidget {
                   _DrawerItem(
                     icon: Icons.grid_view_rounded,
                     title: 'Projects',
+                    isActive: activeSection == 'projects',
                     onTap: () {
                       _closeDrawer(context);
                       onNavItemSelected?.call('projects');
@@ -130,6 +137,7 @@ class MobileDrawer extends StatelessWidget {
                   _DrawerItem(
                     icon: Icons.work_outline_rounded,
                     title: 'Experience',
+                    isActive: activeSection == 'experience',
                     onTap: () {
                       _closeDrawer(context);
                       onNavItemSelected?.call('experience');
@@ -138,6 +146,7 @@ class MobileDrawer extends StatelessWidget {
                   _DrawerItem(
                     icon: Icons.code_rounded,
                     title: 'Skills',
+                    isActive: activeSection == 'skills',
                     onTap: () {
                       _closeDrawer(context);
                       onNavItemSelected?.call('skills');
@@ -146,6 +155,7 @@ class MobileDrawer extends StatelessWidget {
                   _DrawerItem(
                     icon: Icons.person_outline,
                     title: 'About',
+                    isActive: activeSection == 'about',
                     onTap: () {
                       _closeDrawer(context);
                       onNavItemSelected?.call('about');
@@ -154,6 +164,7 @@ class MobileDrawer extends StatelessWidget {
                   _DrawerItem(
                     icon: Icons.school_outlined,
                     title: 'Education',
+                    isActive: activeSection == 'education',
                     onTap: () {
                       _closeDrawer(context);
                       onNavItemSelected?.call('education');
@@ -162,6 +173,7 @@ class MobileDrawer extends StatelessWidget {
                   _DrawerItem(
                     icon: Icons.mail_outline_rounded,
                     title: 'Contact',
+                    isActive: activeSection == 'contact',
                     onTap: () {
                       _closeDrawer(context);
                       onNavItemSelected?.call('contact');
@@ -260,35 +272,51 @@ class MobileDrawer extends StatelessWidget {
 class _DrawerItem extends StatelessWidget {
   final IconData icon;
   final String title;
+  final bool isActive;
   final VoidCallback onTap;
 
   const _DrawerItem({
     required this.icon,
     required this.title,
+    this.isActive = false,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final itemColor = isDark
-        ? AppColors.textPrimaryDark
-        : AppColors.textPrimaryLight;
+    final itemColor = isActive
+        ? (isDark ? AppColors.cyanLight : AppColors.violetPrimary)
+        : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight);
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: ListTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        leading: Icon(icon, color: itemColor, size: 22),
-        title: Text(
-          title,
-          style: TextStyle(
-            color: itemColor,
-            fontWeight: FontWeight.w600,
-            fontSize: 15,
+    return Semantics(
+      button: true,
+      label: '$title navigation${isActive ? ", current section" : ""}',
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 4),
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+            side: isActive
+                ? BorderSide(color: itemColor.withOpacity(0.35), width: 1.2)
+                : BorderSide.none,
           ),
+          tileColor: isActive
+              ? (isDark
+                    ? AppColors.violetPrimary.withOpacity(0.22)
+                    : AppColors.violetPrimary.withOpacity(0.12))
+              : Colors.transparent,
+          leading: Icon(icon, color: itemColor, size: 22),
+          title: Text(
+            title,
+            style: TextStyle(
+              color: itemColor,
+              fontWeight: isActive ? FontWeight.w700 : FontWeight.w600,
+              fontSize: 15,
+            ),
+          ),
+          onTap: onTap,
         ),
-        onTap: onTap,
       ),
     );
   }
