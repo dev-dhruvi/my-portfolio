@@ -45,10 +45,9 @@ void main() {
         );
         expect(find.text('View My Projects'), findsOneWidget);
         expect(find.byIcon(Icons.rocket_launch_rounded), findsOneWidget);
-        expect(find.text('Contact Me'), findsOneWidget);
-        expect(find.byIcon(Icons.chat_bubble_outline_rounded), findsOneWidget);
         expect(find.text('Download CV'), findsOneWidget);
         expect(find.byIcon(Icons.description_outlined), findsOneWidget);
+        expect(find.text('Contact Me'), findsNothing);
         expect(find.text(AppConstants.location), findsOneWidget);
       },
     );
@@ -713,7 +712,7 @@ void main() {
 
         expect(find.text('Dhruvi Patel'), findsOneWidget);
         expect(find.text('View My Projects'), findsOneWidget);
-        expect(find.text('Contact Me'), findsOneWidget);
+        expect(find.text('Download CV'), findsOneWidget);
         expect(tester.takeException(), isNull);
 
         // Compact laptop resolution (1280x720)
@@ -737,7 +736,7 @@ void main() {
 
         expect(find.text('Dhruvi Patel'), findsOneWidget);
         expect(find.text('View My Projects'), findsOneWidget);
-        expect(find.text('Contact Me'), findsOneWidget);
+        expect(find.text('Download CV'), findsOneWidget);
         expect(tester.takeException(), isNull);
 
         await tester.binding.setSurfaceSize(null);

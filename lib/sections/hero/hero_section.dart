@@ -631,7 +631,7 @@ class _HeroSectionState extends State<HeroSection> {
   }
 
   // ===========================================================================
-  // ACTION BUTTONS (1. View My Projects, 2. Contact Me & 3. Download CV)
+  // ACTION BUTTONS (1. View My Projects & 2. Download CV)
   // ===========================================================================
   Widget _buildActionButtons(BuildContext context, {required bool isCentered}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -698,10 +698,10 @@ class _HeroSectionState extends State<HeroSection> {
           ),
         ),
 
-        // Secondary CTA: Contact Me (Navigates to Contact Section)
+        // Secondary CTA: Download CV (Glassmorphic button alongside View My Projects)
         Semantics(
           button: true,
-          label: 'Navigate to Contact Section',
+          label: 'Download Dhruvi Patel CV Resume PDF',
           child: Container(
             decoration: BoxDecoration(
               color: isDark
@@ -728,7 +728,7 @@ class _HeroSectionState extends State<HeroSection> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  widget.onNavigate?.call('contact');
+                  UrlLauncherUtil.openResume(context: context);
                 },
                 borderRadius: BorderRadius.circular(14),
                 child: Padding(
@@ -740,7 +740,7 @@ class _HeroSectionState extends State<HeroSection> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.chat_bubble_outline_rounded,
+                        Icons.description_outlined,
                         size: 18,
                         color: isDark
                             ? AppColors.cyanPrimary
@@ -751,82 +751,11 @@ class _HeroSectionState extends State<HeroSection> {
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            'Contact Me',
+                            'Download CV',
                             style: TextStyle(
                               color: isDark
                                   ? AppColors.cyanPrimary
                                   : AppColors.violetPrimary,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.5,
-                              letterSpacing: 0.2,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        // Tertiary CTA: Download CV (Instant Recruiter Conversion)
-        Semantics(
-          button: true,
-          label: 'Download Dhruvi Patel CV Resume PDF',
-          child: Container(
-            decoration: BoxDecoration(
-              color: isDark
-                  ? AppColors.darkCard.withOpacity(0.55)
-                  : Colors.white.withOpacity(0.75),
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                color: isDark
-                    ? Colors.white.withOpacity(0.18)
-                    : AppColors.violetPrimary.withOpacity(0.25),
-                width: 1.2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  UrlLauncherUtil.openResume(context: context);
-                },
-                borderRadius: BorderRadius.circular(14),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isMobile ? 16 : 20,
-                    vertical: isMobile ? 13 : 15,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.description_outlined,
-                        size: 18,
-                        color: isDark
-                            ? AppColors.textPrimaryDark
-                            : AppColors.textPrimaryLight,
-                      ),
-                      const SizedBox(width: 8),
-                      Flexible(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            'Download CV',
-                            style: TextStyle(
-                              color: isDark
-                                  ? AppColors.textPrimaryDark
-                                  : AppColors.textPrimaryLight,
                               fontWeight: FontWeight.w700,
                               fontSize: 14.5,
                               letterSpacing: 0.2,
