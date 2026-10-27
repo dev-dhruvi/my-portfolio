@@ -8,6 +8,7 @@ import '../../core/constants/app_breakpoints.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
+import '../../core/utils/url_launcher_util.dart';
 import '../../models/profile.dart';
 import '../../widgets/animations/animated_text_effects.dart';
 import '../../widgets/animations/staggered_entrance.dart';
@@ -630,7 +631,7 @@ class _HeroSectionState extends State<HeroSection> {
   }
 
   // ===========================================================================
-  // ACTION BUTTONS (1. View My Projects & 2. Contact Me)
+  // ACTION BUTTONS (1. View My Projects, 2. Contact Me & 3. Download CV)
   // ===========================================================================
   Widget _buildActionButtons(BuildContext context, {required bool isCentered}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -642,51 +643,55 @@ class _HeroSectionState extends State<HeroSection> {
       runSpacing: 12,
       children: [
         // Primary CTA: View My Projects (Navigates to Projects Section)
-        Container(
-          decoration: BoxDecoration(
-            gradient: AppColors.primaryGradient,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.violetPrimary.withOpacity(0.35),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                widget.onNavigate?.call('projects');
-              },
+        Semantics(
+          button: true,
+          label: 'Navigate to Projects Section',
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient,
               borderRadius: BorderRadius.circular(14),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 15),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.rocket_launch_rounded,
-                      size: 18,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 8),
-                    Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          'View My Projects',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.5,
-                            letterSpacing: 0.2,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.violetPrimary.withOpacity(0.35),
+                  blurRadius: 16,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  widget.onNavigate?.call('projects');
+                },
+                borderRadius: BorderRadius.circular(14),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 15),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.rocket_launch_rounded,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 8),
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'View My Projects',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.5,
+                              letterSpacing: 0.2,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -694,68 +699,143 @@ class _HeroSectionState extends State<HeroSection> {
         ),
 
         // Secondary CTA: Contact Me (Navigates to Contact Section)
-        Container(
-          decoration: BoxDecoration(
-            color: isDark
-                ? AppColors.darkCard.withOpacity(0.7)
-                : Colors.white.withOpacity(0.85),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
+        Semantics(
+          button: true,
+          label: 'Navigate to Contact Section',
+          child: Container(
+            decoration: BoxDecoration(
               color: isDark
-                  ? AppColors.cyanPrimary.withOpacity(0.4)
-                  : AppColors.violetPrimary.withOpacity(0.35),
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color:
-                    (isDark ? AppColors.cyanPrimary : AppColors.violetPrimary)
-                        .withOpacity(0.12),
-                blurRadius: 14,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                widget.onNavigate?.call('contact');
-              },
+                  ? AppColors.darkCard.withOpacity(0.7)
+                  : Colors.white.withOpacity(0.85),
               borderRadius: BorderRadius.circular(14),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: isMobile ? 18 : 22,
-                  vertical: isMobile ? 13 : 15,
+              border: Border.all(
+                color: isDark
+                    ? AppColors.cyanPrimary.withOpacity(0.4)
+                    : AppColors.violetPrimary.withOpacity(0.35),
+                width: 1.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      (isDark ? AppColors.cyanPrimary : AppColors.violetPrimary)
+                          .withOpacity(0.12),
+                  blurRadius: 14,
+                  offset: const Offset(0, 4),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.chat_bubble_outline_rounded,
-                      size: 18,
-                      color: isDark
-                          ? AppColors.cyanPrimary
-                          : AppColors.violetPrimary,
-                    ),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          'Contact Me',
-                          style: TextStyle(
-                            color: isDark
-                                ? AppColors.cyanPrimary
-                                : AppColors.violetPrimary,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.5,
-                            letterSpacing: 0.2,
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  widget.onNavigate?.call('contact');
+                },
+                borderRadius: BorderRadius.circular(14),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 18 : 22,
+                    vertical: isMobile ? 13 : 15,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.chat_bubble_outline_rounded,
+                        size: 18,
+                        color: isDark
+                            ? AppColors.cyanPrimary
+                            : AppColors.violetPrimary,
+                      ),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'Contact Me',
+                            style: TextStyle(
+                              color: isDark
+                                  ? AppColors.cyanPrimary
+                                  : AppColors.violetPrimary,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.5,
+                              letterSpacing: 0.2,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        // Tertiary CTA: Download CV (Instant Recruiter Conversion)
+        Semantics(
+          button: true,
+          label: 'Download Dhruvi Patel CV Resume PDF',
+          child: Container(
+            decoration: BoxDecoration(
+              color: isDark
+                  ? AppColors.darkCard.withOpacity(0.55)
+                  : Colors.white.withOpacity(0.75),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: isDark
+                    ? Colors.white.withOpacity(0.18)
+                    : AppColors.violetPrimary.withOpacity(0.25),
+                width: 1.2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  UrlLauncherUtil.openResume(context: context);
+                },
+                borderRadius: BorderRadius.circular(14),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 16 : 20,
+                    vertical: isMobile ? 13 : 15,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.description_outlined,
+                        size: 18,
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
+                      ),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'Download CV',
+                            style: TextStyle(
+                              color: isDark
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.5,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

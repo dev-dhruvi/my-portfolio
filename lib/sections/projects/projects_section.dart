@@ -1622,6 +1622,12 @@ class ProjectDetailDialog extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
 
+                    // Flagship Modular Architecture Flow
+                    if (project.id == 'proj_pandits_near_me') ...[
+                      _buildArchitecturePipeline(context, isDark),
+                      const SizedBox(height: 24),
+                    ],
+
                     // Key Features
                     if (project.keyFeatures.isNotEmpty) ...[
                       Text(
@@ -1838,6 +1844,148 @@ class ProjectDetailDialog extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildArchitecturePipeline(BuildContext context, bool isDark) {
+    const steps = [
+      (
+        'Presentation',
+        'GetX & CustomPainter',
+        Icons.phone_iphone_rounded,
+        Color(0xFF06B6D4),
+      ),
+      (
+        'State & Logic',
+        'Controllers & Workers',
+        Icons.layers_rounded,
+        Color(0xFF8B5CF6),
+      ),
+      (
+        'Domain / Data',
+        'Repositories & Models',
+        Icons.inventory_2_outlined,
+        Color(0xFF3B82F6),
+      ),
+      (
+        'Networking',
+        'Dio + Single-Flight',
+        Icons.lock_clock_rounded,
+        Color(0xFF10B981),
+      ),
+      (
+        'Real-Time',
+        'AWS IoT MQTT & FCM',
+        Icons.cloud_sync_rounded,
+        Color(0xFFF59E0B),
+      ),
+    ];
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark
+            ? AppColors.darkCardHover.withOpacity(0.4)
+            : const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: isDark
+              ? AppColors.cyanPrimary.withOpacity(0.35)
+              : AppColors.violetPrimary.withOpacity(0.25),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.hub_rounded,
+                size: 18,
+                color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Production Clean Architecture Pipeline',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
+                  letterSpacing: 0.3,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (int i = 0; i < steps.length; i++) ...[
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 9,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isDark ? AppColors.darkCard : Colors.white,
+                      borderRadius: BorderRadius.circular(9),
+                      border: Border.all(color: steps[i].$4.withOpacity(0.35)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: steps[i].$4.withOpacity(0.08),
+                          blurRadius: 6,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(steps[i].$3, size: 13, color: steps[i].$4),
+                            const SizedBox(width: 5),
+                            Text(
+                              steps[i].$1,
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: steps[i].$4,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          steps[i].$2,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimaryLight,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (i < steps.length - 1)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                      child: Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 14,
+                        color: isDark ? Colors.white38 : Colors.black26,
+                      ),
+                    ),
+                ],
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

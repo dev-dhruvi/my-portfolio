@@ -47,6 +47,8 @@ void main() {
         expect(find.byIcon(Icons.rocket_launch_rounded), findsOneWidget);
         expect(find.text('Contact Me'), findsOneWidget);
         expect(find.byIcon(Icons.chat_bubble_outline_rounded), findsOneWidget);
+        expect(find.text('Download CV'), findsOneWidget);
+        expect(find.byIcon(Icons.description_outlined), findsOneWidget);
         expect(find.text(AppConstants.location), findsOneWidget);
       },
     );
