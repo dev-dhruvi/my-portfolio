@@ -46,7 +46,7 @@ class AppConstants {
   static const String heroFullHeadline =
       'Building Scalable Mobile Experiences with Flutter';
   static const String heroSupportingText =
-      "I'm Dhruvi Patel, a Flutter developer focused on crafting high-performance, intuitive cross-platform applications.";
+      "I build high-quality cross-platform applications with Flutter, combining clean architecture, intuitive UI, and reliable integrations to deliver smooth, scalable mobile experiences.";
 
   // Short & punchy hero summary matching modern reference design
   static const String shortSummary =
