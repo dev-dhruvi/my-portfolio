@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/constants/app_breakpoints.dart';
@@ -10,8 +9,8 @@ import '../../core/utils/url_launcher_util.dart';
 import '../../models/profile.dart';
 import '../../widgets/animations/staggered_entrance.dart';
 
-/// Contact section providing dual-channel direct inquiry (Email + WhatsApp)
-/// paired with the 3D contact character illustration and a prefilled message form.
+/// Contact section providing direct inquiry channels (Email, WhatsApp, LinkedIn, GitHub)
+/// paired with the 3D contact character illustration and the "Ready to Build" callout banner.
 class ContactSection extends StatefulWidget {
   final Profile profile;
 
@@ -22,81 +21,11 @@ class ContactSection extends StatefulWidget {
 }
 
 class _ContactSectionState extends State<ContactSection> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _messageController = TextEditingController();
-
-  static const List<String> _subjectOptions = [
-    'Job Opportunity',
-    'Freelance Project',
-    'Collaboration',
-    'Other',
-  ];
-
-  String? _selectedSubject = 'Job Opportunity';
-  bool _isSending = false;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _messageController.dispose();
-    super.dispose();
-  }
-
-  void _sendEmail() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _isSending = true);
-
-    final subject =
-        '${_selectedSubject ?? 'Portfolio Inquiry'}: ${_nameController.text.trim()}';
-
-    final body =
-        '''
-From: ${_nameController.text.trim()} (${_emailController.text.trim()})
-Subject: ${_selectedSubject ?? 'General Inquiry'}
-
-${_messageController.text.trim()}
-''';
-
-    final launched = await UrlLauncherUtil.openEmail(
-      widget.profile.email.isNotEmpty
-          ? widget.profile.email
-          : AppConstants.email,
-      subject: subject,
-      body: body,
-    );
-
-    if (mounted) {
-      setState(() => _isSending = false);
-      if (launched) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: AppColors.success,
-            content: Text('Opening default email app with your message...'),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: AppColors.error,
-            content: Text(
-              'Could not launch email app. Direct email: ${widget.profile.email}',
-            ),
-          ),
-        );
-      }
-    }
-  }
-
   void _openDirectEmail() {
     UrlLauncherUtil.openEmail(
       widget.profile.email.isNotEmpty
           ? widget.profile.email
           : AppConstants.email,
-      subject: 'Portfolio Inquiry for ${widget.profile.name}',
     );
   }
 
@@ -197,12 +126,12 @@ ${_messageController.text.trim()}
           const SizedBox(height: 8),
 
           Text(
-            'Have a project in mind, need a skilled Flutter developer, or want to discuss an opportunity? Reach out via direct email, LinkedIn, or send a message below.',
+            'Have a project in mind, need a skilled Flutter developer, or want to discuss an opportunity? Reach out via direct email, WhatsApp, LinkedIn, or GitHub.',
             style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
           const SizedBox(height: 32),
 
-          // Responsive Two-Option Content Layout
+          // Responsive Two-Column Layout
           if (isDesktop)
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +154,7 @@ ${_messageController.text.trim()}
                   flex: 6,
                   child: StaggeredEntrance(
                     index: 1,
-                    child: _buildContactFormCard(
+                    child: _buildRightContactCard(
                       context,
                       isDark: isDark,
                       textColor: textColor,
@@ -252,7 +181,7 @@ ${_messageController.text.trim()}
                 const SizedBox(height: 28),
                 StaggeredEntrance(
                   index: 1,
-                  child: _buildContactFormCard(
+                  child: _buildRightContactCard(
                     context,
                     isDark: isDark,
                     textColor: textColor,
@@ -278,7 +207,7 @@ ${_messageController.text.trim()}
                 const SizedBox(height: 24),
                 StaggeredEntrance(
                   index: 1,
-                  child: _buildContactFormCard(
+                  child: _buildRightContactCard(
                     context,
                     isDark: isDark,
                     textColor: textColor,
@@ -295,7 +224,7 @@ ${_messageController.text.trim()}
     );
   }
 
-  /// Left-side (or top on mobile/tablet): Character stage, direct contact action buttons, and availability indicators.
+  /// Left-side: Character stage and availability indicators.
   Widget _buildLeftOverview(
     BuildContext context, {
     required bool isDark,
@@ -303,16 +232,6 @@ ${_messageController.text.trim()}
     required Color secondaryTextColor,
     required bool isMobile,
   }) {
-    final directEmail = widget.profile.email.isNotEmpty
-        ? widget.profile.email
-        : AppConstants.email;
-    final githubUrl = widget.profile.githubUrl.isNotEmpty
-        ? widget.profile.githubUrl
-        : AppConstants.defaultGithubUrl;
-    final linkedinUrl = widget.profile.linkedinUrl.isNotEmpty
-        ? widget.profile.linkedinUrl
-        : AppConstants.defaultLinkedinUrl;
-
     return Column(
       crossAxisAlignment: isMobile
           ? CrossAxisAlignment.center
@@ -322,735 +241,298 @@ ${_messageController.text.trim()}
         Center(
           child: _ContactCharacterStage(isMobile: isMobile, isDark: isDark),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 24),
 
-        // Two-Option Direct Contact Buttons: Email Me + Chat on WhatsApp
-        Row(
-          children: [
-            Expanded(
-              child: _buildDirectEmailButton(
-                isDark,
-                textColor,
-                secondaryTextColor,
-                isMobile,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _buildWhatsAppButton(
-                isDark,
-                textColor,
-                secondaryTextColor,
-                isMobile,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 14),
-
-        // Direct Email Card with Click-to-Mail and Copy
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          decoration: BoxDecoration(
-            color: (isDark ? const Color(0xFF0F172A) : Colors.white)
-                .withOpacity(isDark ? 0.75 : 0.95),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: isDark ? const Color(0xFF1E2848) : const Color(0xFFE2E8F0),
-            ),
-          ),
-          child: Row(
+        // Status & Availability Indicators Row
+        Center(
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 16,
+            runSpacing: 8,
             children: [
-              Container(
-                padding: const EdgeInsets.all(7),
-                decoration: BoxDecoration(
-                  color: AppColors.cyanPrimary.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.alternate_email_rounded,
-                  size: 16,
-                  color: AppColors.cyanPrimary,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: SelectableText(
-                  directEmail,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: textColor,
-                  ),
-                ),
-              ),
-              IconButton(
-                tooltip: 'Copy Email',
-                icon: const Icon(Icons.copy_rounded, size: 16),
-                color: secondaryTextColor,
-                visualDensity: VisualDensity.compact,
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: directEmail));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      backgroundColor: AppColors.success,
-                      duration: Duration(seconds: 2),
-                      content: Text('Email address copied to clipboard!'),
+              // Available for new opportunities
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF10B981), // Emerald green
+                      shape: BoxShape.circle,
                     ),
-                  );
-                },
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Available for new opportunities',
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600,
+                      color: textColor,
+                    ),
+                  ),
+                ],
+              ),
+
+              // Quick response time indicator
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.bolt_rounded,
+                    size: 15,
+                    color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    'Usually replies within a day',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: secondaryTextColor,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ),
-        const SizedBox(height: 12),
-
-        // Quick Professional Profiles & PDF Resume Row
-        Row(
-          children: [
-            // LinkedIn
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () =>
-                    UrlLauncherUtil.openUrl(linkedinUrl, context: context),
-                icon: const FaIcon(
-                  FontAwesomeIcons.linkedinIn,
-                  size: 14,
-                  color: Color(0xFF0A66C2),
-                ),
-                label: const Text(
-                  'LinkedIn',
-                  style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600),
-                ),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: textColor,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  side: BorderSide(
-                    color: isDark
-                        ? const Color(0xFF1E2848)
-                        : const Color(0xFFE2E8F0),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-
-            // GitHub
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () =>
-                    UrlLauncherUtil.openUrl(githubUrl, context: context),
-                icon: FaIcon(
-                  FontAwesomeIcons.github,
-                  size: 14,
-                  color: isDark ? Colors.white : const Color(0xFF24292F),
-                ),
-                label: const Text(
-                  'GitHub',
-                  style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600),
-                ),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: textColor,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  side: BorderSide(
-                    color: isDark
-                        ? const Color(0xFF1E2848)
-                        : const Color(0xFFE2E8F0),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-
-        // Download Resume (PDF) Button
-        SizedBox(
-          width: double.infinity,
-          height: 44,
-          child: ElevatedButton.icon(
-            onPressed: () => UrlLauncherUtil.openResume(context: context),
-            icon: const Icon(
-              Icons.download_rounded,
-              size: 18,
-              color: Colors.white,
-            ),
-            label: const Text(
-              'Download Resume (PDF)',
-              style: TextStyle(
-                fontSize: 13.5,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                letterSpacing: 0.3,
-              ),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.violetPrimary,
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 18),
-
-        // Status & Availability Indicators Row
-        Wrap(
-          alignment: isMobile ? WrapAlignment.center : WrapAlignment.start,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 16,
-          runSpacing: 8,
-          children: [
-            // Available for new opportunities
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF10B981), // Emerald green
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xFF10B981),
-                        blurRadius: 6,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Available for new opportunities',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: isDark
-                        ? const Color(0xFF94A3B8)
-                        : const Color(0xFF475569),
-                  ),
-                ),
-              ],
-            ),
-
-            // Usually replies within a day
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.access_time_rounded,
-                  size: 14,
-                  color: isDark
-                      ? const Color(0xFF94A3B8)
-                      : const Color(0xFF64748B),
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  'Usually replies within a day',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: isDark
-                        ? const Color(0xFF94A3B8)
-                        : const Color(0xFF64748B),
-                  ),
-                ),
-              ],
-            ),
-          ],
         ),
       ],
     );
   }
 
-  Widget _buildDirectEmailButton(
-    bool isDark,
-    Color textColor,
-    Color secondaryTextColor,
-    bool isMobile,
-  ) {
-    return _InteractiveContactActionCard(
-      onTap: _openDirectEmail,
-      isDark: isDark,
-      accentColor: const Color(0xFF8B5CF6), // Violet
-      backgroundGradient: LinearGradient(
-        colors: isDark
-            ? [
-                const Color(0xFF7C3AED).withOpacity(0.22),
-                const Color(0xFF6366F1).withOpacity(0.08),
-              ]
-            : [const Color(0xFFF5F3FF), Colors.white],
-      ),
-      iconWidget: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          color: const Color(0xFF8B5CF6).withOpacity(0.18),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: const Icon(
-          Icons.mail_rounded,
-          size: 19,
-          color: Color(0xFFA78BFA),
-        ),
-      ),
-      title: isMobile ? "Email" : 'Email Me',
-      subtitle: isMobile ? "" : 'Open your mail app',
-    );
-  }
-
-  /// "Chat on WhatsApp" direct action button
-  Widget _buildWhatsAppButton(
-    bool isDark,
-    Color textColor,
-    Color secondaryTextColor,
-    bool isMobile,
-  ) {
-    return _InteractiveContactActionCard(
-      onTap: _openWhatsApp,
-      isDark: isDark,
-      accentColor: const Color(0xFF10B981), // Emerald green
-      backgroundGradient: LinearGradient(
-        colors: isDark
-            ? [
-                const Color(0xFF10B981).withOpacity(0.24),
-                const Color(0xFF059669).withOpacity(0.10),
-              ]
-            : [const Color(0xFFECFDF5), Colors.white],
-      ),
-      iconWidget: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          color: const Color(0xFF10B981).withOpacity(0.2),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: const Center(child: _WhatsAppIconWidget(size: 20)),
-      ),
-      title: isMobile ? "WhatsApp" : 'Chat on WhatsApp',
-      subtitle: isMobile ? "" : 'Quick response',
-      titleColor: isDark ? Colors.white : const Color(0xFF065F46),
-      subtitleColor: isDark ? const Color(0xFF6EE7B7) : const Color(0xFF047857),
-    );
-  }
-
-  /// Right-side: "Send me a message" Card with Form, Dropdown, Text Area, and CTA
-  Widget _buildContactFormCard(
+  /// Right-side: "Ready to Build" Card at top, followed by 2 rows of contact channels.
+  /// Row 1: Email and WhatsApp
+  /// Row 2: GitHub and LinkedIn
+  Widget _buildRightContactCard(
     BuildContext context, {
     required bool isDark,
     required Color textColor,
     required Color secondaryTextColor,
     required bool isMobile,
   }) {
-    final inputBg = isDark
-        ? const Color(0xFF0B1020).withOpacity(0.7)
-        : const Color(0xFFF8FAFC);
-    final borderColor = isDark
-        ? const Color(0xFF1E2848)
-        : const Color(0xFFE2E8F0);
+    final githubUrl = widget.profile.githubUrl.isNotEmpty
+        ? widget.profile.githubUrl
+        : AppConstants.defaultGithubUrl;
+    final linkedinUrl = widget.profile.linkedinUrl.isNotEmpty
+        ? widget.profile.linkedinUrl
+        : AppConstants.defaultLinkedinUrl;
 
-    return Container(
-      padding: EdgeInsets.all(isMobile ? 20 : 26),
-      decoration: BoxDecoration(
-        color: (isDark ? const Color(0xFF0F172A) : Colors.white).withOpacity(
-          isDark ? 0.78 : 0.95,
-        ),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: borderColor, width: 1.2),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.28 : 0.05),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 1. "Ready to Build" Callout Card (shifted from bottom)
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 18 : 24,
+            vertical: isMobile ? 20 : 24,
           ),
-        ],
-      ),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: isDark
+                  ? [
+                      const Color(0xFF1E1B4B).withOpacity(0.85),
+                      const Color(0xFF0F172A).withOpacity(0.92),
+                    ]
+                  : [const Color(0xFFEEF2FF), Colors.white],
+            ),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: AppColors.violetPrimary.withOpacity(isDark ? 0.35 : 0.25),
+              width: 1.2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.violetPrimary.withOpacity(
+                  isDark ? 0.12 : 0.05,
+                ),
+                blurRadius: 16,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Ready to Build Scalable Mobile Experiences Together?",
+                style: TextStyle(
+                  fontSize: isMobile ? 18 : 22,
+                  fontWeight: FontWeight.w800,
+                  color: textColor,
+                  letterSpacing: -0.3,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Whether you need a dedicated Flutter developer, architectural guidance, or help shipping production releases — let's connect.",
+                style: TextStyle(
+                  fontSize: isMobile ? 12.5 : 14,
+                  color: secondaryTextColor,
+                  height: 1.45,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // 2. Direct Contact Channels:
+        // Row 1: Email and WhatsApp
+        Row(
           children: [
-            // Card Header: Icon + "Send me a message"
-            Row(
-              children: [
-                Container(
-                  width: 42,
-                  height: 42,
+            Expanded(
+              child: _InteractiveContactActionCard(
+                onTap: _openDirectEmail,
+                isDark: isDark,
+                accentColor: const Color(0xFF8B5CF6),
+                backgroundGradient: LinearGradient(
+                  colors: isDark
+                      ? [
+                          const Color(0xFF7C3AED).withOpacity(0.20),
+                          const Color(0xFF6366F1).withOpacity(0.08),
+                        ]
+                      : [const Color(0xFFF5F3FF), Colors.white],
+                ),
+                iconWidget: Container(
+                  width: isMobile ? 36 : 40,
+                  height: isMobile ? 36 : 40,
                   decoration: BoxDecoration(
-                    color: AppColors.violetPrimary.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: AppColors.violetPrimary.withOpacity(0.35),
-                    ),
+                    color: const Color(0xFF8B5CF6).withOpacity(0.18),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
-                    Icons.chat_bubble_outline_rounded,
-                    size: 20,
-                    color: AppColors.violetLight,
-                  ),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Send me a message',
-                        style: TextStyle(
-                          fontSize: isMobile ? 17 : 18.5,
-                          fontWeight: FontWeight.w700,
-                          color: textColor,
-                          letterSpacing: -0.2,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        'Tell me about your project, opportunity or just say hello!',
-                        style: TextStyle(
-                          fontSize: 12.5,
-                          color: secondaryTextColor,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 22),
-
-            // Name & Email Fields (Side-by-side on desktop/tablet, stacked on mobile)
-            if (isMobile) ...[
-              _buildTextFormField(
-                controller: _nameController,
-                hintText: 'Your Name *',
-                prefixIcon: Icons.person_outline_rounded,
-                isDark: isDark,
-                inputBg: inputBg,
-                borderColor: borderColor,
-                textColor: textColor,
-                secondaryTextColor: secondaryTextColor,
-                validator: (val) => val == null || val.trim().isEmpty
-                    ? 'Enter your name'
-                    : null,
-              ),
-              const SizedBox(height: 12),
-              _buildTextFormField(
-                controller: _emailController,
-                hintText: 'Your Email *',
-                prefixIcon: Icons.mail_outline_rounded,
-                isDark: isDark,
-                inputBg: inputBg,
-                borderColor: borderColor,
-                textColor: textColor,
-                secondaryTextColor: secondaryTextColor,
-                keyboardType: TextInputType.emailAddress,
-                validator: (val) {
-                  if (val == null || val.trim().isEmpty) {
-                    return 'Enter your email';
-                  }
-                  if (!val.contains('@')) return 'Enter a valid email';
-                  return null;
-                },
-              ),
-            ] else
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTextFormField(
-                      controller: _nameController,
-                      hintText: 'Your Name *',
-                      prefixIcon: Icons.person_outline_rounded,
-                      isDark: isDark,
-                      inputBg: inputBg,
-                      borderColor: borderColor,
-                      textColor: textColor,
-                      secondaryTextColor: secondaryTextColor,
-                      validator: (val) => val == null || val.trim().isEmpty
-                          ? 'Enter your name'
-                          : null,
-                    ),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: _buildTextFormField(
-                      controller: _emailController,
-                      hintText: 'Your Email *',
-                      prefixIcon: Icons.mail_outline_rounded,
-                      isDark: isDark,
-                      inputBg: inputBg,
-                      borderColor: borderColor,
-                      textColor: textColor,
-                      secondaryTextColor: secondaryTextColor,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (val) {
-                        if (val == null || val.trim().isEmpty) {
-                          return 'Enter your email';
-                        }
-                        if (!val.contains('@')) return 'Enter a valid email';
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            const SizedBox(height: 14),
-
-            // Subject Dropdown
-            DropdownButtonFormField<String>(
-              value: _selectedSubject,
-              items: _subjectOptions.map((opt) {
-                return DropdownMenuItem<String>(
-                  value: opt,
-                  child: Text(
-                    opt,
-                    style: TextStyle(
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w500,
-                      color: textColor,
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (val) => setState(() => _selectedSubject = val),
-              dropdownColor: isDark ? const Color(0xFF0F172A) : Colors.white,
-              icon: Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: secondaryTextColor,
-              ),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: inputBg,
-                prefixIcon: Icon(
-                  Icons.format_list_bulleted_rounded,
-                  size: 19,
-                  color: secondaryTextColor,
-                ),
-                hintText: 'Select Subject *',
-                hintStyle: TextStyle(
-                  fontSize: 13.5,
-                  color: secondaryTextColor.withOpacity(0.7),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: borderColor),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: borderColor),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(
-                    color: AppColors.cyanPrimary,
-                    width: 1.5,
-                  ),
-                ),
-              ),
-              validator: (val) =>
-                  val == null || val.isEmpty ? 'Please select a subject' : null,
-            ),
-            const SizedBox(height: 14),
-
-            // Message Area
-            TextFormField(
-              controller: _messageController,
-              minLines: 4,
-              maxLines: 5,
-              style: TextStyle(fontSize: 14, color: textColor),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: inputBg,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(bottom: 64),
                   child: Icon(
-                    Icons.chat_outlined,
-                    size: 19,
-                    color: secondaryTextColor,
+                    Icons.mail_rounded,
+                    size: isMobile ? 18 : 20,
+                    color: const Color(0xFFA78BFA),
                   ),
                 ),
-                hintText: 'Tell me about your project or opportunity...',
-                hintStyle: TextStyle(
-                  fontSize: 13.5,
-                  color: secondaryTextColor.withOpacity(0.7),
-                ),
-                alignLabelWithHint: true,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: borderColor),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: borderColor),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(
-                    color: AppColors.cyanPrimary,
-                    width: 1.5,
-                  ),
-                ),
+                title: 'Email',
+                subtitle: 'Send an email directly',
+                isMobile: isMobile,
               ),
-              validator: (val) => val == null || val.trim().isEmpty
-                  ? 'Please write a message'
-                  : null,
             ),
-            const SizedBox(height: 20),
-
-            // Submit Button: "Open Email App"
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: _isSending ? null : _sendEmail,
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  elevation: 4,
-                  shadowColor: AppColors.violetPrimary.withOpacity(0.4),
+            SizedBox(width: isMobile ? 10 : 12),
+            Expanded(
+              child: _InteractiveContactActionCard(
+                onTap: _openWhatsApp,
+                isDark: isDark,
+                accentColor: const Color(0xFF10B981),
+                backgroundGradient: LinearGradient(
+                  colors: isDark
+                      ? [
+                          const Color(0xFF10B981).withOpacity(0.22),
+                          const Color(0xFF059669).withOpacity(0.08),
+                        ]
+                      : [const Color(0xFFECFDF5), Colors.white],
                 ),
-                child: Ink(
+                iconWidget: Container(
+                  width: isMobile ? 36 : 40,
+                  height: isMobile ? 36 : 40,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF8B5CF6), // Violet
-                        Color(0xFF6D28D9), // Deep Purple
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(14),
+                    color: const Color(0xFF10B981).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: _isSending
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.send_rounded,
-                                size: 18,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                'Open Email App',
-                                style: TextStyle(
-                                  fontSize: 14.5,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                  letterSpacing: 0.2,
-                                ),
-                              ),
-                            ],
-                          ),
+                  child: Center(
+                    child: _WhatsAppIconWidget(size: isMobile ? 18 : 20),
                   ),
                 ),
+                title: 'WhatsApp',
+                subtitle: 'Connect on WhatsApp',
+                isMobile: isMobile,
               ),
-            ),
-            const SizedBox(height: 12),
-
-            // Clarifying Note
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.info_outline_rounded,
-                  size: 14,
-                  color: secondaryTextColor,
-                ),
-                const SizedBox(width: 6),
-                Flexible(
-                  child: Text(
-                    'Your default email app will open with your message ready to send.',
-                    style: TextStyle(fontSize: 12, color: secondaryTextColor),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-              ],
             ),
           ],
         ),
-      ),
-    );
-  }
+        SizedBox(height: isMobile ? 10 : 12),
 
-  Widget _buildTextFormField({
-    required TextEditingController controller,
-    required String hintText,
-    required IconData prefixIcon,
-    required bool isDark,
-    required Color inputBg,
-    required Color borderColor,
-    required Color textColor,
-    required Color secondaryTextColor,
-    TextInputType? keyboardType,
-    String? Function(String?)? validator,
-  }) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      style: TextStyle(fontSize: 14, color: textColor),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: inputBg,
-        prefixIcon: Icon(prefixIcon, size: 19, color: secondaryTextColor),
-        hintText: hintText,
-        hintStyle: TextStyle(
-          fontSize: 13.5,
-          color: secondaryTextColor.withOpacity(0.7),
+        // Row 2: GitHub and LinkedIn
+        Row(
+          children: [
+            Expanded(
+              child: _InteractiveContactActionCard(
+                onTap: () =>
+                    UrlLauncherUtil.openUrl(githubUrl, context: context),
+                isDark: isDark,
+                accentColor: isDark
+                    ? const Color(0xFFA78BFA)
+                    : const Color(0xFF475569),
+                backgroundGradient: LinearGradient(
+                  colors: isDark
+                      ? [
+                          const Color(0xFF1E293B).withOpacity(0.7),
+                          const Color(0xFF0F172A).withOpacity(0.9),
+                        ]
+                      : [const Color(0xFFF8FAFC), Colors.white],
+                ),
+                iconWidget: Container(
+                  width: isMobile ? 36 : 40,
+                  height: isMobile ? 36 : 40,
+                  decoration: BoxDecoration(
+                    color: (isDark ? Colors.white : const Color(0xFF24292F))
+                        .withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.github,
+                      size: isMobile ? 16 : 18,
+                      color: isDark ? Colors.white : const Color(0xFF24292F),
+                    ),
+                  ),
+                ),
+                title: 'GitHub',
+                subtitle: 'Explore repositories',
+                isMobile: isMobile,
+              ),
+            ),
+            SizedBox(width: isMobile ? 10 : 12),
+            Expanded(
+              child: _InteractiveContactActionCard(
+                onTap: () =>
+                    UrlLauncherUtil.openUrl(linkedinUrl, context: context),
+                isDark: isDark,
+                accentColor: const Color(0xFF0A66C2),
+                backgroundGradient: LinearGradient(
+                  colors: isDark
+                      ? [
+                          const Color(0xFF0A66C2).withOpacity(0.20),
+                          const Color(0xFF0284C7).withOpacity(0.08),
+                        ]
+                      : [const Color(0xFFF0F9FF), Colors.white],
+                ),
+                iconWidget: Container(
+                  width: isMobile ? 36 : 40,
+                  height: isMobile ? 36 : 40,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF0A66C2).withOpacity(0.18),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.linkedinIn,
+                      size: isMobile ? 16 : 18,
+                      color: const Color(0xFF0A66C2),
+                    ),
+                  ),
+                ),
+                title: 'LinkedIn',
+                subtitle: 'Connect on LinkedIn',
+                isMobile: isMobile,
+              ),
+            ),
+          ],
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 14,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: borderColor),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: borderColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: AppColors.cyanPrimary,
-            width: 1.5,
-          ),
-        ),
-      ),
-      validator: validator,
+      ],
     );
   }
 }
 
-/// Interactive direct action card for Email Me & Chat on WhatsApp
+/// Interactive direct action card for Email, WhatsApp, LinkedIn, GitHub
 class _InteractiveContactActionCard extends StatefulWidget {
   final VoidCallback onTap;
   final bool isDark;
@@ -1059,8 +541,7 @@ class _InteractiveContactActionCard extends StatefulWidget {
   final Widget iconWidget;
   final String title;
   final String subtitle;
-  final Color? titleColor;
-  final Color? subtitleColor;
+  final bool isMobile;
 
   const _InteractiveContactActionCard({
     required this.onTap,
@@ -1070,8 +551,7 @@ class _InteractiveContactActionCard extends StatefulWidget {
     required this.iconWidget,
     required this.title,
     required this.subtitle,
-    this.titleColor,
-    this.subtitleColor,
+    this.isMobile = false,
   });
 
   @override
@@ -1098,8 +578,11 @@ class _InteractiveContactActionCardState
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutCubic,
-          transform: Matrix4.translationValues(0, _isHovered ? -3.0 : 0.0, 0),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          transform: Matrix4.translationValues(0, _isHovered ? -2.5 : 0.0, 0),
+          padding: EdgeInsets.symmetric(
+            horizontal: widget.isMobile ? 12 : 16,
+            vertical: widget.isMobile ? 12 : 14,
+          ),
           decoration: BoxDecoration(
             gradient: widget.backgroundGradient,
             color: widget.isDark ? const Color(0xFF0F172A) : Colors.white,
@@ -1113,7 +596,7 @@ class _InteractiveContactActionCardState
             boxShadow: [
               BoxShadow(
                 color: widget.accentColor.withOpacity(
-                  _isHovered ? 0.25 : (widget.isDark ? 0.08 : 0.04),
+                  _isHovered ? 0.22 : (widget.isDark ? 0.08 : 0.04),
                 ),
                 blurRadius: _isHovered ? 14 : 8,
                 offset: const Offset(0, 3),
@@ -1123,43 +606,43 @@ class _InteractiveContactActionCardState
           child: Row(
             children: [
               widget.iconWidget,
-              const SizedBox(width: 12),
+              SizedBox(width: widget.isMobile ? 10 : 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       widget.title,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: widget.isMobile ? 13.5 : 14.5,
                         fontWeight: FontWeight.w700,
-                        color:
-                            widget.titleColor ??
-                            (widget.isDark
-                                ? Colors.white
-                                : AppColors.darkBackground),
+                        color: widget.isDark
+                            ? Colors.white
+                            : AppColors.darkBackground,
                         letterSpacing: -0.1,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    if (widget.subtitle.isNotEmpty &&
-                        widget.subtitle != "") ...[
-                      const SizedBox(height: 1),
+                    if (widget.subtitle.isNotEmpty) ...[
+                      const SizedBox(height: 2),
                       Text(
                         widget.subtitle,
                         style: TextStyle(
-                          fontSize: 11.5,
-                          color:
-                              widget.subtitleColor ??
-                              (widget.isDark
-                                  ? const Color(0xFF94A3B8)
-                                  : const Color(0xFF64748B)),
+                          fontSize: widget.isMobile ? 11 : 12,
+                          color: widget.isDark
+                              ? const Color(0xFF94A3B8)
+                              : const Color(0xFF64748B),
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ],
                 ),
               ),
-              if (widget.subtitle.isNotEmpty && widget.subtitle != "")
+              if (widget.subtitle.isNotEmpty && !widget.isMobile)
                 Icon(
                   Icons.arrow_forward_rounded,
                   size: 16,

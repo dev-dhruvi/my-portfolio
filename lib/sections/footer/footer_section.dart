@@ -80,6 +80,16 @@ class FooterSection extends StatelessWidget {
                     ),
                   ),
                   IconButton(
+                    tooltip: 'WhatsApp',
+                    icon: const FaIcon(FontAwesomeIcons.whatsapp, size: 18),
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () => UrlLauncherUtil.openWhatsApp(
+                      AppConstants.whatsappNumber,
+                      text: AppConstants.whatsappDefaultText,
+                      context: context,
+                    ),
+                  ),
+                  IconButton(
                     tooltip: 'Email',
                     icon: const Icon(Icons.mail_rounded, size: 20),
                     visualDensity: VisualDensity.compact,

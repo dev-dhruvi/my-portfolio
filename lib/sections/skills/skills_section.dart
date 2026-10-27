@@ -219,6 +219,7 @@ class SkillsSection extends StatelessWidget {
         final width = constraints.maxWidth;
         final isMobile = width < 600;
         final isTablet = width >= 600 && width < 1024;
+        final isDesktop = !isMobile && !isTablet;
 
         // Build category cards for all 5 categories
         final List<Widget> categoryCards = _categoryOrder.map((cat) {
@@ -329,178 +330,101 @@ class SkillsSection extends StatelessWidget {
         }
 
         return Container(
-          width: double.infinity,
-          alignment: Alignment.center,
+          alignment: Alignment.topLeft,
           padding: EdgeInsets.symmetric(
-            vertical: isMobile ? 24 : 36,
-            horizontal: isMobile ? 8 : 16,
+            vertical: isDesktop ? 24 : (isMobile ? 20 : 24),
           ),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Top Header Row (Eyebrow + Code Symbol Badge)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 3.5,
-                          height: 18,
-                          decoration: BoxDecoration(
-                            color: AppColors.cyanPrimary,
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'MY TECH STACK',
-                          style: TextStyle(
-                            color: AppColors.cyanPrimary,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                            letterSpacing: 1.6,
-                          ),
-                        ),
-                      ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Top Header Row (Eyebrow)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 3.5,
+                    height: 18,
+                    decoration: BoxDecoration(
+                      color: AppColors.cyanPrimary,
+                      borderRadius: BorderRadius.circular(2),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color:
-                            (isDark
-                                    ? const Color(0xFF1E2848)
-                                    : const Color(0xFFF1F5F9))
-                                .withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: isDark
-                              ? const Color(0xFF2E3D6B)
-                              : const Color(0xFFCBD5E1),
-                        ),
-                      ),
-                      child: const Text(
-                        '</>',
-                        style: TextStyle(
-                          color: AppColors.cyanPrimary,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'MY TECH STACK',
+                    style: TextStyle(
+                      color: AppColors.cyanPrimary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13,
+                      letterSpacing: 1.6,
                     ),
-                  ],
-                ),
-                const SizedBox(height: 10),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
 
-                // Main Title: Skills & Technologies (with gradient on Technologies)
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Skills & ',
+              // Main Title: Skills & Technologies (with gradient on Technologies)
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Skills & ',
+                      style: TextStyle(
+                        fontSize: isMobile ? 26 : 34,
+                        fontWeight: FontWeight.w800,
+                        color: textColor,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    WidgetSpan(
+                      alignment: PlaceholderAlignment.baseline,
+                      baseline: TextBaseline.alphabetic,
+                      child: ShimmerGradientText(
+                        'Technologies',
+                        colors: const [
+                          Color(0xFF06B6D4), // Cyan
+                          Color(0xFF8B5CF6), // Violet
+                          Color(0xFFD946EF), // Magenta
+                          Color(0xFF06B6D4), // Cyan
+                        ],
                         style: TextStyle(
                           fontSize: isMobile ? 26 : 34,
                           fontWeight: FontWeight.w800,
-                          color: textColor,
                           letterSpacing: -0.5,
                         ),
                       ),
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.baseline,
-                        baseline: TextBaseline.alphabetic,
-                        child: ShimmerGradientText(
-                          'Technologies',
-                          colors: const [
-                            Color(0xFF06B6D4), // Cyan
-                            Color(0xFF8B5CF6), // Violet
-                            Color(0xFFD946EF), // Magenta
-                            Color(0xFF06B6D4), // Cyan
-                          ],
-                          style: TextStyle(
-                            fontSize: isMobile ? 26 : 34,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // Grouped Cards Layout (Responsive)
+              responsiveCards,
+              const SizedBox(height: 22),
+
+              // Bottom Footer Line
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 4,
+                children: [
+                  const Icon(
+                    Icons.auto_awesome_rounded,
+                    size: 14,
+                    color: AppColors.violetPrimary,
                   ),
-                ),
-                const SizedBox(height: 8),
-
-                // Subtitle / Overview Stats Row
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 10,
-                  runSpacing: 6,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 3.5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.cyanPrimary.withOpacity(0.12),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: AppColors.cyanPrimary.withOpacity(0.4),
-                        ),
-                      ),
-                      child: Text(
-                        '${skills.length}+ Technologies',
-                        style: const TextStyle(
-                          color: AppColors.cyanLight,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                  Text(
+                    'Cross-platform development · Scalable APIs · Real-time systems',
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w500,
+                      color: secondaryTextColor,
                     ),
-                    Text(
-                      '•  Cross-platform development',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: secondaryTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 26),
-
-                // Grouped Cards Layout (Responsive)
-                responsiveCards,
-                const SizedBox(height: 22),
-
-                // Bottom Footer Line
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 8,
-                  runSpacing: 4,
-                  children: [
-                    const Icon(
-                      Icons.auto_awesome_rounded,
-                      size: 14,
-                      color: AppColors.violetPrimary,
-                    ),
-                    Text(
-                      'Cross-platform development · Scalable APIs · Real-time systems',
-                      style: TextStyle(
-                        fontSize: 12.5,
-                        fontWeight: FontWeight.w500,
-                        color: secondaryTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         );
       },

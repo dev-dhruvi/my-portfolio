@@ -934,7 +934,7 @@ class _ViewMoreButtonState extends State<ViewMoreButton> {
 }
 
 /// Project Card Component with Animated Hover Elevation,
-/// Neon Border Sheen, Banner Zoom, and Interactive CTAs.
+/// Prominent Display Image, Company Name, and Direct App Store/Play Store/GitHub Icons.
 class ProjectCard extends StatefulWidget {
   final Project project;
   final VoidCallback onTap;
@@ -956,6 +956,111 @@ class ProjectCard extends StatefulWidget {
 class _ProjectCardState extends State<ProjectCard> {
   bool _isHovered = false;
 
+  Widget _buildStoreIconButton({
+    required BuildContext context,
+    required String url,
+    required Widget icon,
+    required String tooltip,
+    required bool isDark,
+    Color? accentColor,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: InkWell(
+        onTap: () => UrlLauncherUtil.openUrl(url, context: context),
+        borderRadius: BorderRadius.circular(6),
+        child: Container(
+          width: 28,
+          height: 28,
+          decoration: BoxDecoration(
+            color: isDark
+                ? (accentColor?.withOpacity(0.14) ?? const Color(0xFF1E293B))
+                : (accentColor?.withOpacity(0.08) ?? const Color(0xFFF1F5F9)),
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: isDark
+                  ? (accentColor?.withOpacity(0.28) ?? AppColors.darkCardBorder)
+                  : (accentColor?.withOpacity(0.20) ??
+                        AppColors.lightCardBorder),
+              width: 1,
+            ),
+          ),
+          child: Center(child: icon),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionIcons(BuildContext context, {required bool isDark}) {
+    final project = widget.project;
+    final List<Widget> actionIcons = [];
+
+    if (project.playStoreUrl.isNotEmpty) {
+      actionIcons.add(
+        _buildStoreIconButton(
+          context: context,
+          url: project.playStoreUrl,
+          tooltip: 'Google Play',
+          isDark: isDark,
+          accentColor: AppColors.cyanPrimary,
+          icon: FaIcon(
+            FontAwesomeIcons.googlePlay,
+            size: 13,
+            color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
+          ),
+        ),
+      );
+    }
+
+    if (project.appStoreUrl.isNotEmpty) {
+      actionIcons.add(
+        _buildStoreIconButton(
+          context: context,
+          url: project.appStoreUrl,
+          tooltip: 'App Store',
+          isDark: isDark,
+          accentColor: AppColors.violetPrimary,
+          icon: FaIcon(
+            FontAwesomeIcons.appStoreIos,
+            size: 14,
+            color: isDark ? AppColors.violetLight : AppColors.violetPrimary,
+          ),
+        ),
+      );
+    }
+
+    if (project.githubUrl.isNotEmpty) {
+      actionIcons.add(
+        _buildStoreIconButton(
+          context: context,
+          url: project.githubUrl,
+          tooltip: 'GitHub',
+          isDark: isDark,
+          accentColor: const Color(0xFFA78BFA),
+          icon: FaIcon(
+            FontAwesomeIcons.github,
+            size: 14,
+            color: isDark ? Colors.white : const Color(0xFF24292F),
+          ),
+        ),
+      );
+    }
+
+    if (actionIcons.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (int i = 0; i < actionIcons.length; i++) ...[
+          if (i > 0) const SizedBox(width: 6),
+          actionIcons[i],
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -972,304 +1077,87 @@ class _ProjectCardState extends State<ProjectCard> {
         final bool isBoundedHeight = constraints.maxHeight.isFinite;
 
         final cardBodyContent = Padding(
-          padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+          padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: isBoundedHeight
-                ? MainAxisAlignment.spaceBetween
-                : MainAxisAlignment.start,
-            mainAxisSize: isBoundedHeight ? MainAxisSize.max : MainAxisSize.min,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Company Name (if present)
-                  if (project.companyName.isNotEmpty) ...[
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.apartment_rounded,
-                          size: 12,
-                          color: isDark
-                              ? AppColors.violetLight
-                              : AppColors.violetPrimary,
-                        ),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            project.companyName,
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                              color: isDark
-                                  ? AppColors.violetLight
-                                  : AppColors.violetDark,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 3),
-                  ],
-
-                  // Flagship Case Study Badge
-                  if (project.id == 'proj_pandits_near_me') ...[
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 5),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 7,
-                        vertical: 2.5,
-                      ),
-                      decoration: BoxDecoration(
-                        gradient: AppColors.primaryGradient,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.star_rounded,
-                            size: 10,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 3),
-                          Text(
-                            'FLAGSHIP CASE STUDY',
-                            style: TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white,
-                              letterSpacing: 0.6,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-
-                  // Project Title
-                  Text(
-                    project.title,
-                    style: TextStyle(
-                      fontSize: widget.isDesktopOrTablet ? 15 : 16.5,
-                      fontWeight: FontWeight.w700,
-                      color: textColor,
-                      letterSpacing: -0.2,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-
-                  // Short Description
-                  Text(
-                    project.shortDescription,
-                    style: TextStyle(
-                      fontSize: 11.5,
-                      height: 1.35,
-                      color: secondaryTextColor,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 6),
-
-                  // Technologies Chips (up to 3)
-                  Wrap(
-                    spacing: 5,
-                    runSpacing: 4,
-                    children: project.technologies.take(3).map((tech) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? AppColors.darkCardHover
-                              : const Color(0xFFF1F5F9),
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            color: isDark
-                                ? AppColors.darkCardBorder
-                                : AppColors.lightCardBorder,
-                          ),
-                        ),
-                        child: Text(
-                          tech,
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                            color: isDark
-                                ? AppColors.textSecondaryDark
-                                : AppColors.textSecondaryLight,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
+              // Project Title
+              Text(
+                project.title,
+                style: TextStyle(
+                  fontSize: widget.isDesktopOrTablet ? 15 : 16.5,
+                  fontWeight: FontWeight.w700,
+                  color: textColor,
+                  letterSpacing: -0.2,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              if (!isBoundedHeight) const SizedBox(height: 12),
+              const SizedBox(height: 8),
 
-              // Action Footer: Store Links & Details CTA
+              // Bottom Row: Company Name (bottom left) & Store / GitHub Icons (bottom right)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // Company Name (bottom left)
                   Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (project.playStoreUrl.isNotEmpty) ...[
-                            InkWell(
-                              onTap: () => UrlLauncherUtil.openUrl(
-                                project.playStoreUrl,
-                                context: context,
+                    child: project.companyName.isNotEmpty
+                        ? Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.apartment_rounded,
+                                size: 13,
+                                color: isDark
+                                    ? AppColors.violetLight
+                                    : AppColors.violetPrimary,
                               ),
-                              borderRadius: BorderRadius.circular(5),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 6,
-                                  vertical: 3,
-                                ),
-                                decoration: BoxDecoration(
-                                  color:
-                                      (isDark
-                                              ? AppColors.cyanPrimary
-                                              : AppColors.cyanDark)
-                                          .withOpacity(0.12),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color:
-                                        (isDark
-                                                ? AppColors.cyanPrimary
-                                                : AppColors.cyanDark)
-                                            .withOpacity(0.3),
+                              const SizedBox(width: 4),
+                              Flexible(
+                                child: Text(
+                                  project.companyName,
+                                  style: TextStyle(
+                                    fontSize: 11.5,
+                                    fontWeight: FontWeight.w600,
+                                    color: secondaryTextColor,
                                   ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.play_arrow_rounded,
-                                      size: 13,
-                                      color: isDark
-                                          ? AppColors.cyanLight
-                                          : AppColors.cyanDark,
-                                    ),
-                                    const SizedBox(width: 2),
-                                    Text(
-                                      'Play Store',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w600,
-                                        color: isDark
-                                            ? AppColors.cyanLight
-                                            : AppColors.cyanDark,
-                                      ),
-                                    ),
-                                  ],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 5),
-                          ],
-                          if (project.appStoreUrl.isNotEmpty) ...[
-                            InkWell(
-                              onTap: () => UrlLauncherUtil.openUrl(
-                                project.appStoreUrl,
-                                context: context,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 6,
-                                  vertical: 3,
-                                ),
-                                decoration: BoxDecoration(
-                                  color:
-                                      (isDark
-                                              ? AppColors.violetPrimary
-                                              : AppColors.violetDark)
-                                          .withOpacity(0.12),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color:
-                                        (isDark
-                                                ? AppColors.violetPrimary
-                                                : AppColors.violetDark)
-                                            .withOpacity(0.3),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.apple,
-                                      size: 13,
-                                      color: isDark
-                                          ? AppColors.violetLight
-                                          : AppColors.violetDark,
-                                    ),
-                                    const SizedBox(width: 2),
-                                    Text(
-                                      'App Store',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w600,
-                                        color: isDark
-                                            ? AppColors.violetLight
-                                            : AppColors.violetDark,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
                   ),
-                  const SizedBox(width: 6),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Details',
-                        style: TextStyle(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w600,
-                          color: _isHovered
-                              ? AppColors.cyanPrimary
-                              : (isDark
-                                    ? AppColors.cyanLight
-                                    : AppColors.violetPrimary),
-                        ),
-                      ),
-                      const SizedBox(width: 3),
-                      Transform.translate(
-                        offset: Offset(_isHovered ? 3.0 : 0.0, 0),
-                        child: Icon(
-                          Icons.arrow_forward_rounded,
-                          size: 14,
-                          color: _isHovered
-                              ? AppColors.cyanPrimary
-                              : (isDark
-                                    ? AppColors.cyanLight
-                                    : AppColors.violetPrimary),
-                        ),
-                      ),
-                    ],
-                  ),
+                  const SizedBox(width: 8),
+
+                  // Store & GitHub Icons (bottom right)
+                  _buildActionIcons(context, isDark: isDark),
                 ],
               ),
             ],
+          ),
+        );
+
+        final cardThumbnail = ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+          clipBehavior: Clip.antiAlias,
+          child: AnimatedScale(
+            scale: _isHovered ? 1.05 : 1.0,
+            duration: const Duration(milliseconds: 280),
+            curve: Curves.easeOutCubic,
+            child: AppNetworkImage(
+              imageUrl: project.displayImageUrl,
+              height: isBoundedHeight
+                  ? double.infinity
+                  : (widget.isDesktopOrTablet ? 230 : 260),
+              width: double.infinity,
+              placeholderText: project.title,
+              fallbackIcon: Icons.phone_iphone_rounded,
+              borderRadius: 0,
+            ),
           ),
         );
 
@@ -1333,107 +1221,18 @@ class _ProjectCardState extends State<ProjectCard> {
                     ? MainAxisSize.max
                     : MainAxisSize.min,
                 children: [
-                  // Project Thumbnail Header with Floating Badges
-                  Stack(
-                    children: [
-                      SizedBox(
-                        height: widget.isDesktopOrTablet ? 145 : 230,
-                        width: double.infinity,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(15),
-                          ),
-                          child: AnimatedScale(
-                            scale: _isHovered ? 1.05 : 1.0,
-                            duration: const Duration(milliseconds: 280),
-                            curve: Curves.easeOutCubic,
-                            child: AppNetworkImage(
-                              imageUrl: project.displayImageUrl,
-                              height: widget.isDesktopOrTablet ? 145 : 230,
-                              width: double.infinity,
-                              placeholderText: project.title,
-                              fallbackIcon: Icons.phone_iphone_rounded,
-                              borderRadius: 0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        left: 10,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 3.5,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.78),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: Colors.white.withOpacity(0.18),
-                            ),
-                          ),
-                          child: Text(
-                            project.category,
-                            style: const TextStyle(
-                              fontSize: 10.5,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.cyanLight,
-                            ),
-                          ),
-                        ),
-                      ),
-                      if (project.isFeatured)
-                        Positioned(
-                          top: 10,
-                          right: 10,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 7,
-                              vertical: 3.5,
-                            ),
-                            decoration: BoxDecoration(
-                              gradient: AppColors.primaryGradient,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.violetPrimary.withOpacity(
-                                    0.4,
-                                  ),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.star_rounded,
-                                  size: 12,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 3),
-                                Text(
-                                  'Featured',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
+                  // Increased display image thumbnail
+                  if (isBoundedHeight)
+                    Expanded(child: cardThumbnail)
+                  else
+                    SizedBox(
+                      height: widget.isDesktopOrTablet ? 230 : 260,
+                      width: double.infinity,
+                      child: cardThumbnail,
+                    ),
 
                   // Card Body
-                  if (isBoundedHeight)
-                    Expanded(child: cardBodyContent)
-                  else
-                    cardBodyContent,
+                  cardBodyContent,
                 ],
               ),
             ),

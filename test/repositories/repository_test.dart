@@ -85,13 +85,10 @@ void main() {
       expect(healthiProject.appStoreUrl.isNotEmpty, isTrue);
 
       // Verify updated profile URLs
-      expect(
-        repo.profile.githubUrl,
-        equals('https://github.com/dhruvi-mobiledev'),
-      );
+      expect(repo.profile.githubUrl, equals('https://github.com/dev-dhruvi'));
       expect(
         repo.profile.linkedinUrl,
-        equals('https://www.linkedin.com/in/duvi03'),
+        equals('https://www.linkedin.com/in/duvi03/'),
       );
       expect(repo.profile.headline, equals(AppConstants.fullRoleHeadline));
     });

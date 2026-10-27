@@ -6,7 +6,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/constants/app_breakpoints.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
-import '../../core/utils/experience_calculator.dart';
 import '../../models/experience.dart';
 import '../../widgets/cards/glass_card.dart';
 
@@ -88,12 +87,7 @@ class _ExperienceSectionState extends State<ExperienceSection> {
         ? AppColors.textPrimaryDark
         : AppColors.textPrimaryLight;
 
-    // Calculate total cumulative experience across all ranges without double counting
-    final ranges = widget.experiences
-        .map((e) => {'start': e.startDate, 'end': e.endDate})
-        .toList();
-    final totalExperienceFormatted =
-        ExperienceCalculator.calculateTotalExperience(ranges);
+    // Timeline calculations
 
     return Container(
       alignment: Alignment.topLeft,
@@ -136,38 +130,6 @@ class _ExperienceSectionState extends State<ExperienceSection> {
           ),
           const SizedBox(height: 6),
 
-          // Total Experience Duration Badge
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-            decoration: BoxDecoration(
-              color: AppColors.violetPrimary.withOpacity(isDark ? 0.12 : 0.08),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: AppColors.violetPrimary.withOpacity(isDark ? 0.3 : 0.25),
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.access_time_rounded,
-                  size: 16,
-                  color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    'Total Cumulative Experience: $totalExperienceFormatted (Verified intervals)',
-                    style: TextStyle(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           const SizedBox(height: 28),
 
           // Responsive Vertical Timeline
@@ -568,9 +530,6 @@ class _TimelineDateBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final secondaryTextColor = isDark
-        ? AppColors.textSecondaryDark
-        : AppColors.textSecondaryLight;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -594,24 +553,7 @@ class _TimelineDateBadge extends StatelessWidget {
               color: isDark ? Colors.white : AppColors.textPrimaryLight,
             ),
           ),
-          const SizedBox(height: 6),
 
-          // Location badge
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.location_on_outlined,
-                size: 14,
-                color: secondaryTextColor,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                experience.location,
-                style: TextStyle(fontSize: 12, color: secondaryTextColor),
-              ),
-            ],
-          ),
           if (experience.calculatedDuration.isNotEmpty) ...[
             const SizedBox(height: 4),
             Text(
@@ -643,7 +585,6 @@ class _ExperienceCard extends StatefulWidget {
 }
 
 class _ExperienceCardState extends State<_ExperienceCard> {
-  bool _isExpanded = false;
   bool _isHovered = false;
 
   @override
@@ -656,12 +597,9 @@ class _ExperienceCardState extends State<_ExperienceCard> {
         ? AppColors.textSecondaryDark
         : AppColors.textSecondaryLight;
 
-    final responsibilities = widget.experience.responsibilities;
-    const maxInitialItems = 3;
-    final hasManyResponsibilities = responsibilities.length > maxInitialItems;
-    final displayedResponsibilities = (_isExpanded || !hasManyResponsibilities)
-        ? responsibilities
-        : responsibilities.take(maxInitialItems).toList();
+    final descriptionText = widget.experience.description.isNotEmpty
+        ? widget.experience.description
+        : widget.experience.responsibilities.join(' ');
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -753,77 +691,44 @@ class _ExperienceCardState extends State<_ExperienceCard> {
               ),
               const SizedBox(height: 12),
 
-              // Responsibilities Bullet List
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: displayedResponsibilities.map((resp) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 6.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 4.0, right: 6.0),
-                          child: Icon(
-                            Icons.arrow_right_rounded,
-                            size: 16,
-                            color: AppColors.violetPrimary,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            resp,
-                            style:
-                                AppTypography.getBodyMedium(secondaryTextColor)
-                                    .copyWith(
-                                      fontSize: widget.isMobile ? 12 : 12.5,
-                                      height: 1.4,
-                                    ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-
-              // Show more / Show less toggle
-              if (hasManyResponsibilities) ...[
-                InkWell(
-                  onTap: () => setState(() => _isExpanded = !_isExpanded),
-                  borderRadius: BorderRadius.circular(4),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          _isExpanded
-                              ? 'Show fewer'
-                              : 'Show all ${responsibilities.length} items',
-                          style: TextStyle(
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w600,
-                            color: isDark
-                                ? AppColors.cyanPrimary
-                                : AppColors.violetPrimary,
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        Icon(
-                          _isExpanded
-                              ? Icons.keyboard_arrow_up_rounded
-                              : Icons.keyboard_arrow_down_rounded,
-                          size: 14,
-                          color: isDark
-                              ? AppColors.cyanPrimary
-                              : AppColors.violetPrimary,
-                        ),
-                      ],
-                    ),
-                  ),
+              // Description Paragraph (3 to 5 lines)
+              if (descriptionText.isNotEmpty) ...[
+                Text(
+                  descriptionText,
+                  style: AppTypography.getBodyMedium(secondaryTextColor)
+                      .copyWith(
+                        fontSize: widget.isMobile ? 12.5 : 13.5,
+                        height: 1.52,
+                      ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 12),
+              ],
+
+              // Location Row (below description)
+              if (widget.experience.location.isNotEmpty) ...[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.location_on_outlined,
+                      size: 14,
+                      color: isDark
+                          ? AppColors.cyanPrimary
+                          : AppColors.violetPrimary,
+                    ),
+                    const SizedBox(width: 5),
+                    Flexible(
+                      child: Text(
+                        widget.experience.location,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: secondaryTextColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
 
               // Tech Stack Chips

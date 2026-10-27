@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -27,37 +26,6 @@ class HeroSection extends StatefulWidget {
 }
 
 class _HeroSectionState extends State<HeroSection> {
-  int _currentRoleIndex = 0;
-  Timer? _roleTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    _roleTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (mounted) {
-        setState(() {
-          _currentRoleIndex =
-              (_currentRoleIndex + 1) % AppConstants.animatedRoles.length;
-        });
-      }
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (MediaQuery.maybeOf(context)?.disableAnimations ?? false) {
-      _roleTimer?.cancel();
-      _roleTimer = null;
-    }
-  }
-
-  @override
-  void dispose() {
-    _roleTimer?.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.sizeOf(context).height;
@@ -411,30 +379,6 @@ class _HeroSectionState extends State<HeroSection> {
                 letterSpacing: 0.2,
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-              decoration: BoxDecoration(
-                color: isDark
-                    ? AppColors.violetPrimary.withOpacity(0.18)
-                    : AppColors.violetPrimary.withOpacity(0.10),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: isDark
-                      ? AppColors.violetPrimary.withOpacity(0.35)
-                      : AppColors.violetPrimary.withOpacity(0.25),
-                ),
-              ),
-              child: Text(
-                'Sr. Flutter Developer',
-                style: TextStyle(
-                  fontSize: isMobile ? 11.5 : 12.5,
-                  fontWeight: FontWeight.w700,
-                  color: isDark
-                      ? AppColors.violetLight
-                      : AppColors.violetPrimary,
-                ),
-              ),
-            ),
           ],
         ),
 
@@ -474,64 +418,6 @@ class _HeroSectionState extends State<HeroSection> {
               const TextSpan(text: ' with Flutter'),
             ],
           ),
-        ),
-
-        const SizedBox(height: 14),
-
-        // Animated Role Indicator
-        Row(
-          mainAxisAlignment: isCentered
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 12,
-              height: 3,
-              decoration: BoxDecoration(
-                gradient: AppColors.primaryGradient,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Flexible(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: isCentered ? Alignment.center : Alignment.centerLeft,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 400),
-                  transitionBuilder: (child, animation) {
-                    final curvedAnimation = CurvedAnimation(
-                      parent: animation,
-                      curve: Curves.easeOutCubic,
-                      reverseCurve: Curves.easeInCubic,
-                    );
-                    return FadeTransition(
-                      opacity: curvedAnimation,
-                      child: SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(0, 0.25),
-                          end: Offset.zero,
-                        ).animate(curvedAnimation),
-                        child: child,
-                      ),
-                    );
-                  },
-                  child: Text(
-                    AppConstants.animatedRoles[_currentRoleIndex],
-                    key: ValueKey<int>(_currentRoleIndex),
-                    style: TextStyle(
-                      fontSize: isMobile ? 15 : 17,
-                      fontWeight: FontWeight.w600,
-                      color: isDark
-                          ? AppColors.textSecondaryDark
-                          : AppColors.textSecondaryLight,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
         ),
 
         const SizedBox(height: 16),
@@ -594,25 +480,6 @@ class _HeroSectionState extends State<HeroSection> {
                       const SizedBox(width: 5),
                       Text(
                         '4+ Years Exp',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: secondaryTextColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.rocket_launch_outlined,
-                        size: 15,
-                        color: Color(0xFF10B981),
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        '50+ Releases',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,

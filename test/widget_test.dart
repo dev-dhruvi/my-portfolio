@@ -23,7 +23,7 @@ import 'package:provider/provider.dart';
 void main() {
   group('UI Widget Tests', () {
     testWidgets(
-      'HeroSection displays developer name, role, status badge, and Download CV action button',
+      'HeroSection displays developer name, status badge, location, and Download CV action button',
       (tester) async {
         await tester.pumpWidget(
           MaterialApp(
@@ -36,9 +36,8 @@ void main() {
           ),
         );
 
-        // Verify developer name, role, updated status badge, location, and updated action buttons
+        // Verify developer name, status badge, location, and updated action buttons
         expect(find.text('Dhruvi Patel'), findsOneWidget);
-        expect(find.text(AppConstants.animatedRoles[0]), findsOneWidget);
         expect(
           find.text('Available for Senior Flutter Developer Roles'),
           findsOneWidget,
@@ -234,7 +233,7 @@ void main() {
         expect(find.text('Code Craft Excellence Award (2025)'), findsOneWidget);
         expect(find.text('Clean Architecture Specialist'), findsOneWidget);
         expect(find.text('4+ Years'), findsOneWidget);
-        expect(find.text('50+ Releases'), findsOneWidget);
+        expect(find.text('350+ Releases'), findsOneWidget);
         expect(find.text('20+ Projects'), findsOneWidget);
         expect(find.text('MCA & BCA'), findsOneWidget);
       },
@@ -272,7 +271,7 @@ void main() {
     );
 
     testWidgets(
-      'ContactSection renders contact info, form, and contact anime character stage',
+      'ContactSection renders contact channels, ready to build banner, and contact anime character stage',
       (tester) async {
         await tester.pumpWidget(
           MaterialApp(
@@ -289,10 +288,14 @@ void main() {
         await tester.pump();
 
         expect(find.text('GET IN TOUCH'), findsOneWidget);
-        expect(find.text('Send me a message'), findsOneWidget);
-        expect(find.text('Open Email App'), findsOneWidget);
-        expect(find.textContaining('Email'), findsAtLeastNWidgets(1));
-        expect(find.textContaining('WhatsApp'), findsAtLeastNWidgets(1));
+        expect(
+          find.text('Ready to Build Scalable Mobile Experiences Together?'),
+          findsOneWidget,
+        );
+        expect(find.text('Email'), findsOneWidget);
+        expect(find.text('WhatsApp'), findsOneWidget);
+        expect(find.text('LinkedIn'), findsOneWidget);
+        expect(find.text('GitHub'), findsOneWidget);
         expect(find.text('Available for new opportunities'), findsOneWidget);
         expect(find.text('Usually replies within a day'), findsOneWidget);
         expect(find.text("Let's Connect"), findsOneWidget);
@@ -326,8 +329,8 @@ void main() {
         expect(find.text('Work Experience & Roles'), findsOneWidget);
         expect(find.text('Logix Built Solutions Limited'), findsOneWidget);
         expect(find.text('Dinjan Infotech'), findsOneWidget);
-        expect(find.text('Mobile App Developer'), findsOneWidget);
-        expect(find.text('Intern, Android Developer'), findsOneWidget);
+        expect(find.textContaining('Mobile App Developer'), findsOneWidget);
+        expect(find.textContaining('Android Developer'), findsOneWidget);
       },
     );
 

@@ -54,7 +54,10 @@ class UrlLauncherUtil {
     String text = 'Hi, I visited your portfolio',
     BuildContext? context,
   }) async {
-    final cleanPhone = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    var cleanPhone = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    if (cleanPhone.length == 10) {
+      cleanPhone = '91$cleanPhone';
+    }
     final encodedText = Uri.encodeComponent(text);
     final url =
         'https://wa.me/$cleanPhone${encodedText.isNotEmpty ? '?text=$encodedText' : ''}';

@@ -5,9 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../core/constants/app_breakpoints.dart';
-import '../core/theme/app_colors.dart';
-import '../core/utils/url_launcher_util.dart';
-import '../models/profile.dart';
 import '../repositories/portfolio_repository.dart';
 import '../widgets/animations/ambient_background.dart';
 import '../widgets/animations/character_loader.dart';
@@ -236,12 +233,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
             .getOffsetToReveal(renderBox, 0.0)
             .offset;
         // Scroll directly to the section container's boundary. Each container provides
-        // an internal 92px top inset so the floating navbar rests over the section's
+        // an internal 88px top inset so the floating navbar rests over the section's
         // own canvas with zero visual bleed or text leakage from the preceding section.
-        final targetOffset = revealedOffset.clamp(
-          0.0,
-          position.maxScrollExtent,
-        );
+        // For 'contact', animate to maxScrollExtent so Contact and Footer fit the screen together flush.
+        final targetOffset =
+            (sectionKey == 'contact'
+                    ? position.maxScrollExtent
+                    : revealedOffset)
+                .clamp(0.0, position.maxScrollExtent);
         _scrollController.animateTo(
           targetOffset,
           duration: const Duration(milliseconds: 600),
@@ -283,6 +282,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
     final projects = portfolioRepo.projects;
     final skills = portfolioRepo.skills;
     final education = portfolioRepo.education;
+    final isMobile = AppBreakpoints.isMobile(context);
+    final viewportHeight = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -379,6 +380,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         child: Container(
                           key: _educationKey,
                           padding: const EdgeInsets.only(top: 88),
+                          alignment: Alignment.topCenter,
+                          constraints: BoxConstraints(
+                            minHeight: isMobile ? 0 : viewportHeight,
+                          ),
                           child: ResponsiveContentContainer(
                             child: ScrollVisibilityRevealer(
                               child: EducationSection(education: education),
@@ -387,11 +392,20 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                       ),
 
-                      // 7. Contact & Resume Section
+                      // 7. Contact Section
                       RepaintBoundary(
                         child: Container(
                           key: _contactKey,
                           padding: const EdgeInsets.only(top: 88),
+                          alignment: Alignment.topCenter,
+                          constraints: BoxConstraints(
+                            minHeight: isMobile
+                                ? 0
+                                : (viewportHeight - 69.0).clamp(
+                                    0.0,
+                                    double.infinity,
+                                  ),
+                          ),
                           child: ResponsiveContentContainer(
                             child: ScrollVisibilityRevealer(
                               child: ContactSection(profile: profile),
@@ -400,18 +414,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                       ),
 
-                      // Footer & Repeated Call to Action Banner
+                      // Footer Section
                       RepaintBoundary(
-                        child: Column(
-                          children: [
-                            ResponsiveContentContainer(
-                              child: _buildRepeatedContactCta(context, profile),
-                            ),
-                            FooterSection(
-                              profile: profile,
-                              onNavigate: _scrollToSection,
-                            ),
-                          ],
+                        child: FooterSection(
+                          profile: profile,
+                          onNavigate: _scrollToSection,
                         ),
                       ),
                     ],
@@ -449,124 +456,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 },
               ),
             ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRepeatedContactCta(BuildContext context, Profile profile) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isMobile = AppBreakpoints.isMobile(context);
-    final textColor = isDark
-        ? AppColors.textPrimaryDark
-        : AppColors.textPrimaryLight;
-    final secondaryTextColor = isDark
-        ? AppColors.textSecondaryDark
-        : AppColors.textSecondaryLight;
-
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: isMobile ? 20 : 28),
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 18 : 32,
-        vertical: isMobile ? 22 : 28,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-              ? [
-                  const Color(0xFF1E1B4B).withOpacity(0.85),
-                  const Color(0xFF0F172A).withOpacity(0.92),
-                ]
-              : [const Color(0xFFEEF2FF), Colors.white],
-        ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.violetPrimary.withOpacity(isDark ? 0.35 : 0.25),
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.violetPrimary.withOpacity(isDark ? 0.12 : 0.05),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Text(
-            "Ready to Build Scalable Mobile Experiences Together?",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: isMobile ? 19 : 24,
-              fontWeight: FontWeight.w800,
-              color: textColor,
-              letterSpacing: -0.3,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Whether you need a dedicated Flutter developer, architectural guidance, or help shipping production releases — let's connect.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: isMobile ? 12.5 : 14,
-              color: secondaryTextColor,
-              height: 1.45,
-            ),
-          ),
-          const SizedBox(height: 18),
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 12,
-            runSpacing: 10,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () => _scrollToSection('contact'),
-                icon: const Icon(Icons.mail_outline_rounded, size: 16),
-                label: const Text(
-                  "Get in Touch",
-                  style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.violetPrimary,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 22,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 2,
-                ),
-              ),
-              OutlinedButton.icon(
-                onPressed: () => UrlLauncherUtil.openResume(context: context),
-                icon: const Icon(Icons.download_rounded, size: 16),
-                label: const Text(
-                  "Download Resume (PDF)",
-                  style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700),
-                ),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: textColor,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  side: BorderSide(
-                    color: isDark
-                        ? const Color(0xFF334155)
-                        : const Color(0xFFCBD5E1),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );

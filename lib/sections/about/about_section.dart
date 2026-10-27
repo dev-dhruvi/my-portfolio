@@ -174,8 +174,8 @@ class AboutSection extends StatelessWidget {
                 );
                 final card2 = _HighlightCard(
                   key: ValueKey('highlight_releases_$animationTrigger'),
-                  value: '50+ Releases',
-                  numericTarget: 50,
+                  value: '350+ Releases',
+                  numericTarget: 350,
                   suffix: '+ Releases',
                   label: 'Play Store & App Store',
                   icon: Icons.rocket_launch_rounded,
@@ -258,8 +258,8 @@ class AboutSection extends StatelessWidget {
                   _HighlightCard(
                     key: ValueKey('highlight_releases_$animationTrigger'),
                     width: cardWidth,
-                    value: '50+ Releases',
-                    numericTarget: 50,
+                    value: '350+ Releases',
+                    numericTarget: 350,
                     suffix: '+ Releases',
                     label: 'Play Store & App Store',
                     icon: Icons.rocket_launch_outlined,
@@ -366,7 +366,7 @@ class AboutSection extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'I build for long-term maintainability using Clean Architecture and reactive state models with GetX and Provider. '
-            'Having delivered and contributed to 20+ commercial applications and 50+ store releases across Google Play Store and Apple App Store, '
+            'Having delivered and contributed to 20+ commercial applications and 350+ store releases across Google Play Store and Apple App Store, '
             'I place high priority on automated unit/widget testing, API resilience with Dio interceptors, memory profiling, and smooth user interactions.',
             style: AppTypography.getBodyMedium(secondaryTextColor)
                 .copyWith(height: 1.5),

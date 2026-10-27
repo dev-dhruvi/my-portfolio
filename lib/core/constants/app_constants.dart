@@ -17,8 +17,9 @@ class AppConstants {
   static const String developBy = 'Crafted with 👩‍💻 by Dhruvi Patel © 2026';
 
   // Configurable Links
-  static const String defaultGithubUrl = 'https://github.com/dhruvi-mobiledev';
-  static const String defaultLinkedinUrl = 'https://www.linkedin.com/in/duvi03';
+  static const String defaultGithubUrl = 'https://github.com/dev-dhruvi';
+  static const String defaultLinkedinUrl =
+      'https://www.linkedin.com/in/duvi03/';
   static const String defaultResumeUrl = 'assets/docs/resume.pdf';
   static const String repoName = 'my-portfolio';
 

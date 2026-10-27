@@ -11,6 +11,7 @@ class Experience {
   final bool isCurrent;
   final String? locationType;
   final String? award;
+  final String description;
   final List<String> responsibilities;
   final List<String> technologies;
   final int orderIndex;
@@ -27,6 +28,7 @@ class Experience {
     this.isCurrent = false,
     this.award,
     this.locationType,
+    this.description = '',
     this.responsibilities = const [],
     this.technologies = const [],
     this.orderIndex = 0,
@@ -49,6 +51,7 @@ class Experience {
       'isCurrent': isCurrent,
       'award': award,
       'locationType': locationType,
+      'description': description,
       'responsibilities': responsibilities,
       'technologies': technologies,
       'orderIndex': orderIndex,
@@ -68,6 +71,7 @@ class Experience {
       isCurrent: map['isCurrent'] ?? false,
       award: map['award'] as String?,
       locationType: map['locationType'] as String?,
+      description: map['description'] as String? ?? '',
       responsibilities: List<String>.from(map['responsibilities'] ?? []),
       technologies: List<String>.from(map['technologies'] ?? []),
       orderIndex: (map['orderIndex'] as num?)?.toInt() ?? 0,
@@ -88,6 +92,7 @@ class Experience {
     bool? isCurrent,
     String? award,
     String? locationType,
+    String? description,
     List<String>? responsibilities,
     List<String>? technologies,
     int? orderIndex,
@@ -104,6 +109,7 @@ class Experience {
       isCurrent: isCurrent ?? this.isCurrent,
       award: award ?? this.award,
       locationType: locationType ?? this.locationType,
+      description: description ?? this.description,
       responsibilities: responsibilities ?? this.responsibilities,
       technologies: technologies ?? this.technologies,
       orderIndex: orderIndex ?? this.orderIndex,
