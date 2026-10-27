@@ -185,7 +185,8 @@ void main() {
         await tester.pump();
         expect(find.text('Dhruvi Patel'), findsOneWidget);
         expect(find.text('Projects'), findsOneWidget);
-        expect(find.byIcon(Icons.phone_in_talk_rounded), findsOneWidget);
+        expect(find.text('Contact'), findsOneWidget);
+        expect(find.byIcon(Icons.phone_in_talk_rounded), findsNothing);
 
         // Test Tablet (954px - exact reported overflow width)
         await tester.binding.setSurfaceSize(const Size(954, 800));
@@ -678,11 +679,9 @@ void main() {
         await tester.pump();
         expect(navigatedSection, equals('contact'));
 
-        // Tap phone icon button
-        navigatedSection = null;
-        await tester.tap(find.byIcon(Icons.phone_in_talk_rounded));
-        await tester.pump();
-        expect(navigatedSection, equals('contact'));
+        // Verify phone icon is removed beside theme
+        expect(find.byIcon(Icons.phone_in_talk_rounded), findsNothing);
+        expect(find.byIcon(Icons.light_mode_rounded), findsOneWidget);
 
         await tester.binding.setSurfaceSize(null);
       },

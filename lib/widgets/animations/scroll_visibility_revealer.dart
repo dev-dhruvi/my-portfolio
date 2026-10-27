@@ -137,18 +137,26 @@ class _ScrollVisibilityRevealerState extends State<ScrollVisibilityRevealer>
       return widget.child;
     }
 
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Opacity(
-          opacity: _fadeAnimation.value,
-          child: Transform.translate(
-            offset: Offset(0, _slideAnimation.value),
-            child: Transform.scale(scale: _scaleAnimation.value, child: child),
-          ),
-        );
-      },
-      child: widget.child,
+    return RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          if (_controller.isCompleted) {
+            return child!;
+          }
+          return Opacity(
+            opacity: _fadeAnimation.value,
+            child: Transform.translate(
+              offset: Offset(0, _slideAnimation.value),
+              child: Transform.scale(
+                scale: _scaleAnimation.value,
+                child: child,
+              ),
+            ),
+          );
+        },
+        child: widget.child,
+      ),
     );
   }
 }

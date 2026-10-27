@@ -375,25 +375,66 @@ class _Tablet2x2ProjectSliderState extends State<_Tablet2x2ProjectSlider> {
           itemBuilder: (context, pageIndex) {
             final pageItems = pages[pageIndex];
 
-            return GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemCount: pageItems.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                mainAxisExtent: 310,
-              ),
-              itemBuilder: (context, index) {
-                final project = pageItems[index];
-                return StaggeredEntrance(
-                  index: index,
-                  child: ProjectCard(
-                    project: project,
-                    isDesktopOrTablet: true,
-                    enable3D: true,
-                    onTap: () => widget.onProjectTap(project),
+            return AnimatedBuilder(
+              animation: widget.pageController,
+              builder: (context, _) {
+                final double currentPage =
+                    widget.pageController.hasClients &&
+                        widget.pageController.position.hasContentDimensions
+                    ? (widget.pageController.page ?? pageIndex.toDouble())
+                    : pageIndex.toDouble();
+                final double pageDelta = pageIndex - currentPage;
+                final double scale = (1.0 - (pageDelta.abs() * 0.06)).clamp(
+                  0.9,
+                  1.0,
+                );
+                final double opacity = (1.0 - (pageDelta.abs() * 0.4)).clamp(
+                  0.0,
+                  1.0,
+                );
+
+                return Opacity(
+                  opacity: opacity,
+                  child: Transform.scale(
+                    scale: scale,
+                    child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemCount: pageItems.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                            mainAxisExtent: 310,
+                          ),
+                      itemBuilder: (context, index) {
+                        final project = pageItems[index];
+                        final double quadrantOffset = switch (index) {
+                          0 => -1.0,
+                          1 => 1.0,
+                          2 => -0.8,
+                          3 => 0.8,
+                          _ => 0.0,
+                        };
+
+                        return Transform.translate(
+                          offset: Offset(
+                            pageDelta * quadrantOffset * 10.0,
+                            0.0,
+                          ),
+                          child: StaggeredEntrance(
+                            index: index,
+                            child: ProjectCard(
+                              project: project,
+                              isDesktopOrTablet: true,
+                              enable3D: true,
+                              onTap: () => widget.onProjectTap(project),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 );
               },
@@ -505,30 +546,63 @@ class _DesktopSingleRowProjectSliderState
           itemBuilder: (context, pageIndex) {
             final pageItems = pages[pageIndex];
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (int c = 0; c < itemsPerPage; c++) ...[
-                    if (c > 0) const SizedBox(width: 16),
-                    if (c < pageItems.length)
-                      Expanded(
-                        child: StaggeredEntrance(
-                          index: c,
-                          child: ProjectCard(
-                            project: pageItems[c],
-                            isDesktopOrTablet: true,
-                            enable3D: true,
-                            onTap: () => widget.onProjectTap(pageItems[c]),
-                          ),
-                        ),
-                      )
-                    else
-                      const Expanded(child: SizedBox.shrink()),
-                  ],
-                ],
-              ),
+            return AnimatedBuilder(
+              animation: widget.pageController,
+              builder: (context, _) {
+                final double currentPage =
+                    widget.pageController.hasClients &&
+                        widget.pageController.position.hasContentDimensions
+                    ? (widget.pageController.page ?? pageIndex.toDouble())
+                    : pageIndex.toDouble();
+                final double pageDelta = pageIndex - currentPage;
+                final double rotY = (-pageDelta * 0.08).clamp(-0.2, 0.2);
+                final double pageOpacity = (1.0 - (pageDelta.abs() * 0.35))
+                    .clamp(0.0, 1.0);
+
+                return Opacity(
+                  opacity: pageOpacity,
+                  child: Transform(
+                    alignment: pageDelta > 0
+                        ? Alignment.centerLeft
+                        : Alignment.centerRight,
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.0008)
+                      ..rotateY(rotY),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          for (int c = 0; c < itemsPerPage; c++) ...[
+                            if (c > 0) const SizedBox(width: 16),
+                            if (c < pageItems.length)
+                              Expanded(
+                                child: Transform.translate(
+                                  offset: Offset(
+                                    0.0,
+                                    pageDelta.abs() * (c * 4.0),
+                                  ),
+                                  child: StaggeredEntrance(
+                                    index: c,
+                                    child: ProjectCard(
+                                      project: pageItems[c],
+                                      isDesktopOrTablet: true,
+                                      enable3D: true,
+                                      onTap: () =>
+                                          widget.onProjectTap(pageItems[c]),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else
+                              const Expanded(child: SizedBox.shrink()),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),
@@ -713,23 +787,31 @@ class _MobileStackedProjectSliderState
                       return const SizedBox.shrink();
                     }
 
+                    final double rotateZ = diff < 0
+                        ? (-diff * 0.05).clamp(-0.15, 0.15)
+                        : (diff * 0.015).clamp(0.0, 0.05);
+
                     return Positioned.fill(
                       child: Align(
                         alignment: Alignment.center,
-                        child: Transform.translate(
-                          offset: Offset(translateX, 0.0),
-                          child: Transform.scale(
-                            scale: scale,
-                            child: Opacity(
-                              opacity: opacity,
-                              child: SizedBox(
-                                width: cardWidth,
-                                height: cardHeight,
-                                child: ProjectCard(
-                                  project: project,
-                                  isDesktopOrTablet: false,
-                                  onTap: () => widget.onProjectTap(project),
-                                ),
+                        child: Transform(
+                          alignment: Alignment.bottomCenter,
+                          transform: Matrix4.identity()
+                            ..translate(
+                              translateX,
+                              diff < 0 ? -diff * 10.0 : 0.0,
+                            )
+                            ..rotateZ(rotateZ)
+                            ..scale(scale),
+                          child: Opacity(
+                            opacity: opacity,
+                            child: SizedBox(
+                              width: cardWidth,
+                              height: cardHeight,
+                              child: ProjectCard(
+                                project: project,
+                                isDesktopOrTablet: false,
+                                onTap: () => widget.onProjectTap(project),
                               ),
                             ),
                           ),

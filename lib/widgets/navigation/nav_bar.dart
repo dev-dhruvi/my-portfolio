@@ -176,109 +176,35 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                         ],
                       ),
 
-                      // Right actions: Call Icon + Theme Toggle
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Call Icon Button with active state
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: activeSection == 'contact'
-                                  ? (isDark
-                                        ? AppColors.violetPrimary.withOpacity(
-                                            0.35,
-                                          )
-                                        : AppColors.violetPrimary.withOpacity(
-                                            0.20,
-                                          ))
-                                  : (isDark
-                                        ? Colors.white.withOpacity(0.08)
-                                        : Colors.black.withOpacity(0.04)),
-                              border: activeSection == 'contact'
-                                  ? Border.all(
-                                      color: isDark
-                                          ? AppColors.cyanLight
-                                          : AppColors.violetPrimary,
-                                      width: 1.2,
-                                    )
-                                  : null,
-                            ),
-                            child: IconButton(
-                              tooltip: activeSection == 'contact'
-                                  ? 'Contact Section (Active)'
-                                  : 'Contact / Call',
-                              icon: Icon(
-                                Icons.phone_in_talk_rounded,
-                                color: (activeSection == 'contact' || isDark)
-                                    ? AppColors.cyanLight
-                                    : AppColors.violetDark,
-                                size: 18,
-                              ),
-                              onPressed: () =>
-                                  onNavItemSelected?.call('contact'),
-                            ),
+                      // Right action: Theme Toggle
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isDark
+                              ? Colors.white.withOpacity(0.08)
+                              : Colors.black.withOpacity(0.04),
+                        ),
+                        child: IconButton(
+                          tooltip: isDark
+                              ? 'Switch to Light Theme'
+                              : 'Switch to Dark Theme',
+                          icon: Icon(
+                            isDark
+                                ? Icons.light_mode_rounded
+                                : Icons.dark_mode_rounded,
+                            color: isDark
+                                ? AppColors.cyanLight
+                                : AppColors.violetDark,
+                            size: 18,
                           ),
-                          const SizedBox(width: 8),
-
-                          // Theme Switcher Button
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: isDark
-                                  ? Colors.white.withOpacity(0.08)
-                                  : Colors.black.withOpacity(0.04),
-                            ),
-                            child: IconButton(
-                              tooltip: isDark
-                                  ? 'Switch to Light Theme'
-                                  : 'Switch to Dark Theme',
-                              icon: Icon(
-                                isDark
-                                    ? Icons.light_mode_rounded
-                                    : Icons.dark_mode_rounded,
-                                color: isDark
-                                    ? AppColors.cyanLight
-                                    : AppColors.violetDark,
-                                size: 18,
-                              ),
-                              onPressed: () => themeController.toggleTheme(),
-                            ),
-                          ),
-                        ],
+                          onPressed: () => themeController.toggleTheme(),
+                        ),
                       ),
                     ] else ...[
                       // Tablet / Mobile Right Actions
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Container(
-                            decoration: activeSection == 'contact'
-                                ? BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color:
-                                        (isDark
-                                                ? AppColors.violetPrimary
-                                                : AppColors.violetPrimary)
-                                            .withOpacity(0.25),
-                                  )
-                                : null,
-                            child: IconButton(
-                              tooltip: 'Contact / Call',
-                              visualDensity: screenWidth < 360
-                                  ? VisualDensity.compact
-                                  : VisualDensity.standard,
-                              icon: Icon(
-                                Icons.phone_in_talk_rounded,
-                                color: (activeSection == 'contact' || isDark)
-                                    ? AppColors.cyanLight
-                                    : AppColors.violetDark,
-                                size: screenWidth < 360 ? 18 : 20,
-                              ),
-                              onPressed: () =>
-                                  onNavItemSelected?.call('contact'),
-                            ),
-                          ),
                           IconButton(
                             tooltip: isDark
                                 ? 'Switch to Light Theme'

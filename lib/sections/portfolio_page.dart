@@ -46,6 +46,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
   int _aboutAnimationTrigger = 0;
   bool _isAboutInView = false;
   String _activeSection = 'hero';
+  double _lastCheckedOffset = -1.0;
+  bool _precacheDone = false;
   // On web, the preloader in web/index.html seamlessly handles the initial Flutter
   // bootstrap state. Setting _showAppLoader to false eliminates the redundant 2.1-second
   // secondary delay, letting recruiters instantly view the Hero section.
@@ -57,42 +59,75 @@ class _PortfolioPageState extends State<PortfolioPage> {
     _scrollController.addListener(_onScroll);
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_precacheDone) {
+      _precacheDone = true;
+      precacheImage(
+        const AssetImage('assets/images/developer_character_3d.png'),
+        context,
+      );
+      precacheImage(
+        const AssetImage('assets/images/developer_character_business.png'),
+        context,
+      );
+      precacheImage(
+        const AssetImage('assets/images/developer_character_contact.png'),
+        context,
+      );
+      precacheImage(
+        const AssetImage('assets/images/developer_character_graduate.png'),
+        context,
+      );
+    }
+  }
+
   void _onScroll() {
     if (!_scrollController.hasClients) return;
 
     final scrollOffset = _scrollController.offset;
     final maxScroll = _scrollController.position.maxScrollExtent;
 
-    // 1. Detect active section for navigation pills and indicators
-    String detectedSection = _activeSection;
-
+    // Fast boundary checks without querying render boxes
     if (scrollOffset <= 60) {
-      detectedSection = 'hero';
+      if (_activeSection != 'hero') {
+        setState(() => _activeSection = 'hero');
+      }
+      return;
     } else if (scrollOffset >= maxScroll - 120) {
-      detectedSection = 'contact';
-    } else {
-      // Evaluate sections from bottom to top to identify the currently active viewport section
-      final sectionMap = <String, GlobalKey>{
-        'contact': _contactKey,
-        'education': _educationKey,
-        'about': _aboutKey,
-        'skills': _skillsKey,
-        'experience': _experienceKey,
-        'projects': _projectsKey,
-        'hero': _heroKey,
-      };
+      if (_activeSection != 'contact') {
+        setState(() => _activeSection = 'contact');
+      }
+      return;
+    }
 
-      const double activationThreshold = 140.0;
-      for (final entry in sectionMap.entries) {
-        final ctx = entry.value.currentContext;
-        if (ctx != null) {
-          final renderBox = ctx.findRenderObject() as RenderBox?;
-          if (renderBox != null && renderBox.hasSize) {
-            final globalDy = renderBox.localToGlobal(Offset.zero).dy;
-            if (globalDy <= activationThreshold) {
-              detectedSection = entry.key;
-              break;
-            }
+    // Throttle intermediate render box position checks to eliminate scroll jank
+    if ((scrollOffset - _lastCheckedOffset).abs() < 14.0) return;
+    _lastCheckedOffset = scrollOffset;
+
+    // Evaluate sections from bottom to top to identify the currently active viewport section
+    final sectionMap = <String, GlobalKey>{
+      'contact': _contactKey,
+      'education': _educationKey,
+      'about': _aboutKey,
+      'skills': _skillsKey,
+      'experience': _experienceKey,
+      'projects': _projectsKey,
+      'hero': _heroKey,
+    };
+
+    const double activationThreshold = 140.0;
+    String detectedSection = _activeSection;
+    for (final entry in sectionMap.entries) {
+      final ctx = entry.value.currentContext;
+      if (ctx != null) {
+        final renderBox = ctx.findRenderObject() as RenderBox?;
+        if (renderBox != null && renderBox.hasSize) {
+          final globalDy = renderBox.localToGlobal(Offset.zero).dy;
+          if (globalDy <= activationThreshold) {
+            detectedSection = entry.key;
+            break;
           }
         }
       }
@@ -104,7 +139,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       });
     }
 
-    // 2. Trigger counter animation when the About section enters the active viewport range
+    // Trigger counter animation when the About section enters the active viewport range
     final aboutContext = _aboutKey.currentContext;
     if (aboutContext != null) {
       final renderBox = aboutContext.findRenderObject() as RenderBox?;
@@ -143,8 +178,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
     if (sectionKey == 'hero') {
       _scrollController.animateTo(
         0,
-        duration: const Duration(milliseconds: 700),
-        curve: Curves.easeInOutCubic,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeOutCubic,
       );
       return;
     }
@@ -196,16 +231,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
         );
         _scrollController.animateTo(
           targetOffset,
-          duration: const Duration(milliseconds: 700),
-          curve: Curves.easeInOutCubic,
+          duration: const Duration(milliseconds: 600),
+          curve: Curves.easeOutCubic,
         );
         return;
       }
 
       Scrollable.ensureVisible(
         targetContext,
-        duration: const Duration(milliseconds: 700),
-        curve: Curves.easeInOutCubic,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeOutCubic,
       );
     }
   }
@@ -234,99 +269,120 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 // Main Scrollable Portfolio Sections
                 SingleChildScrollView(
                   controller: _scrollController,
+                  physics: const ClampingScrollPhysics(),
                   padding: EdgeInsets.zero,
                   child: Column(
                     children: [
                       // 1. Hero Section
-                      Container(
-                        key: _heroKey,
-                        padding: const EdgeInsets.only(top: 88),
-                        child: ResponsiveContentContainer(
-                          child: HeroSection(
-                            profile: profile,
-                            onNavigate: _scrollToSection,
+                      RepaintBoundary(
+                        child: Container(
+                          key: _heroKey,
+                          padding: const EdgeInsets.only(top: 88),
+                          child: ResponsiveContentContainer(
+                            child: HeroSection(
+                              profile: profile,
+                              onNavigate: _scrollToSection,
+                            ),
                           ),
                         ),
                       ),
 
                       // 2. Featured Projects Section (Promoted to Section 2 for maximum recruiter impact)
-                      Container(
-                        key: _projectsKey,
-                        padding: const EdgeInsets.only(top: 88),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: ProjectsSection(projects: projects),
+                      RepaintBoundary(
+                        child: Container(
+                          key: _projectsKey,
+                          padding: const EdgeInsets.only(top: 88),
+                          child: ResponsiveContentContainer(
+                            child: ScrollVisibilityRevealer(
+                              child: ProjectsSection(projects: projects),
+                            ),
                           ),
                         ),
                       ),
 
                       // 3. Experience & Achievements Section
-                      Container(
-                        key: _experienceKey,
-                        padding: const EdgeInsets.only(top: 88),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: ExperienceSection(experiences: experiences),
+                      RepaintBoundary(
+                        child: Container(
+                          key: _experienceKey,
+                          padding: const EdgeInsets.only(top: 88),
+                          child: ResponsiveContentContainer(
+                            child: ScrollVisibilityRevealer(
+                              child: ExperienceSection(
+                                experiences: experiences,
+                              ),
+                            ),
                           ),
                         ),
                       ),
 
                       // 4. Technical Skills Section
-                      Container(
-                        key: _skillsKey,
-                        padding: const EdgeInsets.only(top: 88),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: SkillsSection(skills: skills),
+                      RepaintBoundary(
+                        child: Container(
+                          key: _skillsKey,
+                          padding: const EdgeInsets.only(top: 88),
+                          child: ResponsiveContentContainer(
+                            child: ScrollVisibilityRevealer(
+                              child: SkillsSection(skills: skills),
+                            ),
                           ),
                         ),
                       ),
 
                       // 5. About Me Section
-                      Container(
-                        key: _aboutKey,
-                        padding: const EdgeInsets.only(top: 88),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: AboutSection(
-                              profile: profile,
-                              animationTrigger: _aboutAnimationTrigger,
+                      RepaintBoundary(
+                        child: Container(
+                          key: _aboutKey,
+                          padding: const EdgeInsets.only(top: 88),
+                          child: ResponsiveContentContainer(
+                            child: ScrollVisibilityRevealer(
+                              child: AboutSection(
+                                profile: profile,
+                                animationTrigger: _aboutAnimationTrigger,
+                              ),
                             ),
                           ),
                         ),
                       ),
 
                       // 6. Education Section
-                      Container(
-                        key: _educationKey,
-                        padding: const EdgeInsets.only(top: 88),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: EducationSection(education: education),
+                      RepaintBoundary(
+                        child: Container(
+                          key: _educationKey,
+                          padding: const EdgeInsets.only(top: 88),
+                          child: ResponsiveContentContainer(
+                            child: ScrollVisibilityRevealer(
+                              child: EducationSection(education: education),
+                            ),
                           ),
                         ),
                       ),
 
                       // 7. Contact & Resume Section
-                      Container(
-                        key: _contactKey,
-                        padding: const EdgeInsets.only(top: 88),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: ContactSection(profile: profile),
+                      RepaintBoundary(
+                        child: Container(
+                          key: _contactKey,
+                          padding: const EdgeInsets.only(top: 88),
+                          child: ResponsiveContentContainer(
+                            child: ScrollVisibilityRevealer(
+                              child: ContactSection(profile: profile),
+                            ),
                           ),
                         ),
                       ),
 
-                      // Footer
-                      // Repeated Call to Action Banner
-                      ResponsiveContentContainer(
-                        child: _buildRepeatedContactCta(context, profile),
-                      ),
-
-                      FooterSection(
-                        profile: profile,
-                        onNavigate: _scrollToSection,
+                      // Footer & Repeated Call to Action Banner
+                      RepaintBoundary(
+                        child: Column(
+                          children: [
+                            ResponsiveContentContainer(
+                              child: _buildRepeatedContactCta(context, profile),
+                            ),
+                            FooterSection(
+                              profile: profile,
+                              onNavigate: _scrollToSection,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

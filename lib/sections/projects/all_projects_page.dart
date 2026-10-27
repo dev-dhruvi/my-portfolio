@@ -310,56 +310,100 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                       },
                     )
                   else if (isTablet)
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: displayedProjects.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 18,
-                            mainAxisSpacing: 18,
-                            mainAxisExtent: 380,
-                          ),
-                      itemBuilder: (context, index) {
-                        final project = displayedProjects[index];
-                        return _AnimatedCardWrapper(
-                          key: ValueKey('all_proj_t_${project.id}'),
-                          index: index,
-                          child: ProjectCard(
-                            project: project,
-                            isDesktopOrTablet: true,
-                            enable3D: true,
-                            onTap: () => _showDetailDialog(context, project),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 320),
+                      switchInCurve: Curves.easeOutCubic,
+                      switchOutCurve: Curves.easeInCubic,
+                      transitionBuilder: (child, animation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0.04, 0.0),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
                           ),
                         );
                       },
+                      child: KeyedSubtree(
+                        key: ValueKey<int>(safeCurrentPage),
+                        child: GridView.builder(
+                          key: ValueKey<int>(safeCurrentPage),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: displayedProjects.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 18,
+                                mainAxisSpacing: 18,
+                                mainAxisExtent: 380,
+                              ),
+                          itemBuilder: (context, index) {
+                            final project = displayedProjects[index];
+                            return _AnimatedCardWrapper(
+                              key: ValueKey('all_proj_t_${project.id}'),
+                              index: index,
+                              child: ProjectCard(
+                                project: project,
+                                isDesktopOrTablet: true,
+                                enable3D: true,
+                                onTap: () =>
+                                    _showDetailDialog(context, project),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     )
                   else
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: displayedProjects.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            crossAxisSpacing: 18,
-                            mainAxisSpacing: 18,
-                            mainAxisExtent: 385,
-                          ),
-                      itemBuilder: (context, index) {
-                        final project = displayedProjects[index];
-                        return _AnimatedCardWrapper(
-                          key: ValueKey('all_proj_d_${project.id}'),
-                          index: index,
-                          child: ProjectCard(
-                            project: project,
-                            isDesktopOrTablet: true,
-                            enable3D: true,
-                            onTap: () => _showDetailDialog(context, project),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 320),
+                      switchInCurve: Curves.easeOutCubic,
+                      switchOutCurve: Curves.easeInCubic,
+                      transitionBuilder: (child, animation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0.04, 0.0),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
                           ),
                         );
                       },
+                      child: KeyedSubtree(
+                        key: ValueKey<int>(safeCurrentPage),
+                        child: GridView.builder(
+                          key: ValueKey<int>(safeCurrentPage),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: displayedProjects.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                crossAxisSpacing: 18,
+                                mainAxisSpacing: 18,
+                                mainAxisExtent: 385,
+                              ),
+                          itemBuilder: (context, index) {
+                            final project = displayedProjects[index];
+                            return _AnimatedCardWrapper(
+                              key: ValueKey('all_proj_d_${project.id}'),
+                              index: index,
+                              child: ProjectCard(
+                                project: project,
+                                isDesktopOrTablet: true,
+                                enable3D: true,
+                                onTap: () =>
+                                    _showDetailDialog(context, project),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
 
                   // Mobile Scroll Pagination & Status Line

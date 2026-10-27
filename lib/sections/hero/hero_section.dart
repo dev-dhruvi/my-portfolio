@@ -177,7 +177,12 @@ class _HeroSectionState extends State<HeroSection> {
                 height: (screenHeight - 160.0).clamp(360.0, 480.0),
                 child: FittedBox(
                   fit: BoxFit.contain,
-                  child: _buildCharacterStageDesktop(isDark, disableAnimations),
+                  child: RepaintBoundary(
+                    child: _buildCharacterStageDesktop(
+                      isDark,
+                      disableAnimations,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -210,7 +215,9 @@ class _HeroSectionState extends State<HeroSection> {
           slideOffset: 0.1,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: _buildCharacterStageTablet(isDark, disableAnimations),
+            child: RepaintBoundary(
+              child: _buildCharacterStageTablet(isDark, disableAnimations),
+            ),
           ),
         ),
         const SizedBox(height: 28),
@@ -261,7 +268,7 @@ class _HeroSectionState extends State<HeroSection> {
           slideOffset: 0.1,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: _buildCharacterStageMobile(isDark),
+            child: RepaintBoundary(child: _buildCharacterStageMobile(isDark)),
           ),
         ),
         const SizedBox(height: 22),
@@ -493,13 +500,18 @@ class _HeroSectionState extends State<HeroSection> {
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 400),
                   transitionBuilder: (child, animation) {
+                    final curvedAnimation = CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.easeOutCubic,
+                      reverseCurve: Curves.easeInCubic,
+                    );
                     return FadeTransition(
-                      opacity: animation,
+                      opacity: curvedAnimation,
                       child: SlideTransition(
                         position: Tween<Offset>(
                           begin: const Offset(0, 0.25),
                           end: Offset.zero,
-                        ).animate(animation),
+                        ).animate(curvedAnimation),
                         child: child,
                       ),
                     );
