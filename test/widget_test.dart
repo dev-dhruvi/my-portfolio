@@ -36,17 +36,17 @@ void main() {
           ),
         );
 
-        // Verify developer name, role, updated status badge, location, and action button
+        // Verify developer name, role, updated status badge, location, and updated action buttons
         expect(find.text('Dhruvi Patel'), findsOneWidget);
         expect(find.text(AppConstants.animatedRoles[0]), findsOneWidget);
         expect(
           find.text('Available for Senior Flutter Developer Roles'),
           findsOneWidget,
         );
-        expect(find.text('Download CV'), findsOneWidget);
-        expect(find.byIcon(Icons.download_rounded), findsOneWidget);
-        expect(find.text('View Projects'), findsOneWidget);
-        expect(find.byIcon(Icons.rocket_launch_outlined), findsOneWidget);
+        expect(find.text('View My Projects'), findsOneWidget);
+        expect(find.byIcon(Icons.rocket_launch_rounded), findsOneWidget);
+        expect(find.text('Contact Me'), findsOneWidget);
+        expect(find.byIcon(Icons.chat_bubble_outline_rounded), findsOneWidget);
         expect(find.text(AppConstants.location), findsOneWidget);
       },
     );
@@ -563,8 +563,10 @@ void main() {
         expect(find.text('MY TECH STACK'), findsOneWidget);
         expect(find.text('Technologies'), findsOneWidget);
         expect(find.text('Mobile Development'), findsOneWidget);
-        expect(find.text('Backend & Integrations'), findsOneWidget);
-        expect(find.text('Architecture & Tools'), findsOneWidget);
+        expect(find.text('State Management'), findsOneWidget);
+        expect(find.text('Backend & Data'), findsOneWidget);
+        expect(find.text('Engineering'), findsOneWidget);
+        expect(find.text('Tools'), findsOneWidget);
         expect(find.text('Flutter'), findsOneWidget);
         expect(find.text('Dart'), findsOneWidget);
         expect(find.text('Firebase'), findsOneWidget);

@@ -120,19 +120,11 @@ class MobileDrawer extends StatelessWidget {
                     },
                   ),
                   _DrawerItem(
-                    icon: Icons.person_outline,
-                    title: 'About',
+                    icon: Icons.grid_view_rounded,
+                    title: 'Projects',
                     onTap: () {
                       _closeDrawer(context);
-                      onNavItemSelected?.call('about');
-                    },
-                  ),
-                  _DrawerItem(
-                    icon: Icons.code_rounded,
-                    title: 'Skills',
-                    onTap: () {
-                      _closeDrawer(context);
-                      onNavItemSelected?.call('skills');
+                      onNavItemSelected?.call('projects');
                     },
                   ),
                   _DrawerItem(
@@ -144,11 +136,19 @@ class MobileDrawer extends StatelessWidget {
                     },
                   ),
                   _DrawerItem(
-                    icon: Icons.grid_view_rounded,
-                    title: 'Projects',
+                    icon: Icons.code_rounded,
+                    title: 'Skills',
                     onTap: () {
                       _closeDrawer(context);
-                      onNavItemSelected?.call('projects');
+                      onNavItemSelected?.call('skills');
+                    },
+                  ),
+                  _DrawerItem(
+                    icon: Icons.person_outline,
+                    title: 'About',
+                    onTap: () {
+                      _closeDrawer(context);
+                      onNavItemSelected?.call('about');
                     },
                   ),
                   _DrawerItem(

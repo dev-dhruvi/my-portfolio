@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -9,7 +8,6 @@ import '../../core/constants/app_breakpoints.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
-import '../../core/utils/url_launcher_util.dart';
 import '../../models/profile.dart';
 import '../../widgets/animations/animated_text_effects.dart';
 import '../../widgets/animations/staggered_entrance.dart';
@@ -362,38 +360,102 @@ class _HeroSectionState extends State<HeroSection> {
           ? CrossAxisAlignment.center
           : CrossAxisAlignment.start,
       children: [
-        // Headline: Hi, I'm Dhruvi Patel
+        // Prominent Name & Professional Role Badge
+        Wrap(
+          alignment: isCentered ? WrapAlignment.center : WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 10,
+          runSpacing: 6,
+          children: [
+            Text(
+              "Hi, I'm",
+              style: TextStyle(
+                fontSize: isMobile ? 18 : 22,
+                fontWeight: FontWeight.w700,
+                color: secondaryTextColor,
+              ),
+            ),
+            Text(
+              AppConstants.developerName,
+              style: TextStyle(
+                fontSize: isMobile ? 18 : 22,
+                fontWeight: FontWeight.w800,
+                color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
+                letterSpacing: 0.2,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? AppColors.violetPrimary.withOpacity(0.18)
+                    : AppColors.violetPrimary.withOpacity(0.10),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isDark
+                      ? AppColors.violetPrimary.withOpacity(0.35)
+                      : AppColors.violetPrimary.withOpacity(0.25),
+                ),
+              ),
+              child: Text(
+                'Sr. Flutter Developer',
+                style: TextStyle(
+                  fontSize: isMobile ? 11.5 : 12.5,
+                  fontWeight: FontWeight.w700,
+                  color: isDark
+                      ? AppColors.violetLight
+                      : AppColors.violetPrimary,
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 12),
+
+        // Primary Value Proposition Headline: "Building Scalable Mobile Experiences with Flutter"
         RichText(
           textAlign: isCentered ? TextAlign.center : TextAlign.start,
           text: TextSpan(
             style: TextStyle(
-              fontSize: isMobile ? 32 : (screenWidth < 1100 ? 44 : 52),
+              fontSize: isMobile
+                  ? (screenWidth < 360 ? 25.0 : 32.0)
+                  : (screenWidth < 1100 ? 44.0 : 52.0),
               fontWeight: FontWeight.w900,
               color: textColor,
               letterSpacing: -1.2,
               height: 1.15,
             ),
             children: [
-              const TextSpan(text: "Hi, I'm "),
+              const TextSpan(text: 'Building Scalable\n'),
               WidgetSpan(
                 alignment: PlaceholderAlignment.baseline,
                 baseline: TextBaseline.alphabetic,
                 child: ShimmerGradientText(
-                  AppConstants.developerName,
+                  'Mobile Experiences',
+                  colors: const [
+                    Color(0xFF06B6D4), // Cyan
+                    Color(0xFF8B5CF6), // Violet
+                    Color(0xFFD946EF), // Magenta
+                    Color(0xFF06B6D4), // Cyan
+                  ],
                   style: TextStyle(
-                    fontSize: isMobile ? 32 : (screenWidth < 1100 ? 44 : 52),
+                    fontSize: isMobile
+                        ? (screenWidth < 360 ? 25.0 : 32.0)
+                        : (screenWidth < 1100 ? 44.0 : 52.0),
                     fontWeight: FontWeight.w900,
                     letterSpacing: -1.2,
                   ),
                 ),
               ),
+              const TextSpan(text: ' with Flutter'),
             ],
           ),
         ),
 
-        const SizedBox(height: 12),
+        const SizedBox(height: 14),
 
-        // Animated Role Headline (Single authoritative role indicator)
+        // Animated Role Indicator
         Row(
           mainAxisAlignment: isCentered
               ? MainAxisAlignment.center
@@ -431,11 +493,11 @@ class _HeroSectionState extends State<HeroSection> {
                     AppConstants.animatedRoles[_currentRoleIndex],
                     key: ValueKey<int>(_currentRoleIndex),
                     style: TextStyle(
-                      fontSize: isMobile ? 18 : 22,
-                      fontWeight: FontWeight.w700,
+                      fontSize: isMobile ? 15 : 17,
+                      fontWeight: FontWeight.w600,
                       color: isDark
-                          ? AppColors.cyanPrimary
-                          : AppColors.cyanDark,
+                          ? AppColors.textSecondaryDark
+                          : AppColors.textSecondaryLight,
                     ),
                   ),
                 ),
@@ -446,7 +508,7 @@ class _HeroSectionState extends State<HeroSection> {
 
         const SizedBox(height: 16),
 
-        // Concise 2-Line Summary & Location Tag (Matching modern reference style)
+        // Supporting Text (Exact requirement)
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 580),
           child: Column(
@@ -455,40 +517,81 @@ class _HeroSectionState extends State<HeroSection> {
                 : CrossAxisAlignment.start,
             children: [
               Text(
-                AppConstants.shortSummary,
+                AppConstants.heroSupportingText,
                 textAlign: isCentered ? TextAlign.center : TextAlign.start,
                 style: AppTypography.getBodyLarge(secondaryTextColor)
-                    .copyWith(fontSize: isMobile ? 14.5 : 16, height: 1.55),
+                    .copyWith(fontSize: isMobile ? 15 : 16.5, height: 1.55),
               ),
-              const SizedBox(height: 12),
-              // Location Tag matching reference: 📍 Surat, Gujarat, India
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: isCentered
-                    ? MainAxisAlignment.center
-                    : MainAxisAlignment.start,
+              const SizedBox(height: 14),
+              // Highlights Row: Location, Experience & Releases
+              Wrap(
+                alignment: isCentered
+                    ? WrapAlignment.center
+                    : WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 14,
+                runSpacing: 8,
                 children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    size: 16,
-                    color: isDark ? AppColors.cyanPrimary : AppColors.cyanDark,
-                  ),
-                  const SizedBox(width: 6),
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: isCentered
-                          ? Alignment.center
-                          : Alignment.centerLeft,
-                      child: Text(
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        size: 16,
+                        color: isDark
+                            ? AppColors.cyanPrimary
+                            : AppColors.cyanDark,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
                         AppConstants.location,
                         style: TextStyle(
-                          fontSize: 13.5,
+                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: secondaryTextColor,
                         ),
                       ),
-                    ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.verified_outlined,
+                        size: 15,
+                        color: isDark
+                            ? AppColors.violetLight
+                            : AppColors.violetPrimary,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        '4+ Years Exp',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: secondaryTextColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.rocket_launch_outlined,
+                        size: 15,
+                        color: Color(0xFF10B981),
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        '50+ Releases',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: secondaryTextColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -500,17 +603,18 @@ class _HeroSectionState extends State<HeroSection> {
   }
 
   // ===========================================================================
-  // ACTION BUTTONS (Download CV & View Projects)
+  // ACTION BUTTONS (1. View My Projects & 2. Contact Me)
   // ===========================================================================
   Widget _buildActionButtons(BuildContext context, {required bool isCentered}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = AppBreakpoints.isMobile(context);
 
     return Wrap(
       alignment: isCentered ? WrapAlignment.center : WrapAlignment.start,
       spacing: 14,
       runSpacing: 12,
       children: [
-        // Primary: Download CV
+        // Primary CTA: View My Projects (Navigates to Projects Section)
         Container(
           decoration: BoxDecoration(
             gradient: AppColors.primaryGradient,
@@ -527,10 +631,7 @@ class _HeroSectionState extends State<HeroSection> {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                UrlLauncherUtil.openUrl(
-                  widget.profile.resumeUrl,
-                  context: context,
-                );
+                widget.onNavigate?.call('projects');
               },
               borderRadius: BorderRadius.circular(14),
               child: const Padding(
@@ -538,16 +639,23 @@ class _HeroSectionState extends State<HeroSection> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.download_rounded, size: 18, color: Colors.white),
+                    Icon(
+                      Icons.rocket_launch_rounded,
+                      size: 18,
+                      color: Colors.white,
+                    ),
                     SizedBox(width: 8),
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'Download CV',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.5,
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'View My Projects',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.5,
+                            letterSpacing: 0.2,
+                          ),
                         ),
                       ),
                     ),
@@ -558,7 +666,7 @@ class _HeroSectionState extends State<HeroSection> {
           ),
         ),
 
-        // Secondary: View Projects (Navigates to Projects Section)
+        // Secondary CTA: Contact Me (Navigates to Contact Section)
         Container(
           decoration: BoxDecoration(
             color: isDark
@@ -585,35 +693,38 @@ class _HeroSectionState extends State<HeroSection> {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                widget.onNavigate?.call('projects');
+                widget.onNavigate?.call('contact');
               },
               borderRadius: BorderRadius.circular(14),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 22,
-                  vertical: 15,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile ? 18 : 22,
+                  vertical: isMobile ? 13 : 15,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      Icons.rocket_launch_outlined,
+                      Icons.chat_bubble_outline_rounded,
                       size: 18,
                       color: isDark
                           ? AppColors.cyanPrimary
                           : AppColors.violetPrimary,
                     ),
                     const SizedBox(width: 8),
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'View Projects',
-                        style: TextStyle(
-                          color: isDark
-                              ? AppColors.cyanPrimary
-                              : AppColors.violetPrimary,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.5,
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'Contact Me',
+                          style: TextStyle(
+                            color: isDark
+                                ? AppColors.cyanPrimary
+                                : AppColors.violetPrimary,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.5,
+                            letterSpacing: 0.2,
+                          ),
                         ),
                       ),
                     ),
@@ -1051,75 +1162,69 @@ class _HeroSectionState extends State<HeroSection> {
     required String subtitle,
     required bool isDark,
   }) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          decoration: BoxDecoration(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: isDark
+            ? AppColors.darkGlassBackground.withOpacity(0.92)
+            : AppColors.lightGlassBackground.withOpacity(0.95),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark
+              ? AppColors.darkGlassBorder
+              : AppColors.lightGlassBorder,
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
             color: isDark
-                ? AppColors.darkGlassBackground.withOpacity(0.92)
-                : AppColors.lightGlassBackground.withOpacity(0.95),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: isDark
-                  ? AppColors.darkGlassBorder
-                  : AppColors.lightGlassBorder,
-              width: 1.2,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: isDark
-                    ? Colors.black.withOpacity(0.4)
-                    : AppColors.violetPrimary.withOpacity(0.08),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-              ),
-            ],
+                ? Colors.black.withOpacity(0.4)
+                : AppColors.violetPrimary.withOpacity(0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
-          child: Row(
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: iconBg,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(child: Icon(icon, size: 20, color: iconColor)),
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: iconBg,
-                  borderRadius: BorderRadius.circular(10),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w700,
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
                 ),
-                child: Center(child: Icon(icon, size: 20, color: iconColor)),
               ),
-              const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w700,
-                      color: isDark
-                          ? AppColors.textPrimaryDark
-                          : AppColors.textPrimaryLight,
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      fontSize: 10.5,
-                      fontWeight: FontWeight.w500,
-                      color: isDark
-                          ? AppColors.textSecondaryDark
-                          : AppColors.textSecondaryLight,
-                    ),
-                  ),
-                ],
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 10.5,
+                  fontWeight: FontWeight.w500,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondaryLight,
+                ),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
@@ -1132,41 +1237,35 @@ class _HeroSectionState extends State<HeroSection> {
     required String label,
     required bool isDark,
   }) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-          decoration: BoxDecoration(
-            color: isDark
-                ? AppColors.darkGlassBackground.withOpacity(0.90)
-                : AppColors.lightGlassBackground.withOpacity(0.90),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+      decoration: BoxDecoration(
+        color: isDark
+            ? AppColors.darkGlassBackground.withOpacity(0.90)
+            : AppColors.lightGlassBackground.withOpacity(0.90),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isDark
+              ? AppColors.darkGlassBorder
+              : AppColors.lightGlassBorder,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: AppColors.violetPrimary),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 11.5,
+              fontWeight: FontWeight.w700,
               color: isDark
-                  ? AppColors.darkGlassBorder
-                  : AppColors.lightGlassBorder,
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
             ),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 14, color: AppColors.violetPrimary),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w700,
-                  color: isDark
-                      ? AppColors.textPrimaryDark
-                      : AppColors.textPrimaryLight,
-                ),
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

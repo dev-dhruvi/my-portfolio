@@ -60,4 +60,13 @@ class UrlLauncherUtil {
         'https://wa.me/$cleanPhone${encodedText.isNotEmpty ? '?text=$encodedText' : ''}';
     return await openUrl(url, context: context);
   }
+
+  static Future<bool> openResume({BuildContext? context}) async {
+    final success = await openUrl('resume.pdf');
+    if (!success) {
+      if (context != null && !context.mounted) return false;
+      return await openUrl('assets/docs/resume.pdf', context: context);
+    }
+    return success;
+  }
 }

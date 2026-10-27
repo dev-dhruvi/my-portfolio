@@ -364,12 +364,12 @@ class AboutSection extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'With over 4 years of verified software engineering experience based in Surat, Gujarat, '
-            'I focus on building production-grade cross-platform mobile and web applications with Flutter and Dart. '
-            'My technical journey spans end-to-end development, from designing responsive interfaces to '
-            'integrating high-concurrency REST APIs, real-time AWS IoT Core (MQTT) data pipelines, and Firebase cloud services.',
+            'With 4+ years of professional mobile engineering experience based in Surat, Gujarat, '
+            'I specialize in architecting, developing, and shipping production-grade cross-platform applications with Flutter and Dart. '
+            'My hands-on focus spans complete product lifecycles — from crafting responsive, accessible UI layouts across mobile and web viewports to '
+            'integrating high-concurrency REST APIs, real-time AWS IoT Core (MQTT) pipelines, and Firebase cloud infrastructure.',
             style: AppTypography.getBodyMedium(secondaryTextColor)
-                .copyWith(height: 1.45),
+                .copyWith(height: 1.5),
           ),
           const SizedBox(height: 12),
           Text(
@@ -379,13 +379,11 @@ class AboutSection extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'I advocate for modular, Clean Architecture principles and strict separation of concerns using GetX '
-            'and reactive state models. '
-            'Having led and contributed to over 20 client and enterprise applications, I emphasize automated unit and '
-            'widget testing, robust JWT authentication, memory leak elimination, and CI/CD deployment pipelines '
-            'targeting both the Google Play Store and Apple App Store.',
+            'I build for long-term maintainability using Clean Architecture and reactive state models with GetX and Provider. '
+            'Having delivered and contributed to 20+ commercial applications and 50+ store releases across Google Play Store and Apple App Store, '
+            'I place high priority on automated unit/widget testing, API resilience with Dio interceptors, memory profiling, and smooth user interactions.',
             style: AppTypography.getBodyMedium(secondaryTextColor)
-                .copyWith(height: 1.45),
+                .copyWith(height: 1.5),
           ),
           const SizedBox(height: 12),
           Container(

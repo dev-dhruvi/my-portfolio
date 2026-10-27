@@ -138,11 +138,11 @@ class SeedData {
   ];
 
   static List<Skill> get initialSkills => [
-    // Mobile & Frameworks
+    // 1. Mobile
     const Skill(
       id: 'sk_flutter',
       name: 'Flutter (Mobile & Web)',
-      category: 'Mobile & Frameworks',
+      category: 'Mobile',
       iconName: 'flutter',
       description:
           'Build responsive cross-platform apps for Android, iOS, and Web.',
@@ -152,7 +152,7 @@ class SeedData {
     const Skill(
       id: 'sk_dart',
       name: 'Dart',
-      category: 'Mobile & Frameworks',
+      category: 'Mobile',
       iconName: 'code',
       description:
           'Write type-safe, maintainable code with asynchronous programming.',
@@ -160,160 +160,174 @@ class SeedData {
       orderIndex: 1,
     ),
     const Skill(
-      id: 'sk_getx',
-      name: 'GetX State Management',
-      category: 'Mobile & Frameworks',
-      iconName: 'layers',
-      description:
-          'Manage reactive state, navigation, and dependency injection.',
+      id: 'sk_responsive',
+      name: 'Responsive Layouts',
+      category: 'Mobile',
+      iconName: 'layout',
+      description: 'Adapt viewports seamlessly across mobile, tablet, and desktop form factors.',
       isHighlighted: true,
       orderIndex: 2,
     ),
     const Skill(
-      id: 'sk_flutterflow',
-      name: 'FlutterFlow',
-      category: 'Mobile & Frameworks',
-      iconName: 'palette',
-      description:
-          'Build app interfaces with custom widgets and API integrations.',
+      id: 'sk_android_ios',
+      name: 'Android & iOS',
+      category: 'Mobile',
+      iconName: 'mobile',
+      description: 'Configure platform channels, Gradle configurations, and Xcode build settings.',
       isHighlighted: false,
       orderIndex: 3,
     ),
+
+    // 2. State Management
     const Skill(
-      id: 'sk_android',
-      name: 'Android Studio & Android SDK',
-      category: 'Mobile & Frameworks',
-      iconName: 'android',
-      description:
-          'Configure Android builds, Gradle, and platform-specific features.',
-      isHighlighted: false,
+      id: 'sk_getx',
+      name: 'GetX',
+      category: 'State Management',
+      iconName: 'layers',
+      description: 'Reactive state management, route management, and dependency injection.',
+      isHighlighted: true,
       orderIndex: 4,
     ),
     const Skill(
-      id: 'sk_ios',
-      name: 'iOS App Deployment',
-      category: 'Mobile & Frameworks',
-      iconName: 'apple',
-      description: 'Configure iOS builds, signing, provisioning, and App Store releases.',
-      isHighlighted: false,
+      id: 'sk_provider',
+      name: 'Provider',
+      category: 'State Management',
+      iconName: 'layers',
+      description: 'Scoped state listening, change notifiers, and consumer widget optimization.',
+      isHighlighted: true,
       orderIndex: 5,
     ),
 
-    // Cloud & Backend
+    // 3. Backend & Data
     const Skill(
-      id: 'sk_firebase_auth',
-      name: 'Firebase Authentication & Firestore',
-      category: 'Cloud & Backend',
+      id: 'sk_firebase',
+      name: 'Firebase',
+      category: 'Backend & Data',
       iconName: 'fire',
-      description: 'Implement authentication and cloud-based data storage.',
+      description: 'Firebase Authentication, Cloud Firestore, FCM, Analytics & Crashlytics.',
       isHighlighted: true,
       orderIndex: 6,
     ),
     const Skill(
-      id: 'sk_fcm',
-      name: 'Firebase Cloud Messaging (FCM)',
-      category: 'Cloud & Backend',
-      iconName: 'bell',
-      description:
-          'Integrate push notifications and background message handling.',
-      isHighlighted: false,
+      id: 'sk_rest_dio',
+      name: 'REST APIs & Dio',
+      category: 'Backend & Data',
+      iconName: 'key',
+      description: 'High-performance HTTP networking, JWT authentication, and interceptors.',
+      isHighlighted: true,
       orderIndex: 7,
     ),
     const Skill(
-      id: 'sk_aws_iot',
-      name: 'AWS IoT Core & MQTT',
-      category: 'Cloud & Backend',
-      iconName: 'cloud',
-      description: 'Enable real-time, bidirectional messaging through MQTT.',
-      isHighlighted: true,
+      id: 'sk_sqlite_hive',
+      name: 'SQLite & Hive',
+      category: 'Backend & Data',
+      iconName: 'database',
+      description: 'Relational SQLite and fast NoSQL Hive offline caching and local storage.',
+      isHighlighted: false,
       orderIndex: 8,
     ),
     const Skill(
-      id: 'sk_rest_jwt',
-      name: 'Dio, REST APIs & JWT',
-      category: 'Cloud & Backend',
-      iconName: 'key',
-      description: 'Integrate APIs with authentication, interceptors, and error handling.',
+      id: 'sk_aws_iot',
+      name: 'AWS IoT & MQTT',
+      category: 'Backend & Data',
+      iconName: 'cloud',
+      description: 'Bidirectional real-time message streaming over WebSockets.',
       isHighlighted: true,
       orderIndex: 9,
     ),
+
+    // 4. Engineering
     const Skill(
-      id: 'sk_crashlytics',
-      name: 'Firebase Crashlytics & Analytics',
-      category: 'Cloud & Backend',
-      iconName: 'chart',
-      description:
-          'Monitor application crashes, diagnose issues, and track events.',
+      id: 'sk_git',
+      name: 'Git & Version Control',
+      category: 'Engineering',
+      iconName: 'branch',
+      description: 'Branch workflows, pull requests, merge conflict resolution, and code reviews.',
       isHighlighted: false,
       orderIndex: 10,
     ),
     const Skill(
-      id: 'sk_python_automation',
-      name: 'Python & Dataset Automation',
-      category: 'Cloud & Backend',
-      iconName: 'terminal',
-      description:
-          'Automate dataset validation, data processing, and error correction.',
-      isHighlighted: false,
-      orderIndex: 11,
-    ),
-
-    // Architecture & Quality
-    const Skill(
-      id: 'sk_clean_arch',
-      name: 'Clean & Modular Architecture',
-      category: 'Architecture & Quality',
-      iconName: 'shield',
-      description:
-          'Structure applications with clear separation of responsibilities.',
-      isHighlighted: true,
-      orderIndex: 12,
-    ),
-    const Skill(
       id: 'sk_testing',
       name: 'Automated Testing',
-      category: 'Architecture & Quality',
+      category: 'Engineering',
       iconName: 'check_circle',
-      description: 'Write unit, widget, and integration tests using Flutter testing tools.',
+      description: 'Unit testing, widget testing, and integration testing with Flutter test suites.',
+      isHighlighted: true,
+      orderIndex: 11,
+    ),
+    const Skill(
+      id: 'sk_debugging_profiling',
+      name: 'Debugging & Profiling',
+      category: 'Engineering',
+      iconName: 'terminal',
+      description: 'Flutter DevTools, memory leak analysis, and frame rendering diagnosis.',
       isHighlighted: false,
-      orderIndex: 13,
+      orderIndex: 12,
     ),
     const Skill(
       id: 'sk_perf_opt',
       name: 'Performance Optimization',
-      category: 'Architecture & Quality',
+      category: 'Engineering',
       iconName: 'bolt',
-      description: 'Profile rendering, investigate memory issues, and improve app performance.',
-      isHighlighted: false,
-      orderIndex: 14,
+      description: 'Rebuild minimization, lazy lists, repainting boundaries, and asset optimization.',
+      isHighlighted: true,
+      orderIndex: 13,
     ),
     const Skill(
-      id: 'sk_git',
-      name: 'Git & Version Control',
-      category: 'Architecture & Quality',
-      iconName: 'branch',
-      description: 'Manage branches, collaborate through pull requests, and review code.',
+      id: 'sk_clean_arch',
+      name: 'Clean Architecture',
+      category: 'Engineering',
+      iconName: 'shield',
+      description: 'Decoupled presentation, domain, and data layers for long-term scalability.',
+      isHighlighted: true,
+      orderIndex: 14,
+    ),
+
+    // 5. Tools
+    const Skill(
+      id: 'sk_android_studio',
+      name: 'Android Studio',
+      category: 'Tools',
+      iconName: 'android',
+      description: 'Android Gradle build automation, logcat inspection, and AVD emulation.',
       isHighlighted: false,
       orderIndex: 15,
     ),
     const Skill(
-      id: 'sk_integrations',
-      name: 'Third-Party Integrations & Local Storage',
-      category: 'Architecture & Quality',
-      iconName: 'plug',
-      description: 'Integrate DocuSign and Google Places, and manage local data with Hive.',
+      id: 'sk_vscode',
+      name: 'VS Code',
+      category: 'Tools',
+      iconName: 'code',
+      description: 'Primary daily IDE with Flutter extension suite, LSP, and keyboard shortcuts.',
       isHighlighted: false,
       orderIndex: 16,
     ),
     const Skill(
-      id: 'sk_hive',
-      name: 'Hive DB & Local Storage',
-      category: 'Architecture & Quality',
-      iconName: 'database',
-      description:
-          'Manage offline key-value NoSQL storage and local state with Hive.',
+      id: 'sk_xcode',
+      name: 'Xcode',
+      category: 'Tools',
+      iconName: 'apple',
+      description: 'iOS workspace configuration, Cocoapods, signing certificates, and TestFlight.',
       isHighlighted: false,
       orderIndex: 17,
+    ),
+    const Skill(
+      id: 'sk_postman',
+      name: 'Postman',
+      category: 'Tools',
+      iconName: 'terminal',
+      description: 'API endpoint contract testing, mock environments, and token inspection.',
+      isHighlighted: false,
+      orderIndex: 18,
+    ),
+    const Skill(
+      id: 'sk_flutterflow',
+      name: 'FlutterFlow',
+      category: 'Tools',
+      iconName: 'palette',
+      description: 'Rapid UI prototyping, widget generation, and visual layout acceleration.',
+      isHighlighted: false,
+      orderIndex: 19,
     ),
   ];
 
@@ -366,6 +380,14 @@ class SeedData {
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.officialpanditsnearme',
       appStoreUrl: 'https://apps.apple.com/in/app/pandits-near-me-instant-puja/id6757301105',
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/WpXkFFjJYxueZPCTAq4hUA/648x365bb.webp',
+      keyFeatures: [
+        'Real-time booking dispatch powered by AWS IoT Core & MQTT over Secure WebSockets with connection lifecycle reconnection logic',
+        'Dual-sided role workflows for users, verified Pandits, and Vedic Astrologers with dynamic pricing and wallet discounts',
+        'CustomPainter engine rendering high-performance Kundali and Kundali Matching horoscope charts with vector geometry and PDF export',
+        'End-to-end KYC onboarding workflow with secure Aadhaar photo upload and certificate verification',
+        'Multilingual localization across English, Hindi, and Gujarati with zero-downtime updates',
+        '50+ production releases deployed across Google Play Store and Apple App Store with Firebase Crashlytics & telemetry',
+      ],
       isFeatured: true,
       isPublished: true,
       orderIndex: 0,
@@ -392,9 +414,8 @@ class SeedData {
       appStoreUrl:
           'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/b0/d1/44/b0d144e8-fedc-befd-0868-f5bd0a5e2aaf/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.jpg',
-      isFeatured: false,
-      isPublished: true,
-      orderIndex: 13,
+      isFeatured: true,
+      orderIndex: 5,
     ),
     const Project(
       id: 'proj_muvr-user',
@@ -421,7 +442,7 @@ class SeedData {
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/4c/26/c0/4c26c0ef-45b4-426e-6ecd-039ec9569644/Placeholder.mill/400x400Icon.ApSiOS01-75.webp',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 18,
+      orderIndex: 1,
     ),
     const Project(
       id: 'proj_healthi_indian',
@@ -449,7 +470,7 @@ class SeedData {
           'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 7,
+      orderIndex: 2,
       keyFeatures: [
         'Personalized meal suggestions tailored to individual fitness and nutritional goals',
         'A wide range of healthy vegetarian and vegan recipes, optimized for balanced macronutrient intake',
@@ -483,7 +504,7 @@ class SeedData {
           'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 8,
+      orderIndex: 3,
       keyFeatures: [
         '▶️ Audio Playback with Play/Pause control',
         '🌐 WebView Integration for in-app browsing',
@@ -533,8 +554,8 @@ class SeedData {
           'Solution: Engineered automated validation rules and bulk Auto-Fix routines for HTML/array remediation, rendered complex math with flutter_math_fork, and built a side-by-side Cell Inspector and multi-device interactive mobile simulator in Flutter Web.',
       verifiedOutcomes: 'Browser-based CSV dataset QA suite with Unicode/multi-language support, bulk Auto-Fix remediation, LaTeX rendering, side-by-side Cell Inspector, and multi-device mobile simulator with automated test coverage.',
       isFeatured: true,
-      isPublished: false,
-      orderIndex: 1,
+      isPublished: true,
+      orderIndex: 4,
     ),
     const Project(
       id: 'proj_pmp_exam_prep',
@@ -572,7 +593,7 @@ class SeedData {
       isPublished: true,
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.pmp.examprep",
-      orderIndex: 2,
+      orderIndex: 6,
     ),
     const Project(
       id: 'proj_nirvana',
@@ -610,7 +631,7 @@ class SeedData {
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.cscp.mynirvana",
       appStoreUrl: "https://apps.apple.com/my/app/my-nirvana/id1555172257",
-      orderIndex: 3,
+      orderIndex: 7,
     ),
     const Project(
       id: 'proj_reutbyitforme',
@@ -646,7 +667,7 @@ class SeedData {
       isFeatured: false,
       isPublished: true,
       playStoreUrl: "https://play.google.com/store/apps/details?id=com.reuttomer.reut_buy_it_for_me",
-      orderIndex: 4,
+      orderIndex: 8,
     ),
     const Project(
       id: 'proj_milos_paddle',
@@ -681,7 +702,7 @@ class SeedData {
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.milos.padel",
       appStoreUrl: "https://apps.apple.com/id/app/milos-padel/id6737511643",
-      orderIndex: 5,
+      orderIndex: 9,
     ),
     const Project(
       id: 'proj_minder',
@@ -713,7 +734,7 @@ class SeedData {
       isPublished: true,
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.minder_app",
-      orderIndex: 6,
+      orderIndex: 10,
     ),
 
     const Project(

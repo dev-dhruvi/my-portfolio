@@ -103,10 +103,10 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     final textColor = isDark
         ? AppColors.textPrimaryDark
         : AppColors.textPrimaryLight;
-    // Filter active projects
-    final activeProjects = widget.projects.where((project) {
+    // Filter and sort active projects by verified priority (orderIndex)
+    final activeProjects = (widget.projects.where((project) {
       return project.isStatusActive;
-    }).toList();
+    }).toList())..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
 
     // Device-specific project counts:
     // Mobile: show total 5
@@ -940,6 +940,41 @@ class _ProjectCardState extends State<ProjectCard> {
                     const SizedBox(height: 3),
                   ],
 
+                  // Flagship Case Study Badge
+                  if (project.id == 'proj_pandits_near_me') ...[
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 5),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 7,
+                        vertical: 2.5,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: AppColors.primaryGradient,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.star_rounded,
+                            size: 10,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 3),
+                          Text(
+                            'FLAGSHIP CASE STUDY',
+                            style: TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                              letterSpacing: 0.6,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+
                   // Project Title
                   Text(
                     project.title,
@@ -1416,7 +1451,9 @@ class ProjectDetailDialog extends StatelessWidget {
                           spacing: 8,
                           children: [
                             Text(
-                              project.category.toUpperCase(),
+                              project.id == 'proj_pandits_near_me'
+                                  ? 'FLAGSHIP ARCHITECTURAL CASE STUDY'
+                                  : project.category.toUpperCase(),
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,

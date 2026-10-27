@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
+import '../core/constants/app_breakpoints.dart';
+import '../core/theme/app_colors.dart';
+import '../core/utils/url_launcher_util.dart';
+import '../models/profile.dart';
 import '../repositories/portfolio_repository.dart';
 import '../widgets/animations/ambient_background.dart';
 import '../widgets/animations/character_loader.dart';
@@ -189,7 +193,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   padding: EdgeInsets.zero,
                   child: Column(
                     children: [
-                      // Hero Section
+                      // 1. Hero Section
                       Container(
                         key: _heroKey,
                         padding: const EdgeInsets.only(top: 92),
@@ -201,7 +205,40 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                       ),
 
-                      // About Section
+                      // 2. Featured Projects Section (Promoted to Section 2 for maximum recruiter impact)
+                      Container(
+                        key: _projectsKey,
+                        padding: const EdgeInsets.only(top: 75),
+                        child: ResponsiveContentContainer(
+                          child: ScrollVisibilityRevealer(
+                            child: ProjectsSection(projects: projects),
+                          ),
+                        ),
+                      ),
+
+                      // 3. Experience & Achievements Section
+                      Container(
+                        key: _experienceKey,
+                        padding: const EdgeInsets.only(top: 75),
+                        child: ResponsiveContentContainer(
+                          child: ScrollVisibilityRevealer(
+                            child: ExperienceSection(experiences: experiences),
+                          ),
+                        ),
+                      ),
+
+                      // 4. Technical Skills Section
+                      Container(
+                        key: _skillsKey,
+                        padding: const EdgeInsets.only(top: 75),
+                        child: ResponsiveContentContainer(
+                          child: ScrollVisibilityRevealer(
+                            child: SkillsSection(skills: skills),
+                          ),
+                        ),
+                      ),
+
+                      // 5. About Me Section
                       Container(
                         key: _aboutKey,
                         padding: const EdgeInsets.only(top: 80),
@@ -215,40 +252,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                       ),
 
-                      // Skills Section
-                      Container(
-                        key: _skillsKey,
-                        padding: const EdgeInsets.only(top: 75),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: SkillsSection(skills: skills),
-                          ),
-                        ),
-                      ),
-
-                      // Experience Section
-                      Container(
-                        key: _experienceKey,
-                        padding: const EdgeInsets.only(top: 75),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: ExperienceSection(experiences: experiences),
-                          ),
-                        ),
-                      ),
-
-                      // Projects Section
-                      Container(
-                        key: _projectsKey,
-                        padding: const EdgeInsets.only(top: 75),
-                        child: ResponsiveContentContainer(
-                          child: ScrollVisibilityRevealer(
-                            child: ProjectsSection(projects: projects),
-                          ),
-                        ),
-                      ),
-
-                      // Education Section
+                      // 6. Education Section
                       Container(
                         key: _educationKey,
                         padding: const EdgeInsets.only(top: 75),
@@ -259,7 +263,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                       ),
 
-                      // Contact Section
+                      // 7. Contact & Resume Section
                       Container(
                         key: _contactKey,
                         padding: const EdgeInsets.only(top: 40),
@@ -271,6 +275,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       ),
 
                       // Footer
+                      // Repeated Call to Action Banner
+                      ResponsiveContentContainer(
+                        child: _buildRepeatedContactCta(context, profile),
+                      ),
+
                       FooterSection(
                         profile: profile,
                         onNavigate: _scrollToSection,
@@ -309,6 +318,124 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 },
               ),
             ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRepeatedContactCta(BuildContext context, Profile profile) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = AppBreakpoints.isMobile(context);
+    final textColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
+    final secondaryTextColor = isDark
+        ? AppColors.textSecondaryDark
+        : AppColors.textSecondaryLight;
+
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: isMobile ? 20 : 28),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 18 : 32,
+        vertical: isMobile ? 22 : 28,
+      ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark
+              ? [
+                  const Color(0xFF1E1B4B).withOpacity(0.85),
+                  const Color(0xFF0F172A).withOpacity(0.92),
+                ]
+              : [const Color(0xFFEEF2FF), Colors.white],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppColors.violetPrimary.withOpacity(isDark ? 0.35 : 0.25),
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.violetPrimary.withOpacity(isDark ? 0.12 : 0.05),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Ready to Build Scalable Mobile Experiences Together?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: isMobile ? 19 : 24,
+              fontWeight: FontWeight.w800,
+              color: textColor,
+              letterSpacing: -0.3,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Whether you need a dedicated Flutter developer, architectural guidance, or help shipping production releases — let's connect.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: isMobile ? 12.5 : 14,
+              color: secondaryTextColor,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 18),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 12,
+            runSpacing: 10,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () => _scrollToSection('contact'),
+                icon: const Icon(Icons.mail_outline_rounded, size: 16),
+                label: const Text(
+                  "Get in Touch",
+                  style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.violetPrimary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 22,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 2,
+                ),
+              ),
+              OutlinedButton.icon(
+                onPressed: () => UrlLauncherUtil.openResume(context: context),
+                icon: const Icon(Icons.download_rounded, size: 16),
+                label: const Text(
+                  "Download Resume (PDF)",
+                  style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: textColor,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  side: BorderSide(
+                    color: isDark
+                        ? const Color(0xFF334155)
+                        : const Color(0xFFCBD5E1),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/constants/app_breakpoints.dart';
 import '../../core/constants/app_constants.dart';
@@ -159,7 +161,7 @@ ${_messageController.text.trim()}
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "Let's Build Something ",
+                  text: "Let's Discuss Your Next ",
                   style: TextStyle(
                     fontSize: isMobile ? 26 : 34,
                     fontWeight: FontWeight.w800,
@@ -179,7 +181,7 @@ ${_messageController.text.trim()}
                       ],
                     ).createShader(bounds),
                     child: Text(
-                      'Exceptional',
+                      'Mobile App',
                       style: TextStyle(
                         fontSize: isMobile ? 26 : 34,
                         fontWeight: FontWeight.w800,
@@ -195,7 +197,7 @@ ${_messageController.text.trim()}
           const SizedBox(height: 8),
 
           Text(
-            'Have a project in mind or want to discuss an opportunity? I\'d love to hear from you.',
+            'Have a project in mind, need a skilled Flutter developer, or want to discuss an opportunity? Reach out via direct email, LinkedIn, or send a message below.',
             style: AppTypography.getBodyLarge(secondaryTextColor),
           ),
           const SizedBox(height: 32),
@@ -301,6 +303,16 @@ ${_messageController.text.trim()}
     required Color secondaryTextColor,
     required bool isMobile,
   }) {
+    final directEmail = widget.profile.email.isNotEmpty
+        ? widget.profile.email
+        : AppConstants.email;
+    final githubUrl = widget.profile.githubUrl.isNotEmpty
+        ? widget.profile.githubUrl
+        : AppConstants.defaultGithubUrl;
+    final linkedinUrl = widget.profile.linkedinUrl.isNotEmpty
+        ? widget.profile.linkedinUrl
+        : AppConstants.defaultLinkedinUrl;
+
     return Column(
       crossAxisAlignment: isMobile
           ? CrossAxisAlignment.center
@@ -310,7 +322,7 @@ ${_messageController.text.trim()}
         Center(
           child: _ContactCharacterStage(isMobile: isMobile, isDark: isDark),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
 
         // Two-Option Direct Contact Buttons: Email Me + Chat on WhatsApp
         Row(
@@ -323,7 +335,7 @@ ${_messageController.text.trim()}
                 isMobile,
               ),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 12),
             Expanded(
               child: _buildWhatsAppButton(
                 isDark,
@@ -334,34 +346,159 @@ ${_messageController.text.trim()}
             ),
           ],
         ),
-        // if (isMobile)
-        //   Column(
-        //     children: [
-        //       _buildDirectEmailButton(isDark, textColor, secondaryTextColor),
-        //       const SizedBox(height: 12),
-        //       _buildWhatsAppButton(isDark, textColor, secondaryTextColor),
-        //     ],
-        //   )
-        // else
-        //   Row(
-        //     children: [
-        //       Expanded(
-        //         child: _buildDirectEmailButton(
-        //           isDark,
-        //           textColor,
-        //           secondaryTextColor,
-        //         ),
-        //       ),
-        //       const SizedBox(width: 14),
-        //       Expanded(
-        //         child: _buildWhatsAppButton(
-        //           isDark,
-        //           textColor,
-        //           secondaryTextColor,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
+        const SizedBox(height: 14),
+
+        // Direct Email Card with Click-to-Mail and Copy
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: (isDark ? const Color(0xFF0F172A) : Colors.white)
+                .withOpacity(isDark ? 0.75 : 0.95),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: isDark ? const Color(0xFF1E2848) : const Color(0xFFE2E8F0),
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  color: AppColors.cyanPrimary.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(
+                  Icons.alternate_email_rounded,
+                  size: 16,
+                  color: AppColors.cyanPrimary,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: SelectableText(
+                  directEmail,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
+                  ),
+                ),
+              ),
+              IconButton(
+                tooltip: 'Copy Email',
+                icon: const Icon(Icons.copy_rounded, size: 16),
+                color: secondaryTextColor,
+                visualDensity: VisualDensity.compact,
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: directEmail));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: AppColors.success,
+                      duration: Duration(seconds: 2),
+                      content: Text('Email address copied to clipboard!'),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        // Quick Professional Profiles & PDF Resume Row
+        Row(
+          children: [
+            // LinkedIn
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () =>
+                    UrlLauncherUtil.openUrl(linkedinUrl, context: context),
+                icon: const FaIcon(
+                  FontAwesomeIcons.linkedinIn,
+                  size: 14,
+                  color: Color(0xFF0A66C2),
+                ),
+                label: const Text(
+                  'LinkedIn',
+                  style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: textColor,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  side: BorderSide(
+                    color: isDark
+                        ? const Color(0xFF1E2848)
+                        : const Color(0xFFE2E8F0),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+
+            // GitHub
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () =>
+                    UrlLauncherUtil.openUrl(githubUrl, context: context),
+                icon: FaIcon(
+                  FontAwesomeIcons.github,
+                  size: 14,
+                  color: isDark ? Colors.white : const Color(0xFF24292F),
+                ),
+                label: const Text(
+                  'GitHub',
+                  style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: textColor,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  side: BorderSide(
+                    color: isDark
+                        ? const Color(0xFF1E2848)
+                        : const Color(0xFFE2E8F0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+
+        // Download Resume (PDF) Button
+        SizedBox(
+          width: double.infinity,
+          height: 44,
+          child: ElevatedButton.icon(
+            onPressed: () => UrlLauncherUtil.openResume(context: context),
+            icon: const Icon(
+              Icons.download_rounded,
+              size: 18,
+              color: Colors.white,
+            ),
+            label: const Text(
+              'Download Resume (PDF)',
+              style: TextStyle(
+                fontSize: 13.5,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                letterSpacing: 0.3,
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.violetPrimary,
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ),
         const SizedBox(height: 18),
 
         // Status & Availability Indicators Row
@@ -434,7 +571,6 @@ ${_messageController.text.trim()}
     );
   }
 
-  /// "Email Me" direct action button with mail app launcher
   Widget _buildDirectEmailButton(
     bool isDark,
     Color textColor,

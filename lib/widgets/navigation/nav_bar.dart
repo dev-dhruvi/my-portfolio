@@ -135,20 +135,20 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                             onTap: () => onNavItemSelected?.call('hero'),
                           ),
                           _NavPill(
-                            title: 'About',
-                            onTap: () => onNavItemSelected?.call('about'),
-                          ),
-                          _NavPill(
-                            title: 'Skills',
-                            onTap: () => onNavItemSelected?.call('skills'),
+                            title: 'Projects',
+                            onTap: () => onNavItemSelected?.call('projects'),
                           ),
                           _NavPill(
                             title: 'Experience',
                             onTap: () => onNavItemSelected?.call('experience'),
                           ),
                           _NavPill(
-                            title: 'Projects',
-                            onTap: () => onNavItemSelected?.call('projects'),
+                            title: 'Skills',
+                            onTap: () => onNavItemSelected?.call('skills'),
+                          ),
+                          _NavPill(
+                            title: 'About',
+                            onTap: () => onNavItemSelected?.call('about'),
                           ),
                           _NavPill(
                             title: 'Education',

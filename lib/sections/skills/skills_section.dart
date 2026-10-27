@@ -18,53 +18,93 @@ class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key, required this.skills});
 
   static const List<String> _categoryOrder = [
-    'Mobile & Frameworks',
-    'Cloud & Backend',
-    'Architecture & Quality',
+    'Mobile',
+    'State Management',
+    'Backend & Data',
+    'Engineering',
+    'Tools',
   ];
 
   static String _getCategoryDisplayTitle(String category) {
-    if (category.contains('Mobile')) return 'Mobile Development';
-    if (category.contains('Cloud') || category.contains('Backend')) {
-      return 'Backend & Integrations';
+    if (category == 'Mobile' || category.contains('Mobile')) {
+      return 'Mobile Development';
     }
-    if (category.contains('Architecture') || category.contains('Quality')) {
-      return 'Architecture & Tools';
+    if (category == 'State Management') {
+      return 'State Management';
+    }
+    if (category == 'Backend & Data' ||
+        category.contains('Backend') ||
+        category.contains('Cloud')) {
+      return 'Backend & Data';
+    }
+    if (category == 'Engineering') {
+      return 'Engineering';
+    }
+    if (category == 'Tools') {
+      return 'Tools';
     }
     return category;
   }
 
   static String _getCategorySubtitle(String category) {
-    if (category.contains('Mobile')) {
-      return 'Build cross-platform apps for Android, iOS and Web.';
+    if (category == 'Mobile' || category.contains('Mobile')) {
+      return 'Cross-platform native applications for Android, iOS, and Web.';
     }
-    if (category.contains('Cloud') || category.contains('Backend')) {
-      return 'Cloud services, APIs and real-time communication.';
+    if (category == 'State Management') {
+      return 'Predictable reactive state, dependency injection, and clean architecture.';
     }
-    if (category.contains('Architecture') || category.contains('Quality')) {
-      return 'Clean code, testing and development tools.';
+    if (category == 'Backend & Data' ||
+        category.contains('Backend') ||
+        category.contains('Cloud')) {
+      return 'Cloud platforms, real-time messaging, REST APIs, and local persistence.';
+    }
+    if (category == 'Engineering') {
+      return 'Clean code, automated testing, profiling, and performance optimization.';
+    }
+    if (category == 'Tools') {
+      return 'IDEs, build tools, API inspection, and mobile deployment workflows.';
     }
     return 'Core skills & verified production technologies.';
   }
 
   static IconData _getCategoryIcon(String category) {
-    if (category.contains('Mobile')) return Icons.phone_iphone_rounded;
-    if (category.contains('Cloud') || category.contains('Backend')) {
+    if (category == 'Mobile' || category.contains('Mobile')) {
+      return Icons.phone_iphone_rounded;
+    }
+    if (category == 'State Management') {
+      return Icons.account_tree_rounded;
+    }
+    if (category == 'Backend & Data' ||
+        category.contains('Backend') ||
+        category.contains('Cloud')) {
       return Icons.cloud_rounded;
     }
-    if (category.contains('Architecture') || category.contains('Quality')) {
-      return Icons.layers_rounded;
+    if (category == 'Engineering') {
+      return Icons.verified_rounded;
+    }
+    if (category == 'Tools') {
+      return Icons.build_circle_rounded;
     }
     return Icons.widgets_rounded;
   }
 
   static Color _getCategoryAccent(String category) {
-    if (category.contains('Mobile')) return const Color(0xFF06B6D4); // Cyan
-    if (category.contains('Cloud') || category.contains('Backend')) {
+    if (category == 'Mobile' || category.contains('Mobile')) {
+      return const Color(0xFF06B6D4); // Cyan
+    }
+    if (category == 'State Management') {
+      return const Color(0xFF8B5CF6); // Violet
+    }
+    if (category == 'Backend & Data' ||
+        category.contains('Backend') ||
+        category.contains('Cloud')) {
       return const Color(0xFF38BDF8); // Sky Blue
     }
-    if (category.contains('Architecture') || category.contains('Quality')) {
-      return const Color(0xFFA855F7); // Purple / Violet
+    if (category == 'Engineering') {
+      return const Color(0xFF10B981); // Emerald Green
+    }
+    if (category == 'Tools') {
+      return const Color(0xFFF59E0B); // Amber
     }
     return AppColors.cyanPrimary;
   }
@@ -80,17 +120,39 @@ class SkillsSection extends StatelessWidget {
     if (id == 'sk_dart' || name == 'dart') {
       return 'Dart';
     }
+    if (id == 'sk_responsive' || name.contains('responsive')) {
+      return 'Responsive Layouts';
+    }
+    if (id == 'sk_android_ios' ||
+        (name.contains('android') && name.contains('ios'))) {
+      return 'Android & iOS';
+    }
     if (id == 'sk_getx' || name.contains('getx')) {
       return 'GetX';
+    }
+    if (id == 'sk_provider' || name.contains('provider')) {
+      return 'Provider';
     }
     if (id == 'sk_flutterflow' || name.contains('flutterflow')) {
       return 'FlutterFlow';
     }
-    if (id == 'sk_android' || name.contains('android')) {
-      return 'Android';
+    if (id == 'sk_android_studio' || name == 'android studio') {
+      return 'Android Studio';
     }
-    if (id == 'sk_ios' || name.contains('ios')) {
-      return 'iOS';
+    if (id == 'sk_vscode' || name.contains('vs code')) {
+      return 'VS Code';
+    }
+    if (id == 'sk_xcode' || name == 'xcode') {
+      return 'Xcode';
+    }
+    if (id == 'sk_postman' || name.contains('postman')) {
+      return 'Postman';
+    }
+    if (id == 'sk_sqlite_hive' || name.contains('sqlite')) {
+      return 'SQLite & Hive';
+    }
+    if (id == 'sk_rest_dio' || id == 'sk_rest_jwt' || name.contains('rest')) {
+      return 'REST APIs';
     }
 
     if (id == 'sk_firebase_auth' ||
@@ -158,96 +220,111 @@ class SkillsSection extends StatelessWidget {
         final isMobile = width < 600;
         final isTablet = width >= 600 && width < 1024;
 
-        // Group skills by category
-        final List<Skill> mobileSkills = skills
-            .where((s) => s.category == _categoryOrder[0])
-            .toList();
-        final List<Skill> backendSkills = skills
-            .where((s) => s.category == _categoryOrder[1])
-            .toList();
-        final List<Skill> archSkills = skills
-            .where((s) => s.category == _categoryOrder[2])
-            .toList();
+        // Build category cards for all 5 categories
+        final List<Widget> categoryCards = _categoryOrder.map((cat) {
+          final catSkills = skills.where((s) {
+            if (s.category == cat) {
+              return true;
+            }
+            if (cat == 'Mobile' && s.category.contains('Mobile')) {
+              return true;
+            }
+            if (cat == 'Backend & Data' &&
+                (s.category.contains('Cloud') ||
+                    s.category.contains('Backend'))) {
+              return true;
+            }
+            if (cat == 'Engineering' &&
+                (s.category.contains('Architecture') ||
+                    s.category.contains('Quality'))) {
+              return true;
+            }
+            return false;
+          }).toList();
 
-        final cardMobile = _CategoryGroupCard(
-          categoryTitle: _getCategoryDisplayTitle(_categoryOrder[0]),
-          categorySubtitle: _getCategorySubtitle(_categoryOrder[0]),
-          categoryIcon: _getCategoryIcon(_categoryOrder[0]),
-          categoryAccent: _getCategoryAccent(_categoryOrder[0]),
-          skills: mobileSkills,
-          isDark: isDark,
-          textColor: textColor,
-          secondaryTextColor: secondaryTextColor,
-          isMobile: isMobile,
-        );
-
-        final cardBackend = _CategoryGroupCard(
-          categoryTitle: _getCategoryDisplayTitle(_categoryOrder[1]),
-          categorySubtitle: _getCategorySubtitle(_categoryOrder[1]),
-          categoryIcon: _getCategoryIcon(_categoryOrder[1]),
-          categoryAccent: _getCategoryAccent(_categoryOrder[1]),
-          skills: backendSkills,
-          isDark: isDark,
-          textColor: textColor,
-          secondaryTextColor: secondaryTextColor,
-          isMobile: isMobile,
-        );
-
-        final cardArch = _CategoryGroupCard(
-          categoryTitle: _getCategoryDisplayTitle(_categoryOrder[2]),
-          categorySubtitle: _getCategorySubtitle(_categoryOrder[2]),
-          categoryIcon: _getCategoryIcon(_categoryOrder[2]),
-          categoryAccent: _getCategoryAccent(_categoryOrder[2]),
-          skills: archSkills,
-          isDark: isDark,
-          textColor: textColor,
-          secondaryTextColor: secondaryTextColor,
-          isMobile: isMobile,
-        );
+          return _CategoryGroupCard(
+            categoryTitle: _getCategoryDisplayTitle(cat),
+            categorySubtitle: _getCategorySubtitle(cat),
+            categoryIcon: _getCategoryIcon(cat),
+            categoryAccent: _getCategoryAccent(cat),
+            skills: catSkills,
+            isDark: isDark,
+            textColor: textColor,
+            secondaryTextColor: secondaryTextColor,
+            isMobile: isMobile,
+          );
+        }).toList();
 
         Widget responsiveCards;
         if (isMobile) {
-          // Mobile: 1-column stacked cards
+          // Mobile: 1-column vertically stacked cards
           responsiveCards = Column(
-            children: [
-              cardMobile,
-              const SizedBox(height: 14),
-              cardBackend,
-              const SizedBox(height: 14),
-              cardArch,
-            ],
+            children: categoryCards
+                .map(
+                  (c) => Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: c,
+                  ),
+                )
+                .toList(),
           );
         } else if (isTablet) {
-          // Tablet: 2-column cards, last category spanning full width
+          // Tablet: 2-column cards, 5th category spanning full width
           responsiveCards = Column(
             children: [
               IntrinsicHeight(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(child: cardMobile),
+                    Expanded(child: categoryCards[0]),
                     const SizedBox(width: 16),
-                    Expanded(child: cardBackend),
+                    Expanded(child: categoryCards[1]),
                   ],
                 ),
               ),
               const SizedBox(height: 16),
-              cardArch,
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(child: categoryCards[2]),
+                    const SizedBox(width: 16),
+                    Expanded(child: categoryCards[3]),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              categoryCards[4],
             ],
           );
         } else {
-          // Desktop: 3-column cards side by side
-          responsiveCards = IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(child: cardMobile),
-                const SizedBox(width: 18),
-                Expanded(child: cardBackend),
-                const SizedBox(width: 18),
-                Expanded(child: cardArch),
-              ],
-            ),
+          // Desktop: Top row (3 columns), Bottom row (2 columns)
+          responsiveCards = Column(
+            children: [
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(child: categoryCards[0]),
+                    const SizedBox(width: 16),
+                    Expanded(child: categoryCards[1]),
+                    const SizedBox(width: 16),
+                    Expanded(child: categoryCards[2]),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(child: categoryCards[3]),
+                    const SizedBox(width: 16),
+                    Expanded(child: categoryCards[4]),
+                  ],
+                ),
+              ),
+            ],
           );
         }
 

@@ -38,7 +38,9 @@ class _CreativeAnimatedBackgroundState extends State<CreativeAnimatedBackground>
   late final List<_BackgroundParticle> _particles;
   final math.Random _rng = math.Random(42);
 
-  Offset _mouseParallax = Offset.zero;
+  final ValueNotifier<Offset> _mouseParallax = ValueNotifier<Offset>(
+    Offset.zero,
+  );
 
   @override
   void initState() {
@@ -67,6 +69,7 @@ class _CreativeAnimatedBackgroundState extends State<CreativeAnimatedBackground>
   @override
   void dispose() {
     _controller.dispose();
+    _mouseParallax.dispose();
     super.dispose();
   }
 
@@ -82,9 +85,8 @@ class _CreativeAnimatedBackgroundState extends State<CreativeAnimatedBackground>
     final normX = (event.localPosition.dx / size.width) - 0.5;
     final normY = (event.localPosition.dy / size.height) - 0.5;
 
-    setState(() {
-      _mouseParallax = Offset(normX * 24.0, normY * 24.0);
-    });
+    // Decoupled from widget tree rebuilds: updates ValueNotifier without calling setState()
+    _mouseParallax.value = Offset(normX * 24.0, normY * 24.0);
   }
 
   @override
@@ -122,14 +124,14 @@ class _CreativeAnimatedBackgroundState extends State<CreativeAnimatedBackground>
           // 2. Animated CustomPainter canvas with RepaintBoundary
           Positioned.fill(
             child: RepaintBoundary(
-              child: AnimatedBuilder(
-                animation: _controller,
+              child: ListenableBuilder(
+                listenable: Listenable.merge([_controller, _mouseParallax]),
                 builder: (context, _) {
                   return CustomPaint(
                     painter: _CreativeCanvasPainter(
                       progress: _controller.value,
                       particles: widget.enableParticles ? _particles : const [],
-                      parallax: _mouseParallax,
+                      parallax: _mouseParallax.value,
                       isDark: isDark,
                     ),
                   );
@@ -276,23 +278,26 @@ class _CreativeCanvasPainter extends CustomPainter {
       canvas.drawCircle(point, p.radius, particlePaint);
     }
 
-    // Connect close neighboring particles with subtle filament lines
-    final maxDistance = size.width < 600 ? 70.0 : 110.0;
-    for (int i = 0; i < renderedPoints.length; i++) {
-      for (int j = i + 1; j < renderedPoints.length; j++) {
-        final p1 = renderedPoints[i];
-        final p2 = renderedPoints[j];
-        final distance = (p1 - p2).distance;
+    // Connect close neighboring particles with subtle filament lines on tablet/desktop
+    // Skip heavy O(N^2) pairwise line calculations on narrow mobile viewports (<600px)
+    if (size.width >= 600) {
+      final maxDistance = 110.0;
+      for (int i = 0; i < renderedPoints.length; i++) {
+        for (int j = i + 1; j < renderedPoints.length; j++) {
+          final p1 = renderedPoints[i];
+          final p2 = renderedPoints[j];
+          final distance = (p1 - p2).distance;
 
-        if (distance < maxDistance) {
-          final lineAlpha = ((1.0 - (distance / maxDistance)) * 0.12).clamp(
-            0.0,
-            0.12,
-          );
-          linePaint.color =
-              (isDark ? AppColors.cyanPrimary : AppColors.violetPrimary)
-                  .withOpacity(lineAlpha);
-          canvas.drawLine(p1, p2, linePaint);
+          if (distance < maxDistance) {
+            final lineAlpha = ((1.0 - (distance / maxDistance)) * 0.12).clamp(
+              0.0,
+              0.12,
+            );
+            linePaint.color =
+                (isDark ? AppColors.cyanPrimary : AppColors.violetPrimary)
+                    .withOpacity(lineAlpha);
+            canvas.drawLine(p1, p2, linePaint);
+          }
         }
       }
     }

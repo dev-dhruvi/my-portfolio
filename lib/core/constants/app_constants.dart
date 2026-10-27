@@ -38,6 +38,15 @@ class AppConstants {
       'real-time booking systems, optimizing performance, securing API communication, and '
       'developing automated tests for production-ready applications.';
 
+  // Primary Hero Section Headlines & Value Proposition
+  static const String heroHeadlinePrefix = 'Building Scalable ';
+  static const String heroHeadlineHighlight = 'Mobile Experiences';
+  static const String heroHeadlineSuffix = ' with Flutter';
+  static const String heroFullHeadline =
+      'Building Scalable Mobile Experiences with Flutter';
+  static const String heroSupportingText =
+      "I'm Dhruvi Patel, a Flutter developer focused on crafting high-performance, intuitive cross-platform applications.";
+
   // Short & punchy hero summary matching modern reference design
   static const String shortSummary =
       '4+ years shipping production Flutter apps for iOS, Android & Web, '
