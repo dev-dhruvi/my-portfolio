@@ -17,10 +17,10 @@ class ScrollVisibilityRevealer extends StatefulWidget {
   const ScrollVisibilityRevealer({
     super.key,
     required this.child,
-    this.duration = const Duration(milliseconds: 600),
+    this.duration = const Duration(milliseconds: 500),
     this.delay = Duration.zero,
-    this.slideDistance = 32.0,
-    this.initialScale = 0.96,
+    this.slideDistance = 0.0,
+    this.initialScale = 1.0,
     this.viewportThreshold = 0.88,
     this.animateOnce = true,
     this.curve = Curves.easeOutCubic,
@@ -137,25 +137,38 @@ class _ScrollVisibilityRevealerState extends State<ScrollVisibilityRevealer>
       return widget.child;
     }
 
+    if (_hasAnimated && _controller.isCompleted) {
+      return widget.child;
+    }
+
+    final hasTransform =
+        widget.slideDistance > 0.0 || widget.initialScale != 1.0;
+
     return RepaintBoundary(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          if (_controller.isCompleted) {
-            return child!;
-          }
-          return Opacity(
-            opacity: _fadeAnimation.value,
-            child: Transform.translate(
-              offset: Offset(0, _slideAnimation.value),
-              child: Transform.scale(
-                scale: _scaleAnimation.value,
-                child: child,
-              ),
-            ),
-          );
-        },
-        child: widget.child,
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: hasTransform
+            ? AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  Widget result = child!;
+                  if (widget.slideDistance > 0.0) {
+                    result = Transform.translate(
+                      offset: Offset(0, _slideAnimation.value),
+                      child: result,
+                    );
+                  }
+                  if (widget.initialScale != 1.0) {
+                    result = Transform.scale(
+                      scale: _scaleAnimation.value,
+                      child: result,
+                    );
+                  }
+                  return result;
+                },
+                child: widget.child,
+              )
+            : widget.child,
       ),
     );
   }

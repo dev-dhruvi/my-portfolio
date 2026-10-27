@@ -11,7 +11,6 @@ import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/project.dart';
 import '../../widgets/animations/interactive_3d_card.dart';
-import '../../widgets/animations/staggered_entrance.dart';
 import '../../widgets/cards/app_network_image.dart';
 import '../../widgets/navigation/dynamic_scroll_indicators.dart';
 import 'all_projects_page.dart';
@@ -423,14 +422,11 @@ class _Tablet2x2ProjectSliderState extends State<_Tablet2x2ProjectSlider> {
                             pageDelta * quadrantOffset * 10.0,
                             0.0,
                           ),
-                          child: StaggeredEntrance(
-                            index: index,
-                            child: ProjectCard(
-                              project: project,
-                              isDesktopOrTablet: true,
-                              enable3D: true,
-                              onTap: () => widget.onProjectTap(project),
-                            ),
+                          child: ProjectCard(
+                            project: project,
+                            isDesktopOrTablet: true,
+                            enable3D: true,
+                            onTap: () => widget.onProjectTap(project),
                           ),
                         );
                       },
@@ -582,15 +578,12 @@ class _DesktopSingleRowProjectSliderState
                                     0.0,
                                     pageDelta.abs() * (c * 4.0),
                                   ),
-                                  child: StaggeredEntrance(
-                                    index: c,
-                                    child: ProjectCard(
-                                      project: pageItems[c],
-                                      isDesktopOrTablet: true,
-                                      enable3D: true,
-                                      onTap: () =>
-                                          widget.onProjectTap(pageItems[c]),
-                                    ),
+                                  child: ProjectCard(
+                                    project: pageItems[c],
+                                    isDesktopOrTablet: true,
+                                    enable3D: true,
+                                    onTap: () =>
+                                        widget.onProjectTap(pageItems[c]),
                                   ),
                                 ),
                               )

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +50,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
   String _activeSection = 'hero';
   double _lastCheckedOffset = -1.0;
   bool _precacheDone = false;
+  bool _isProgrammaticScrolling = false;
+  Timer? _programmaticScrollTimer;
   // On web, the preloader in web/index.html seamlessly handles the initial Flutter
   // bootstrap state. Setting _showAppLoader to false eliminates the redundant 2.1-second
   // secondary delay, letting recruiters instantly view the Hero section.
@@ -84,7 +88,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   void _onScroll() {
-    if (!_scrollController.hasClients) return;
+    if (!_scrollController.hasClients || _isProgrammaticScrolling) return;
 
     final scrollOffset = _scrollController.offset;
     final maxScroll = _scrollController.position.maxScrollExtent;
@@ -163,12 +167,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   @override
   void dispose() {
+    _programmaticScrollTimer?.cancel();
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
   }
 
   void _scrollToSection(String sectionKey) {
+    _programmaticScrollTimer?.cancel();
+    _isProgrammaticScrolling = true;
+
     if (_activeSection != sectionKey) {
       setState(() {
         _activeSection = sectionKey;
@@ -181,6 +189,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
         duration: const Duration(milliseconds: 600),
         curve: Curves.easeOutCubic,
       );
+      _programmaticScrollTimer = Timer(const Duration(milliseconds: 650), () {
+        if (mounted) {
+          _isProgrammaticScrolling = false;
+        }
+      });
       return;
     }
 
@@ -234,6 +247,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
           duration: const Duration(milliseconds: 600),
           curve: Curves.easeOutCubic,
         );
+        _programmaticScrollTimer = Timer(const Duration(milliseconds: 650), () {
+          if (mounted) {
+            _isProgrammaticScrolling = false;
+            if (_activeSection != sectionKey) {
+              setState(() {
+                _activeSection = sectionKey;
+              });
+            }
+          }
+        });
         return;
       }
 
@@ -242,6 +265,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
         duration: const Duration(milliseconds: 600),
         curve: Curves.easeOutCubic,
       );
+      _programmaticScrollTimer = Timer(const Duration(milliseconds: 650), () {
+        if (mounted) {
+          _isProgrammaticScrolling = false;
+        }
+      });
+    } else {
+      _isProgrammaticScrolling = false;
     }
   }
 
