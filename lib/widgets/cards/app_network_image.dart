@@ -76,6 +76,19 @@ class AppNetworkImage extends StatelessWidget {
       return fallbackWidget;
     }
 
+    if (imageUrl.startsWith('assets/')) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: Image.asset(
+          imageUrl,
+          width: width,
+          height: height,
+          fit: fit,
+          errorBuilder: (context, error, stackTrace) => fallbackWidget,
+        ),
+      );
+    }
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
       child: Image.network(
@@ -106,7 +119,16 @@ class AppNetworkImage extends StatelessWidget {
           );
         },
         errorBuilder: (context, error, stackTrace) {
-          return fallbackWidget;
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(borderRadius),
+            child: Image.asset(
+              'assets/images/project/default.webp',
+              width: width,
+              height: height,
+              fit: fit,
+              errorBuilder: (ctx, err, stack) => fallbackWidget,
+            ),
+          );
         },
       ),
     );

@@ -1144,20 +1144,84 @@ class _ProjectCardState extends State<ProjectCard> {
         final cardThumbnail = ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
           clipBehavior: Clip.antiAlias,
-          child: AnimatedScale(
-            scale: _isHovered ? 1.05 : 1.0,
-            duration: const Duration(milliseconds: 280),
-            curve: Curves.easeOutCubic,
-            child: AppNetworkImage(
-              imageUrl: project.displayImageUrl,
-              height: isBoundedHeight
-                  ? double.infinity
-                  : (widget.isDesktopOrTablet ? 230 : 260),
-              width: double.infinity,
-              placeholderText: project.title,
-              fallbackIcon: Icons.phone_iphone_rounded,
-              borderRadius: 0,
-            ),
+          child: Stack(
+            fit: StackFit.passthrough,
+            children: [
+              AnimatedScale(
+                scale: _isHovered ? 1.05 : 1.0,
+                duration: const Duration(milliseconds: 280),
+                curve: Curves.easeOutCubic,
+                child: AppNetworkImage(
+                  imageUrl: project.displayImageUrl,
+                  height: isBoundedHeight
+                      ? double.infinity
+                      : (widget.isDesktopOrTablet ? 230 : 260),
+                  width: double.infinity,
+                  placeholderText: project.title,
+                  fallbackIcon: Icons.phone_iphone_rounded,
+                  borderRadius: 0,
+                ),
+              ),
+
+              // Flag / Badge: "Featured" if dedicated image is provided, "Client Projects" if image is not there
+              Positioned(
+                top: 10,
+                left: 10,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4.5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: project.hasCustomImage
+                        ? (isDark
+                              ? AppColors.violetPrimary.withOpacity(0.88)
+                              : AppColors.violetPrimary)
+                        : (isDark
+                              ? const Color(0xFF0F172A).withOpacity(0.88)
+                              : const Color(0xFF334155).withOpacity(0.92)),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: project.hasCustomImage
+                          ? AppColors.cyanPrimary.withOpacity(0.65)
+                          : Colors.white.withOpacity(0.25),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        project.hasCustomImage
+                            ? Icons.star_rounded
+                            : Icons.business_center_rounded,
+                        size: 11,
+                        color: project.hasCustomImage
+                            ? AppColors.cyanLight
+                            : Colors.white70,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        project.hasCustomImage ? 'Featured' : 'Client Projects',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         );
 
@@ -1327,7 +1391,9 @@ class ProjectDetailDialog extends StatelessWidget {
                             Text(
                               project.id == 'proj_pandits_near_me'
                                   ? 'FLAGSHIP ARCHITECTURAL CASE STUDY'
-                                  : project.category.toUpperCase(),
+                                  : (project.hasCustomImage
+                                        ? project.category.toUpperCase()
+                                        : 'CLIENT PROJECTS'),
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,

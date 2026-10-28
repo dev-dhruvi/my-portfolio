@@ -52,11 +52,20 @@ class Project {
     this.createdAt,
   });
 
-  /// Returns the effective image URL whether specified via imageUrl or thumbnailUrl
+  static const String defaultProjectImageUrl =
+      'assets/images/project/default.webp';
+
+  /// Flag indicating whether the project has a custom image provided.
+  /// If false, the project defaults to [defaultProjectImageUrl] and displays "Client Projects" in the UI.
+  bool get hasCustomImage =>
+      imageUrl.trim().isNotEmpty || thumbnailUrl.trim().isNotEmpty;
+
+  /// Returns the effective image URL whether specified via imageUrl or thumbnailUrl,
+  /// or falls back to [defaultProjectImageUrl] if no custom image is specified.
   String get displayImageUrl {
-    if (imageUrl.isNotEmpty) return imageUrl;
-    if (thumbnailUrl.isNotEmpty) return thumbnailUrl;
-    return '';
+    if (imageUrl.trim().isNotEmpty) return imageUrl.trim();
+    if (thumbnailUrl.trim().isNotEmpty) return thumbnailUrl.trim();
+    return defaultProjectImageUrl;
   }
 
   Map<String, dynamic> toMap() {

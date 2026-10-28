@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dhruvi_portfolio/core/constants/app_constants.dart';
 import 'package:dhruvi_portfolio/core/constants/seed_data.dart';
+import 'package:dhruvi_portfolio/models/project.dart';
 import 'package:dhruvi_portfolio/sections/hero/hero_section.dart';
 import 'package:dhruvi_portfolio/sections/about/about_section.dart';
 import 'package:dhruvi_portfolio/sections/education/education_section.dart';
@@ -123,6 +124,53 @@ void main() {
           }
         }
         expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
+      },
+    );
+
+    testWidgets(
+      'ProjectsSection renders Featured badge when custom image exists and Client Projects badge when image is absent',
+      (tester) async {
+        final sampleProjects = [
+          const Project(
+            id: 'proj_with_img',
+            slug: 'proj-with-img',
+            title: 'Project With Image',
+            shortDescription: 'Short desc',
+            fullDescription: 'Full desc',
+            category: 'Mobile App',
+            imageUrl: 'https://example.com/project.png',
+          ),
+          const Project(
+            id: 'proj_without_img',
+            slug: 'proj-without-img',
+            title: 'Project Without Image',
+            shortDescription: 'Short desc',
+            fullDescription: 'Full desc',
+            category: 'Client Work',
+            imageUrl: '',
+            thumbnailUrl: '',
+          ),
+        ];
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(1280, 800),
+                disableAnimations: true,
+              ),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: ProjectsSection(projects: sampleProjects),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('Featured'), findsOneWidget);
+        expect(find.text('Client Projects'), findsOneWidget);
       },
     );
 

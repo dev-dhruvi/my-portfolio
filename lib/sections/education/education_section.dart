@@ -5,7 +5,6 @@ import '../../core/constants/app_breakpoints.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../models/education.dart';
-import '../../widgets/animations/staggered_entrance.dart';
 import '../../widgets/cards/glass_card.dart';
 
 /// Education section presenting verified degrees, universities, honors,
@@ -104,46 +103,35 @@ class EducationSection extends StatelessWidget {
                     if (education.isNotEmpty)
                       Expanded(
                         flex: 7,
-                        child: StaggeredEntrance(
-                          index: 0,
-                          slideOffset: -0.1,
-                          child: _wrapFloating(
-                            _EducationCard(education: education[0]),
-                            begin: 8,
-                            end: -8,
-                            duration: const Duration(milliseconds: 2800),
-                            disableAnimations: disableAnimations,
-                          ),
+                        child: _wrapFloating(
+                          _EducationCard(education: education[0]),
+                          begin: 8,
+                          end: -8,
+                          duration: const Duration(milliseconds: 2800),
+                          disableAnimations: disableAnimations,
                         ),
                       ),
                     const SizedBox(width: 22),
                     Expanded(
                       flex: 6,
-                      child: StaggeredEntrance(
-                        index: 1,
-                        child: _wrapFloating(
-                          const _EducationCharacterStage(isMobile: false),
-                          begin: -10,
-                          end: 10,
-                          duration: const Duration(milliseconds: 2400),
-                          disableAnimations: disableAnimations,
-                        ),
+                      child: _wrapFloating(
+                        const _EducationCharacterStage(isMobile: false),
+                        begin: -10,
+                        end: 10,
+                        duration: const Duration(milliseconds: 2400),
+                        disableAnimations: disableAnimations,
                       ),
                     ),
                     const SizedBox(width: 22),
                     if (education.length > 1)
                       Expanded(
                         flex: 7,
-                        child: StaggeredEntrance(
-                          index: 2,
-                          slideOffset: 0.1,
-                          child: _wrapFloating(
-                            _EducationCard(education: education[1]),
-                            begin: -8,
-                            end: 8,
-                            duration: const Duration(milliseconds: 3100),
-                            disableAnimations: disableAnimations,
-                          ),
+                        child: _wrapFloating(
+                          _EducationCard(education: education[1]),
+                          begin: -8,
+                          end: 8,
+                          duration: const Duration(milliseconds: 3100),
+                          disableAnimations: disableAnimations,
                         ),
                       ),
                   ],
@@ -164,29 +152,23 @@ class EducationSection extends StatelessWidget {
                       children: [
                         if (education.isNotEmpty)
                           Expanded(
-                            child: StaggeredEntrance(
-                              index: 0,
-                              child: _wrapFloating(
-                                _EducationCard(education: education[0]),
-                                begin: 6,
-                                end: -6,
-                                duration: const Duration(milliseconds: 2800),
-                                disableAnimations: disableAnimations,
-                              ),
+                            child: _wrapFloating(
+                              _EducationCard(education: education[0]),
+                              begin: 6,
+                              end: -6,
+                              duration: const Duration(milliseconds: 2800),
+                              disableAnimations: disableAnimations,
                             ),
                           ),
                         if (education.length > 1) ...[
                           const SizedBox(width: 18),
                           Expanded(
-                            child: StaggeredEntrance(
-                              index: 1,
-                              child: _wrapFloating(
-                                _EducationCard(education: education[1]),
-                                begin: -6,
-                                end: 6,
-                                duration: const Duration(milliseconds: 3100),
-                                disableAnimations: disableAnimations,
-                              ),
+                            child: _wrapFloating(
+                              _EducationCard(education: education[1]),
+                              begin: -6,
+                              end: 6,
+                              duration: const Duration(milliseconds: 3100),
+                              disableAnimations: disableAnimations,
                             ),
                           ),
                         ],
@@ -210,17 +192,14 @@ class EducationSection extends StatelessWidget {
                       final edu = entry.value;
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 18),
-                        child: StaggeredEntrance(
-                          index: index + 1,
-                          child: _wrapFloating(
-                            _EducationCard(education: edu),
-                            begin: index == 0 ? 6 : -6,
-                            end: index == 0 ? -6 : 6,
-                            duration: Duration(
-                              milliseconds: 2700 + (index * 400),
-                            ),
-                            disableAnimations: disableAnimations,
+                        child: _wrapFloating(
+                          _EducationCard(education: edu),
+                          begin: index == 0 ? 6 : -6,
+                          end: index == 0 ? -6 : 6,
+                          duration: Duration(
+                            milliseconds: 2700 + (index * 400),
                           ),
+                          disableAnimations: disableAnimations,
                         ),
                       );
                     }),

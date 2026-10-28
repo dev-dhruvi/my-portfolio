@@ -139,6 +139,19 @@ void main() {
         fallbackProj.displayImageUrl,
         equals('https://example.com/thumb.png'),
       );
+      expect(fallbackProj.hasCustomImage, isTrue);
+
+      // Test fallback to defaultProjectImageUrl when both are empty
+      final defaultProj = project.copyWith(imageUrl: '', thumbnailUrl: '');
+      expect(
+        defaultProj.displayImageUrl,
+        equals(Project.defaultProjectImageUrl),
+      );
+      expect(
+        defaultProj.displayImageUrl,
+        equals('assets/images/project/default.webp'),
+      );
+      expect(defaultProj.hasCustomImage, isFalse);
     });
 
     test('supports is_status_active flag in serialization and parsing', () {

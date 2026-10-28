@@ -637,11 +637,11 @@ class SeedData {
       personalContribution: 'Architected the migration to GetX, resolved UI freeze issues on launch, integrated recipe search and filter APIs, and deployed to app stores.',
       challengesAndSolutions: 'Challenge: Laggy recipe list filtering and persistent splash screen delays. Solution: Refactored data fetching into GetX workers and implemented cached local storage with SharedPreferences.',
       verifiedOutcomes:
-      'Successfully published on Google Play Store & Apple App Store.',
+          'Successfully published on Google Play Store & Apple App Store.',
       imageUrl: 'https://play-lh.googleusercontent.com/8nteAV4V8jELN5nHTGWKR4XZpKpbR5FA31agItrvYrBEwUuDLmYuPAXF7Pz5X8eKuH-ske7pZPs41jmVm-6c=w832-h470-rw',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.thehealthiindian',
       appStoreUrl:
-      'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
+          'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
       isFeatured: true,
       isPublished: true,
       orderIndex: 2,
@@ -675,7 +675,7 @@ class SeedData {
       imageUrl: 'https://play-lh.googleusercontent.com/sFcN7Jo7Y9zs4gVZNXoNjbYF7ZySPMzYlt9kYGWN2SSll-j_jzFkMmH074LF6FfuQL66DlFlcR0tvoh3k54IOA=w832-h470-rw',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.nzealand.radioSpice',
       appStoreUrl:
-      'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
+          'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
       isFeatured: true,
       isPublished: true,
       orderIndex: 3,
@@ -730,7 +730,7 @@ class SeedData {
       verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
       imageUrl: 'https://play-lh.googleusercontent.com/e4S7aIZ7LsghP2NF4GJWnNb6Csfy5h5ZGlQ53Xujy7k4u-cvV1pUSIWwBU6rEtyhgeYrcFAH1TYYqu1vNoxp=w832-h470-rw',
       playStoreUrl:
-      'https://play.google.com/store/apps/details?id=com.kwneworleans.app',
+          'https://play.google.com/store/apps/details?id=com.kwneworleans.app',
       appStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
       isFeatured: true,
       isPublished: true,
@@ -790,7 +790,7 @@ class SeedData {
       personalContribution: 'Designed responsive quote viewports, configured background notification schedulers, and integrated dual-language English & Dutch localization strings.',
       challengesAndSolutions: 'Challenge: Exact scheduled notification delivery across differing Android OEM battery optimizations. Solution: Used exact alarm scheduling protocols with battery-exemption guidance.',
       verifiedOutcomes:
-      'Multi-lingual production deployment with dark/light themes.',
+          'Multi-lingual production deployment with dark/light themes.',
       isFeatured: true,
       isPublished: true,
       orderIndex: 9,
@@ -815,7 +815,7 @@ class SeedData {
       verifiedOutcomes: 'Available on Google Play Store & Apple App Store.',
       imageUrl: 'https://play-lh.googleusercontent.com/C4hcEoBm5ra-qtwAmVV2rkg5RR7ZccsAz5Tv_IS8j2ETaDr2jB-oBjgkTJFQZLpmbr1c0IC38SuQBpKKj12_TQ=w832-h470-rw',
       playStoreUrl:
-      'https://play.google.com/store/apps/details?id=com.app.fineaway',
+          'https://play.google.com/store/apps/details?id=com.app.fineaway',
       appStoreUrl: 'https://apps.apple.com/us/app/fineaway-app/id6467185920',
       isFeatured: true,
       isPublished: true,
@@ -833,7 +833,7 @@ class SeedData {
       slug: 'muvr-user-app',
       title: 'Muvr User App',
       shortDescription:
-      'On-demand moving and logistics platform with dedicated User App.',
+          'On-demand moving and logistics platform with dedicated User App.',
       fullDescription: 'An on-demand logistics booking application connecting customers with professional moving service providers. Developed both the User App and Mover App using Flutter and GetX. Managed responsive layouts across all device sizes, mentored junior engineers on state management best practices, and maintained production stability.',
       category: 'Mobile App',
       companyName: 'White Orange Software',
@@ -849,7 +849,7 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
       appStoreUrl:
-      'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
+          'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/4c/26/c0/4c26c0ef-45b4-426e-6ecd-039ec9569644/Placeholder.mill/400x400Icon.ApSiOS01-75.webp',
       isFeatured: true,
       isPublished: true,
@@ -902,7 +902,7 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Real-time stock alerts not triggering while app was closed. Solution: Replaced polling with FCM high-priority data payloads.',
       verifiedOutcomes: 'Deployed to Google Play & Apple App Store.',
       appStoreUrl:
-      'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
+          'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/b0/d1/44/b0d144e8-fedc-befd-0868-f5bd0a5e2aaf/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.jpg',
       isFeatured: true,
       orderIndex: 5,
@@ -919,7 +919,7 @@ class SeedData {
       personalContribution: 'Developed live feed widgets, chat message components, poll voting calculations, and integrated local caching with Hive DB.',
       challengesAndSolutions: 'Challenge: High-throughput chat messages causing frequent rebuilds. Solution: Scoped widget rebuilds to individual chat bubble state controllers.',
       verifiedOutcomes:
-      'Collaborative enterprise platform with offline persistence.',
+          'Collaborative enterprise platform with offline persistence.',
       isFeatured: false,
       isPublished: true,
       orderIndex: 12,
@@ -973,12 +973,10 @@ class SeedData {
       personalContribution: 'Structured MVC controllers, integrated e-commerce catalog APIs, implemented German localization files, and built the multi-step checkout flow.',
       challengesAndSolutions: 'Challenge: Formatting currency and tax compliance for EU regulations. Solution: Built custom localization formatters respecting German decimal separators.',
       verifiedOutcomes:
-      'Production retail app for international European market.',
+          'Production retail app for international European market.',
       isFeatured: false,
       isPublished: true,
       orderIndex: 17,
     ),
-
-
   ];
 }
