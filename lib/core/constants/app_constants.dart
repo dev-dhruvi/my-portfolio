@@ -3,7 +3,7 @@ class AppConstants {
   AppConstants._();
 
   // Personal Branding & Identity (Verified from Resumes)
-  static const String developerName = 'Duvi Patel';
+  static const String developerName = 'Dhruvi Patel';
   static const String primaryRole = 'Senior Flutter Developer';
   static const String fullRoleHeadline =
       'Senior Software Engineer | Senior Flutter Developer | Mobile Application Developer';
@@ -14,7 +14,7 @@ class AppConstants {
   static const String whatsappUrl =
       'https://wa.me/919925589405?text=Hi%2C%20I%20visited%20your%20portfolio';
   static const String location = 'Surat, Gujarat, India';
-  static const String developBy = 'Crafted with 👩‍💻 by Dhruvi Patel © 2026';
+  static const String developBy = 'Developed with 👩‍💻 by Dhruvi Patel © 2026';
 
   // Configurable Links
   static const String defaultGithubUrl = 'https://github.com/dev-dhruvi';
