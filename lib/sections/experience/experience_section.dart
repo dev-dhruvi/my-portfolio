@@ -655,37 +655,15 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                               ),
                         ),
                         const SizedBox(height: 4),
-                        Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: 8,
-                          runSpacing: 4,
-                          children: [
-                            Text(
-                              widget.experience.company,
-                              style: TextStyle(
-                                color: isDark
-                                    ? AppColors.violetLight
-                                    : AppColors.violetDark,
-                                fontWeight: FontWeight.w600,
-                                fontSize: widget.isMobile ? 13.5 : 14.5,
-                              ),
-                            ),
-                            Text(
-                              '•',
-                              style: TextStyle(
-                                color: isDark
-                                    ? AppColors.textMutedDark
-                                    : AppColors.textSecondaryLight,
-                              ),
-                            ),
-                            Text(
-                              widget.experience.locationType ?? "On-Site",
-                              style: TextStyle(
-                                color: secondaryTextColor,
-                                fontSize: widget.isMobile ? 12 : 12.5,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          widget.experience.company,
+                          style: TextStyle(
+                            color: isDark
+                                ? AppColors.violetLight
+                                : AppColors.violetDark,
+                            fontWeight: FontWeight.w600,
+                            fontSize: widget.isMobile ? 13.5 : 14.5,
+                          ),
                         ),
                       ],
                     ),
@@ -711,32 +689,54 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                 const SizedBox(height: 12),
               ],
 
-              // Location Row (below description)
-              if (widget.experience.location.isNotEmpty) ...[
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.location_on_outlined,
-                      size: 14,
-                      color: isDark
-                          ? AppColors.cyanPrimary
-                          : AppColors.violetPrimary,
-                    ),
-                    const SizedBox(width: 5),
-                    Flexible(
-                      child: Text(
-                        widget.experience.location,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: secondaryTextColor,
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 4,
+                children: [
+                  // Location Row (below description)
+                  if (widget.experience.location.isNotEmpty) ...[
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
+                          size: 14,
+                          color: isDark
+                              ? AppColors.cyanPrimary
+                              : AppColors.violetPrimary,
                         ),
-                      ),
+                        const SizedBox(width: 5),
+                        Flexible(
+                          child: Text(
+                            widget.experience.location,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: secondaryTextColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ],
+                  Text(
+                    '•',
+                    style: TextStyle(
+                      color: isDark
+                          ? AppColors.textMutedDark
+                          : AppColors.textSecondaryLight,
+                    ),
+                  ),
+                  Text(
+                    widget.experience.locationType ?? "On-Site",
+                    style: TextStyle(
+                      color: secondaryTextColor,
+                      fontSize: widget.isMobile ? 12 : 12.5,
+                    ),
+                  ),
+                ],
+              ),
 
               // Tech Stack Chips
               if (widget.experience.technologies.isNotEmpty) ...[

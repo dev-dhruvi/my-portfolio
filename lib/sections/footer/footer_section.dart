@@ -42,6 +42,7 @@ class FooterSection extends StatelessWidget {
             maxWidth: AppBreakpoints.maxContentWidth,
           ),
           child: ScrollReveal(
+            viewportThreshold: 1.0,
             slideDistance: 12.0,
             child: LayoutBuilder(
               builder: (context, constraints) {
