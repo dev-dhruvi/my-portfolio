@@ -77,7 +77,7 @@ void main() {
       final pmpProject = SeedData.initialProjects.firstWhere(
         (p) => p.id == 'proj_pmp_csv_validator',
       );
-      expect(pmpProject.category, equals('Website'));
+      expect(pmpProject.category, equals('Flutter Web'));
       expect(pmpProject.projectType, equals('Professional Project'));
       expect(pmpProject.technologies, contains('Flutter Web'));
       expect(pmpProject.technologies, contains('CSV Parsing'));
