@@ -294,7 +294,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           child: ProjectCard(
                             project: project,
                             isDesktopOrTablet: false,
-                            imageHeight: 250,
+                            imageHeight: 205,
                             onTap: () => _onProjectCardTap(context, project),
                           ),
                         );

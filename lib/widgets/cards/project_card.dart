@@ -229,7 +229,7 @@ class _ProjectCardState extends State<ProjectCard> {
 
     final platformCategory = project.platformCategory;
     final effectiveImageHeight =
-        widget.imageHeight ?? (isMobile ? 200.0 : 185.0);
+        widget.imageHeight ?? (isMobile ? 220.0 : 185.0);
 
     final imageBgColor = isDark
         ? const Color(0xFF0A0F1D)

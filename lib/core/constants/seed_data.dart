@@ -996,7 +996,8 @@ class SeedData {
       personalContribution: 'Engineered booking request workflows, mentored junior team members on clean code conventions, resolved layout issues, and prepared dual store deployments.',
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
-      playStoreUrl:"https://play.google.com/store/apps/details?id=com.muvr.user",
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.muvr.user",
       appStoreUrl:
           'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
       imageUrl: 'assets/images/project/muvr_user_bg.webp',
@@ -1025,7 +1026,8 @@ class SeedData {
       personalContribution: 'Engineered booking request workflows, mentored junior team members on clean code conventions, resolved layout issues, and prepared dual store deployments.',
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
-      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.muvr.mover',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.muvr.mover',
       appStoreUrl:
           'https://apps.apple.com/us/app/muvr-driver-move-deliver/id6450041017',
       imageUrl: 'assets/images/project/mover_move_bg.webp',

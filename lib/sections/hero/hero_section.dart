@@ -255,7 +255,9 @@ class _HeroSectionState extends State<HeroSection> {
           slideOffset: 0.1,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: RepaintBoundary(child: _buildCharacterStageMobile(isDark)),
+            child: RepaintBoundary(
+              child: _buildCharacterStageMobile(isDark, disableAnimations),
+            ),
           ),
         ),
         const SizedBox(height: 22),
@@ -470,8 +472,9 @@ class _HeroSectionState extends State<HeroSection> {
         const SizedBox(height: 10),
         Text(
           'Clean architecture · Smooth performance · Quality-focused development',
+          textAlign: isCentered ? TextAlign.center : TextAlign.start,
           style: TextStyle(
-            fontSize: 13,
+            fontSize: isMobile ? 12.5 : 13,
             fontWeight: FontWeight.w400,
             color: secondaryTextColor,
           ),
@@ -490,7 +493,7 @@ class _HeroSectionState extends State<HeroSection> {
                 AppConstants.heroSupportingText,
                 textAlign: isCentered ? TextAlign.center : TextAlign.start,
                 style: AppTypography.getBodyLarge(secondaryTextColor)
-                    .copyWith(fontSize: isMobile ? 15 : 16.5, height: 1.55),
+                    .copyWith(fontSize: isMobile ? 14 : 16.5, height: 1.5),
               ),
               const SizedBox(height: 14),
               // Highlights Row: Location, Experience & Releases
@@ -998,21 +1001,21 @@ class _HeroSectionState extends State<HeroSection> {
     );
   }
 
-  Widget _buildCharacterStageMobile(bool isDark) {
+  Widget _buildCharacterStageMobile(bool isDark, bool disableAnimations) {
     return Column(
       children: [
         SizedBox(
-          width: 290,
-          height: 290,
+          width: 330,
+          height: 320,
           child: Stack(
             alignment: Alignment.center,
             children: [
-              _buildRadiantAura(240, 240, isDark),
+              _buildRadiantAura(280, 280, isDark),
               Positioned(
                 bottom: 0,
                 child: Image.asset(
                   'assets/images/developer_character_3d.png',
-                  height: 260,
+                  height: 312,
                   fit: BoxFit.contain,
                   filterQuality: FilterQuality.high,
                 ),
@@ -1021,71 +1024,151 @@ class _HeroSectionState extends State<HeroSection> {
           ),
         ),
         const SizedBox(height: 14),
-        // Mobile Docked Badges in adaptive row to prevent any screen overflow
+        // Mobile Docked Badges converted into floating animated icons matching web & tablet
         Wrap(
           alignment: WrapAlignment.center,
           spacing: 8,
           runSpacing: 8,
           children: [
-            _buildFloatingBadge(
-              icon: Icons.flutter_dash,
-              iconColor: const Color(0xFF02569B),
-              iconBg: const Color(0xFF02569B).withOpacity(0.12),
-              title: 'Flutter',
-              subtitle: 'Mobile & Web',
-              isDark: isDark,
+            _wrapFloating(
+              _buildFloatingIconBadge(
+                icon: Icons.flutter_dash,
+                iconColor: const Color(0xFF02569B),
+                iconBg: const Color(0xFF02569B).withOpacity(0.12),
+                tooltip: 'Flutter (Mobile & Web)',
+                isDark: isDark,
+              ),
+              begin: 0,
+              end: -6,
+              duration: 2400.ms,
+              disableAnimations: disableAnimations,
             ),
-            _buildFloatingBadge(
-              icon: Icons.code_rounded,
-              iconColor: const Color(0xFF0175C2),
-              iconBg: const Color(0xFF0175C2).withOpacity(0.12),
-              title: 'Dart',
-              subtitle: 'Language',
-              isDark: isDark,
+            _wrapFloating(
+              _buildFloatingIconBadge(
+                icon: Icons.code_rounded,
+                iconColor: const Color(0xFF0175C2),
+                iconBg: const Color(0xFF0175C2).withOpacity(0.12),
+                tooltip: 'Dart Language',
+                isDark: isDark,
+              ),
+              begin: 0,
+              end: 6,
+              duration: 2700.ms,
+              disableAnimations: disableAnimations,
             ),
-            _buildFloatingBadge(
-              icon: Icons.bolt_rounded,
-              iconColor: const Color(0xFF8B5CF6),
-              iconBg: const Color(0xFF8B5CF6).withOpacity(0.12),
-              title: 'GetX',
-              subtitle: 'State Mgmt',
-              isDark: isDark,
+            _wrapFloating(
+              _buildFloatingIconBadge(
+                icon: Icons.bolt_rounded,
+                iconColor: const Color(0xFF8B5CF6),
+                iconBg: const Color(0xFF8B5CF6).withOpacity(0.12),
+                tooltip: 'GetX State Management',
+                isDark: isDark,
+              ),
+              begin: 0,
+              end: -7,
+              duration: 2500.ms,
+              disableAnimations: disableAnimations,
             ),
-            _buildFloatingBadge(
-              icon: Icons.language_rounded,
-              iconColor: const Color(0xFF3B82F6),
-              iconBg: const Color(0xFF3B82F6).withOpacity(0.12),
-              title: 'Flutter Web',
-              subtitle: 'Responsive',
-              isDark: isDark,
+            _wrapFloating(
+              _buildFloatingIconBadge(
+                icon: Icons.language_rounded,
+                iconColor: const Color(0xFF3B82F6),
+                iconBg: const Color(0xFF3B82F6).withOpacity(0.12),
+                tooltip: 'Flutter Web',
+                isDark: isDark,
+              ),
+              begin: 0,
+              end: 7,
+              duration: 2900.ms,
+              disableAnimations: disableAnimations,
             ),
-            _buildFloatingBadge(
-              icon: Icons.local_fire_department_rounded,
-              iconColor: const Color(0xFFF59E0B),
-              iconBg: const Color(0xFFF59E0B).withOpacity(0.12),
-              title: 'Firebase',
-              subtitle: 'Cloud Auth',
-              isDark: isDark,
+            _wrapFloating(
+              _buildFloatingIconBadge(
+                icon: Icons.local_fire_department_rounded,
+                iconColor: const Color(0xFFF59E0B),
+                iconBg: const Color(0xFFF59E0B).withOpacity(0.12),
+                tooltip: 'Firebase Cloud Auth',
+                isDark: isDark,
+              ),
+              begin: 0,
+              end: -6,
+              duration: 2600.ms,
+              disableAnimations: disableAnimations,
             ),
-            _buildFloatingBadge(
-              icon: Icons.cloud_upload_rounded,
-              iconColor: const Color(0xFF10B981),
-              iconBg: const Color(0xFF10B981).withOpacity(0.12),
-              title: 'Deployment',
-              subtitle: 'CI/CD Pipeline',
-              isDark: isDark,
+            _wrapFloating(
+              _buildFloatingIconBadge(
+                icon: Icons.cloud_upload_rounded,
+                iconColor: const Color(0xFF10B981),
+                iconBg: const Color(0xFF10B981).withOpacity(0.12),
+                tooltip: 'Play & App Store Deployment',
+                isDark: isDark,
+              ),
+              begin: 0,
+              end: 6,
+              duration: 2800.ms,
+              disableAnimations: disableAnimations,
             ),
-            _buildFloatingBadge(
-              icon: Icons.alt_route_rounded,
-              iconColor: const Color(0xFFF05032),
-              iconBg: const Color(0xFFF05032).withOpacity(0.12),
-              title: 'Git Version',
-              subtitle: 'VCS Workflow',
-              isDark: isDark,
+            _wrapFloating(
+              _buildFloatingIconBadge(
+                icon: Icons.alt_route_rounded,
+                iconColor: const Color(0xFFF05032),
+                iconBg: const Color(0xFFF05032).withOpacity(0.12),
+                tooltip: 'Git & GitHub Version Control',
+                isDark: isDark,
+              ),
+              begin: 0,
+              end: -5,
+              duration: 2300.ms,
+              disableAnimations: disableAnimations,
             ),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildFloatingIconBadge({
+    required IconData icon,
+    required Color iconColor,
+    required Color iconBg,
+    required String tooltip,
+    required bool isDark,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: Container(
+        padding: const EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          color: isDark
+              ? AppColors.darkGlassBackground.withOpacity(0.92)
+              : AppColors.lightGlassBackground.withOpacity(0.95),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isDark
+                ? AppColors.darkGlassBorder
+                : AppColors.lightGlassBorder,
+            width: 1.2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isDark
+                  ? Colors.black.withOpacity(0.35)
+                  : AppColors.violetPrimary.withOpacity(0.08),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Container(
+          width: 26,
+          height: 26,
+          decoration: BoxDecoration(
+            color: iconBg,
+            borderRadius: BorderRadius.circular(7),
+          ),
+          child: Icon(icon, color: iconColor, size: 16),
+        ),
+      ),
     );
   }
 

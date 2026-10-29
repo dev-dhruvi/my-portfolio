@@ -749,7 +749,7 @@ class _MobileStackedProjectSliderState
 
     final screenWidth = MediaQuery.sizeOf(context).width;
     final cardWidth = (screenWidth * 0.84).clamp(270.0, 350.0);
-    const cardHeight = 365.0;
+    const cardHeight = 385.0;
 
     if (count == 1) {
       final project = widget.projects.first;
@@ -762,6 +762,7 @@ class _MobileStackedProjectSliderState
             child: ProjectCard(
               project: project,
               isDesktopOrTablet: false,
+              imageHeight: 220.0,
               onTap: () => widget.onProjectTap(project),
             ),
           ),
@@ -848,6 +849,7 @@ class _MobileStackedProjectSliderState
                               child: ProjectCard(
                                 project: project,
                                 isDesktopOrTablet: false,
+                                imageHeight: 220.0,
                                 onTap: () => widget.onProjectTap(project),
                               ),
                             ),
