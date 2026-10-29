@@ -565,7 +565,7 @@ class _DesktopSingleRowProjectSliderState
       onEnter: (_) => _isHovered = true,
       onExit: (_) => _isHovered = false,
       child: SizedBox(
-        height: 352,
+        height: 380,
         child: PageView.builder(
           clipBehavior: Clip.none,
           controller: widget.pageController,
@@ -619,6 +619,7 @@ class _DesktopSingleRowProjectSliderState
                                   child: ProjectCard(
                                     project: pageItems[c],
                                     isDesktopOrTablet: true,
+                                    imageHeight: 210.0,
                                     enable3D: true,
                                     onTap: () =>
                                         widget.onProjectTap(pageItems[c]),

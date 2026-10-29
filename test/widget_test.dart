@@ -42,7 +42,7 @@ void main() {
         // Verify developer name, status badge, location, and updated action buttons
         expect(find.text('Dhruvi Patel'), findsOneWidget);
         expect(
-          find.text('Available for Senior Flutter Developer Roles'),
+          find.text('Open to Senior Flutter Developer Opportunities'),
           findsOneWidget,
         );
         expect(find.text('View My Projects'), findsOneWidget);
@@ -285,20 +285,19 @@ void main() {
         expect(find.text('ABOUT ME'), findsOneWidget);
         expect(
           find.text(
-            'Flutter Developer Passionate About Building Scalable Digital Experiences',
+            'A Software Engineer Focused on Quality, Performance & Maintainability',
           ),
           findsOneWidget,
         );
         expect(find.text('Clean Architecture Specialist'), findsOneWidget);
         expect(find.text('4+ Years'), findsOneWidget);
-        expect(find.text('350+ Releases'), findsOneWidget);
-        expect(find.text('20+ Projects'), findsOneWidget);
-        expect(find.text('100%'), findsOneWidget);
-        expect(find.text('Commitment'), findsOneWidget);
-        expect(find.text('Quality & Learning'), findsOneWidget);
-        expect(find.text('Flutter & Dart'), findsOneWidget);
-        expect(find.text('Exploring Flutter Web'), findsOneWidget);
-        expect(find.text('Open to Opportunities'), findsOneWidget);
+        expect(find.text('Professional Experience'), findsOneWidget);
+        expect(find.text('20+'), findsOneWidget);
+        expect(find.text('Projects Contributed To'), findsOneWidget);
+        expect(find.text('Android & iOS'), findsOneWidget);
+        expect(find.text('Build & Deployment'), findsOneWidget);
+        expect(find.text('Quality-First'), findsOneWidget);
+        expect(find.text('Engineering Approach'), findsOneWidget);
       },
     );
 
@@ -537,11 +536,10 @@ void main() {
         await tester.pump();
 
         expect(find.text('Key Highlights'), findsOneWidget);
-        expect(find.text('Hands-on Experience'), findsOneWidget);
-        expect(find.text('Play Store & App Store'), findsOneWidget);
-        expect(find.text('Built & Deployed'), findsOneWidget);
-        expect(find.text('Commitment'), findsOneWidget);
-        expect(find.text('Quality & Learning'), findsOneWidget);
+        expect(find.text('Professional Experience'), findsOneWidget);
+        expect(find.text('Projects Contributed To'), findsOneWidget);
+        expect(find.text('Build & Deployment'), findsOneWidget);
+        expect(find.text('Engineering Approach'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );

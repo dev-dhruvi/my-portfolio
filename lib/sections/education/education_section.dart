@@ -104,43 +104,58 @@ class EducationSection extends StatelessWidget {
                   constraints.maxWidth >= 650 && constraints.maxWidth < 1050;
 
               if (isDesktopLayout) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (education.isNotEmpty)
-                      Expanded(
-                        flex: 7,
-                        child: _wrapFloating(
-                          _EducationCard(education: education[0]),
-                          begin: 8,
-                          end: -8,
-                          duration: const Duration(milliseconds: 2800),
-                          disableAnimations: disableAnimations,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (education.isNotEmpty)
+                          Expanded(
+                            flex: 7,
+                            child: _wrapFloating(
+                              _EducationCard(education: education[0]),
+                              begin: 8,
+                              end: -8,
+                              duration: const Duration(milliseconds: 2800),
+                              disableAnimations: disableAnimations,
+                            ),
+                          ),
+                        const SizedBox(width: 22),
+                        Expanded(
+                          flex: 6,
+                          child: _wrapFloating(
+                            const _EducationCharacterStage(isMobile: false),
+                            begin: -10,
+                            end: 10,
+                            duration: const Duration(milliseconds: 2400),
+                            disableAnimations: disableAnimations,
+                          ),
                         ),
-                      ),
-                    const SizedBox(width: 22),
-                    Expanded(
-                      flex: 6,
+                        const SizedBox(width: 22),
+                        if (education.length > 1)
+                          Expanded(
+                            flex: 7,
+                            child: _wrapFloating(
+                              _EducationCard(education: education[1]),
+                              begin: -8,
+                              end: 8,
+                              duration: const Duration(milliseconds: 3100),
+                              disableAnimations: disableAnimations,
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 28),
+                    Center(
                       child: _wrapFloating(
-                        const _EducationCharacterStage(isMobile: false),
-                        begin: -10,
-                        end: 10,
-                        duration: const Duration(milliseconds: 2400),
+                        const _EducationAwardBadge(),
+                        begin: -5,
+                        end: 5,
+                        duration: const Duration(milliseconds: 2600),
                         disableAnimations: disableAnimations,
                       ),
                     ),
-                    const SizedBox(width: 22),
-                    if (education.length > 1)
-                      Expanded(
-                        flex: 7,
-                        child: _wrapFloating(
-                          _EducationCard(education: education[1]),
-                          begin: -8,
-                          end: 8,
-                          duration: const Duration(milliseconds: 3100),
-                          disableAnimations: disableAnimations,
-                        ),
-                      ),
                   ],
                 );
               } else if (isTabletLayout) {
@@ -152,6 +167,16 @@ class EducationSection extends StatelessWidget {
                       end: 8,
                       duration: const Duration(milliseconds: 2400),
                       disableAnimations: disableAnimations,
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: _wrapFloating(
+                        const _EducationAwardBadge(),
+                        begin: -5,
+                        end: 5,
+                        duration: const Duration(milliseconds: 2600),
+                        disableAnimations: disableAnimations,
+                      ),
                     ),
                     const SizedBox(height: 24),
                     Row(
@@ -192,6 +217,16 @@ class EducationSection extends StatelessWidget {
                       end: 8,
                       duration: const Duration(milliseconds: 2400),
                       disableAnimations: disableAnimations,
+                    ),
+                    const SizedBox(height: 18),
+                    Center(
+                      child: _wrapFloating(
+                        const _EducationAwardBadge(),
+                        begin: -5,
+                        end: 5,
+                        duration: const Duration(milliseconds: 2600),
+                        disableAnimations: disableAnimations,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     ...education.asMap().entries.map((entry) {
@@ -237,8 +272,8 @@ class _EducationCharacterStage extends StatelessWidget {
         fit: BoxFit.scaleDown,
         child: Container(
           constraints: BoxConstraints(
-            maxWidth: isMobile ? 270 : 320,
-            maxHeight: isMobile ? 290 : 350,
+            maxWidth: isMobile ? 260 : 300,
+            maxHeight: isMobile ? 260 : 300,
           ),
           child: Stack(
             alignment: Alignment.center,
@@ -290,108 +325,103 @@ class _EducationCharacterStage extends StatelessWidget {
                 ),
 
               // 3D Anime Graduate Character Asset
-              Positioned(
-                bottom: isMobile ? 24 : 28,
-                child: Image.asset(
-                  'assets/images/developer_character_graduate.png',
-                  height: isMobile ? 220 : 270,
-                  fit: BoxFit.contain,
-                  filterQuality: FilterQuality.high,
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    width: isMobile ? 180 : 220,
-                    height: isMobile ? 180 : 220,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: AppColors.primaryGradient,
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.school_rounded,
-                        size: 64,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Code Craft Excellence Award Badge centered below 3D character
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 8,
-                  ),
+              Image.asset(
+                'assets/images/developer_character_graduate.png',
+                height: isMobile ? 220 : 270,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  width: isMobile ? 180 : 220,
+                  height: isMobile ? 180 : 220,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        const Color(0xFFF59E0B)
-                            .withOpacity(isDark ? 0.22 : 0.14),
-                        AppColors.violetPrimary.withOpacity(
-                          isDark ? 0.16 : 0.08,
-                        ),
-                      ],
-                    ),
-                    color: isDark
-                        ? AppColors.darkCard.withOpacity(0.95)
-                        : Colors.white.withOpacity(0.96),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: const Color(0xFFF59E0B)
-                          .withOpacity(isDark ? 0.6 : 0.45),
-                      width: 1.2,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFF59E0B).withOpacity(0.22),
-                        blurRadius: 14,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
+                    shape: BoxShape.circle,
+                    gradient: AppColors.primaryGradient,
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.emoji_events_rounded,
-                            color: Color(0xFFF59E0B),
-                            size: 16,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Code Craft Excellence Award (2025)',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: isDark
-                                  ? const Color(0xFFFDE68A)
-                                  : const Color(0xFFB45309),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        'Logix Built Infotech Solutions',
-                        style: TextStyle(
-                          fontSize: 10.5,
-                          fontWeight: FontWeight.w500,
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                      ),
-                    ],
+                  child: const Center(
+                    child: Icon(
+                      Icons.school_rounded,
+                      size: 64,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _EducationAwardBadge extends StatelessWidget {
+  const _EducationAwardBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFFF59E0B).withOpacity(isDark ? 0.22 : 0.14),
+            AppColors.violetPrimary.withOpacity(isDark ? 0.16 : 0.08),
+          ],
+        ),
+        color: isDark
+            ? AppColors.darkCard.withOpacity(0.95)
+            : Colors.white.withOpacity(0.96),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFFF59E0B).withOpacity(isDark ? 0.6 : 0.45),
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFF59E0B).withOpacity(0.22),
+            blurRadius: 14,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.emoji_events_rounded,
+                color: Color(0xFFF59E0B),
+                size: 18,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Code Craft Excellence Award (2025)',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: isDark
+                      ? const Color(0xFFFDE68A)
+                      : const Color(0xFFB45309),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 3),
+          Text(
+            'Logix Built Infotech Solutions',
+            style: TextStyle(
+              fontSize: 11.5,
+              fontWeight: FontWeight.w500,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
+            ),
+          ),
+        ],
       ),
     );
   }

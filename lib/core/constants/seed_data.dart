@@ -414,7 +414,7 @@ class SeedData {
           'PMP CSV Validator is a browser-based quality assurance tool built with Flutter Web to simplify the validation, correction, and testing of PMP question bank datasets. It enables users to upload CSV files, inspect question content, identify data issues, apply automated fixes, and export corrected datasets through a responsive interface. '
           'The tool supports automatic delimiter and text-encoding detection, multilingual Unicode content including Gujarati, Hindi, and Sanskrit, and validation dashboards with error, warning, and compatibility statuses. Bulk Auto-Fix functionality helps correct common HTML, styling, and array-format issues. '
           'It also includes reusable rich-text rendering for nested lists, images, tables, and LaTeX equations, alongside an interactive mobile simulator with device presets, TRAIN/FLIP card previews, and a side-by-side Cell Inspector for comparing source content with its rendered output.',
-      category: 'Website',
+      category: 'Flutter Web',
       projectType: 'Professional Project',
       companyName: 'Logix Built Solutions Limited',
       technologies: [
@@ -703,7 +703,8 @@ class SeedData {
           'Solution: Refactored GetX controller lifecycle bindings, decoupled scroll listeners, and implemented defensive ad instance cleanup on view disposal.',
       verifiedOutcomes: 'Interactive certification quiz engine with full attempt analytics, referral deep linking, and smooth ad monetization.',
       isFeatured: true,
-      isPublished: false,
+      isPublished: true,
+      imageUrl: 'assets/images/project/pmp_exam_prep.webp',
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.pmp.examprep",
       orderIndex: 8,
@@ -741,7 +742,8 @@ class SeedData {
           'Solution: Engineered reactive view models with layout builders adapting to landscape tablets, and integrated legal contract PDF rendering directly in-app.',
       verifiedOutcomes: 'End-to-end property purchase engine with interactive PDF agreements, live unit reservation status, and iOS TestFlight deployment.',
       isFeatured: true,
-      isPublished: false,
+      isPublished: true,
+      imageUrl: 'assets/images/project/my-nirvana.webp',
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.cscp.mynirvana",
       appStoreUrl: "https://apps.apple.com/my/app/my-nirvana/id1555172257",
@@ -817,7 +819,8 @@ class SeedData {
           'Solution: Systematically resolved dependency trees, migrated to modern Android v2 embedding with AGP namespaces, and implemented flutter_inappwebview WebUri routing with external URL dispatch.',
       verifiedOutcomes: 'Successful migration from Flutter 3.10 to 3.32, modern push notification pipeline, and updated Android Gradle toolchain.',
       isFeatured: false,
-      isPublished: false,
+      isPublished: true,
+      imageUrl: 'assets/images/project/reut_buy_it.webp',
       playStoreUrl: "https://play.google.com/store/apps/details?id=com.reuttomer.reut_buy_it_for_me",
       orderIndex: 11,
     ),
@@ -851,7 +854,8 @@ class SeedData {
           'Solution: Designed stateful selection grids with real-time cost accumulation, and updated Gradle Kotlin DSL configurations for clean APK builds.',
       verifiedOutcomes: 'Multi-court booking engine with dynamic time-slot reservation and streamlined payment checkout.',
       isFeatured: false,
-      isPublished: false,
+      isPublished: true,
+      imageUrl: 'assets/images/project/milos-padel.webp',
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.milos.padel",
       appStoreUrl: "https://apps.apple.com/id/app/milos-padel/id6737511643",
@@ -885,7 +889,7 @@ class SeedData {
           'Solution: Built diagnostic logging interceptors, mapped request/response discrepancies between dev and prod environments, and delivered actionable bug reports to backend teams.',
       verifiedOutcomes: 'Resolved authentication bottlenecks and improved cross-environment API reliability.',
       isFeatured: false,
-      isPublished: false,
+      isPublished: true,
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.minder_app",
       orderIndex: 13,
@@ -910,7 +914,7 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Complying with strict Apple Sign In requirements for iOS submission. Solution: Integrated Apple identity tokens with Firebase Auth credentials.',
       verifiedOutcomes: 'Available on the Apple App Store.',
       isFeatured: false,
-      isPublished: false,
+      isPublished: true,
       orderIndex: 14,
     ),
     const Project(
@@ -934,7 +938,7 @@ class SeedData {
       verifiedOutcomes: 'Dynamic location-based discovery platform.',
       imageUrl: 'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
       isFeatured: false,
-      isPublished: false,
+      isPublished: true,
       orderIndex: 15,
       keyFeatures: [
         'Seamless phone number authentication with auto-login and SMS verification',
@@ -965,7 +969,7 @@ class SeedData {
       verifiedOutcomes:
           'Multi-lingual production deployment with dark/light themes.',
       isFeatured: true,
-      isPublished: false,
+      isPublished: true,
       orderIndex: 16,
     ),
 

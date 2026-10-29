@@ -144,6 +144,11 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                             onTap: () => onNavItemSelected?.call('hero'),
                           ),
                           _NavPill(
+                            title: 'About',
+                            isActive: activeSection == 'about',
+                            onTap: () => onNavItemSelected?.call('about'),
+                          ),
+                          _NavPill(
                             title: 'Projects',
                             isActive: activeSection == 'projects',
                             onTap: () => onNavItemSelected?.call('projects'),
@@ -157,11 +162,6 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                             title: 'Skills',
                             isActive: activeSection == 'skills',
                             onTap: () => onNavItemSelected?.call('skills'),
-                          ),
-                          _NavPill(
-                            title: 'About',
-                            isActive: activeSection == 'about',
-                            onTap: () => onNavItemSelected?.call('about'),
                           ),
                           _NavPill(
                             title: 'Education',

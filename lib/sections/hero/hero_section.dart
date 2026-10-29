@@ -335,7 +335,7 @@ class _HeroSectionState extends State<HeroSection> {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                'Available for Senior Flutter Developer Roles',
+                'Open to Senior Flutter Developer Opportunities',
                 maxLines: 1,
                 style: TextStyle(
                   color: isDark ? AppColors.cyanLight : AppColors.violetPrimary,
@@ -414,7 +414,7 @@ class _HeroSectionState extends State<HeroSection> {
               slideDistance: 38.0,
               duration: const Duration(milliseconds: 650),
               child: Text(
-                'Building Scalable',
+                'Building Reliable, Scalable',
                 textAlign: isCentered ? TextAlign.center : TextAlign.start,
                 style: TextStyle(
                   fontSize: headlineFontSize,
@@ -437,7 +437,7 @@ class _HeroSectionState extends State<HeroSection> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   ShimmerGradientText(
-                    'Mobile Experiences',
+                    'Flutter Applications',
                     colors: const [
                       Color(0xFF06B6D4), // Cyan
                       Color(0xFF8B5CF6), // Violet
@@ -451,22 +451,31 @@ class _HeroSectionState extends State<HeroSection> {
                       height: 1.15,
                     ),
                   ),
-                  Text(
-                    ' with Flutter',
-                    style: TextStyle(
-                      fontSize: headlineFontSize,
-                      fontWeight: FontWeight.w900,
-                      color: textColor,
-                      letterSpacing: -1.2,
-                      height: 1.15,
-                    ),
-                  ),
+                  // Text(
+                  //   ' with Flutter',
+                  //   style: TextStyle(
+                  //     fontSize: headlineFontSize,
+                  //     fontWeight: FontWeight.w900,
+                  //     color: textColor,
+                  //     letterSpacing: -1.2,
+                  //     height: 1.15,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
           ],
         ),
 
+        const SizedBox(height: 10),
+        Text(
+          'Clean architecture · Smooth performance · Quality-focused development',
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w400,
+            color: secondaryTextColor,
+          ),
+        ),
         const SizedBox(height: 16),
 
         // Supporting Text (Exact requirement)
@@ -518,7 +527,7 @@ class _HeroSectionState extends State<HeroSection> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.verified_outlined,
+                        Icons.laptop_mac,
                         size: 15,
                         color: isDark
                             ? AppColors.violetLight
@@ -526,7 +535,7 @@ class _HeroSectionState extends State<HeroSection> {
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        '4+ Years Exp',
+                        'Remote & Onsite',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,

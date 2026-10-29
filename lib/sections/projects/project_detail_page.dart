@@ -124,16 +124,18 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
               children: [
                 icon,
                 const SizedBox(width: 8),
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: isPrimary
-                        ? Colors.white
-                        : (isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight),
+                Flexible(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: isPrimary
+                          ? Colors.white
+                          : (isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimaryLight),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 4),
@@ -179,13 +181,15 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
         children: [
           Icon(icon, size: 13, color: primaryColor),
           const SizedBox(width: 6),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
-              letterSpacing: 0.2,
+          Flexible(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                letterSpacing: 0.2,
+              ),
             ),
           ),
         ],
@@ -201,8 +205,10 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     required bool isDark,
     Color? iconColor,
   }) {
+    final isMobile = MediaQuery.sizeOf(context).width < 600;
+
     return GlassCard(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(isMobile ? 16 : 24),
       borderRadius: 16,
       enableHoverEffect: false,
       child: Column(
@@ -233,15 +239,17 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                 ),
               ),
               const SizedBox(width: 12),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.2,
-                  color: isDark
-                      ? AppColors.textPrimaryDark
-                      : AppColors.textPrimaryLight,
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: isMobile ? 16.5 : 18,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.2,
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
                 ),
               ),
             ],
@@ -490,10 +498,14 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                           _buildActionButton(
                             context: context,
                             label: 'Apple App Store',
-                            icon: const FaIcon(
+                            icon: FaIcon(
                               FontAwesomeIcons.appStoreIos,
                               size: 15,
-                              color: Colors.white,
+                              color: project.playStoreUrl.trim().isEmpty
+                                  ? Colors.white
+                                  : (isDark
+                                        ? Colors.white
+                                        : AppColors.textPrimaryLight),
                             ),
                             url: project.appStoreUrl,
                             isPrimary: project.playStoreUrl.trim().isEmpty,
@@ -503,10 +515,16 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                           _buildActionButton(
                             context: context,
                             label: 'Live Web Demo',
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.open_in_new_rounded,
                               size: 15,
-                              color: Colors.white,
+                              color:
+                                  (project.playStoreUrl.trim().isEmpty &&
+                                      project.appStoreUrl.trim().isEmpty)
+                                  ? Colors.white
+                                  : (isDark
+                                        ? Colors.white
+                                        : AppColors.textPrimaryLight),
                             ),
                             url: project.demoUrl,
                             isPrimary:
@@ -819,14 +837,16 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                                     color: AppColors.cyanPrimary,
                                   ),
                                   const SizedBox(width: 6),
-                                  Text(
-                                    tech,
-                                    style: TextStyle(
-                                      fontSize: 12.5,
-                                      fontWeight: FontWeight.w600,
-                                      color: isDark
-                                          ? AppColors.textPrimaryDark
-                                          : AppColors.textPrimaryLight,
+                                  Flexible(
+                                    child: Text(
+                                      tech,
+                                      style: TextStyle(
+                                        fontSize: 12.5,
+                                        fontWeight: FontWeight.w600,
+                                        color: isDark
+                                            ? AppColors.textPrimaryDark
+                                            : AppColors.textPrimaryLight,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -854,52 +874,6 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                             color: isDark
                                 ? const Color(0xFFCBD5E1)
                                 : const Color(0xFF334155),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                    ],
-
-                    // 6. Outcomes & Deliverables
-                    if (project.verifiedOutcomes.isNotEmpty) ...[
-                      _buildSectionCard(
-                        context: context,
-                        icon: Icons.verified_rounded,
-                        title: 'Verified Outcomes & Production Deliverables',
-                        isDark: isDark,
-                        iconColor: const Color(0xFF10B981),
-                        content: Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF10B981).withOpacity(0.08),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: const Color(0xFF10B981).withOpacity(0.25),
-                            ),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.workspace_premium_rounded,
-                                size: 20,
-                                color: Color(0xFF10B981),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  project.verifiedOutcomes,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.5,
-                                    color: isDark
-                                        ? const Color(0xFFE2E8F0)
-                                        : const Color(0xFF1E293B),
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       ),

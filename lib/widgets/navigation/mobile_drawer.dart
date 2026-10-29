@@ -126,6 +126,15 @@ class MobileDrawer extends StatelessWidget {
                     },
                   ),
                   _DrawerItem(
+                    icon: Icons.person_outline,
+                    title: 'About',
+                    isActive: activeSection == 'about',
+                    onTap: () {
+                      _closeDrawer(context);
+                      onNavItemSelected?.call('about');
+                    },
+                  ),
+                  _DrawerItem(
                     icon: Icons.grid_view_rounded,
                     title: 'Projects',
                     isActive: activeSection == 'projects',
@@ -150,15 +159,6 @@ class MobileDrawer extends StatelessWidget {
                     onTap: () {
                       _closeDrawer(context);
                       onNavItemSelected?.call('skills');
-                    },
-                  ),
-                  _DrawerItem(
-                    icon: Icons.person_outline,
-                    title: 'About',
-                    isActive: activeSection == 'about',
-                    onTap: () {
-                      _closeDrawer(context);
-                      onNavItemSelected?.call('about');
                     },
                   ),
                   _DrawerItem(

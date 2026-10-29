@@ -121,10 +121,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
     final sectionMap = <String, GlobalKey>{
       'contact': _contactKey,
       'education': _educationKey,
-      'about': _aboutKey,
       'skills': _skillsKey,
       'experience': _experienceKey,
       'projects': _projectsKey,
+      'about': _aboutKey,
       'hero': _heroKey,
     };
 
@@ -326,7 +326,26 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                       ),
 
-                      // 2. Featured Projects Section (Promoted to Section 2 for maximum recruiter impact)
+                      // 2. About Me Section
+                      RepaintBoundary(
+                        child: Container(
+                          key: _aboutKey,
+                          padding: const EdgeInsets.only(top: 88),
+                          child: ResponsiveContentContainer(
+                            child: ScrollVisibilityRevealer(
+                              child: ValueListenableBuilder<int>(
+                                valueListenable: _aboutAnimationTriggerNotifier,
+                                builder: (context, trigger, _) => AboutSection(
+                                  profile: profile,
+                                  animationTrigger: trigger,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // 3. Featured Projects Section
                       RepaintBoundary(
                         child: Container(
                           key: _projectsKey,
@@ -339,7 +358,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                       ),
 
-                      // 3. Experience & Achievements Section
+                      // 4. Experience & Achievements Section
                       RepaintBoundary(
                         child: Container(
                           key: _experienceKey,
@@ -354,7 +373,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                       ),
 
-                      // 4. Technical Skills Section
+                      // 5. Technical Skills Section
                       RepaintBoundary(
                         child: Container(
                           key: _skillsKey,
@@ -362,25 +381,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           child: ResponsiveContentContainer(
                             child: ScrollVisibilityRevealer(
                               child: SkillsSection(skills: skills),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      // 5. About Me Section
-                      RepaintBoundary(
-                        child: Container(
-                          key: _aboutKey,
-                          padding: const EdgeInsets.only(top: 88),
-                          child: ResponsiveContentContainer(
-                            child: ScrollVisibilityRevealer(
-                              child: ValueListenableBuilder<int>(
-                                valueListenable: _aboutAnimationTriggerNotifier,
-                                builder: (context, trigger, _) => AboutSection(
-                                  profile: profile,
-                                  animationTrigger: trigger,
-                                ),
-                              ),
                             ),
                           ),
                         ),

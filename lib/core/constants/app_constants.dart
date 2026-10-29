@@ -46,7 +46,7 @@ class AppConstants {
   static const String heroFullHeadline =
       'Building Scalable Mobile Experiences with Flutter';
   static const String heroSupportingText =
-      "I build high-quality cross-platform applications with Flutter, combining clean architecture, intuitive UI, and reliable integrations to deliver smooth, scalable mobile experiences.";
+      "I turn complex requirements into reliable, user-friendly Flutter applications. From clean architecture and custom UI to API integrations, automated testing, and performance optimization, I focus on building maintainable apps that are ready to scale.";
 
   // Short & punchy hero summary matching modern reference design
   static const String shortSummary =
