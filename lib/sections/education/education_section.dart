@@ -237,8 +237,8 @@ class _EducationCharacterStage extends StatelessWidget {
         fit: BoxFit.scaleDown,
         child: Container(
           constraints: BoxConstraints(
-            maxWidth: isMobile ? 260 : 310,
-            maxHeight: isMobile ? 270 : 330,
+            maxWidth: isMobile ? 270 : 320,
+            maxHeight: isMobile ? 290 : 350,
           ),
           child: Stack(
             alignment: Alignment.center,
@@ -291,7 +291,7 @@ class _EducationCharacterStage extends StatelessWidget {
 
               // 3D Anime Graduate Character Asset
               Positioned(
-                bottom: 8,
+                bottom: isMobile ? 24 : 28,
                 child: Image.asset(
                   'assets/images/developer_character_graduate.png',
                   height: isMobile ? 220 : 270,
@@ -315,48 +315,74 @@ class _EducationCharacterStage extends StatelessWidget {
                 ),
               ),
 
-              // Floating Distinction Honors Badge
+              // Code Craft Excellence Award Badge centered below 3D character
               Positioned(
-                bottom: -4,
+                bottom: 0,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 14,
-                    vertical: 7,
+                    vertical: 8,
                   ),
                   decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        const Color(0xFFF59E0B)
+                            .withOpacity(isDark ? 0.22 : 0.14),
+                        AppColors.violetPrimary.withOpacity(
+                          isDark ? 0.16 : 0.08,
+                        ),
+                      ],
+                    ),
                     color: isDark
-                        ? AppColors.darkCard.withOpacity(0.92)
-                        : Colors.white.withOpacity(0.95),
-                    borderRadius: BorderRadius.circular(20),
+                        ? AppColors.darkCard.withOpacity(0.95)
+                        : Colors.white.withOpacity(0.96),
+                    borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: const Color(0xFFF59E0B).withOpacity(0.5),
+                      color: const Color(0xFFF59E0B)
+                          .withOpacity(isDark ? 0.6 : 0.45),
                       width: 1.2,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFF59E0B).withOpacity(0.2),
-                        blurRadius: 12,
+                        color: const Color(0xFFF59E0B).withOpacity(0.22),
+                        blurRadius: 14,
                         offset: const Offset(0, 4),
                       ),
                     ],
                   ),
-                  child: Row(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.workspace_premium_rounded,
-                        color: Color(0xFFF59E0B),
-                        size: 16,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.emoji_events_rounded,
+                            color: Color(0xFFF59E0B),
+                            size: 16,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Code Craft Excellence Award (2025)',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: isDark
+                                  ? const Color(0xFFFDE68A)
+                                  : const Color(0xFFB45309),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 6),
+                      const SizedBox(height: 2),
                       Text(
-                        'Distinction Honors (MCA & BCA)',
+                        'Logix Built Infotech Solutions',
                         style: TextStyle(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w700,
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.w500,
                           color: isDark
-                              ? Colors.white
-                              : AppColors.darkBackground,
+                              ? AppColors.textSecondaryDark
+                              : AppColors.textSecondaryLight,
                         ),
                       ),
                     ],

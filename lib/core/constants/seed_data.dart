@@ -336,15 +336,13 @@ class SeedData {
   ];
 
   static List<Project> get initialProjects => [
-
     const Project(
       id: 'proj_pandits_near_me',
       slug: 'pandit-near-me',
       title: 'Pandits Near Me - Instant Puja',
-      shortDescription:
-      'A spiritual services marketplace featuring puja booking, real-time booking alerts, Kundali generation, Pandit verification, and multilingual support.',
+      shortDescription: 'A spiritual services marketplace featuring puja booking, real-time booking alerts, Kundali generation, Pandit verification, and multilingual support.',
       fullDescription:
-      'Pandits Near Me is a production Flutter application that connects users with Pandits and Vedic Astrologers through a spiritual services marketplace. It offers user onboarding, puja discovery and booking, dynamic pricing, wallet discounts, and service-provider verification. '
+          'Pandits Near Me is a production Flutter application that connects users with Pandits and Vedic Astrologers through a spiritual services marketplace. It offers user onboarding, puja discovery and booking, dynamic pricing, wallet discounts, and service-provider verification. '
           'My contributions include developing requirement-driven product features, implementing real-time booking communication using AWS IoT Core and MQTT, integrating Firebase Cloud Messaging, building custom Kundali and Kundali Matching charts using Flutter CustomPainter, and developing Pandit KYC workflows and multilingual experiences. '
           'The application combines real-time communication, custom UI rendering, and end-to-end booking workflows to deliver a consistent experience across Android and iOS.',
       category: 'Mobile App',
@@ -387,14 +385,11 @@ class SeedData {
           '• Attend team scrum meetings to discuss progress, share updates, communicate blockers, and align implementation with current priorities.\n'
           '• Maintain reusable components, API error handling, pagination, analytics instrumentation, performance monitoring, and Android/iOS compatibility.',
       challengesAndSolutions:
-      'Challenge: Delivering reliable real-time booking alerts over unstable mobile networks, rendering complex Vedic horoscope charts, and handling concurrent authentication token refresh requests.\n\n'
+          'Challenge: Delivering reliable real-time booking alerts over unstable mobile networks, rendering complex Vedic horoscope charts, and handling concurrent authentication token refresh requests.\n\n'
           'Solution: Implement MQTT over Secure WebSockets with connection lifecycle and reconnection handling, develop custom horoscope chart rendering with Flutter CustomPainter, and coordinate concurrent API requests through single-flight token refresh handling in Dio.',
-      verifiedOutcomes:
-      'Production mobile application available on Android and iOS, featuring real-time booking communication, custom Kundali and Kundali Matching charts, Pandit KYC workflows, and English, Hindi, and Gujarati localization.',
-      playStoreUrl:
-      'https://play.google.com/store/apps/details?id=com.officialpanditsnearme',
-      appStoreUrl:
-      'https://apps.apple.com/in/app/pandits-near-me-instant-puja/id6757301105',
+      verifiedOutcomes: 'Production mobile application available on Android and iOS, featuring real-time booking communication, custom Kundali and Kundali Matching charts, Pandit KYC workflows, and English, Hindi, and Gujarati localization.',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.officialpanditsnearme',
+      appStoreUrl: 'https://apps.apple.com/in/app/pandits-near-me-instant-puja/id6757301105',
       imageUrl: 'assets/images/project/pandit-near-me.webp',
       keyFeatures: [
         'Real-time booking alerts using FCM and MQTT over Secure WebSockets.',
@@ -529,11 +524,11 @@ class SeedData {
       personalContribution: 'Architected the migration to GetX, resolved UI freeze issues on launch, integrated recipe search and filter APIs, and deployed to app stores.',
       challengesAndSolutions: 'Challenge: Laggy recipe list filtering and persistent splash screen delays. Solution: Refactored data fetching into GetX workers and implemented cached local storage with SharedPreferences.',
       verifiedOutcomes:
-      'Successfully published on Google Play Store & Apple App Store.',
+          'Successfully published on Google Play Store & Apple App Store.',
       imageUrl: 'assets/images/project/the-healthi-indian.webp',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.thehealthiindian',
       appStoreUrl:
-      'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
+          'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
       isFeatured: true,
       isPublished: true,
       orderIndex: 3,
@@ -568,7 +563,7 @@ class SeedData {
       imageUrl: 'assets/images/project/radio-spice-nz.webp',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.nzealand.radioSpice',
       appStoreUrl:
-      'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
+          'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
       isFeatured: true,
       isPublished: true,
       orderIndex: 4,
@@ -601,7 +596,8 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Embedding DocuSign signing ceremonies within a smooth webview without losing mobile authentication tokens. Solution: Configured OAuth callback interceptors.',
       verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
       imageUrl: 'assets/images/project/thrive-ai.webp',
-      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.kwneworleans.app',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.kwneworleans.app',
       appStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
       isFeatured: true,
       isPublished: true,
@@ -633,7 +629,8 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Scanning accuracy under poor lighting conditions. Solution: Added edge-detection preprocessing and fallback manual confirmation steps.',
       verifiedOutcomes: 'Available on Google Play Store & Apple App Store.',
       imageUrl: 'assets/images/project/fineaway.webp',
-      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.fineaway',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.app.fineaway',
       appStoreUrl: 'https://apps.apple.com/us/app/fineaway-app/id6467185920',
       isFeatured: true,
       isPublished: true,
@@ -667,7 +664,7 @@ class SeedData {
       challengesAndSolutions: 'Challenge: Real-time stock alerts not triggering while app was closed. Solution: Replaced polling with FCM high-priority data payloads.',
       verifiedOutcomes: 'Deployed to Google Play & Apple App Store.',
       appStoreUrl:
-      'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
+          'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
       imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/b0/d1/44/b0d144e8-fedc-befd-0868-f5bd0a5e2aaf/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.jpg',
       isFeatured: true,
       orderIndex: 7,
@@ -889,7 +886,8 @@ class SeedData {
       verifiedOutcomes: 'Resolved authentication bottlenecks and improved cross-environment API reliability.',
       isFeatured: false,
       isPublished: false,
-      playStoreUrl: "https://play.google.com/store/apps/details?id=com.minder_app",
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.minder_app",
       orderIndex: 13,
     ),
     const Project(
@@ -975,7 +973,8 @@ class SeedData {
       id: 'proj_muvr-user',
       slug: 'muvr-user-app',
       title: 'Muvr User App',
-      shortDescription: 'On-demand moving and logistics platform with dedicated User App.',
+      shortDescription:
+          'On-demand moving and logistics platform with dedicated User App.',
       fullDescription: 'An on-demand logistics booking application connecting customers with professional moving service providers. Developed both the User App and Mover App using Flutter and GetX. Managed responsive layouts across all device sizes, mentored junior engineers on state management best practices, and maintained production stability.',
       category: 'Mobile App',
       projectType: 'Client Project',
@@ -991,7 +990,8 @@ class SeedData {
       personalContribution: 'Engineered booking request workflows, mentored junior team members on clean code conventions, resolved layout issues, and prepared dual store deployments.',
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
-      appStoreUrl: 'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
+      appStoreUrl:
+          'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
       imageUrl: 'assets/images/project/muvr_user_bg.webp',
       isFeatured: true,
       isPublished: true,
@@ -1001,7 +1001,8 @@ class SeedData {
       id: 'proj_muvr',
       slug: 'muvr',
       title: 'Muvr Mover App',
-      shortDescription: 'On-demand moving and logistics platform with dedicated Mover App.',
+      shortDescription:
+          'On-demand moving and logistics platform with dedicated Mover App.',
       fullDescription: 'An on-demand logistics booking application connecting customers with professional moving service providers. Developed both the User App and Mover App using Flutter and GetX. Managed responsive layouts across all device sizes, mentored junior engineers on state management best practices, and maintained production stability.',
       category: 'Mobile App',
       projectType: 'Client Project',
@@ -1036,7 +1037,8 @@ class SeedData {
       technologies: ['Flutter', 'Hive DB', 'REST APIs', 'Jira', 'Git'],
       personalContribution: 'Developed live feed widgets, chat message components, poll voting calculations, and integrated local caching with Hive DB.',
       challengesAndSolutions: 'Challenge: High-throughput chat messages causing frequent rebuilds. Solution: Scoped widget rebuilds to individual chat bubble state controllers.',
-      verifiedOutcomes: 'Collaborative enterprise platform with offline persistence.',
+      verifiedOutcomes:
+          'Collaborative enterprise platform with offline persistence.',
       isFeatured: false,
       isPublished: true,
       orderIndex: 19,

@@ -76,7 +76,7 @@ class AboutSection extends StatelessWidget {
           ScrollReveal.clippedText(
             staggerIndex: 1,
             child: Text(
-              'Specialized in Flutter, Mobile Architecture & Cloud Services',
+              'Flutter Developer Passionate About Building Scalable Digital Experiences',
               style: AppTypography.getDisplayMedium(textColor)
                   .copyWith(fontSize: isMobile ? 24 : 28),
             ),
@@ -222,13 +222,14 @@ class AboutSection extends StatelessWidget {
                   staggerIndex: 2,
                 );
                 final card4 = _HighlightCard(
-                  key: ValueKey('highlight_edu_$animationTrigger'),
-                  value: 'MCA & BCA',
-                  numericTarget: null,
-                  suffix: '',
-                  label: 'GTU & VNSGU Distinction',
-                  icon: Icons.school_rounded,
-                  accentColor: AppColors.bluePrimary,
+                  key: ValueKey('highlight_commitment_$animationTrigger'),
+                  value: '100%',
+                  numericTarget: 100,
+                  suffix: '%',
+                  label: 'Commitment',
+                  subtitle: 'Quality & Learning',
+                  icon: Icons.verified_rounded,
+                  accentColor: const Color(0xFF10B981),
                   animationTrigger: animationTrigger,
                   isCentered: true,
                   staggerIndex: 3,
@@ -311,14 +312,15 @@ class AboutSection extends StatelessWidget {
                     staggerIndex: 2,
                   ),
                   _HighlightCard(
-                    key: ValueKey('highlight_edu_$animationTrigger'),
+                    key: ValueKey('highlight_commitment_$animationTrigger'),
                     width: cardWidth,
-                    value: 'MCA & BCA',
-                    numericTarget: null,
-                    suffix: '',
-                    label: 'GTU & VNSGU Distinction',
-                    icon: Icons.school_outlined,
-                    accentColor: AppColors.bluePrimary,
+                    value: '100%',
+                    numericTarget: 100,
+                    suffix: '%',
+                    label: 'Commitment',
+                    subtitle: 'Quality & Learning',
+                    icon: Icons.verified_outlined,
+                    accentColor: const Color(0xFF10B981),
                     animationTrigger: animationTrigger,
                     isCentered: false,
                     staggerIndex: 3,
@@ -344,106 +346,106 @@ class AboutSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Text(
+            'With 4+ years of experience in mobile application development, I specialize in building high-quality, scalable applications using Flutter and Dart. I enjoy creating intuitive user interfaces, implementing clean architecture, integrating APIs, and delivering reliable applications for real-world needs.',
+            style: AppTypography.getBodyMedium(secondaryTextColor)
+                .copyWith(height: 1.6),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'I\'m also eager to expand my expertise in Flutter Web, modern web technologies, cloud services, and emerging tools. I believe in continuous learning, exploring new technologies, and improving my skills through practical projects and collaboration.',
+            style: AppTypography.getBodyMedium(secondaryTextColor)
+                .copyWith(height: 1.6),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'Based in Surat, Gujarat, I\'m open to onsite opportunities in Surat, remote roles, and freelance projects where I can contribute my experience, take on new challenges, and grow as a developer.',
+            style: AppTypography.getBodyMedium(secondaryTextColor)
+                .copyWith(height: 1.6),
+          ),
+          const SizedBox(height: 18),
+          Divider(
+            color: (isDark ? Colors.white : Colors.black).withOpacity(0.08),
+            height: 1,
+            thickness: 1,
+          ),
+          const SizedBox(height: 16),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
             children: [
-              if (isMobile) ...[
-                Container(
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    color: AppColors.violetPrimary.withOpacity(
-                      isDark ? 0.22 : 0.12,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: AppColors.violetPrimary.withOpacity(
-                        isDark ? 0.4 : 0.25,
-                      ),
-                      width: 1,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.person_outline_rounded,
-                    size: 18,
-                    color: AppColors.violetLight,
-                  ),
-                ),
-                const SizedBox(width: 10),
-              ],
-              Flexible(
-                child: Text(
-                  'Professional Background',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.getTitleMedium(textColor)
-                      .copyWith(fontWeight: FontWeight.w700),
-                ),
+              _buildPillChip(
+                label: '4+ Years Experience',
+                backgroundColor: isDark
+                    ? AppColors.bluePrimary.withOpacity(0.18)
+                    : AppColors.bluePrimary.withOpacity(0.08),
+                borderColor: isDark
+                    ? AppColors.bluePrimary.withOpacity(0.45)
+                    : AppColors.bluePrimary.withOpacity(0.25),
+                textColor: isDark
+                    ? const Color(0xFF60A5FA)
+                    : AppColors.bluePrimary,
+              ),
+              _buildPillChip(
+                label: 'Flutter & Dart',
+                backgroundColor: isDark
+                    ? Colors.white.withOpacity(0.06)
+                    : Colors.black.withOpacity(0.04),
+                borderColor: isDark
+                    ? Colors.white.withOpacity(0.12)
+                    : Colors.black.withOpacity(0.1),
+                textColor: isDark ? Colors.white : AppColors.textPrimaryLight,
+              ),
+              _buildPillChip(
+                label: 'Exploring Flutter Web',
+                backgroundColor: isDark
+                    ? Colors.white.withOpacity(0.06)
+                    : Colors.black.withOpacity(0.04),
+                borderColor: isDark
+                    ? Colors.white.withOpacity(0.12)
+                    : Colors.black.withOpacity(0.1),
+                textColor: isDark ? Colors.white : AppColors.textPrimaryLight,
+              ),
+              _buildPillChip(
+                label: 'Open to Opportunities',
+                backgroundColor: isDark
+                    ? const Color(0xFF10B981).withOpacity(0.16)
+                    : const Color(0xFF10B981).withOpacity(0.08),
+                borderColor: isDark
+                    ? const Color(0xFF10B981).withOpacity(0.45)
+                    : const Color(0xFF10B981).withOpacity(0.3),
+                textColor: isDark
+                    ? const Color(0xFF34D399)
+                    : const Color(0xFF059669),
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            'With 4+ years of professional mobile engineering experience based in Surat, Gujarat, '
-            'I specialize in architecting, developing, and shipping production-grade cross-platform applications with Flutter and Dart. '
-            'My hands-on focus spans complete product lifecycles — from crafting responsive, accessible UI layouts across mobile and web viewports to '
-            'integrating high-concurrency REST APIs, real-time AWS IoT Core (MQTT) pipelines, and Firebase cloud infrastructure.',
-            style: AppTypography.getBodyMedium(secondaryTextColor)
-                .copyWith(height: 1.5),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Engineering Philosophy & Craftsmanship',
-            style: AppTypography.getTitleMedium(textColor)
-                .copyWith(fontWeight: FontWeight.w700),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'I build for long-term maintainability using Clean Architecture and reactive state models with GetX and Provider. '
-            'Having delivered and contributed to 20+ commercial applications and 350+ store releases across Google Play Store and Apple App Store, '
-            'I place high priority on automated unit/widget testing, API resilience with Dio interceptors, memory profiling, and smooth user interactions.',
-            style: AppTypography.getBodyMedium(secondaryTextColor)
-                .copyWith(height: 1.5),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  const Color(0xFFF59E0B).withOpacity(isDark ? 0.18 : 0.12),
-                  AppColors.violetPrimary.withOpacity(isDark ? 0.15 : 0.08),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: const Color(0xFFF59E0B).withOpacity(isDark ? 0.45 : 0.4),
-                width: 1,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.emoji_events_rounded,
-                  size: 16,
-                  color: Color(0xFFD97706),
-                ),
-                const SizedBox(width: 6),
-                Flexible(
-                  child: Text(
-                    "Code Craft Excellence Award (2025)",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: isDark
-                          ? const Color(0xFFFDE68A)
-                          : const Color(0xFFB45309),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildPillChip({
+    required String label,
+    required Color backgroundColor,
+    required Color borderColor,
+    required Color textColor,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: borderColor, width: 1),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: textColor,
+          letterSpacing: 0.2,
+        ),
       ),
     );
   }
@@ -581,6 +583,7 @@ class _HighlightCard extends StatelessWidget {
   final int? numericTarget;
   final String suffix;
   final String label;
+  final String? subtitle;
   final IconData icon;
   final Color accentColor;
   final int animationTrigger;
@@ -594,6 +597,7 @@ class _HighlightCard extends StatelessWidget {
     this.numericTarget,
     this.suffix = '',
     required this.label,
+    this.subtitle,
     required this.icon,
     required this.accentColor,
     this.animationTrigger = 0,
@@ -662,15 +666,30 @@ class _HighlightCard extends StatelessWidget {
               Text(
                 label,
                 textAlign: TextAlign.center,
-                maxLines: 2,
+                maxLines: subtitle != null ? 1 : 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   color: secondaryTextColor,
                   height: 1.3,
                 ),
               ),
+              if (subtitle != null) ...[
+                const SizedBox(height: 2),
+                Text(
+                  subtitle!,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w400,
+                    color: secondaryTextColor.withOpacity(0.85),
+                    height: 1.2,
+                  ),
+                ),
+              ],
             ],
           )
         : Column(
@@ -715,12 +734,27 @@ class _HighlightCard extends StatelessWidget {
               const SizedBox(height: 3),
               Text(
                 label,
+                maxLines: subtitle != null ? 1 : 2,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   color: secondaryTextColor,
                 ),
               ),
+              if (subtitle != null) ...[
+                const SizedBox(height: 2),
+                Text(
+                  subtitle!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w400,
+                    color: secondaryTextColor.withOpacity(0.85),
+                  ),
+                ),
+              ],
             ],
           );
 

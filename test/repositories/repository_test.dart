@@ -47,16 +47,31 @@ void main() {
       );
       expect(panditsProject.personalContribution, contains('CustomPainter'));
 
-      // Verify newly added projects exist
+      // Verify newly added projects exist in initialProjects seed data
       expect(
-        repo.projects.any((p) => p.title.contains('PMP Exam Prep')),
+        SeedData.initialProjects.any((p) => p.title.contains('PMP Exam Prep')),
         isTrue,
       );
-      expect(repo.projects.any((p) => p.title.contains('Nirvana')), isTrue);
-      expect(repo.projects.any((p) => p.title.contains('Reut')), isTrue);
-      expect(repo.projects.any((p) => p.title.contains('Milos')), isTrue);
-      expect(repo.projects.any((p) => p.title == 'Minder App'), isTrue);
-      expect(repo.projects.any((p) => p.title == 'Muvr User App'), isTrue);
+      expect(
+        SeedData.initialProjects.any((p) => p.title.contains('Nirvana')),
+        isTrue,
+      );
+      expect(
+        SeedData.initialProjects.any((p) => p.title.contains('Reut')),
+        isTrue,
+      );
+      expect(
+        SeedData.initialProjects.any((p) => p.title.contains('Milos')),
+        isTrue,
+      );
+      expect(
+        SeedData.initialProjects.any((p) => p.title == 'Minder App'),
+        isTrue,
+      );
+      expect(
+        SeedData.initialProjects.any((p) => p.title == 'Muvr User App'),
+        isTrue,
+      );
 
       // Verify PMP CSV Validator project in seed data
       final pmpProject = SeedData.initialProjects.firstWhere(

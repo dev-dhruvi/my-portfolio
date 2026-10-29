@@ -126,7 +126,7 @@ void main() {
             await tester.pumpAndSettle();
           }
         }
-        expect(find.text('Reut, buy me'), findsAtLeastNWidgets(1));
+        expect(find.text('The Healthi Indian'), findsAtLeastNWidgets(1));
       },
     );
 
@@ -283,17 +283,22 @@ void main() {
         await tester.pump();
 
         expect(find.text('ABOUT ME'), findsOneWidget);
-        expect(find.text('Professional Background'), findsOneWidget);
         expect(
-          find.text('Engineering Philosophy & Craftsmanship'),
+          find.text(
+            'Flutter Developer Passionate About Building Scalable Digital Experiences',
+          ),
           findsOneWidget,
         );
-        expect(find.text('Code Craft Excellence Award (2025)'), findsOneWidget);
         expect(find.text('Clean Architecture Specialist'), findsOneWidget);
         expect(find.text('4+ Years'), findsOneWidget);
         expect(find.text('350+ Releases'), findsOneWidget);
         expect(find.text('20+ Projects'), findsOneWidget);
-        expect(find.text('MCA & BCA'), findsOneWidget);
+        expect(find.text('100%'), findsOneWidget);
+        expect(find.text('Commitment'), findsOneWidget);
+        expect(find.text('Quality & Learning'), findsOneWidget);
+        expect(find.text('Flutter & Dart'), findsOneWidget);
+        expect(find.text('Exploring Flutter Web'), findsOneWidget);
+        expect(find.text('Open to Opportunities'), findsOneWidget);
       },
     );
 
@@ -324,7 +329,8 @@ void main() {
           find.text('Bachelor of Computer Applications (BCA)'),
           findsOneWidget,
         );
-        expect(find.text('Distinction Honors (MCA & BCA)'), findsOneWidget);
+        expect(find.text('Code Craft Excellence Award (2025)'), findsOneWidget);
+        expect(find.text('Logix Built Infotech Solutions'), findsOneWidget);
       },
     );
 
@@ -534,7 +540,8 @@ void main() {
         expect(find.text('Hands-on Experience'), findsOneWidget);
         expect(find.text('Play Store & App Store'), findsOneWidget);
         expect(find.text('Built & Deployed'), findsOneWidget);
-        expect(find.text('GTU & VNSGU Distinction'), findsOneWidget);
+        expect(find.text('Commitment'), findsOneWidget);
+        expect(find.text('Quality & Learning'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );
