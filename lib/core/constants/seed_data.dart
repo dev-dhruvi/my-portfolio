@@ -913,6 +913,8 @@ class SeedData {
       personalContribution: 'Configured Firebase database schema, implemented Apple and Google SSO, created interactive financial timeline widgets, and set up goal tracking calculations.',
       challengesAndSolutions: 'Challenge: Complying with strict Apple Sign In requirements for iOS submission. Solution: Integrated Apple identity tokens with Firebase Auth credentials.',
       verifiedOutcomes: 'Available on the Apple App Store.',
+      imageUrl: 'assets/images/project/finpin.webp',
+      appStoreUrl: 'https://apps.apple.com/in/app/finpin/id6727005412',
       isFeatured: false,
       isPublished: true,
       orderIndex: 14,
@@ -936,7 +938,7 @@ class SeedData {
       personalContribution: 'Built Google Places address lookup components, implemented Haversine distance calculation algorithms, and populated nearby user grids.',
       challengesAndSolutions: 'Challenge: Battery drain from frequent GPS location updates. Solution: Applied adaptive distance-threshold geolocation listeners.',
       verifiedOutcomes: 'Dynamic location-based discovery platform.',
-      imageUrl: 'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
+      imageUrl: 'assets/images/project/disporata.webp',
       isFeatured: false,
       isPublished: true,
       orderIndex: 15,
@@ -994,6 +996,7 @@ class SeedData {
       personalContribution: 'Engineered booking request workflows, mentored junior team members on clean code conventions, resolved layout issues, and prepared dual store deployments.',
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
+      playStoreUrl:"https://play.google.com/store/apps/details?id=com.muvr.user",
       appStoreUrl:
           'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
       imageUrl: 'assets/images/project/muvr_user_bg.webp',
@@ -1022,6 +1025,7 @@ class SeedData {
       personalContribution: 'Engineered booking request workflows, mentored junior team members on clean code conventions, resolved layout issues, and prepared dual store deployments.',
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.muvr.mover',
       appStoreUrl:
           'https://apps.apple.com/us/app/muvr-driver-move-deliver/id6450041017',
       imageUrl: 'assets/images/project/mover_move_bg.webp',
