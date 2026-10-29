@@ -82,9 +82,10 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
   }
 
   int _getItemsPerPage(BuildContext context) {
-    if (AppBreakpoints.isMobile(context)) return _mobilePageSize;
-    if (AppBreakpoints.isTablet(context)) return 9; // 3 columns x 3 rows
-    return 12; // 4 columns x 3 rows on desktop
+    final width = MediaQuery.sizeOf(context).width;
+    if (width < 600) return _mobilePageSize; // 6 on mobile
+    if (width < 1000) return 6; // 2 columns x 3 rows on tablet
+    return 9; // 3 columns x 3 rows on desktop
   }
 
   void _goToPage(int page) {
@@ -109,6 +110,14 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
     return repo.projects.where((p) => p.isStatusActive).toList();
   }
 
+  void _onProjectCardTap(BuildContext context, Project project) {
+    try {
+      context.go('/projects/${project.slug}');
+    } catch (_) {
+      _showDetailDialog(context, project);
+    }
+  }
+
   void _showDetailDialog(BuildContext context, Project project) {
     showDialog(
       context: context,
@@ -118,8 +127,9 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = AppBreakpoints.isMobile(context);
-    final isTablet = AppBreakpoints.isTablet(context);
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600 && screenWidth < 1000;
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark
@@ -304,7 +314,8 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           child: ProjectCard(
                             project: project,
                             isDesktopOrTablet: false,
-                            onTap: () => _showDetailDialog(context, project),
+                            imageHeight: 250,
+                            onTap: () => _onProjectCardTap(context, project),
                           ),
                         );
                       },
@@ -333,12 +344,14 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: displayedProjects.length,
+                          clipBehavior: Clip.none,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
+                                crossAxisCount: 2,
                                 crossAxisSpacing: 18,
                                 mainAxisSpacing: 18,
-                                mainAxisExtent: 380,
+                                mainAxisExtent: 390,
                               ),
                           itemBuilder: (context, index) {
                             final project = displayedProjects[index];
@@ -349,8 +362,9 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                                 project: project,
                                 isDesktopOrTablet: true,
                                 enable3D: true,
+                                imageHeight: 235,
                                 onTap: () =>
-                                    _showDetailDialog(context, project),
+                                    _onProjectCardTap(context, project),
                               ),
                             );
                           },
@@ -380,13 +394,15 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                           key: ValueKey<int>(safeCurrentPage),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
+                          clipBehavior: Clip.none,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
                           itemCount: displayedProjects.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4,
-                                crossAxisSpacing: 18,
-                                mainAxisSpacing: 18,
-                                mainAxisExtent: 385,
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 20,
+                                mainAxisSpacing: 20,
+                                mainAxisExtent: 390,
                               ),
                           itemBuilder: (context, index) {
                             final project = displayedProjects[index];
@@ -397,8 +413,9 @@ class _AllProjectsPageState extends State<AllProjectsPage> {
                                 project: project,
                                 isDesktopOrTablet: true,
                                 enable3D: true,
+                                imageHeight: 235,
                                 onTap: () =>
-                                    _showDetailDialog(context, project),
+                                    _onProjectCardTap(context, project),
                               ),
                             );
                           },

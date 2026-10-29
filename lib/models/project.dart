@@ -6,6 +6,7 @@ class Project {
   final String shortDescription;
   final String fullDescription;
   final String category;
+  final String projectType;
   final String companyName;
   final List<String> technologies;
   final String thumbnailUrl;
@@ -32,6 +33,7 @@ class Project {
     required this.shortDescription,
     required this.fullDescription,
     required this.category,
+    this.projectType = 'Client Project',
     this.companyName = '',
     this.technologies = const [],
     this.thumbnailUrl = '',
@@ -55,8 +57,35 @@ class Project {
   static const String defaultProjectImageUrl =
       'assets/images/project/default.webp';
 
+  /// Canonical platform category guaranteed to be one of:
+  /// 'Mobile App', 'Website', or 'Mobile & Web'.
+  String get platformCategory {
+    final lower = category.trim().toLowerCase();
+    if (category == 'Website' || lower == 'flutter web') {
+      return 'Website';
+    }
+    if (category == 'Mobile & Web' ||
+        (lower.contains('web') && lower.contains('mobile'))) {
+      return 'Mobile & Web';
+    }
+    return 'Mobile App';
+  }
+
+  /// Canonical project type guaranteed to be one of:
+  /// 'Client Project', 'Professional Project', or 'Personal Project'.
+  String get effectiveProjectType {
+    if (projectType.trim().isNotEmpty) {
+      final lower = projectType.toLowerCase();
+      if (lower.contains('personal')) return 'Personal Project';
+      if (lower.contains('professional')) return 'Professional Project';
+      return 'Client Project';
+    }
+    if (companyName.trim().isEmpty) return 'Personal Project';
+    return 'Client Project';
+  }
+
   /// Flag indicating whether the project has a custom image provided.
-  /// If false, the project defaults to [defaultProjectImageUrl] and displays "Client Projects" in the UI.
+  /// If false, the project defaults to [defaultProjectImageUrl].
   bool get hasCustomImage =>
       imageUrl.trim().isNotEmpty || thumbnailUrl.trim().isNotEmpty;
 
@@ -76,6 +105,7 @@ class Project {
       'shortDescription': shortDescription,
       'fullDescription': fullDescription,
       'category': category,
+      'projectType': projectType,
       'companyName': companyName,
       'technologies': technologies,
       'thumbnailUrl': thumbnailUrl,
@@ -105,6 +135,8 @@ class Project {
       shortDescription: map['shortDescription'] ?? '',
       fullDescription: map['fullDescription'] ?? '',
       category: map['category'] ?? 'Mobile App',
+      projectType:
+          map['projectType'] ?? map['project_type'] ?? 'Client Project',
       companyName: map['companyName'] ?? '',
       technologies: List<String>.from(map['technologies'] ?? []),
       thumbnailUrl: map['thumbnailUrl'] ?? '',
@@ -139,6 +171,7 @@ class Project {
     String? shortDescription,
     String? fullDescription,
     String? category,
+    String? projectType,
     String? companyName,
     List<String>? technologies,
     String? thumbnailUrl,
@@ -165,6 +198,7 @@ class Project {
       shortDescription: shortDescription ?? this.shortDescription,
       fullDescription: fullDescription ?? this.fullDescription,
       category: category ?? this.category,
+      projectType: projectType ?? this.projectType,
       companyName: companyName ?? this.companyName,
       technologies: technologies ?? this.technologies,
       thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,

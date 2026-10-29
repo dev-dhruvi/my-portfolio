@@ -10,18 +10,18 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/project.dart';
-import '../../widgets/animations/interactive_3d_card.dart';
 import '../../widgets/animations/scroll_reveal.dart';
 import '../../widgets/cards/app_network_image.dart';
+import '../../widgets/cards/project_card.dart';
 import '../../widgets/navigation/dynamic_scroll_indicators.dart';
 import 'all_projects_page.dart';
 
+export '../../widgets/cards/project_card.dart';
+
 /// Interactive project showcase on home page:
-/// - Mobile: 3D stacked coverflow slider showing up to 5 projects + "View More" button
-/// - Tablet: 2*2 grid horizontal slider showing up to 12 projects (4 per page)
-///   with dynamic indicator dots (no side arrows) + "View All Projects" button
-/// - Web / Desktop: Single row horizontal slider showing up to 12 projects (4 per page)
-///   with auto-scrolling, hover effects, dynamic indicator dots (no side arrows) + "View All Projects" button
+/// - Mobile: 1 project per view coverflow / swipeable cards
+/// - Tablet: 2 project cards per row (2*2 grid horizontal slider)
+/// - Web / Desktop: 3 project cards per row horizontal slider with auto-scrolling
 class ProjectsSection extends StatefulWidget {
   final List<Project> projects;
 
@@ -93,11 +93,20 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     }
   }
 
+  void _onProjectTap(BuildContext context, Project project) {
+    try {
+      context.go('/projects/${project.slug}');
+    } catch (_) {
+      _showProjectDetailDialog(context, project);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isMobile = AppBreakpoints.isMobile(context);
-    final isTablet = AppBreakpoints.isTablet(context);
-    final isDesktop = !isMobile && !isTablet;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600 && screenWidth < 1000;
+    final isDesktop = screenWidth >= 1000;
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark
@@ -111,7 +120,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     // Device-specific project counts:
     // Mobile: show total 5
     // Tablet: show total 12 (4 cards per view, 2x2 grid)
-    // Web / Desktop: show total 12 in single row listing (4 cards per view)
+    // Web / Desktop: show total 12 in single row listing (3 cards per view)
     final mobileProjects = activeProjects.take(5).toList();
     final tabletProjects = activeProjects.take(12).toList();
     final desktopProjects = activeProjects.take(12).toList();
@@ -121,7 +130,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
         ? 0
         : (tabletProjects.length / tabletItemsPerPage).ceil();
 
-    const int desktopItemsPerPage = 4;
+    const int desktopItemsPerPage = 3;
     final int desktopPageCount = desktopProjects.isEmpty
         ? 0
         : (desktopProjects.length / desktopItemsPerPage).ceil();
@@ -190,7 +199,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       projects: mobileProjects,
                       activePageNotifier: _mobileActivePageNotifier,
                       onProjectTap: (project) =>
-                          _showProjectDetailDialog(context, project),
+                          _onProjectTap(context, project),
                     ),
                     // Mobile View More Button (if more than 5 projects exist)
                     if (activeProjects.length > 5) ...[
@@ -209,7 +218,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       pageController: _tabletPageController,
                       activePageNotifier: _tabletActivePageNotifier,
                       onProjectTap: (project) =>
-                          _showProjectDetailDialog(context, project),
+                          _onProjectTap(context, project),
                     ),
 
                     // Dynamic Scroll Indicators without side arrows (Tablet)
@@ -246,7 +255,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                       pageController: _desktopPageController,
                       activePageNotifier: _desktopActivePageNotifier,
                       onProjectTap: (project) =>
-                          _showProjectDetailDialog(context, project),
+                          _onProjectTap(context, project),
                     ),
 
                     // Dynamic Scroll Indicators without side arrows (Desktop only)
@@ -382,8 +391,9 @@ class _Tablet2x2ProjectSliderState extends State<_Tablet2x2ProjectSlider> {
       onEnter: (_) => _isHovered = true,
       onExit: (_) => _isHovered = false,
       child: SizedBox(
-        height: 640,
+        height: 720,
         child: PageView.builder(
+          clipBehavior: Clip.none,
           controller: widget.pageController,
           itemCount: pageCount,
           onPageChanged: (pageIndex) {
@@ -420,14 +430,15 @@ class _Tablet2x2ProjectSliderState extends State<_Tablet2x2ProjectSlider> {
                     scale: scale,
                     child: GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
+                      clipBehavior: Clip.none,
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       itemCount: pageItems.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 16,
                             mainAxisSpacing: 16,
-                            mainAxisExtent: 310,
+                            mainAxisExtent: 340,
                           ),
                       itemBuilder: (context, index) {
                         final project = pageItems[index];
@@ -515,7 +526,7 @@ class _DesktopSingleRowProjectSliderState
     _autoplayTimer?.cancel();
     final disableAnimations =
         MediaQuery.maybeOf(context)?.disableAnimations ?? false;
-    final pageCount = (widget.projects.length / 4).ceil();
+    final pageCount = (widget.projects.length / 3).ceil();
 
     if (disableAnimations || pageCount <= 1) return;
 
@@ -538,7 +549,7 @@ class _DesktopSingleRowProjectSliderState
 
   @override
   Widget build(BuildContext context) {
-    const itemsPerPage = 4;
+    const itemsPerPage = 3;
     final List<List<Project>> pages = [];
 
     for (var i = 0; i < widget.projects.length; i += itemsPerPage) {
@@ -554,8 +565,9 @@ class _DesktopSingleRowProjectSliderState
       onEnter: (_) => _isHovered = true,
       onExit: (_) => _isHovered = false,
       child: SizedBox(
-        height: 340,
+        height: 352,
         child: PageView.builder(
+          clipBehavior: Clip.none,
           controller: widget.pageController,
           itemCount: pageCount,
           onPageChanged: (pageIndex) {
@@ -591,7 +603,7 @@ class _DesktopSingleRowProjectSliderState
                       ..setEntry(3, 2, 0.0008)
                       ..rotateY(rotY),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 4.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -736,7 +748,7 @@ class _MobileStackedProjectSliderState
 
     final screenWidth = MediaQuery.sizeOf(context).width;
     final cardWidth = (screenWidth * 0.84).clamp(270.0, 350.0);
-    const cardHeight = 445.0;
+    const cardHeight = 365.0;
 
     if (count == 1) {
       final project = widget.projects.first;
@@ -964,447 +976,7 @@ class _ViewMoreButtonState extends State<ViewMoreButton> {
   }
 }
 
-/// Project Card Component with Animated Hover Elevation,
-/// Prominent Display Image, Company Name, and Direct App Store/Play Store/GitHub Icons.
-class ProjectCard extends StatefulWidget {
-  final Project project;
-  final VoidCallback onTap;
-  final bool isDesktopOrTablet;
-  final bool enable3D;
-
-  const ProjectCard({
-    super.key,
-    required this.project,
-    required this.onTap,
-    this.isDesktopOrTablet = true,
-    this.enable3D = false,
-  });
-
-  @override
-  State<ProjectCard> createState() => _ProjectCardState();
-}
-
-class _ProjectCardState extends State<ProjectCard> {
-  bool _isHovered = false;
-
-  Widget _buildStoreIconButton({
-    required BuildContext context,
-    required String url,
-    required Widget icon,
-    required String tooltip,
-    required bool isDark,
-    Color? accentColor,
-  }) {
-    return Tooltip(
-      message: tooltip,
-      child: InkWell(
-        onTap: () => UrlLauncherUtil.openUrl(url, context: context),
-        borderRadius: BorderRadius.circular(6),
-        child: Container(
-          width: 28,
-          height: 28,
-          decoration: BoxDecoration(
-            color: isDark
-                ? (accentColor?.withOpacity(0.14) ?? const Color(0xFF1E293B))
-                : (accentColor?.withOpacity(0.08) ?? const Color(0xFFF1F5F9)),
-            borderRadius: BorderRadius.circular(6),
-            border: Border.all(
-              color: isDark
-                  ? (accentColor?.withOpacity(0.28) ?? AppColors.darkCardBorder)
-                  : (accentColor?.withOpacity(0.20) ??
-                        AppColors.lightCardBorder),
-              width: 1,
-            ),
-          ),
-          child: Center(child: icon),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionIcons(BuildContext context, {required bool isDark}) {
-    final project = widget.project;
-    final List<Widget> actionIcons = [];
-
-    if (project.playStoreUrl.isNotEmpty) {
-      actionIcons.add(
-        _buildStoreIconButton(
-          context: context,
-          url: project.playStoreUrl,
-          tooltip: 'Google Play',
-          isDark: isDark,
-          accentColor: AppColors.cyanPrimary,
-          icon: FaIcon(
-            FontAwesomeIcons.googlePlay,
-            size: 13,
-            color: isDark ? AppColors.cyanLight : AppColors.cyanDark,
-          ),
-        ),
-      );
-    }
-
-    if (project.appStoreUrl.isNotEmpty) {
-      actionIcons.add(
-        _buildStoreIconButton(
-          context: context,
-          url: project.appStoreUrl,
-          tooltip: 'App Store',
-          isDark: isDark,
-          accentColor: AppColors.violetPrimary,
-          icon: FaIcon(
-            FontAwesomeIcons.appStoreIos,
-            size: 14,
-            color: isDark ? AppColors.violetLight : AppColors.violetPrimary,
-          ),
-        ),
-      );
-    }
-
-    if (project.githubUrl.isNotEmpty) {
-      actionIcons.add(
-        _buildStoreIconButton(
-          context: context,
-          url: project.githubUrl,
-          tooltip: 'GitHub',
-          isDark: isDark,
-          accentColor: const Color(0xFFA78BFA),
-          icon: FaIcon(
-            FontAwesomeIcons.github,
-            size: 14,
-            color: isDark ? Colors.white : const Color(0xFF24292F),
-          ),
-        ),
-      );
-    }
-
-    if (actionIcons.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        for (int i = 0; i < actionIcons.length; i++) ...[
-          if (i > 0) const SizedBox(width: 6),
-          actionIcons[i],
-        ],
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark
-        ? AppColors.textPrimaryDark
-        : AppColors.textPrimaryLight;
-    final secondaryTextColor = isDark
-        ? AppColors.textSecondaryDark
-        : AppColors.textSecondaryLight;
-    final project = widget.project;
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final bool isBoundedHeight = constraints.maxHeight.isFinite;
-
-        final cardBodyContent = Padding(
-          padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Project Title with smooth hover translation & arrow
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 220),
-                curve: Curves.easeOutCubic,
-                transform: Matrix4.translationValues(
-                  _isHovered && widget.isDesktopOrTablet ? 3.0 : 0.0,
-                  0,
-                  0,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        project.title,
-                        style: TextStyle(
-                          fontSize: widget.isDesktopOrTablet ? 15 : 16.5,
-                          fontWeight: FontWeight.w700,
-                          color: _isHovered && widget.isDesktopOrTablet
-                              ? (isDark
-                                    ? AppColors.cyanPrimary
-                                    : AppColors.violetPrimary)
-                              : textColor,
-                          letterSpacing: -0.2,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    if (widget.isDesktopOrTablet) ...[
-                      const SizedBox(width: 4),
-                      AnimatedOpacity(
-                        opacity: _isHovered ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 180),
-                        child: Icon(
-                          Icons.arrow_outward_rounded,
-                          size: 13,
-                          color: isDark
-                              ? AppColors.cyanPrimary
-                              : AppColors.violetPrimary,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-
-              // Bottom Row: Company Name (bottom left) & Store / GitHub Icons (bottom right)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Company Name (bottom left)
-                  Expanded(
-                    child: project.companyName.isNotEmpty
-                        ? Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.apartment_rounded,
-                                size: 13,
-                                color: isDark
-                                    ? AppColors.violetLight
-                                    : AppColors.violetPrimary,
-                              ),
-                              const SizedBox(width: 4),
-                              Flexible(
-                                child: Text(
-                                  project.companyName,
-                                  style: TextStyle(
-                                    fontSize: 11.5,
-                                    fontWeight: FontWeight.w600,
-                                    color: secondaryTextColor,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                  const SizedBox(width: 8),
-
-                  // Store & GitHub Icons (bottom right)
-                  _buildActionIcons(context, isDark: isDark),
-                ],
-              ),
-            ],
-          ),
-        );
-
-        final cardThumbnail = ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-          clipBehavior: Clip.antiAlias,
-          child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              AnimatedScale(
-                scale: _isHovered ? 1.05 : 1.0,
-                duration: const Duration(milliseconds: 280),
-                curve: Curves.easeOutCubic,
-                child: AppNetworkImage(
-                  imageUrl: project.displayImageUrl,
-                  height: isBoundedHeight
-                      ? double.infinity
-                      : (widget.isDesktopOrTablet ? 230 : 260),
-                  width: double.infinity,
-                  placeholderText: project.title,
-                  fallbackIcon: Icons.phone_iphone_rounded,
-                  borderRadius: 0,
-                ),
-              ),
-
-              // Flag / Badge: "Featured" if dedicated image is provided, "Client Projects" if image is not there
-              Positioned(
-                top: 10,
-                left: 10,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4.5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: project.hasCustomImage
-                        ? (isDark
-                              ? AppColors.violetPrimary.withOpacity(0.88)
-                              : AppColors.violetPrimary)
-                        : (isDark
-                              ? const Color(0xFF0F172A).withOpacity(0.88)
-                              : const Color(0xFF334155).withOpacity(0.92)),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: project.hasCustomImage
-                          ? AppColors.cyanPrimary.withOpacity(0.65)
-                          : Colors.white.withOpacity(0.25),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.25),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        project.hasCustomImage
-                            ? Icons.star_rounded
-                            : Icons.business_center_rounded,
-                        size: 11,
-                        color: project.hasCustomImage
-                            ? AppColors.cyanLight
-                            : Colors.white70,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        project.hasCustomImage ? 'Featured' : 'Client Projects',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10.5,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-
-        final cardContent = GestureDetector(
-          onTap: widget.onTap,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeOutCubic,
-            transform: Matrix4.translationValues(
-              0,
-              _isHovered && widget.isDesktopOrTablet ? -6.0 : 0.0,
-              0,
-            ),
-            decoration: BoxDecoration(
-              color: isDark
-                  ? (_isHovered ? const Color(0xFF17172E) : AppColors.darkCard)
-                  : (_isHovered
-                        ? const Color(0xFFF8FAFC)
-                        : AppColors.lightCard),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: _isHovered
-                    ? AppColors.violetPrimary.withOpacity(0.85)
-                    : (isDark
-                          ? AppColors.darkCardBorder
-                          : AppColors.lightCardBorder),
-                width: _isHovered ? 1.5 : 1.0,
-              ),
-              boxShadow: [
-                if (isDark && _isHovered) ...[
-                  BoxShadow(
-                    color: AppColors.violetPrimary.withOpacity(0.28),
-                    blurRadius: 22,
-                    offset: const Offset(0, 10),
-                  ),
-                  BoxShadow(
-                    color: AppColors.cyanPrimary.withOpacity(0.12),
-                    blurRadius: 14,
-                    offset: const Offset(0, 4),
-                  ),
-                ] else if (!isDark && _isHovered) ...[
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.12),
-                    blurRadius: 18,
-                    offset: const Offset(0, 8),
-                  ),
-                ] else ...[
-                  BoxShadow(
-                    color: Colors.black.withOpacity(isDark ? 0.28 : 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: isBoundedHeight
-                    ? MainAxisSize.max
-                    : MainAxisSize.min,
-                children: [
-                  // Increased display image thumbnail
-                  if (isBoundedHeight)
-                    Expanded(child: cardThumbnail)
-                  else
-                    SizedBox(
-                      height: widget.isDesktopOrTablet ? 230 : 260,
-                      width: double.infinity,
-                      child: cardThumbnail,
-                    ),
-
-                  // Card Body
-                  cardBodyContent,
-                ],
-              ),
-            ),
-          ),
-        );
-
-        // On mobile touch viewports, skip MouseRegion entirely to avoid scheduler assertion collisions
-        if (!widget.isDesktopOrTablet) {
-          return cardContent;
-        }
-
-        if (widget.enable3D) {
-          return Interactive3DCard(
-            borderRadius: BorderRadius.circular(16),
-            child: cardContent,
-          );
-        }
-
-        return MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) {
-            if (!_isHovered && mounted) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (mounted && !_isHovered) {
-                  setState(() => _isHovered = true);
-                }
-              });
-            }
-          },
-          onExit: (_) {
-            if (_isHovered && mounted) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (mounted && _isHovered) {
-                  setState(() => _isHovered = false);
-                }
-              });
-            }
-          },
-          child: cardContent,
-        );
-      },
-    );
-  }
-}
+// ProjectCard is modularly imported and re-exported from lib/widgets/cards/project_card.dart
 
 class ProjectDetailDialog extends StatelessWidget {
   final Project project;

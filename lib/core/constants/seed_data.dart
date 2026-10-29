@@ -336,26 +336,32 @@ class SeedData {
   ];
 
   static List<Project> get initialProjects => [
+
     const Project(
       id: 'proj_pandits_near_me',
       slug: 'pandit-near-me',
       title: 'Pandits Near Me - Instant Puja',
-      shortDescription: 'Dual-sided spiritual services marketplace with real-time AWS IoT MQTT dispatch, Kundali CustomPainter, and multilingual puja booking.',
+      shortDescription:
+      'A spiritual services marketplace featuring puja booking, real-time booking alerts, Kundali generation, Pandit verification, and multilingual support.',
       fullDescription:
-          'A production-grade dual-sided on-demand marketplace application designed and developed from scratch using Flutter and clean modular architecture, supporting 50+ successful releases across Android and iOS. '
-          'Built cross-platform features for users, Pandits, and Astrologers including phone OTP verification, role-based navigation, and end-to-end puja booking with dynamic pricing and wallet discounts. '
-          'Engineered real-time booking dispatch with AWS IoT Core and MQTT over Secure WebSockets with connection lifecycle reconnection logic, paired with FCM notifications with custom audio/vibration behavior. '
-          'Features complete Pandit onboarding and KYC (Aadhaar uploads, certificate verification), dynamic Kundali and Kundali Matching with CustomPainter horoscope charts and PDF downloads, '
-          'location-aware services with Google Places, Panchang/Muhurat/Choghadiya astrology services, multilingual support (English, Hindi, Gujarati), zero-downtime updates, and resilient Dio single-flight concurrency.',
-      category: 'On-Demand Marketplace',
+      'Pandits Near Me is a production Flutter application that connects users with Pandits and Vedic Astrologers through a spiritual services marketplace. It offers user onboarding, puja discovery and booking, dynamic pricing, wallet discounts, and service-provider verification. '
+          'My contributions include developing requirement-driven product features, implementing real-time booking communication using AWS IoT Core and MQTT, integrating Firebase Cloud Messaging, building custom Kundali and Kundali Matching charts using Flutter CustomPainter, and developing Pandit KYC workflows and multilingual experiences. '
+          'The application combines real-time communication, custom UI rendering, and end-to-end booking workflows to deliver a consistent experience across Android and iOS.',
+      category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
         'Dart',
         'GetX',
+        'REST APIs',
         'Dio',
-        'AWS IoT Core (MQTT)',
-        'Firebase (FCM, Crashlytics, Analytics, Remote Config, Performance)',
+        'MQTT using AWS IoT Core',
+        'Firebase Cloud Messaging',
+        'Firebase Crashlytics',
+        'Firebase Analytics',
+        'Firebase Remote Config',
+        'Firebase Performance',
         'Google Places API',
         'CustomPainter',
         'PostHog',
@@ -366,32 +372,39 @@ class SeedData {
         'Git',
       ],
       personalContribution:
-          'Role: Senior Software Engineer | Flutter Developer (May 2025 – Present)\n'
-          '• Built cross-platform application features for users, Pandits, and Astrologers, covering onboarding, authentication, profiles, service discovery, puja booking, and booking management.\n'
-          '• Implemented authentication and account management with phone OTP verification, email verification, password recovery, profile updates, account recovery, and role-based navigation.\n'
-          '• Developed end-to-end puja booking workflows, including dynamic service selection, language preferences, date and time validation, address management, pricing, wallet discounts, and booking submission.\n'
-          '• Integrated real-time booking communication using AWS IoT Core and MQTT, including signed WebSocket URL setup, topic subscriptions, connection lifecycle handling, reconnection logic, and booking event processing.\n'
-          '• Implemented push notification workflows using Firebase Cloud Messaging, custom notification interfaces, and Android/iOS notification configuration; worked on sound and vibration behavior across app states.\n'
-          '• Developed Pandit onboarding and KYC functionality, including Aadhaar image uploads, certificates, reference details, service categories, experience information, service locations, and verification status.\n'
-          '• Built Kundali and Kundali Matching features, including dynamic planetary data, custom horoscope charts using CustomPainter, Dasha details, Gun Milan results, saved records, deletion, and PDF download integration.\n'
-          '• Integrated location-aware and astrology-related services, including Google location suggestions, address autocomplete, Panchang, Muhurat, Choghadiya, horoscope, festivals, Sankalp, Adhyatm, Dharma Shiksha, and blogs.\n'
-          '• Implemented multilingual interfaces for English, Hindi, and Gujarati across relevant booking, onboarding, dashboard, and astrology screens.\n'
-          '• Improved application reliability and release readiness through reusable form validation, API error handling, pagination, Firebase Analytics events, performance traces, environment separation, Git conflict resolution, and Android/iOS build preparation.',
+          '• Analyze product requirements and understand complete feature workflows before implementation, including user journeys, business rules, API dependencies, and edge cases.\n'
+          '• Plan and develop requirement-driven features for users, Pandits, and Astrologers, covering onboarding, authentication, profiles, service discovery, puja booking, and booking management.\n'
+          '• Implement phone OTP authentication, account management, profile updates, password recovery, and role-based navigation.\n'
+          '• Build end-to-end puja booking workflows with service selection, date and time validation, address management, dynamic pricing, and wallet discounts.\n'
+          '• Integrate real-time booking communication using AWS IoT Core and MQTT over Secure WebSockets, including topic subscriptions, connection management, reconnection handling, and booking event processing.\n'
+          '• Implement Firebase Cloud Messaging notifications and custom notification experiences with platform-specific sound and vibration configuration.\n'
+          '• Develop Pandit onboarding and KYC workflows covering Aadhaar uploads, certificates, reference details, experience, service categories, and verification status.\n'
+          '• Implement Kundali and Kundali Matching features, including custom horoscope charts using CustomPainter, Dasha details, Gun Milan results, saved records, and PDF download integration.\n'
+          '• Integrate Google Places and location-aware address features, along with Panchang, Muhurat, Choghadiya, festivals, and other astrology-related content.\n'
+          '• Improve user experience by refining screen flows, form validation, error messages, loading states, navigation, and interaction behavior based on product requirements and feedback.\n'
+          '• Prepare feature builds for QA, review test scenarios and use cases, investigate reported defects, resolve issues, and validate fixes before subsequent testing.\n'
+          '• Coordinate feature readiness and support release activities, including build preparation, deployment checks, and post-release issue investigation.\n'
+          '• Attend team scrum meetings to discuss progress, share updates, communicate blockers, and align implementation with current priorities.\n'
+          '• Maintain reusable components, API error handling, pagination, analytics instrumentation, performance monitoring, and Android/iOS compatibility.',
       challengesAndSolutions:
-          'Challenge: Coordinating real-time dispatch over unstable mobile networks without battery drain, rendering complex Vedic astrology charts smoothly, and preventing token refresh race conditions.\n'
-          'Solution: Architected MQTT over Secure WebSockets with connection lifecycle reconnection on AWS IoT Core, built CustomPainter geometric algorithms for horoscope chart rendering, and implemented a thread-safe Single-Flight Lock Completer in Dio.',
-      verifiedOutcomes: '50+ production releases on Android & iOS, real-time MQTT dispatch, custom astrology chart engine, multilingual support (English/Hindi/Gujarati), and comprehensive KYC verification.',
-      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.officialpanditsnearme',
-      appStoreUrl: 'https://apps.apple.com/in/app/pandits-near-me-instant-puja/id6757301105',
+      'Challenge: Delivering reliable real-time booking alerts over unstable mobile networks, rendering complex Vedic horoscope charts, and handling concurrent authentication token refresh requests.\n\n'
+          'Solution: Implement MQTT over Secure WebSockets with connection lifecycle and reconnection handling, develop custom horoscope chart rendering with Flutter CustomPainter, and coordinate concurrent API requests through single-flight token refresh handling in Dio.',
+      verifiedOutcomes:
+      'Production mobile application available on Android and iOS, featuring real-time booking communication, custom Kundali and Kundali Matching charts, Pandit KYC workflows, and English, Hindi, and Gujarati localization.',
+      playStoreUrl:
+      'https://play.google.com/store/apps/details?id=com.officialpanditsnearme',
+      appStoreUrl:
+      'https://apps.apple.com/in/app/pandits-near-me-instant-puja/id6757301105',
       imageUrl: 'assets/images/project/pandit-near-me.webp',
-      // imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/WpXkFFjJYxueZPCTAq4hUA/648x365bb.webp',
       keyFeatures: [
-        'Real-time booking dispatch powered by AWS IoT Core & MQTT over Secure WebSockets with connection lifecycle reconnection logic',
-        'Dual-sided role workflows for users, verified Pandits, and Vedic Astrologers with dynamic pricing and wallet discounts',
-        'CustomPainter engine rendering high-performance Kundali and Kundali Matching horoscope charts with vector geometry and PDF export',
-        'End-to-end KYC onboarding workflow with secure Aadhaar photo upload and certificate verification',
-        'Multilingual localization across English, Hindi, and Gujarati with zero-downtime updates',
-        '50+ production releases deployed across Google Play Store and Apple App Store with Firebase Crashlytics & telemetry',
+        'Real-time booking alerts using FCM and MQTT over Secure WebSockets.',
+        'Role-based experiences for users, Pandits, and Vedic Astrologers.',
+        'End-to-end puja booking with dynamic pricing and wallet discounts.',
+        'Custom Kundali and Kundali Matching horoscope charts using Flutter CustomPainter.',
+        'Pandit & Astrologers onboarding and KYC verification workflows.',
+        'Firebase Cloud Messaging notifications and analytics integration.',
+        'Location-aware services powered by Google Places.',
+        'English, Hindi, and Gujarati localization.',
       ],
       isFeatured: true,
       isPublished: true,
@@ -401,12 +414,13 @@ class SeedData {
       id: 'proj_pmp_csv_validator',
       slug: 'pmp-csv-validator',
       title: 'PMP CSV Validator',
-      shortDescription: 'Responsive browser-based dataset validation, repair, and mobile simulation suite automating QA for PMP question banks.',
+      shortDescription: 'A Flutter Web QA tool for validating, repairing, and previewing PMP question datasets with Unicode support, LaTeX rendering, and an interactive mobile simulator.',
       fullDescription:
-          'A responsive browser-based dataset validation and repair suite developed in Flutter Web to upload, inspect, validate, correct, and export PMP question datasets. '
-          'Features drag-and-drop CSV uploads, automatic delimiter and text-encoding detection with full Unicode support (Gujarati, Hindi, Sanskrit, special characters), a validation dashboard with error/warning statuses, and bulk Auto-Fix repair for HTML tags, styling, and array formats. '
-          'Includes reusable HTML rendering supporting rich text, nested lists, Base64 images, horizontally scrollable tables, and inline/block LaTeX equations via flutter_math_fork, alongside an interactive mobile simulator with device presets, TRAIN/FLIP cards, and a side-by-side Cell Inspector.',
-      category: 'Flutter Web',
+          'PMP CSV Validator is a browser-based quality assurance tool built with Flutter Web to simplify the validation, correction, and testing of PMP question bank datasets. It enables users to upload CSV files, inspect question content, identify data issues, apply automated fixes, and export corrected datasets through a responsive interface. '
+          'The tool supports automatic delimiter and text-encoding detection, multilingual Unicode content including Gujarati, Hindi, and Sanskrit, and validation dashboards with error, warning, and compatibility statuses. Bulk Auto-Fix functionality helps correct common HTML, styling, and array-format issues. '
+          'It also includes reusable rich-text rendering for nested lists, images, tables, and LaTeX equations, alongside an interactive mobile simulator with device presets, TRAIN/FLIP card previews, and a side-by-side Cell Inspector for comparing source content with its rendered output.',
+      category: 'Website',
+      projectType: 'Professional Project',
       companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
@@ -415,6 +429,7 @@ class SeedData {
         'CSV Parsing',
         'HTML Rendering',
         'flutter_math_fork',
+        'Unicode & Text Encoding',
         'Widget Testing',
         'Python',
         'Web APIs',
@@ -422,23 +437,240 @@ class SeedData {
         'HTML5 BroadcastChannel',
       ],
       personalContribution:
-          'Role: Flutter Developer (Platform: Flutter Web)\n'
-          '• Developed a responsive CSV validation tool to upload, inspect, validate, correct, and export PMP question datasets directly through a browser-based interface.\n'
-          '• Implemented drag-and-drop CSV uploads, automatic delimiter and text-encoding detection, CSV column navigation, and support for Unicode content, including Gujarati, Hindi, Sanskrit, and special characters.\n'
-          '• Built a validation dashboard with error, warning, and app-compatibility statuses, issue summaries, field-level validation, and direct navigation to affected questions.\n'
-          '• Developed bulk Auto-Fix functionality to repair common HTML tag, styling, and array-format issues, with corrected CSV generation and export.\n'
-          '• Created reusable HTML rendering components supporting rich text, nested lists, Base64 images, horizontally scrollable tables, and inline/block LaTeX equations.\n'
-          '• Built an interactive mobile simulator with device presets, custom screen dimensions, question navigation, and TRAIN/FLIP card previews to verify how CSV content renders in the actual Flutter app.\n'
+          'Role: Flutter Developer | Platform: Flutter Web\n\n'
+          '• Developed a responsive browser-based tool to upload, validate, inspect, repair, and export PMP question bank CSV datasets.\n'
+          '• Implemented drag-and-drop file uploads, automatic delimiter and text-encoding detection, CSV column navigation, and multilingual Unicode support.\n'
+          '• Built a validation dashboard with error and warning statuses, app-compatibility checks, issue summaries, and navigation to affected questions.\n'
+          '• Developed bulk Auto-Fix functionality to repair common HTML tag, styling, and array-format issues and generate corrected CSV files.\n'
+          '• Created reusable content-rendering components for rich text, nested lists, Base64 images, horizontally scrollable tables, and inline/block LaTeX equations.\n'
+          '• Built an interactive mobile simulator with device presets, configurable screen dimensions, question navigation, and TRAIN/FLIP card previews.\n'
           '• Implemented a side-by-side Cell Inspector to compare original HTML content with its rendered Flutter preview, including code inspection and copy actions.\n'
-          '• Optimized CSV validation performance through reusable validation patterns and improved responsive layouts across desktop, tablet, and mobile screen sizes.\n'
-          '• Added automated unit and widget tests for CSV validation, HTML rendering, arrays, tables, images, LaTeX formulas, and Auto-Fix functionality; verified the implementation using flutter analyze and flutter test.',
+          '• Improved responsive layouts and validation workflows for desktop, tablet, and mobile browser sizes.\n'
+          '• Added unit and widget tests covering CSV validation, HTML rendering, arrays, tables, images, LaTeX formulas, and Auto-Fix functionality.',
       challengesAndSolutions:
-          'Challenge: Parsing malformed HTML syntax, broken table/list hierarchies, LaTeX equations, and encoding artifacts across massive CSV question banks while accurately previewing on simulated mobile viewports.\n'
-          'Solution: Engineered automated validation rules and bulk Auto-Fix routines for HTML/array remediation, rendered complex math with flutter_math_fork, and built a side-by-side Cell Inspector and multi-device interactive mobile simulator in Flutter Web.',
-      verifiedOutcomes: 'Browser-based CSV dataset QA suite with Unicode/multi-language support, bulk Auto-Fix remediation, LaTeX rendering, side-by-side Cell Inspector, and multi-device mobile simulator with automated test coverage.',
+          'Challenge: Validating large question datasets containing malformed HTML, inconsistent array structures, complex tables, LaTeX equations, and multilingual text while ensuring the content renders correctly on mobile devices.\n\n'
+          'Solution: Developed reusable validation rules and bulk Auto-Fix routines, integrated flutter_math_fork for mathematical expressions, and built an interactive mobile simulator with a side-by-side Cell Inspector to compare source data with its rendered output.',
+      verifiedOutcomes: 'Delivered a browser-based dataset QA tool with multilingual Unicode support, automated data repair, rich-text and LaTeX rendering, a mobile simulation environment, and automated testing.',
+      imageUrl: 'assets/images/project/pmp-csv-validator.webp',
+      keyFeatures: [
+        'CSV upload, validation, correction, and export through a responsive Flutter Web interface.',
+        'Automatic delimiter and text-encoding detection with multilingual Unicode support.',
+        'Validation dashboard with error, warning, and app-compatibility checks.',
+        'Bulk Auto-Fix for common HTML, styling, and array-format issues.',
+        'Rich-text rendering for nested lists, images, tables, and LaTeX equations.',
+        'Interactive mobile simulator with device presets and TRAIN/FLIP previews.',
+        'Side-by-side Cell Inspector for source HTML and rendered content comparison.',
+        'Unit and widget tests for core validation and rendering workflows.',
+      ],
       isFeatured: true,
       isPublished: true,
       orderIndex: 1,
+    ),
+    const Project(
+      id: 'proj_artha_finance_tracker',
+      slug: 'artha-finance-tracker',
+      title: 'Artha - Finance Tracker',
+      shortDescription: 'An offline personal finance app to track expenses, income, savings, loans, gold, and financial goals.',
+      fullDescription: 'Artha (अर्थ) is an offline-first personal finance and wealth tracking application built with Flutter. It helps users manage income and expenses, plan EMI payments, track savings goals, monitor physical and digital gold investments, and manage monthly budgets. The application provides financial reports, net worth calculations, recurring transaction rules, and JSON/CSV backup and restore functionality. Designed with privacy in mind, it stores financial data locally without requiring user authentication, a backend server, or cloud database. The application supports Android, iOS, Windows, macOS, Linux, and Flutter Web.',
+      category: 'Mobile & Web',
+      projectType: 'Personal Project',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'Local Storage',
+        'Offline-First Architecture',
+        'JSON',
+        'CSV',
+        'Data Visualization',
+        'Flutter Web',
+      ],
+      imageUrl: 'assets/images/project/artha-finance-tracker.webp',
+      thumbnailUrl: 'assets/images/project/artha-finance-tracker.webp',
+      galleryUrls: ['assets/images/project/artha-finance-tracker.webp'],
+      personalContribution: 'Independently designed and developed the Artha finance tracker using Flutter. Implemented local financial data management, income and expense tracking, EMI calculations, savings goals, gold investment tracking, category budgets, recurring transaction rules, financial analytics, and data backup and restore features.',
+      challengesAndSolutions: 'Challenge: Maintaining accurate financial calculations while managing multiple asset types, recurring transactions, EMI payments, and savings allocations entirely offline. Solution: Implemented structured local data management, consistent financial calculation rules, duplicate prevention for recurring transactions, and JSON/CSV backup and restore functionality.',
+      verifiedOutcomes: 'Published a live Flutter Web demo on GitHub Pages. Built as a personal, offline-first finance application with local data storage and no required backend or authentication.',
+      githubUrl: 'https://github.com/dev-dhruvi/finance_tracker',
+      demoUrl: 'https://dev-dhruvi.github.io/finance_tracker/',
+      isFeatured: true,
+      isPublished: true,
+      isStatusActive: true,
+      orderIndex: 2,
+      keyFeatures: [
+        'Track income, expenses, and custom categories',
+        'Plan EMI payments and manage loan installments',
+        'Set savings goals and monitor financial progress',
+        'Track physical and digital gold investments',
+        'Manage monthly category budgets',
+        'Automate recurring income and expenses without duplicate records',
+        'View spending reports, financial analytics, and estimated net worth',
+        'Export and restore financial data using JSON and CSV',
+        'Offline-first data storage with no required backend or telemetry',
+        'Cross-platform support for mobile, desktop, and web',
+      ],
+    ),
+    const Project(
+      id: 'proj_healthi_indian',
+      slug: 'the-healthi-indian',
+      title: 'The Healthi Indian',
+      shortDescription: 'Health and nutrition app offering macro-balanced vegetarian and vegan recipes.',
+      fullDescription: 'A specialized health and nutrition platform offering curated, macro-balanced vegetarian and vegan recipes. Migrated application state management from setState to GetX for improved responsiveness and maintainability. Completely redesigned the user interface, resolved critical splash screen startup issues, integrated backend REST APIs, and utilized SharedPreferences for local caching of recently viewed recipes. Enhanced user engagement with real-time search and filter capabilities and deployed production builds to both Google Play Store and Apple App Store.',
+      category: 'Mobile App',
+      projectType: 'Client Project',
+      companyName: 'Dinjan Infotech',
+      technologies: [
+        'Flutter',
+        'GetX',
+        'REST API',
+        'SharedPreferences',
+        'Android',
+        'iOS',
+      ],
+      personalContribution: 'Architected the migration to GetX, resolved UI freeze issues on launch, integrated recipe search and filter APIs, and deployed to app stores.',
+      challengesAndSolutions: 'Challenge: Laggy recipe list filtering and persistent splash screen delays. Solution: Refactored data fetching into GetX workers and implemented cached local storage with SharedPreferences.',
+      verifiedOutcomes:
+      'Successfully published on Google Play Store & Apple App Store.',
+      imageUrl: 'assets/images/project/the-healthi-indian.webp',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.thehealthiindian',
+      appStoreUrl:
+      'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 3,
+      keyFeatures: [
+        'Personalized meal suggestions tailored to individual fitness and nutritional goals',
+        'A wide range of healthy vegetarian and vegan recipes, optimized for balanced macronutrient intake',
+        'Simple, user-friendly interface with category filters to help users find meals suited to their lifestyle',
+        'Complete privacy—no account creation or personal data collection needed to use the app',
+      ],
+    ),
+    const Project(
+      id: 'proj_radio_spice',
+      slug: 'radio-spice',
+      title: 'Radio Spice',
+      shortDescription: 'Radio streaming app with background audio playback, social integrations, and push alerts.',
+      fullDescription: 'A modern live radio streaming mobile application engineered with Flutter and GetX. Features continuous background audio playback, seamless YouTube video player integration, direct WhatsApp contact links, embedded WebViews for community programming, and Firebase Cloud Messaging for instant broadcast notifications.',
+      category: 'Mobile App',
+      projectType: 'Client Project',
+      companyName: 'Dinjan Infotech',
+      technologies: [
+        'Flutter',
+        'GetX',
+        'Audio Playback',
+        'Firebase FCM',
+        'WebView',
+        'Android',
+        'iOS',
+      ],
+      personalContribution: 'Built static audio streaming pipelines, integrated Firebase notifications for show announcements, and created responsive media player controls.',
+      challengesAndSolutions: 'Challenge: Handling audio playback transitions during incoming calls and app minimization. Solution: Implemented audio focus listeners and foreground service controllers.',
+      verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
+      imageUrl: 'assets/images/project/radio-spice-nz.webp',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.nzealand.radioSpice',
+      appStoreUrl:
+      'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 4,
+      keyFeatures: [
+        '▶️ Audio Playback with Play/Pause control',
+        '🌐 WebView Integration for in-app browsing',
+        '📞 Contact Us Screen with Email and Ad Inquiry options',
+        '📲 WhatsApp Integration to send quick messages',
+        '📹 YouTube Access via embedded video support',
+        '🔔 Push Notifications powered by Firebase',
+      ],
+    ),
+    const Project(
+      id: 'proj_agents_thrive',
+      slug: 'agents-thrive',
+      title: 'Agents Thrive',
+      shortDescription: 'Real estate agent productivity app featuring DocuSign e-signatures, PDF handling, and calendar sync.',
+      fullDescription: 'A high-efficiency productivity mobile app for licensed real estate agents built using FlutterFlow and custom Flutter code. Features secure enterprise authentication, DocuSign document signing integration, in-app PDF previewing and annotation, productivity task tracking, and two-way calendar synchronization.',
+      category: 'Mobile App',
+      projectType: 'Client Project',
+      companyName: 'Dinjan Infotech',
+      technologies: [
+        'FlutterFlow',
+        'Flutter',
+        'DocuSign API',
+        'PDF Handling',
+        'Calendar Sync',
+      ],
+      personalContribution: 'Implemented secure login workflows, DocuSign embedded signing sessions, PDF document rendering, and native calendar synchronization.',
+      challengesAndSolutions: 'Challenge: Embedding DocuSign signing ceremonies within a smooth webview without losing mobile authentication tokens. Solution: Configured OAuth callback interceptors.',
+      verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
+      imageUrl: 'assets/images/project/thrive-ai.webp',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.kwneworleans.app',
+      appStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 5,
+      keyFeatures: [
+        'AI Integration: Get instant advice and support with ChatGPT',
+        'Secure Login: Seamless access through Firebase Authentication',
+        'Smart Document Handling: Manage and send agreements with built-in DocuSign integration',
+        'Productivity Tools: Real-time updates, calendar sync, and networking features keep agents informed and connected',
+      ],
+    ),
+    const Project(
+      id: 'proj_fineaway',
+      slug: 'fineaway',
+      title: 'Fine Away (Pty) Ltd.',
+      shortDescription: 'License renewal utility app with automated OCR text scanning and cross-platform support.',
+      fullDescription: 'A mobile utility application streamlining driving and business license renewals. Features optical character recognition (OCR) camera scanning to automatically read and populate document details, reducing manual typing errors. Maintained high performance across Android and iOS platforms.',
+      category: 'Mobile App',
+      projectType: 'Client Project',
+      companyName: 'White Orange Software',
+      technologies: [
+        'Flutter',
+        'GetX',
+        'Text Recognition (OCR)',
+        'Android',
+        'iOS',
+      ],
+      personalContribution: 'Maintained and extended codebase, integrated camera-based text scanning for instant form auto-fill, and fixed cross-platform layout discrepancies.',
+      challengesAndSolutions: 'Challenge: Scanning accuracy under poor lighting conditions. Solution: Added edge-detection preprocessing and fallback manual confirmation steps.',
+      verifiedOutcomes: 'Available on Google Play Store & Apple App Store.',
+      imageUrl: 'assets/images/project/fineaway.webp',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.fineaway',
+      appStoreUrl: 'https://apps.apple.com/us/app/fineaway-app/id6467185920',
+      isFeatured: true,
+      isPublished: true,
+      orderIndex: 6,
+      keyFeatures: [
+        'Renewal Reminders: Notifies users before license expiry to avoid fines',
+        'Text Scanning: Auto-detects and extracts data from license discs',
+        'User-Friendly Interface: Simplifies license submission and tracking',
+        'Stable Infrastructure: Ensures a reliable and responsive app experience',
+        'Secure Data Handling: Keeps user and vehicle info safe',
+      ],
+    ),
+    const Project(
+      id: 'proj_adroit_wealth_mgmt',
+      slug: 'adroit-vantage-wealth-management',
+      title: 'Wealth Management 2.0',
+      shortDescription: 'Stock trading and portfolio enhancement app with push alerts, calendar events, and real-time chat.',
+      fullDescription: 'Stock trading and investment management app. Enhanced core app stability by fixing legacy chat bugs, implementing market event calendar reminders, and integrating Firebase push notifications for instant stock volatility alerts.',
+      category: 'Mobile App',
+      projectType: 'Professional Project',
+      companyName: 'White Orange Software',
+      technologies: [
+        'Flutter',
+        'REST APIs',
+        'Push Notifications',
+        'Firebase',
+        'Play Store',
+        'App Store',
+      ],
+      personalContribution: 'Resolved chat messaging synchronization issues, connected calendar reminder events, and deployed release builds to store consoles.',
+      challengesAndSolutions: 'Challenge: Real-time stock alerts not triggering while app was closed. Solution: Replaced polling with FCM high-priority data payloads.',
+      verifiedOutcomes: 'Deployed to Google Play & Apple App Store.',
+      appStoreUrl:
+      'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
+      imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/b0/d1/44/b0d144e8-fedc-befd-0868-f5bd0a5e2aaf/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.jpg',
+      isFeatured: true,
+      orderIndex: 7,
     ),
     const Project(
       id: 'proj_pmp_exam_prep',
@@ -446,7 +678,8 @@ class SeedData {
       title: 'PMP Exam Prep',
       shortDescription: 'Comprehensive certification exam simulator with interactive quizzes, referral deep linking, and performance tracking.',
       fullDescription: 'A specialized professional certification preparation application engineered in Flutter and GetX. Features interactive quiz modes with timed examinations, question bookmarking, answer explanations, attempt tracking, and performance analytics. Integrates referral deep linking with intent preservation, guest vs. premium tiered access control with subscription paywalls, native ad lifecycle management, and smooth responsive animations across mobile viewports.',
-      category: 'EdTech',
+      category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
@@ -473,10 +706,10 @@ class SeedData {
           'Solution: Refactored GetX controller lifecycle bindings, decoupled scroll listeners, and implemented defensive ad instance cleanup on view disposal.',
       verifiedOutcomes: 'Interactive certification quiz engine with full attempt analytics, referral deep linking, and smooth ad monetization.',
       isFeatured: true,
-      isPublished: true,
+      isPublished: false,
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.pmp.examprep",
-      orderIndex: 2,
+      orderIndex: 8,
     ),
     const Project(
       id: 'proj_nirvana',
@@ -484,7 +717,8 @@ class SeedData {
       title: 'My Nirvana Portal',
       shortDescription: 'Real estate discovery and unit booking platform featuring live pricing, multi-step purchase flows, and an embedded chatbot.',
       fullDescription: 'A premier real estate and property exploration application built with Flutter. Enables prospective buyers to explore architectural projects, zone layouts, and specific unit availability with real-time dynamic pricing. Implements a multi-step property purchase flow from unit reservation to legal agreement review, down-payment computation, PDF document inspection, terms and conditions bottom sheets, and an AI chatbot assistant embedded directly on the home dashboard.',
-      category: 'PropTech',
+      category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
@@ -510,11 +744,48 @@ class SeedData {
           'Solution: Engineered reactive view models with layout builders adapting to landscape tablets, and integrated legal contract PDF rendering directly in-app.',
       verifiedOutcomes: 'End-to-end property purchase engine with interactive PDF agreements, live unit reservation status, and iOS TestFlight deployment.',
       isFeatured: true,
-      isPublished: true,
+      isPublished: false,
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.cscp.mynirvana",
       appStoreUrl: "https://apps.apple.com/my/app/my-nirvana/id1555172257",
-      orderIndex: 3,
+      orderIndex: 9,
+    ),
+    const Project(
+      id: 'proj_locago',
+      slug: 'locago-location-demo',
+      title: 'LocaGo',
+      shortDescription: 'A Flutter utility app for device phone number access, GPS-based location detection, and Google Maps integration.',
+      fullDescription: 'LocaGo is a personal Flutter demo project that explores device information, GPS-based location detection, and interactive Google Maps integration through a simple, navigable interface. The app demonstrates retrieving a device phone number when supported by the device and operating system, automatically filling a location field using GPS, and displaying the current location on an interactive map. Built with Flutter 3.29.3, the project showcases mobile device capabilities and location-based functionality.',
+      category: 'Mobile App',
+      projectType: 'Personal Project',
+      companyName: '',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'Google Maps',
+        'Geolocation',
+        'Device Info',
+        'Location Services',
+      ],
+      imageUrl: 'assets/images/project/locago.webp',
+      thumbnailUrl: 'assets/images/project/locago.webp',
+      galleryUrls: ['assets/images/project/locago.webp'],
+      personalContribution: 'Independently developed the Flutter demo application, implemented device phone number retrieval where supported, integrated GPS-based current location detection, and created an interactive Google Maps sample screen.',
+      challengesAndSolutions: 'Challenge: Accessing device-specific information and obtaining accurate location data across supported platforms. Solution: Integrated device information and location services with a straightforward UI to demonstrate available phone number data, current location retrieval, and map interactions.',
+      verifiedOutcomes: 'Developed a navigable Flutter demonstration of phone number access, GPS location detection, and Google Maps integration. Source code is available on GitHub.',
+      githubUrl: 'https://github.com/dev-dhruvi/location-demo',
+      isFeatured: false,
+      isPublished: true,
+      isStatusActive: true,
+      orderIndex: 10,
+      keyFeatures: [
+        'Retrieve the device phone number when accessible',
+        'Fetch the current location using GPS',
+        'Automatically populate a location field',
+        'View current location on Google Maps',
+        'Interact with map features through a dedicated demo screen',
+        'Simple and easy-to-navigate Flutter UI',
+      ],
     ),
     const Project(
       id: 'proj_reutbyitforme',
@@ -522,7 +793,8 @@ class SeedData {
       title: 'Reut, buy me',
       shortDescription: 'Modernization of a legacy Flutter app from Flutter 3.10 to 3.32 with modern InAppWebView, FCM, and Android Gradle upgrade.',
       fullDescription: 'An extensive legacy modernization project upgrading an enterprise mobile app from Flutter 3.10 to Flutter 3.32. Resolved breaking API deprecations, modernized null-safety constraints across all packages, upgraded Firebase Cloud Messaging to modern background/tap workflows, refactored webview interactions to flutter_inappwebview with external browser routing, and updated Android Gradle Plugin, namespace declarations, and Android embedding standards for production stability.',
-      category: 'App Migration',
+      category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter (3.10 to 3.32)',
@@ -548,9 +820,9 @@ class SeedData {
           'Solution: Systematically resolved dependency trees, migrated to modern Android v2 embedding with AGP namespaces, and implemented flutter_inappwebview WebUri routing with external URL dispatch.',
       verifiedOutcomes: 'Successful migration from Flutter 3.10 to 3.32, modern push notification pipeline, and updated Android Gradle toolchain.',
       isFeatured: false,
-      isPublished: true,
+      isPublished: false,
       playStoreUrl: "https://play.google.com/store/apps/details?id=com.reuttomer.reut_buy_it_for_me",
-      orderIndex: 4,
+      orderIndex: 11,
     ),
     const Project(
       id: 'proj_milos_paddle',
@@ -558,7 +830,8 @@ class SeedData {
       title: 'Milos Padel',
       shortDescription: 'Sports reservation mobile app supporting multi-court booking, dynamic time-slot pricing, and integrated payments.',
       fullDescription: 'A modern sports court booking mobile application tailored for paddle sports enthusiasts. Supports flexible multi-court scheduling allowing players to select concurrent courts and multi-hour time slots. Integrates live availability checks, automated multi-slot pricing algorithms, payment gateway processing, and resolution of Android Gradle/Kotlin compatibility hurdles.',
-      category: 'Sports & Booking',
+      category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
@@ -581,11 +854,11 @@ class SeedData {
           'Solution: Designed stateful selection grids with real-time cost accumulation, and updated Gradle Kotlin DSL configurations for clean APK builds.',
       verifiedOutcomes: 'Multi-court booking engine with dynamic time-slot reservation and streamlined payment checkout.',
       isFeatured: false,
-      isPublished: true,
+      isPublished: false,
       playStoreUrl:
           "https://play.google.com/store/apps/details?id=com.milos.padel",
       appStoreUrl: "https://apps.apple.com/id/app/milos-padel/id6737511643",
-      orderIndex: 5,
+      orderIndex: 12,
     ),
     const Project(
       id: 'proj_minder',
@@ -593,7 +866,8 @@ class SeedData {
       title: 'Minder App',
       shortDescription: 'Mobile authentication validation, network diagnostics, and backend integration QA for production stability.',
       fullDescription: 'A quality assurance and backend integration engineering engagement for the Minder mobile application. Focused on verifying user onboarding, registration, and authentication API contracts against production and staging backends. Conducted network latency investigations, timeout profiling, and root-cause analysis for API discrepancies.',
-      category: 'QA & Diagnostics',
+      category: 'Mobile App',
+      projectType: 'Professional Project',
       companyName: 'Logix Built Solutions Limited',
       technologies: [
         'Flutter',
@@ -614,80 +888,9 @@ class SeedData {
           'Solution: Built diagnostic logging interceptors, mapped request/response discrepancies between dev and prod environments, and delivered actionable bug reports to backend teams.',
       verifiedOutcomes: 'Resolved authentication bottlenecks and improved cross-environment API reliability.',
       isFeatured: false,
-      isPublished: true,
-      playStoreUrl:
-          "https://play.google.com/store/apps/details?id=com.minder_app",
-      orderIndex: 6,
-    ),
-    const Project(
-      id: 'proj_healthi_indian',
-      slug: 'the-healthi-indian',
-      title: 'The Healthi Indian',
-      shortDescription: 'Health and nutrition app offering macro-balanced vegetarian and vegan recipes.',
-      fullDescription: 'A specialized health and nutrition platform offering curated, macro-balanced vegetarian and vegan recipes. Migrated application state management from setState to GetX for improved responsiveness and maintainability. Completely redesigned the user interface, resolved critical splash screen startup issues, integrated backend REST APIs, and utilized SharedPreferences for local caching of recently viewed recipes. Enhanced user engagement with real-time search and filter capabilities and deployed production builds to both Google Play Store and Apple App Store.',
-      category: 'Mobile App',
-      companyName: 'Dinjan Infotech',
-      technologies: [
-        'Flutter',
-        'GetX',
-        'REST API',
-        'SharedPreferences',
-        'Android',
-        'iOS',
-      ],
-      personalContribution: 'Architected the migration to GetX, resolved UI freeze issues on launch, integrated recipe search and filter APIs, and deployed to app stores.',
-      challengesAndSolutions: 'Challenge: Laggy recipe list filtering and persistent splash screen delays. Solution: Refactored data fetching into GetX workers and implemented cached local storage with SharedPreferences.',
-      verifiedOutcomes:
-          'Successfully published on Google Play Store & Apple App Store.',
-      imageUrl: 'assets/images/project/the-healthi-indian.webp',
-      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.app.thehealthiindian',
-      appStoreUrl:
-          'https://apps.apple.com/us/app/the-healthi-indian/id6738694566',
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 7,
-      keyFeatures: [
-        'Personalized meal suggestions tailored to individual fitness and nutritional goals',
-        'A wide range of healthy vegetarian and vegan recipes, optimized for balanced macronutrient intake',
-        'Simple, user-friendly interface with category filters to help users find meals suited to their lifestyle',
-        'Complete privacy—no account creation or personal data collection needed to use the app',
-      ],
-    ),
-    const Project(
-      id: 'proj_radio_spice',
-      slug: 'radio-spice',
-      title: 'Radio Spice',
-      shortDescription: 'Radio streaming app with background audio playback, social integrations, and push alerts.',
-      fullDescription: 'A modern live radio streaming mobile application engineered with Flutter and GetX. Features continuous background audio playback, seamless YouTube video player integration, direct WhatsApp contact links, embedded WebViews for community programming, and Firebase Cloud Messaging for instant broadcast notifications.',
-      category: 'Mobile App',
-      companyName: 'Dinjan Infotech',
-      technologies: [
-        'Flutter',
-        'GetX',
-        'Audio Playback',
-        'Firebase FCM',
-        'WebView',
-        'Android',
-        'iOS',
-      ],
-      personalContribution: 'Built static audio streaming pipelines, integrated Firebase notifications for show announcements, and created responsive media player controls.',
-      challengesAndSolutions: 'Challenge: Handling audio playback transitions during incoming calls and app minimization. Solution: Implemented audio focus listeners and foreground service controllers.',
-      verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
-      imageUrl: 'assets/images/project/radio-spice-nz.webp',
-      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.nzealand.radioSpice',
-      appStoreUrl:
-          'https://apps.apple.com/in/app/radio-spice-nzpmt/id6737826716',
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 8,
-      keyFeatures: [
-        '▶️ Audio Playback with Play/Pause control',
-        '🌐 WebView Integration for in-app browsing',
-        '📞 Contact Us Screen with Email and Ad Inquiry options',
-        '📲 WhatsApp Integration to send quick messages',
-        '📹 YouTube Access via embedded video support',
-        '🔔 Push Notifications powered by Firebase',
-      ],
+      isPublished: false,
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.minder_app",
+      orderIndex: 13,
     ),
     const Project(
       id: 'proj_finpin',
@@ -695,7 +898,8 @@ class SeedData {
       title: 'FinPin',
       shortDescription: 'Personal finance and target tracking app with Google & Apple authentication and visual timelines.',
       fullDescription: 'A personal finance tracking application built with FlutterFlow and Firebase backend. Enables users to monitor income, categorize daily expenses, visualize savings trajectories across weekly, monthly, and yearly timelines, and establish custom financial milestone targets. Supports seamless Google and Apple single sign-on.',
-      category: 'FlutterFlow',
+      category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'Dinjan Infotech',
       technologies: [
         'FlutterFlow',
@@ -709,39 +913,7 @@ class SeedData {
       verifiedOutcomes: 'Available on the Apple App Store.',
       isFeatured: false,
       isPublished: false,
-      orderIndex: 9,
-    ),
-    const Project(
-      id: 'proj_agents_thrive',
-      slug: 'agents-thrive',
-      title: 'Agents Thrive',
-      shortDescription: 'Real estate agent productivity app featuring DocuSign e-signatures, PDF handling, and calendar sync.',
-      fullDescription: 'A high-efficiency productivity mobile app for licensed real estate agents built using FlutterFlow and custom Flutter code. Features secure enterprise authentication, DocuSign document signing integration, in-app PDF previewing and annotation, productivity task tracking, and two-way calendar synchronization.',
-      category: 'FlutterFlow',
-      companyName: 'Dinjan Infotech',
-      technologies: [
-        'FlutterFlow',
-        'Flutter',
-        'DocuSign API',
-        'PDF Handling',
-        'Calendar Sync',
-      ],
-      personalContribution: 'Implemented secure login workflows, DocuSign embedded signing sessions, PDF document rendering, and native calendar synchronization.',
-      challengesAndSolutions: 'Challenge: Embedding DocuSign signing ceremonies within a smooth webview without losing mobile authentication tokens. Solution: Configured OAuth callback interceptors.',
-      verifiedOutcomes: 'Deployed to Google Play Store & Apple App Store.',
-      imageUrl: 'https://play-lh.googleusercontent.com/e4S7aIZ7LsghP2NF4GJWnNb6Csfy5h5ZGlQ53Xujy7k4u-cvV1pUSIWwBU6rEtyhgeYrcFAH1TYYqu1vNoxp=w832-h470-rw',
-      playStoreUrl:
-          'https://play.google.com/store/apps/details?id=com.kwneworleans.app',
-      appStoreUrl: 'https://apps.apple.com/us/app/thriveai/id6739500812',
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 10,
-      keyFeatures: [
-        'AI Integration: Get instant advice and support with ChatGPT',
-        'Secure Login: Seamless access through Firebase Authentication',
-        'Smart Document Handling: Manage and send agreements with built-in DocuSign integration',
-        'Productivity Tools: Real-time updates, calendar sync, and networking features keep agents informed and connected',
-      ],
+      orderIndex: 14,
     ),
     const Project(
       id: 'proj_disporata',
@@ -750,6 +922,7 @@ class SeedData {
       shortDescription: 'Location-based social discovery app featuring Google Places integration and proximity calculations.',
       fullDescription: 'A location-aware social networking app built with Flutter and FlutterFlow. Includes secure automated login, detailed profile onboarding with Google Places autocomplete, real-time geodistance calculations, and dynamic nearby user discovery feeds.',
       category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'Dinjan Infotech',
       technologies: [
         'Flutter',
@@ -763,8 +936,8 @@ class SeedData {
       verifiedOutcomes: 'Dynamic location-based discovery platform.',
       imageUrl: 'https://media.cakeresume.com/image/upload/s--tPqPaP6w--/c_pad,fl_png8,h_288,w_384/v1746081099/yqohmx2abva4ffkxps9i.png',
       isFeatured: false,
-      isPublished: true,
-      orderIndex: 11,
+      isPublished: false,
+      orderIndex: 15,
       keyFeatures: [
         'Seamless phone number authentication with auto-login and SMS verification',
         'Profile creation with home/host country and town using Google Places API',
@@ -780,6 +953,7 @@ class SeedData {
       shortDescription: 'Motivational quotes app featuring scheduled notifications, dark/light themes, and bilingual support.',
       fullDescription: 'A daily motivational mobile app designed to inspire goal achievement. Features curated quote categories, REST API synchronization, background scheduled push notifications, dynamic localization supporting English and Dutch, and a polished dark and light theme switch.',
       category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'Dinjan Infotech',
       technologies: [
         'Flutter',
@@ -793,50 +967,18 @@ class SeedData {
       verifiedOutcomes:
           'Multi-lingual production deployment with dark/light themes.',
       isFeatured: true,
-      isPublished: true,
-      orderIndex: 12,
+      isPublished: false,
+      orderIndex: 16,
     ),
-    const Project(
-      id: 'proj_fineaway',
-      slug: 'fineaway',
-      title: 'Fine Away (Pty) Ltd.',
-      shortDescription: 'License renewal utility app with automated OCR text scanning and cross-platform support.',
-      fullDescription: 'A mobile utility application streamlining driving and business license renewals. Features optical character recognition (OCR) camera scanning to automatically read and populate document details, reducing manual typing errors. Maintained high performance across Android and iOS platforms.',
-      category: 'Mobile App',
-      companyName: 'White Orange Software',
-      technologies: [
-        'Flutter',
-        'GetX',
-        'Text Recognition (OCR)',
-        'Android',
-        'iOS',
-      ],
-      personalContribution: 'Maintained and extended codebase, integrated camera-based text scanning for instant form auto-fill, and fixed cross-platform layout discrepancies.',
-      challengesAndSolutions: 'Challenge: Scanning accuracy under poor lighting conditions. Solution: Added edge-detection preprocessing and fallback manual confirmation steps.',
-      verifiedOutcomes: 'Available on Google Play Store & Apple App Store.',
-      imageUrl: 'https://play-lh.googleusercontent.com/C4hcEoBm5ra-qtwAmVV2rkg5RR7ZccsAz5Tv_IS8j2ETaDr2jB-oBjgkTJFQZLpmbr1c0IC38SuQBpKKj12_TQ=w832-h470-rw',
-      playStoreUrl:
-          'https://play.google.com/store/apps/details?id=com.app.fineaway',
-      appStoreUrl: 'https://apps.apple.com/us/app/fineaway-app/id6467185920',
-      isFeatured: true,
-      isPublished: true,
-      orderIndex: 13,
-      keyFeatures: [
-        'Renewal Reminders: Notifies users before license expiry to avoid fines',
-        'Text Scanning: Auto-detects and extracts data from license discs',
-        'User-Friendly Interface: Simplifies license submission and tracking',
-        'Stable Infrastructure: Ensures a reliable and responsive app experience',
-        'Secure Data Handling: Keeps user and vehicle info safe',
-      ],
-    ),
+
     const Project(
       id: 'proj_muvr-user',
       slug: 'muvr-user-app',
       title: 'Muvr User App',
-      shortDescription:
-          'On-demand moving and logistics platform with dedicated User App.',
+      shortDescription: 'On-demand moving and logistics platform with dedicated User App.',
       fullDescription: 'An on-demand logistics booking application connecting customers with professional moving service providers. Developed both the User App and Mover App using Flutter and GetX. Managed responsive layouts across all device sizes, mentored junior engineers on state management best practices, and maintained production stability.',
       category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'White Orange Software',
       technologies: [
         'Flutter',
@@ -849,21 +991,20 @@ class SeedData {
       personalContribution: 'Engineered booking request workflows, mentored junior team members on clean code conventions, resolved layout issues, and prepared dual store deployments.',
       challengesAndSolutions: 'Challenge: Dual application role synchronization between customer booking and mover acceptance. Solution: Implemented atomic status state transitions in GetX controllers.',
       verifiedOutcomes: 'Four published store apps: Muvr User App (Play Store & App Store) and Muvr Mover App (Play Store & App Store).',
-      appStoreUrl:
-          'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
+      appStoreUrl: 'https://apps.apple.com/us/app/muvr-request-movers/id6450030781',
       imageUrl: 'assets/images/project/muvr_user_bg.webp',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 14,
+      orderIndex: 17,
     ),
     const Project(
       id: 'proj_muvr',
       slug: 'muvr',
       title: 'Muvr Mover App',
-      shortDescription:
-          'On-demand moving and logistics platform with dedicated Mover App.',
+      shortDescription: 'On-demand moving and logistics platform with dedicated Mover App.',
       fullDescription: 'An on-demand logistics booking application connecting customers with professional moving service providers. Developed both the User App and Mover App using Flutter and GetX. Managed responsive layouts across all device sizes, mentored junior engineers on state management best practices, and maintained production stability.',
       category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'White Orange Software',
       technologies: [
         'Flutter',
@@ -881,32 +1022,7 @@ class SeedData {
       imageUrl: 'assets/images/project/mover_move_bg.webp',
       isFeatured: true,
       isPublished: true,
-      orderIndex: 15,
-    ),
-    const Project(
-      id: 'proj_adroit_wealth_mgmt',
-      slug: 'adroit-vantage-wealth-management',
-      title: 'Wealth Management 2.0',
-      shortDescription: 'Stock trading and portfolio enhancement app with push alerts, calendar events, and real-time chat.',
-      fullDescription: 'Stock trading and investment management app. Enhanced core app stability by fixing legacy chat bugs, implementing market event calendar reminders, and integrating Firebase push notifications for instant stock volatility alerts.',
-      category: 'Mobile App',
-      companyName: 'White Orange Software',
-      technologies: [
-        'Flutter',
-        'REST APIs',
-        'Push Notifications',
-        'Firebase',
-        'Play Store',
-        'App Store',
-      ],
-      personalContribution: 'Resolved chat messaging synchronization issues, connected calendar reminder events, and deployed release builds to store consoles.',
-      challengesAndSolutions: 'Challenge: Real-time stock alerts not triggering while app was closed. Solution: Replaced polling with FCM high-priority data payloads.',
-      verifiedOutcomes: 'Deployed to Google Play & Apple App Store.',
-      appStoreUrl:
-          'https://apps.apple.com/us/app/wealth-management-2-0/id1672260039',
-      imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/b0/d1/44/b0d144e8-fedc-befd-0868-f5bd0a5e2aaf/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.jpg',
-      isFeatured: true,
-      orderIndex: 16,
+      orderIndex: 18,
     ),
     const Project(
       id: 'proj_adroit_avsocial',
@@ -914,16 +1030,16 @@ class SeedData {
       title: 'AV Social',
       shortDescription: 'Internal social networking app with live feeds, real-time chat, interactive polls, and news modules.',
       fullDescription: 'An enterprise social networking application designed for organizational collaboration. Features a real-time activity feed, peer-to-peer chat, participatory employee polls, multimedia sharing, and news dissemination modules. Persists offline data using fast Hive NoSQL database.',
-      category: 'Social Networking',
+      category: 'Mobile App',
+      projectType: 'Professional Project',
       companyName: 'White Orange Software',
       technologies: ['Flutter', 'Hive DB', 'REST APIs', 'Jira', 'Git'],
       personalContribution: 'Developed live feed widgets, chat message components, poll voting calculations, and integrated local caching with Hive DB.',
       challengesAndSolutions: 'Challenge: High-throughput chat messages causing frequent rebuilds. Solution: Scoped widget rebuilds to individual chat bubble state controllers.',
-      verifiedOutcomes:
-          'Collaborative enterprise platform with offline persistence.',
+      verifiedOutcomes: 'Collaborative enterprise platform with offline persistence.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 17,
+      orderIndex: 19,
     ),
     const Project(
       id: 'proj_adroit_lc_banker',
@@ -932,6 +1048,7 @@ class SeedData {
       shortDescription: 'Wealth management and banking application featuring interactive financial charts and calendar scheduling.',
       fullDescription: 'Part of the Adroit Vantage enterprise financial suite. LC Banker provides financial wealth managers with responsive analytics dashboards, interactive financial yield graphs, calendar scheduling for client portfolio reviews, and secure REST API integrations powered by GetX state management.',
       category: 'Mobile App',
+      projectType: 'Professional Project',
       companyName: 'White Orange Software',
       technologies: [
         'Flutter',
@@ -946,7 +1063,7 @@ class SeedData {
       imageUrl: 'https://media.cakeresume.com/image/upload/s--7U5mpGz0--/c_pad,fl_png8,h_288,w_384/v1746093250/ebf7gcahzw7bf7jywmiq.png',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 18,
+      orderIndex: 20,
       keyFeatures: [
         'Secure chatbox for real-time communication',
         'Built-in task manager for priority handling',
@@ -962,7 +1079,8 @@ class SeedData {
       title: 'Mdsty',
       shortDescription: 'German e-commerce mobile application featuring MVC architecture, localized UI, and checkout flows.',
       fullDescription: 'A dedicated e-commerce mobile app crafted for the German retail market. Built on structured MVC architecture with clean REST API integration, multi-language localization (German & English), frictionless product discovery, payment gateway integration, and real-time order tracking.',
-      category: 'E-Commerce',
+      category: 'Mobile App',
+      projectType: 'Client Project',
       companyName: 'White Orange Software',
       technologies: [
         'Flutter',
@@ -977,7 +1095,7 @@ class SeedData {
           'Production retail app for international European market.',
       isFeatured: false,
       isPublished: true,
-      orderIndex: 19,
+      orderIndex: 21,
     ),
     const Project(
       id: 'proj_simple_sqlite_crud',
@@ -985,7 +1103,8 @@ class SeedData {
       title: 'SQLite CRUD App',
       shortDescription: 'A lightweight Flutter app demonstrating product CRUD operations using a local SQLite database.',
       fullDescription: 'A personal Flutter project demonstrating complete CRUD (Create, Read, Update, Delete) functionality using a local SQLite database. The application allows users to add new products, view saved product records, update existing product details, and delete products. Built with Flutter and the sqflite package, the project demonstrates local database integration, structured data handling, and simple state management without requiring a remote backend.',
-      category: 'Personal Project',
+      category: 'Mobile App',
+      projectType: 'Personal Project',
       companyName: '',
       technologies: [
         'Flutter',
@@ -1006,7 +1125,7 @@ class SeedData {
       isFeatured: false,
       isPublished: true,
       isStatusActive: true,
-      orderIndex: 20,
+      orderIndex: 22,
       keyFeatures: [
         'Create and save new product records in a local SQLite database',
         'View and retrieve saved products',
@@ -1014,91 +1133,6 @@ class SeedData {
         'Delete products with appropriate user confirmation',
         'Persist data locally across application restarts',
         'Simple and responsive Flutter user interface',
-      ],
-    ),
-    const Project(
-      id: 'proj_artha_finance_tracker',
-      slug: 'artha-finance-tracker',
-      title: 'Artha - Finance Tracker',
-      shortDescription: 'An offline personal finance app to track expenses, income, savings, loans, gold, and financial goals.',
-      fullDescription: 'Artha (अर्थ) is an offline-first personal finance and wealth tracking application built with Flutter. It helps users manage income and expenses, plan EMI payments, track savings goals, monitor physical and digital gold investments, and manage monthly budgets. The application provides financial reports, net worth calculations, recurring transaction rules, and JSON/CSV backup and restore functionality. Designed with privacy in mind, it stores financial data locally without requiring user authentication, a backend server, or cloud database. The application supports Android, iOS, Windows, macOS, Linux, and Flutter Web.',
-      category: 'Personal Project',
-      companyName: '',
-      technologies: [
-        'Flutter',
-        'Dart',
-        'Local Storage',
-        'Offline-First Architecture',
-        'JSON',
-        'CSV',
-        'Data Visualization',
-        'Flutter Web',
-      ],
-      imageUrl: 'assets/images/project/artha-finance-tracker.webp',
-      thumbnailUrl: 'assets/images/project/artha-finance-tracker.webp',
-      galleryUrls: ['assets/images/project/artha-finance-tracker.webp'],
-      personalContribution: 'Independently designed and developed the Artha finance tracker using Flutter. Implemented local financial data management, income and expense tracking, EMI calculations, savings goals, gold investment tracking, category budgets, recurring transaction rules, financial analytics, and data backup and restore features.',
-      challengesAndSolutions: 'Challenge: Maintaining accurate financial calculations while managing multiple asset types, recurring transactions, EMI payments, and savings allocations entirely offline. Solution: Implemented structured local data management, consistent financial calculation rules, duplicate prevention for recurring transactions, and JSON/CSV backup and restore functionality.',
-      verifiedOutcomes: 'Published a live Flutter Web demo on GitHub Pages. Built as a personal, offline-first finance application with local data storage and no required backend or authentication.',
-      playStoreUrl: '',
-      appStoreUrl: '',
-      githubUrl: 'https://github.com/dev-dhruvi/finance_tracker',
-      demoUrl: 'https://dev-dhruvi.github.io/finance_tracker/',
-      isFeatured: true,
-      isPublished: true,
-      isStatusActive: true,
-      orderIndex: 21,
-      keyFeatures: [
-        'Track income, expenses, and custom categories',
-        'Plan EMI payments and manage loan installments',
-        'Set savings goals and monitor financial progress',
-        'Track physical and digital gold investments',
-        'Manage monthly category budgets',
-        'Automate recurring income and expenses without duplicate records',
-        'View spending reports, financial analytics, and estimated net worth',
-        'Export and restore financial data using JSON and CSV',
-        'Offline-first data storage with no required backend or telemetry',
-        'Cross-platform support for mobile, desktop, and web',
-      ],
-    ),
-
-    const Project(
-      id: 'proj_locago',
-      slug: 'locago-location-demo',
-      title: 'LocaGo',
-      shortDescription: 'A Flutter utility app for device phone number access, GPS-based location detection, and Google Maps integration.',
-      fullDescription: 'LocaGo is a personal Flutter demo project that explores device information, GPS-based location detection, and interactive Google Maps integration through a simple, navigable interface. The app demonstrates retrieving a device phone number when supported by the device and operating system, automatically filling a location field using GPS, and displaying the current location on an interactive map. Built with Flutter 3.29.3, the project showcases mobile device capabilities and location-based functionality.',
-      category: 'Personal Project',
-      companyName: '',
-      technologies: [
-        'Flutter',
-        'Dart',
-        'Google Maps',
-        'Geolocation',
-        'Device Info',
-        'Location Services',
-      ],
-      imageUrl: 'assets/images/project/locago.webp',
-      thumbnailUrl: 'assets/images/project/locago.webp',
-      galleryUrls: ['assets/images/project/locago.webp'],
-      personalContribution: 'Independently developed the Flutter demo application, implemented device phone number retrieval where supported, integrated GPS-based current location detection, and created an interactive Google Maps sample screen.',
-      challengesAndSolutions: 'Challenge: Accessing device-specific information and obtaining accurate location data across supported platforms. Solution: Integrated device information and location services with a straightforward UI to demonstrate available phone number data, current location retrieval, and map interactions.',
-      verifiedOutcomes: 'Developed a navigable Flutter demonstration of phone number access, GPS location detection, and Google Maps integration. Source code is available on GitHub.',
-      playStoreUrl: '',
-      appStoreUrl: '',
-      githubUrl: 'https://github.com/dev-dhruvi/location-demo',
-      demoUrl: '',
-      isFeatured: false,
-      isPublished: true,
-      isStatusActive: true,
-      orderIndex: 10,
-      keyFeatures: [
-        'Retrieve the device phone number when accessible',
-        'Fetch the current location using GPS',
-        'Automatically populate a location field',
-        'View current location on Google Maps',
-        'Interact with map features through a dedicated demo screen',
-        'Simple and easy-to-navigate Flutter UI',
       ],
     ),
   ];

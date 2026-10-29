@@ -31,6 +31,19 @@ class PortfolioRepository extends ChangeNotifier {
   bool get isLoading => false;
   String? get error => null;
 
+  Project? getProjectBySlug(String slug) {
+    final normalized = slug.trim().toLowerCase();
+    try {
+      return _projects.firstWhere(
+        (p) =>
+            p.slug.toLowerCase() == normalized ||
+            p.id.toLowerCase() == normalized,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
   void loadPortfolioData() {
     _profile = SeedData.initialProfile;
     _experiences = SeedData.initialExperiences;

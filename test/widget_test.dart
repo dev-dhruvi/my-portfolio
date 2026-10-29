@@ -9,6 +9,8 @@ import 'package:dhruvi_portfolio/sections/education/education_section.dart';
 import 'package:dhruvi_portfolio/sections/contact/contact_section.dart';
 import 'package:dhruvi_portfolio/sections/projects/projects_section.dart';
 import 'package:dhruvi_portfolio/sections/projects/all_projects_page.dart';
+import 'package:dhruvi_portfolio/sections/projects/project_detail_page.dart';
+import 'package:dhruvi_portfolio/repositories/portfolio_repository.dart';
 import 'package:dhruvi_portfolio/sections/experience/experience_section.dart';
 import 'package:dhruvi_portfolio/sections/skills/skills_section.dart';
 import 'package:dhruvi_portfolio/widgets/animations/character_loader.dart';
@@ -129,7 +131,7 @@ void main() {
     );
 
     testWidgets(
-      'ProjectsSection renders Featured badge when custom image exists and Client Projects badge when image is absent',
+      'ProjectsSection renders Platform Category without Featured or Project Type badge',
       (tester) async {
         final sampleProjects = [
           const Project(
@@ -139,6 +141,8 @@ void main() {
             shortDescription: 'Short desc',
             fullDescription: 'Full desc',
             category: 'Mobile App',
+            projectType: 'Personal Project',
+            companyName: 'Independent Lab',
             imageUrl: 'https://example.com/project.png',
           ),
           const Project(
@@ -147,7 +151,9 @@ void main() {
             title: 'Project Without Image',
             shortDescription: 'Short desc',
             fullDescription: 'Full desc',
-            category: 'Client Work',
+            category: 'Website',
+            projectType: 'Client Project',
+            companyName: 'Client Corp',
             imageUrl: '',
             thumbnailUrl: '',
           ),
@@ -170,8 +176,11 @@ void main() {
         );
         await tester.pump();
 
-        expect(find.text('Featured'), findsOneWidget);
-        expect(find.text('Client Projects'), findsOneWidget);
+        expect(find.text('Featured'), findsNothing);
+        expect(find.text('Client Project'), findsNothing);
+        expect(find.text('Personal Project'), findsNothing);
+        expect(find.text('Mobile App'), findsOneWidget);
+        expect(find.text('Website'), findsOneWidget);
       },
     );
 
@@ -792,6 +801,88 @@ void main() {
         expect(tester.takeException(), isNull);
 
         await tester.binding.setSurfaceSize(null);
+      },
+    );
+
+    testWidgets(
+      'ProjectDetailPage renders case study overview, features, and tech stack for valid slug',
+      (tester) async {
+        final repo = PortfolioRepository();
+
+        await tester.pumpWidget(
+          ChangeNotifierProvider<PortfolioRepository>.value(
+            value: repo,
+            child: const MaterialApp(
+              home: ProjectDetailPage(slug: 'pandit-near-me'),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('Pandits Near Me - Instant Puja'), findsOneWidget);
+        expect(find.text('Project Overview'), findsOneWidget);
+        expect(find.text('Key Features & Capabilities'), findsOneWidget);
+        expect(find.text('Technology Stack & Tools'), findsOneWidget);
+        expect(find.text('Mobile App'), findsOneWidget);
+        expect(find.text('Client Project'), findsNothing);
+        expect(find.text('Google Play Store'), findsOneWidget);
+        expect(find.text('Apple App Store'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'ProjectDetailPage displays Project Not Found state for invalid slug',
+      (tester) async {
+        final repo = PortfolioRepository();
+
+        await tester.pumpWidget(
+          ChangeNotifierProvider<PortfolioRepository>.value(
+            value: repo,
+            child: const MaterialApp(
+              home: ProjectDetailPage(slug: 'non-existent-project'),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('Project Not Found'), findsOneWidget);
+        expect(find.text('Back to Projects Directory'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'ProjectCard displays platform category and independent external links without project type badge',
+      (tester) async {
+        bool cardTapped = false;
+        final sampleProject = SeedData.initialProjects.first;
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: SizedBox(
+                  width: 360,
+                  height: 420,
+                  child: ProjectCard(
+                    project: sampleProject,
+                    isDesktopOrTablet: true,
+                    onTap: () => cardTapped = true,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text(sampleProject.title), findsOneWidget);
+        expect(find.text('Mobile App'), findsOneWidget);
+        expect(find.text('Client Project'), findsNothing);
+        expect(find.text('Featured'), findsNothing);
+
+        // Tap card to ensure card onTap works
+        await tester.tap(find.text(sampleProject.title));
+        expect(cardTapped, isTrue);
       },
     );
   });

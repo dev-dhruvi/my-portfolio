@@ -32,12 +32,13 @@ void main() {
       final panditsProject = repo.projects.firstWhere(
         (p) => p.title.contains('Pandit'),
       );
-      expect(panditsProject.category, equals('On-Demand Marketplace'));
+      expect(panditsProject.category, equals('Mobile App'));
+      expect(panditsProject.projectType, equals('Client Project'));
       expect(
         panditsProject.companyName,
         equals('Logix Built Solutions Limited'),
       );
-      expect(panditsProject.technologies, contains('AWS IoT Core (MQTT)'));
+      expect(panditsProject.technologies, contains('MQTT using AWS IoT Core'));
       expect(panditsProject.technologies, contains('Dio'));
       expect(panditsProject.technologies, contains('Mocktail'));
       expect(
@@ -61,13 +62,14 @@ void main() {
       final pmpProject = SeedData.initialProjects.firstWhere(
         (p) => p.id == 'proj_pmp_csv_validator',
       );
-      expect(pmpProject.category, equals('Flutter Web'));
+      expect(pmpProject.category, equals('Website'));
+      expect(pmpProject.projectType, equals('Professional Project'));
       expect(pmpProject.technologies, contains('Flutter Web'));
       expect(pmpProject.technologies, contains('CSV Parsing'));
       expect(pmpProject.technologies, contains('flutter_math_fork'));
       expect(
         pmpProject.personalContribution,
-        contains('responsive CSV validation tool'),
+        contains('responsive browser-based tool'),
       );
       expect(
         pmpProject.personalContribution,

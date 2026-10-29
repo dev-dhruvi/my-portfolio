@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../sections/portfolio_page.dart';
 import '../../sections/projects/all_projects_page.dart';
+import '../../sections/projects/project_detail_page.dart';
 import 'app_route_transitions.dart';
 
 /// Centralized router configuration for Dhruvi Patel's portfolio.
@@ -30,6 +31,18 @@ class AppRouter {
             state: state,
             child: const AllProjectsPage(),
           ),
+        ),
+        // Dedicated Project Detail & Case Study Page
+        GoRoute(
+          path: '/projects/:slug',
+          name: 'project_detail',
+          pageBuilder: (context, state) {
+            final slug = state.pathParameters['slug'] ?? '';
+            return AppRouteTransitions.slideUp(
+              state: state,
+              child: ProjectDetailPage(slug: slug),
+            );
+          },
         ),
       ],
       errorBuilder: (context, state) => Scaffold(
