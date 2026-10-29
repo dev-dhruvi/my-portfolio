@@ -7,6 +7,7 @@ import '../../core/constants/app_breakpoints.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../models/experience.dart';
+import '../../widgets/animations/scroll_reveal.dart';
 import '../../widgets/cards/glass_card.dart';
 
 /// Vertical timeline displaying verified work experience with merged
@@ -99,34 +100,40 @@ class _ExperienceSectionState extends State<ExperienceSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Section Tag & Header
-          Row(
-            children: [
-              Container(
-                width: 4,
-                height: 24,
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(2),
+          // Section Tag & Header with clipped text reveal
+          ScrollReveal.clippedText(
+            staggerIndex: 0,
+            child: Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              const Text(
-                'CAREER PATH',
-                style: TextStyle(
-                  color: AppColors.cyanPrimary,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  letterSpacing: 1.5,
+                const SizedBox(width: 12),
+                const Text(
+                  'CAREER PATH',
+                  style: TextStyle(
+                    color: AppColors.cyanPrimary,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    letterSpacing: 1.5,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 10),
-          Text(
-            'Work Experience & Roles',
-            style: AppTypography.getDisplayMedium(textColor)
-                .copyWith(fontSize: isMobile ? 24 : 32),
+          ScrollReveal.clippedText(
+            staggerIndex: 1,
+            child: Text(
+              'Work Experience & Roles',
+              style: AppTypography.getDisplayMedium(textColor)
+                  .copyWith(fontSize: isMobile ? 24 : 32),
+            ),
           ),
           const SizedBox(height: 6),
 

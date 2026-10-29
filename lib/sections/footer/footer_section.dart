@@ -6,6 +6,7 @@ import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/profile.dart';
+import '../../widgets/animations/scroll_reveal.dart';
 
 /// Clean, responsive footer with copyright, stack credits, and quick links.
 class FooterSection extends StatelessWidget {
@@ -40,81 +41,127 @@ class FooterSection extends StatelessWidget {
           constraints: const BoxConstraints(
             maxWidth: AppBreakpoints.maxContentWidth,
           ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final isNarrow = constraints.maxWidth < 560;
+          child: ScrollReveal(
+            slideDistance: 12.0,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final isNarrow = constraints.maxWidth < 560;
 
-              final brandText = FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: isNarrow ? Alignment.center : Alignment.centerLeft,
-                child: const Text(
-                  AppConstants.developBy,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.cyanPrimary,
-                  ),
-                ),
-              );
-
-              final socialIcons = Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    tooltip: 'GitHub',
-                    icon: const FaIcon(FontAwesomeIcons.github, size: 18),
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () => UrlLauncherUtil.openUrl(
-                      profile.githubUrl,
-                      context: context,
+                final brandText = FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: isNarrow ? Alignment.center : Alignment.centerLeft,
+                  child: const Text(
+                    AppConstants.developBy,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.cyanPrimary,
                     ),
                   ),
-                  IconButton(
-                    tooltip: 'LinkedIn',
-                    icon: const FaIcon(FontAwesomeIcons.linkedinIn, size: 18),
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () => UrlLauncherUtil.openUrl(
-                      profile.linkedinUrl,
-                      context: context,
-                    ),
-                  ),
-                  IconButton(
-                    tooltip: 'WhatsApp',
-                    icon: const FaIcon(FontAwesomeIcons.whatsapp, size: 18),
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () => UrlLauncherUtil.openWhatsApp(
-                      AppConstants.whatsappNumber,
-                      text: AppConstants.whatsappDefaultText,
-                      context: context,
-                    ),
-                  ),
-                  IconButton(
-                    tooltip: 'Email',
-                    icon: const Icon(Icons.mail_rounded, size: 20),
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () => UrlLauncherUtil.openEmail(profile.email),
-                  ),
-                ],
-              );
-
-              if (isNarrow) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [socialIcons, const SizedBox(height: 6), brandText],
                 );
-              }
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: brandText),
-                  const SizedBox(width: 12),
-                  socialIcons,
-                ],
-              );
-            },
+                final socialIcons = Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _FooterSocialIconButton(
+                      tooltip: 'GitHub',
+                      icon: const FaIcon(FontAwesomeIcons.github, size: 18),
+                      onPressed: () => UrlLauncherUtil.openUrl(
+                        profile.githubUrl,
+                        context: context,
+                      ),
+                    ),
+                    _FooterSocialIconButton(
+                      tooltip: 'LinkedIn',
+                      icon: const FaIcon(FontAwesomeIcons.linkedinIn, size: 18),
+                      onPressed: () => UrlLauncherUtil.openUrl(
+                        profile.linkedinUrl,
+                        context: context,
+                      ),
+                    ),
+                    _FooterSocialIconButton(
+                      tooltip: 'WhatsApp',
+                      icon: const FaIcon(FontAwesomeIcons.whatsapp, size: 18),
+                      onPressed: () => UrlLauncherUtil.openWhatsApp(
+                        AppConstants.whatsappNumber,
+                        text: AppConstants.whatsappDefaultText,
+                        context: context,
+                      ),
+                    ),
+                    _FooterSocialIconButton(
+                      tooltip: 'Email',
+                      icon: const Icon(Icons.mail_rounded, size: 20),
+                      onPressed: () => UrlLauncherUtil.openEmail(profile.email),
+                    ),
+                  ],
+                );
+
+                if (isNarrow) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      socialIcons,
+                      const SizedBox(height: 6),
+                      brandText,
+                    ],
+                  );
+                }
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(child: brandText),
+                    const SizedBox(width: 12),
+                    socialIcons,
+                  ],
+                );
+              },
+            ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FooterSocialIconButton extends StatefulWidget {
+  final Widget icon;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  const _FooterSocialIconButton({
+    required this.icon,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  @override
+  State<_FooterSocialIconButton> createState() =>
+      _FooterSocialIconButtonState();
+}
+
+class _FooterSocialIconButtonState extends State<_FooterSocialIconButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        if (!_isHovered && mounted) setState(() => _isHovered = true);
+      },
+      onExit: (_) {
+        if (_isHovered && mounted) setState(() => _isHovered = false);
+      },
+      child: AnimatedScale(
+        scale: _isHovered ? 1.15 : 1.0,
+        duration: const Duration(milliseconds: 180),
+        curve: Curves.easeOutBack,
+        child: IconButton(
+          tooltip: widget.tooltip,
+          icon: widget.icon,
+          visualDensity: VisualDensity.compact,
+          onPressed: widget.onPressed,
         ),
       ),
     );

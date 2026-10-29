@@ -10,6 +10,8 @@ import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/profile.dart';
 import '../../widgets/animations/animated_text_effects.dart';
+import '../../widgets/animations/parallax_widget.dart';
+import '../../widgets/animations/scroll_reveal.dart';
 import '../../widgets/animations/staggered_entrance.dart';
 
 /// Redesigned Hero Section featuring 3D anime cartoon character illustration,
@@ -18,8 +20,14 @@ import '../../widgets/animations/staggered_entrance.dart';
 class HeroSection extends StatefulWidget {
   final Profile profile;
   final Function(String sectionKey)? onNavigate;
+  final ScrollController? scrollController;
 
-  const HeroSection({super.key, required this.profile, this.onNavigate});
+  const HeroSection({
+    super.key,
+    required this.profile,
+    this.onNavigate,
+    this.scrollController,
+  });
 
   @override
   State<HeroSection> createState() => _HeroSectionState();
@@ -49,6 +57,30 @@ class _HeroSectionState extends State<HeroSection> {
         ? math.max(460.0, screenHeight - 88.0)
         : null;
 
+    final heroContent = isMobile
+        ? _buildMobileLayout(
+            context,
+            textColor,
+            secondaryTextColor,
+            isDark,
+            disableAnimations,
+          )
+        : (isTablet
+              ? _buildTabletLayout(
+                  context,
+                  textColor,
+                  secondaryTextColor,
+                  isDark,
+                  disableAnimations,
+                )
+              : _buildDesktopLayout(
+                  context,
+                  textColor,
+                  secondaryTextColor,
+                  isDark,
+                  disableAnimations,
+                ));
+
     return Container(
       constraints: minHeroHeight != null
           ? BoxConstraints(minHeight: minHeroHeight)
@@ -60,29 +92,7 @@ class _HeroSectionState extends State<HeroSection> {
             : (isTablet ? 24 : (screenHeight < 800 ? 14 : 26)),
         horizontal: isMobile ? 8 : 16,
       ),
-      child: isMobile
-          ? _buildMobileLayout(
-              context,
-              textColor,
-              secondaryTextColor,
-              isDark,
-              disableAnimations,
-            )
-          : (isTablet
-                ? _buildTabletLayout(
-                    context,
-                    textColor,
-                    secondaryTextColor,
-                    isDark,
-                    disableAnimations,
-                  )
-                : _buildDesktopLayout(
-                    context,
-                    textColor,
-                    secondaryTextColor,
-                    isDark,
-                    disableAnimations,
-                  )),
+      child: heroContent,
     );
   }
 
@@ -147,9 +157,13 @@ class _HeroSectionState extends State<HeroSection> {
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: RepaintBoundary(
-                    child: _buildCharacterStageDesktop(
-                      isDark,
-                      disableAnimations,
+                    child: ParallaxWidget(
+                      speed: -0.06,
+                      maxOffset: 25,
+                      child: _buildCharacterStageDesktop(
+                        isDark,
+                        disableAnimations,
+                      ),
                     ),
                   ),
                 ),
@@ -185,7 +199,11 @@ class _HeroSectionState extends State<HeroSection> {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: RepaintBoundary(
-              child: _buildCharacterStageTablet(isDark, disableAnimations),
+              child: ParallaxWidget(
+                speed: -0.04,
+                maxOffset: 16,
+                child: _buildCharacterStageTablet(isDark, disableAnimations),
+              ),
             ),
           ),
         ),
@@ -385,39 +403,68 @@ class _HeroSectionState extends State<HeroSection> {
         const SizedBox(height: 12),
 
         // Primary Value Proposition Headline: "Building Scalable Mobile Experiences with Flutter"
-        RichText(
-          textAlign: isCentered ? TextAlign.center : TextAlign.start,
-          text: TextSpan(
-            style: TextStyle(
-              fontSize: headlineFontSize,
-              fontWeight: FontWeight.w900,
-              color: textColor,
-              letterSpacing: -1.2,
-              height: 1.15,
-            ),
-            children: [
-              const TextSpan(text: 'Building Scalable\n'),
-              WidgetSpan(
-                alignment: PlaceholderAlignment.baseline,
-                baseline: TextBaseline.alphabetic,
-                child: ShimmerGradientText(
-                  'Mobile Experiences',
-                  colors: const [
-                    Color(0xFF06B6D4), // Cyan
-                    Color(0xFF8B5CF6), // Violet
-                    Color(0xFFD946EF), // Magenta
-                    Color(0xFF06B6D4), // Cyan
-                  ],
-                  style: TextStyle(
-                    fontSize: headlineFontSize,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: -1.2,
-                  ),
+        // Animated line by line using clipped vertical reveals inspired by creative studios (eezyinn.de)
+        Column(
+          crossAxisAlignment: isCentered
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.start,
+          children: [
+            ScrollReveal.clippedText(
+              staggerIndex: 0,
+              slideDistance: 38.0,
+              duration: const Duration(milliseconds: 650),
+              child: Text(
+                'Building Scalable',
+                textAlign: isCentered ? TextAlign.center : TextAlign.start,
+                style: TextStyle(
+                  fontSize: headlineFontSize,
+                  fontWeight: FontWeight.w900,
+                  color: textColor,
+                  letterSpacing: -1.2,
+                  height: 1.15,
                 ),
               ),
-              const TextSpan(text: ' with Flutter'),
-            ],
-          ),
+            ),
+            const SizedBox(height: 2),
+            ScrollReveal.clippedText(
+              staggerIndex: 1,
+              slideDistance: 38.0,
+              duration: const Duration(milliseconds: 650),
+              child: Wrap(
+                alignment: isCentered
+                    ? WrapAlignment.center
+                    : WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  ShimmerGradientText(
+                    'Mobile Experiences',
+                    colors: const [
+                      Color(0xFF06B6D4), // Cyan
+                      Color(0xFF8B5CF6), // Violet
+                      Color(0xFFD946EF), // Magenta
+                      Color(0xFF06B6D4), // Cyan
+                    ],
+                    style: TextStyle(
+                      fontSize: headlineFontSize,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -1.2,
+                      height: 1.15,
+                    ),
+                  ),
+                  Text(
+                    ' with Flutter',
+                    style: TextStyle(
+                      fontSize: headlineFontSize,
+                      fontWeight: FontWeight.w900,
+                      color: textColor,
+                      letterSpacing: -1.2,
+                      height: 1.15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
 
         const SizedBox(height: 16),

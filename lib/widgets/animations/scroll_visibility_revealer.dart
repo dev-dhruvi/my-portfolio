@@ -17,9 +17,9 @@ class ScrollVisibilityRevealer extends StatefulWidget {
   const ScrollVisibilityRevealer({
     super.key,
     required this.child,
-    this.duration = const Duration(milliseconds: 500),
+    this.duration = const Duration(milliseconds: 550),
     this.delay = Duration.zero,
-    this.slideDistance = 0.0,
+    this.slideDistance = 24.0,
     this.initialScale = 1.0,
     this.viewportThreshold = 0.88,
     this.animateOnce = true,
@@ -41,6 +41,7 @@ class _ScrollVisibilityRevealerState extends State<ScrollVisibilityRevealer>
   ScrollPosition? _scrollPosition;
   bool _isVisible = false;
   bool _hasAnimated = false;
+  double _lastCheckedOffset = -100.0;
 
   @override
   void initState() {
@@ -71,32 +72,52 @@ class _ScrollVisibilityRevealerState extends State<ScrollVisibilityRevealer>
   }
 
   void _attachScrollListener() {
+    if (widget.animateOnce && _hasAnimated) return;
     final scrollable = Scrollable.maybeOf(context);
     final newPosition = scrollable?.position;
     if (_scrollPosition != newPosition) {
-      _scrollPosition?.removeListener(_checkVisibility);
+      _scrollPosition?.removeListener(_onScroll);
       _scrollPosition = newPosition;
-      _scrollPosition?.addListener(_checkVisibility);
+      _scrollPosition?.addListener(_onScroll);
       WidgetsBinding.instance.addPostFrameCallback((_) => _checkVisibility());
     }
   }
 
   @override
   void dispose() {
-    _scrollPosition?.removeListener(_checkVisibility);
+    _scrollPosition?.removeListener(_onScroll);
     _controller.dispose();
     super.dispose();
   }
 
+  void _onScroll() {
+    if (!mounted) return;
+    if (widget.animateOnce && _hasAnimated) {
+      _scrollPosition?.removeListener(_onScroll);
+      _scrollPosition = null;
+      return;
+    }
+    final currentOffset = _scrollPosition?.pixels ?? 0.0;
+    if ((currentOffset - _lastCheckedOffset).abs() < 24.0) return;
+    _lastCheckedOffset = currentOffset;
+    _checkVisibility();
+  }
+
   void _checkVisibility() {
     if (!mounted) return;
-    if (widget.animateOnce && _hasAnimated) return;
+    if (widget.animateOnce && _hasAnimated) {
+      _scrollPosition?.removeListener(_onScroll);
+      _scrollPosition = null;
+      return;
+    }
 
     if (MediaQuery.maybeOf(context)?.disableAnimations ?? false) {
       if (!_isVisible) {
         _isVisible = true;
         _hasAnimated = true;
         _controller.value = 1.0;
+        _scrollPosition?.removeListener(_onScroll);
+        _scrollPosition = null;
       }
       return;
     }
@@ -115,6 +136,10 @@ class _ScrollVisibilityRevealerState extends State<ScrollVisibilityRevealer>
       if (!_isVisible) {
         _isVisible = true;
         _hasAnimated = true;
+        if (widget.animateOnce) {
+          _scrollPosition?.removeListener(_onScroll);
+          _scrollPosition = null;
+        }
         if (widget.delay == Duration.zero) {
           _controller.forward();
         } else {
@@ -137,7 +162,7 @@ class _ScrollVisibilityRevealerState extends State<ScrollVisibilityRevealer>
       return widget.child;
     }
 
-    if (_hasAnimated && _controller.isCompleted) {
+    if (widget.animateOnce && _hasAnimated && _controller.isCompleted) {
       return widget.child;
     }
 

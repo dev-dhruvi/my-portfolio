@@ -11,6 +11,7 @@ import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/project.dart';
 import '../../widgets/animations/interactive_3d_card.dart';
+import '../../widgets/animations/scroll_reveal.dart';
 import '../../widgets/cards/app_network_image.dart';
 import '../../widgets/navigation/dynamic_scroll_indicators.dart';
 import 'all_projects_page.dart';
@@ -134,134 +135,151 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             ? MainAxisAlignment.center
             : MainAxisAlignment.start,
         children: [
-          // Section Tag & Title
-          Row(
-            children: [
-              Container(
-                width: 4,
-                height: 24,
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(2),
+          // Section Tag & Title with clipped text reveal
+          ScrollReveal.clippedText(
+            staggerIndex: 0,
+            child: Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              const Text(
-                'FEATURED WORK',
-                style: TextStyle(
-                  color: AppColors.cyanPrimary,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  letterSpacing: 1.5,
+                const SizedBox(width: 12),
+                const Text(
+                  'FEATURED WORK',
+                  style: TextStyle(
+                    color: AppColors.cyanPrimary,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    letterSpacing: 1.5,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 10),
-          Text(
-            'Production Applications & Client Projects',
-            style: AppTypography.getDisplayMedium(textColor)
-                .copyWith(fontSize: isMobile ? 24 : 28),
+          ScrollReveal.clippedText(
+            staggerIndex: 1,
+            child: Text(
+              'Production Applications & Client Projects',
+              style: AppTypography.getDisplayMedium(textColor)
+                  .copyWith(fontSize: isMobile ? 24 : 28),
+            ),
           ),
           const SizedBox(height: 24),
 
           // Projects Display Area per Device Form Factor
           if (activeProjects.isEmpty)
             const SizedBox.shrink()
-          else if (isMobile) ...[
-            // Mobile: 3D Stacked Coverflow Slider (total 5)
-            _MobileStackedProjectSlider(
-              key: _mobileSliderKey,
-              projects: mobileProjects,
-              activePageNotifier: _mobileActivePageNotifier,
-              onProjectTap: (project) =>
-                  _showProjectDetailDialog(context, project),
-            ),
-            // Mobile View More Button (if more than 5 projects exist)
-            if (activeProjects.length > 5) ...[
-              const SizedBox(height: 22),
-              Center(
-                child: ViewMoreButton(
-                  label: 'View All Projects',
-                  onTap: () => _navigateToAllProjects(context),
-                ),
+          else
+            ScrollReveal(
+              staggerIndex: 2,
+              slideDistance: 20.0,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (isMobile) ...[
+                    // Mobile: 3D Stacked Coverflow Slider (total 5)
+                    _MobileStackedProjectSlider(
+                      key: _mobileSliderKey,
+                      projects: mobileProjects,
+                      activePageNotifier: _mobileActivePageNotifier,
+                      onProjectTap: (project) =>
+                          _showProjectDetailDialog(context, project),
+                    ),
+                    // Mobile View More Button (if more than 5 projects exist)
+                    if (activeProjects.length > 5) ...[
+                      const SizedBox(height: 22),
+                      Center(
+                        child: ViewMoreButton(
+                          label: 'View All Projects',
+                          onTap: () => _navigateToAllProjects(context),
+                        ),
+                      ),
+                    ],
+                  ] else if (isTablet) ...[
+                    // Tablet: 2*2 view slider (total 12, 4 cards per page view in 2x2 grid)
+                    _Tablet2x2ProjectSlider(
+                      projects: tabletProjects,
+                      pageController: _tabletPageController,
+                      activePageNotifier: _tabletActivePageNotifier,
+                      onProjectTap: (project) =>
+                          _showProjectDetailDialog(context, project),
+                    ),
+
+                    // Dynamic Scroll Indicators without side arrows (Tablet)
+                    ValueListenableBuilder<int>(
+                      valueListenable: _tabletActivePageNotifier,
+                      builder: (context, activeIndex, _) {
+                        final int safeIndex = activeIndex
+                            .clamp(0, math.max(0, tabletPageCount - 1))
+                            .toInt();
+                        return DynamicScrollIndicators(
+                          pageCount: tabletPageCount,
+                          activeIndex: safeIndex,
+                          showArrows: false,
+                          onDotTapped: (index) =>
+                              _animateToTabletPage(index, tabletPageCount),
+                        );
+                      },
+                    ),
+
+                    // Tablet View More Button (if more than 12 projects exist)
+                    if (activeProjects.length > 12) ...[
+                      const SizedBox(height: 28),
+                      Center(
+                        child: ViewMoreButton(
+                          label: 'View All Projects',
+                          onTap: () => _navigateToAllProjects(context),
+                        ),
+                      ),
+                    ],
+                  ] else ...[
+                    // Web / Desktop: Single row horizontal slider (total 12, 4 cards per view)
+                    _DesktopSingleRowProjectSlider(
+                      projects: desktopProjects,
+                      pageController: _desktopPageController,
+                      activePageNotifier: _desktopActivePageNotifier,
+                      onProjectTap: (project) =>
+                          _showProjectDetailDialog(context, project),
+                    ),
+
+                    // Dynamic Scroll Indicators without side arrows (Desktop only)
+                    ValueListenableBuilder<int>(
+                      valueListenable: _desktopActivePageNotifier,
+                      builder: (context, activeIndex, _) {
+                        final int safeIndex = activeIndex
+                            .clamp(0, math.max(0, desktopPageCount - 1))
+                            .toInt();
+                        return DynamicScrollIndicators(
+                          pageCount: desktopPageCount,
+                          activeIndex: safeIndex,
+                          showArrows: false,
+                          onDotTapped: (index) =>
+                              _animateToDesktopPage(index, desktopPageCount),
+                        );
+                      },
+                    ),
+
+                    // Web View More Button (if more than 12 projects exist)
+                    if (activeProjects.length > 12) ...[
+                      const SizedBox(height: 22),
+                      Center(
+                        child: ViewMoreButton(
+                          label: 'View All Projects',
+                          onTap: () => _navigateToAllProjects(context),
+                        ),
+                      ),
+                    ],
+                  ],
+                ],
               ),
-            ],
-          ] else if (isTablet) ...[
-            // Tablet: 2*2 view slider (total 12, 4 cards per page view in 2x2 grid)
-            _Tablet2x2ProjectSlider(
-              projects: tabletProjects,
-              pageController: _tabletPageController,
-              activePageNotifier: _tabletActivePageNotifier,
-              onProjectTap: (project) =>
-                  _showProjectDetailDialog(context, project),
             ),
-
-            // Dynamic Scroll Indicators without side arrows (Tablet)
-            ValueListenableBuilder<int>(
-              valueListenable: _tabletActivePageNotifier,
-              builder: (context, activeIndex, _) {
-                final int safeIndex = activeIndex
-                    .clamp(0, math.max(0, tabletPageCount - 1))
-                    .toInt();
-                return DynamicScrollIndicators(
-                  pageCount: tabletPageCount,
-                  activeIndex: safeIndex,
-                  showArrows: false,
-                  onDotTapped: (index) =>
-                      _animateToTabletPage(index, tabletPageCount),
-                );
-              },
-            ),
-
-            // Tablet View More Button (if more than 12 projects exist)
-            if (activeProjects.length > 12) ...[
-              const SizedBox(height: 28),
-              Center(
-                child: ViewMoreButton(
-                  label: 'View All Projects',
-                  onTap: () => _navigateToAllProjects(context),
-                ),
-              ),
-            ],
-          ] else ...[
-            // Web / Desktop: Single row horizontal slider (total 12, 4 cards per view)
-            _DesktopSingleRowProjectSlider(
-              projects: desktopProjects,
-              pageController: _desktopPageController,
-              activePageNotifier: _desktopActivePageNotifier,
-              onProjectTap: (project) =>
-                  _showProjectDetailDialog(context, project),
-            ),
-
-            // Dynamic Scroll Indicators without side arrows (Desktop only)
-            ValueListenableBuilder<int>(
-              valueListenable: _desktopActivePageNotifier,
-              builder: (context, activeIndex, _) {
-                final int safeIndex = activeIndex
-                    .clamp(0, math.max(0, desktopPageCount - 1))
-                    .toInt();
-                return DynamicScrollIndicators(
-                  pageCount: desktopPageCount,
-                  activeIndex: safeIndex,
-                  showArrows: false,
-                  onDotTapped: (index) =>
-                      _animateToDesktopPage(index, desktopPageCount),
-                );
-              },
-            ),
-
-            // Web View More Button (if more than 12 projects exist)
-            if (activeProjects.length > 12) ...[
-              const SizedBox(height: 22),
-              Center(
-                child: ViewMoreButton(
-                  label: 'View All Projects',
-                  onTap: () => _navigateToAllProjects(context),
-                ),
-              ),
-            ],
-          ],
         ],
       ),
     );
@@ -377,11 +395,15 @@ class _Tablet2x2ProjectSliderState extends State<_Tablet2x2ProjectSlider> {
             return AnimatedBuilder(
               animation: widget.pageController,
               builder: (context, _) {
-                final double currentPage =
-                    widget.pageController.hasClients &&
-                        widget.pageController.position.hasContentDimensions
-                    ? (widget.pageController.page ?? pageIndex.toDouble())
-                    : pageIndex.toDouble();
+                double currentPage = pageIndex.toDouble();
+                if (widget.pageController.hasClients &&
+                    widget.pageController.positions.length == 1) {
+                  final pos = widget.pageController.position;
+                  if (pos.hasContentDimensions &&
+                      widget.pageController.page != null) {
+                    currentPage = widget.pageController.page!;
+                  }
+                }
                 final double pageDelta = pageIndex - currentPage;
                 final double scale = (1.0 - (pageDelta.abs() * 0.06)).clamp(
                   0.9,
@@ -545,11 +567,15 @@ class _DesktopSingleRowProjectSliderState
             return AnimatedBuilder(
               animation: widget.pageController,
               builder: (context, _) {
-                final double currentPage =
-                    widget.pageController.hasClients &&
-                        widget.pageController.position.hasContentDimensions
-                    ? (widget.pageController.page ?? pageIndex.toDouble())
-                    : pageIndex.toDouble();
+                double currentPage = pageIndex.toDouble();
+                if (widget.pageController.hasClients &&
+                    widget.pageController.positions.length == 1) {
+                  final pos = widget.pageController.position;
+                  if (pos.hasContentDimensions &&
+                      widget.pageController.page != null) {
+                    currentPage = widget.pageController.page!;
+                  }
+                }
                 final double pageDelta = pageIndex - currentPage;
                 final double rotY = (-pageDelta * 0.08).clamp(-0.2, 0.2);
                 final double pageOpacity = (1.0 - (pageDelta.abs() * 0.35))
@@ -649,7 +675,10 @@ class _MobileStackedProjectSliderState
   }
 
   void _onPageScroll() {
-    if (!mounted || !_pageController.hasClients || widget.projects.isEmpty) {
+    if (!mounted ||
+        !_pageController.hasClients ||
+        _pageController.positions.length != 1 ||
+        widget.projects.isEmpty) {
       return;
     }
     final double page = _pageController.page ?? _initialPage.toDouble();
@@ -736,7 +765,9 @@ class _MobileStackedProjectSliderState
             child: AnimatedBuilder(
               animation: _pageController,
               builder: (context, _) {
-                final double page = _pageController.hasClients
+                final double page =
+                    (_pageController.hasClients &&
+                        _pageController.positions.length == 1)
                     ? (_pageController.page ?? _initialPage.toDouble())
                     : _initialPage.toDouble();
 
@@ -1082,17 +1113,50 @@ class _ProjectCardState extends State<ProjectCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Project Title
-              Text(
-                project.title,
-                style: TextStyle(
-                  fontSize: widget.isDesktopOrTablet ? 15 : 16.5,
-                  fontWeight: FontWeight.w700,
-                  color: textColor,
-                  letterSpacing: -0.2,
+              // Project Title with smooth hover translation & arrow
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutCubic,
+                transform: Matrix4.translationValues(
+                  _isHovered && widget.isDesktopOrTablet ? 3.0 : 0.0,
+                  0,
+                  0,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        project.title,
+                        style: TextStyle(
+                          fontSize: widget.isDesktopOrTablet ? 15 : 16.5,
+                          fontWeight: FontWeight.w700,
+                          color: _isHovered && widget.isDesktopOrTablet
+                              ? (isDark
+                                    ? AppColors.cyanPrimary
+                                    : AppColors.violetPrimary)
+                              : textColor,
+                          letterSpacing: -0.2,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (widget.isDesktopOrTablet) ...[
+                      const SizedBox(width: 4),
+                      AnimatedOpacity(
+                        opacity: _isHovered ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 180),
+                        child: Icon(
+                          Icons.arrow_outward_rounded,
+                          size: 13,
+                          color: isDark
+                              ? AppColors.cyanPrimary
+                              : AppColors.violetPrimary,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ),
               const SizedBox(height: 8),
 

@@ -107,8 +107,9 @@ void main() {
           find.text('Pandits Near Me - Instant Puja'),
           findsAtLeastNWidgets(1),
         );
+        expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
 
-        // On desktop single-row slider (4 cards/page), advance to page 1 for PMP CSV Validator
+        // Advance to page 1 on desktop slider (4 cards/page)
         final dots = find.descendant(
           of: find.byType(DynamicScrollIndicators),
           matching: find.byType(InkWell),
@@ -123,7 +124,7 @@ void main() {
             await tester.pumpAndSettle();
           }
         }
-        expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
+        expect(find.text('Reut, buy me'), findsAtLeastNWidgets(1));
       },
     );
 

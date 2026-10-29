@@ -4,6 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../models/skill.dart';
 import '../../widgets/animations/animated_text_effects.dart';
 import '../../widgets/animations/interactive_3d_card.dart';
+import '../../widgets/animations/scroll_reveal.dart';
 
 /// Grouped-chip skills section displaying technology stack across:
 /// - Desktop (≥1024px): 3-column category cards
@@ -222,7 +223,11 @@ class SkillsSection extends StatelessWidget {
         final isDesktop = !isMobile && !isTablet;
 
         // Build category cards for all 5 categories
-        final List<Widget> categoryCards = _categoryOrder.map((cat) {
+        final List<Widget> categoryCards = _categoryOrder.asMap().entries.map((
+          entry,
+        ) {
+          final index = entry.key;
+          final cat = entry.value;
           final catSkills = skills.where((s) {
             if (s.category == cat) {
               return true;
@@ -243,7 +248,7 @@ class SkillsSection extends StatelessWidget {
             return false;
           }).toList();
 
-          return _CategoryGroupCard(
+          final card = _CategoryGroupCard(
             categoryTitle: _getCategoryDisplayTitle(cat),
             categorySubtitle: _getCategorySubtitle(cat),
             categoryIcon: _getCategoryIcon(cat),
@@ -253,6 +258,12 @@ class SkillsSection extends StatelessWidget {
             textColor: textColor,
             secondaryTextColor: secondaryTextColor,
             isMobile: isMobile,
+          );
+
+          return ScrollReveal(
+            staggerIndex: index,
+            slideDistance: 20.0,
+            child: card,
           );
         }).toList();
 
@@ -338,63 +349,69 @@ class SkillsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Top Header Row (Eyebrow)
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 3.5,
-                    height: 18,
-                    decoration: BoxDecoration(
-                      color: AppColors.cyanPrimary,
-                      borderRadius: BorderRadius.circular(2),
+              ScrollReveal.clippedText(
+                staggerIndex: 0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 3.5,
+                      height: 18,
+                      decoration: BoxDecoration(
+                        color: AppColors.cyanPrimary,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Text(
-                    'MY TECH STACK',
-                    style: TextStyle(
-                      color: AppColors.cyanPrimary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 13,
-                      letterSpacing: 1.6,
+                    const SizedBox(width: 8),
+                    const Text(
+                      'MY TECH STACK',
+                      style: TextStyle(
+                        color: AppColors.cyanPrimary,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                        letterSpacing: 1.6,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
 
               // Main Title: Skills & Technologies (with gradient on Technologies)
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Skills & ',
-                      style: TextStyle(
-                        fontSize: isMobile ? 26 : 34,
-                        fontWeight: FontWeight.w800,
-                        color: textColor,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.baseline,
-                      baseline: TextBaseline.alphabetic,
-                      child: ShimmerGradientText(
-                        'Technologies',
-                        colors: const [
-                          Color(0xFF06B6D4), // Cyan
-                          Color(0xFF8B5CF6), // Violet
-                          Color(0xFFD946EF), // Magenta
-                          Color(0xFF06B6D4), // Cyan
-                        ],
+              ScrollReveal.clippedText(
+                staggerIndex: 1,
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Skills & ',
                         style: TextStyle(
                           fontSize: isMobile ? 26 : 34,
                           fontWeight: FontWeight.w800,
+                          color: textColor,
                           letterSpacing: -0.5,
                         ),
                       ),
-                    ),
-                  ],
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.baseline,
+                        baseline: TextBaseline.alphabetic,
+                        child: ShimmerGradientText(
+                          'Technologies',
+                          colors: const [
+                            Color(0xFF06B6D4), // Cyan
+                            Color(0xFF8B5CF6), // Violet
+                            Color(0xFFD946EF), // Magenta
+                            Color(0xFF06B6D4), // Cyan
+                          ],
+                          style: TextStyle(
+                            fontSize: isMobile ? 26 : 34,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -404,25 +421,29 @@ class SkillsSection extends StatelessWidget {
               const SizedBox(height: 22),
 
               // Bottom Footer Line
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 8,
-                runSpacing: 4,
-                children: [
-                  const Icon(
-                    Icons.auto_awesome_rounded,
-                    size: 14,
-                    color: AppColors.violetPrimary,
-                  ),
-                  Text(
-                    'Cross-platform development · Scalable APIs · Real-time systems',
-                    style: TextStyle(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w500,
-                      color: secondaryTextColor,
+              ScrollReveal(
+                staggerIndex: 5,
+                slideDistance: 12.0,
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 8,
+                  runSpacing: 4,
+                  children: [
+                    const Icon(
+                      Icons.auto_awesome_rounded,
+                      size: 14,
+                      color: AppColors.violetPrimary,
                     ),
-                  ),
-                ],
+                    Text(
+                      'Cross-platform development · Scalable APIs · Real-time systems',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w500,
+                        color: secondaryTextColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

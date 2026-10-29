@@ -8,6 +8,7 @@ import '../core/constants/app_breakpoints.dart';
 import '../repositories/portfolio_repository.dart';
 import '../widgets/animations/ambient_background.dart';
 import '../widgets/animations/character_loader.dart';
+import '../widgets/animations/scroll_progress_indicator.dart';
 import '../widgets/animations/scroll_visibility_revealer.dart';
 import '../widgets/navigation/mobile_drawer.dart';
 import '../widgets/navigation/nav_bar.dart';
@@ -42,9 +43,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final GlobalKey _educationKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
-  int _aboutAnimationTrigger = 0;
+  final ValueNotifier<int> _aboutAnimationTriggerNotifier = ValueNotifier<int>(
+    0,
+  );
   bool _isAboutInView = false;
-  String _activeSection = 'hero';
+  final ValueNotifier<String> _activeSectionNotifier = ValueNotifier<String>(
+    'hero',
+  );
   double _lastCheckedOffset = -1.0;
   bool _precacheDone = false;
   bool _isProgrammaticScrolling = false;
@@ -65,22 +70,27 @@ class _PortfolioPageState extends State<PortfolioPage> {
     super.didChangeDependencies();
     if (!_precacheDone) {
       _precacheDone = true;
+      // Precache primary hero character immediately for instant first frame
       precacheImage(
         const AssetImage('assets/images/developer_character_3d.png'),
         context,
       );
-      precacheImage(
-        const AssetImage('assets/images/developer_character_business.png'),
-        context,
-      );
-      precacheImage(
-        const AssetImage('assets/images/developer_character_contact.png'),
-        context,
-      );
-      precacheImage(
-        const AssetImage('assets/images/developer_character_graduate.png'),
-        context,
-      );
+      // Defer below-the-fold character stages to avoid blocking the initial frame
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        precacheImage(
+          const AssetImage('assets/images/developer_character_business.png'),
+          context,
+        );
+        precacheImage(
+          const AssetImage('assets/images/developer_character_contact.png'),
+          context,
+        );
+        precacheImage(
+          const AssetImage('assets/images/developer_character_graduate.png'),
+          context,
+        );
+      });
     }
   }
 
@@ -92,19 +102,19 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
     // Fast boundary checks without querying render boxes
     if (scrollOffset <= 60) {
-      if (_activeSection != 'hero') {
-        setState(() => _activeSection = 'hero');
+      if (_activeSectionNotifier.value != 'hero') {
+        _activeSectionNotifier.value = 'hero';
       }
       return;
     } else if (scrollOffset >= maxScroll - 120) {
-      if (_activeSection != 'contact') {
-        setState(() => _activeSection = 'contact');
+      if (_activeSectionNotifier.value != 'contact') {
+        _activeSectionNotifier.value = 'contact';
       }
       return;
     }
 
     // Throttle intermediate render box position checks to eliminate scroll jank
-    if ((scrollOffset - _lastCheckedOffset).abs() < 14.0) return;
+    if ((scrollOffset - _lastCheckedOffset).abs() < 32.0) return;
     _lastCheckedOffset = scrollOffset;
 
     // Evaluate sections from bottom to top to identify the currently active viewport section
@@ -119,7 +129,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
     };
 
     const double activationThreshold = 140.0;
-    String detectedSection = _activeSection;
+    String detectedSection = _activeSectionNotifier.value;
     for (final entry in sectionMap.entries) {
       final ctx = entry.value.currentContext;
       if (ctx != null) {
@@ -134,10 +144,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
       }
     }
 
-    if (detectedSection != _activeSection) {
-      setState(() {
-        _activeSection = detectedSection;
-      });
+    if (detectedSection != _activeSectionNotifier.value) {
+      _activeSectionNotifier.value = detectedSection;
     }
 
     // Trigger counter animation when the About section enters the active viewport range
@@ -152,9 +160,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             (position.dy + renderBox.size.height) > screenHeight * 0.25;
         if (inView && !_isAboutInView) {
           _isAboutInView = true;
-          setState(() {
-            _aboutAnimationTrigger++;
-          });
+          _aboutAnimationTriggerNotifier.value++;
         } else if (!inView && _isAboutInView) {
           _isAboutInView = false;
         }
@@ -167,6 +173,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
     _programmaticScrollTimer?.cancel();
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _activeSectionNotifier.dispose();
+    _aboutAnimationTriggerNotifier.dispose();
     super.dispose();
   }
 
@@ -174,10 +182,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
     _programmaticScrollTimer?.cancel();
     _isProgrammaticScrolling = true;
 
-    if (_activeSection != sectionKey) {
-      setState(() {
-        _activeSection = sectionKey;
-      });
+    if (_activeSectionNotifier.value != sectionKey) {
+      _activeSectionNotifier.value = sectionKey;
     }
 
     if (sectionKey == 'hero') {
@@ -196,9 +202,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
     if (sectionKey == 'about') {
       _isAboutInView = true;
-      setState(() {
-        _aboutAnimationTrigger++;
-      });
+      _aboutAnimationTriggerNotifier.value++;
     }
 
     GlobalKey? targetKey;
@@ -249,10 +253,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
         _programmaticScrollTimer = Timer(const Duration(milliseconds: 650), () {
           if (mounted) {
             _isProgrammaticScrolling = false;
-            if (_activeSection != sectionKey) {
-              setState(() {
-                _activeSection = sectionKey;
-              });
+            if (_activeSectionNotifier.value != sectionKey) {
+              _activeSectionNotifier.value = sectionKey;
             }
           }
         });
@@ -287,9 +289,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
     return Scaffold(
       key: _scaffoldKey,
-      drawer: MobileDrawer(
-        onNavItemSelected: _scrollToSection,
-        activeSection: _activeSection,
+      drawer: ValueListenableBuilder<String>(
+        valueListenable: _activeSectionNotifier,
+        builder: (context, activeSection, _) => MobileDrawer(
+          onNavItemSelected: _scrollToSection,
+          activeSection: activeSection,
+        ),
       ),
       body: Stack(
         children: [
@@ -300,7 +305,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 // Main Scrollable Portfolio Sections
                 SingleChildScrollView(
                   controller: _scrollController,
-                  physics: const ClampingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
                   padding: EdgeInsets.zero,
                   child: Column(
                     children: [
@@ -313,6 +320,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             child: HeroSection(
                               profile: profile,
                               onNavigate: _scrollToSection,
+                              scrollController: _scrollController,
                             ),
                           ),
                         ),
@@ -366,9 +374,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           padding: const EdgeInsets.only(top: 88),
                           child: ResponsiveContentContainer(
                             child: ScrollVisibilityRevealer(
-                              child: AboutSection(
-                                profile: profile,
-                                animationTrigger: _aboutAnimationTrigger,
+                              child: ValueListenableBuilder<int>(
+                                valueListenable: _aboutAnimationTriggerNotifier,
+                                builder: (context, trigger, _) => AboutSection(
+                                  profile: profile,
+                                  animationTrigger: trigger,
+                                ),
                               ),
                             ),
                           ),
@@ -431,12 +442,25 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   left: 0,
                   right: 0,
                   child: SafeArea(
-                    child: NavBar(
-                      activeSection: _activeSection,
-                      onNavItemSelected: _scrollToSection,
-                      onOpenDrawer: () =>
-                          _scaffoldKey.currentState?.openDrawer(),
+                    child: ValueListenableBuilder<String>(
+                      valueListenable: _activeSectionNotifier,
+                      builder: (context, activeSection, _) => NavBar(
+                        activeSection: activeSection,
+                        onNavItemSelected: _scrollToSection,
+                        onOpenDrawer: () =>
+                            _scaffoldKey.currentState?.openDrawer(),
+                      ),
                     ),
+                  ),
+                ),
+
+                // Top Viewport Reading / Scroll Progress Bar (0.0 -> 1.0)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: ScrollProgressIndicator(
+                    scrollController: _scrollController,
                   ),
                 ),
               ],

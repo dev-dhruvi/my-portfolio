@@ -4,6 +4,8 @@ import '../../core/constants/app_breakpoints.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../models/profile.dart';
+import '../../widgets/animations/parallax_widget.dart';
+import '../../widgets/animations/scroll_reveal.dart';
 import '../../widgets/animations/staggered_entrance.dart';
 import '../../widgets/cards/glass_card.dart';
 
@@ -42,36 +44,42 @@ class AboutSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Section Tag & Title
-          Row(
-            children: [
-              Container(
-                width: 4,
-                height: 24,
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Flexible(
-                child: Text(
-                  'ABOUT ME',
-                  style: const TextStyle(
-                    color: AppColors.cyanPrimary,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    letterSpacing: 1.5,
+          // Section Tag & Title with clipped entrance reveal
+          ScrollReveal.clippedText(
+            staggerIndex: 0,
+            child: Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(2),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 12),
+                const Flexible(
+                  child: Text(
+                    'ABOUT ME',
+                    style: TextStyle(
+                      color: AppColors.cyanPrimary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 10),
-          Text(
-            'Specialized in Flutter, Mobile Architecture & Cloud Services',
-            style: AppTypography.getDisplayMedium(textColor)
-                .copyWith(fontSize: isMobile ? 24 : 28),
+          ScrollReveal.clippedText(
+            staggerIndex: 1,
+            child: Text(
+              'Specialized in Flutter, Mobile Architecture & Cloud Services',
+              style: AppTypography.getDisplayMedium(textColor)
+                  .copyWith(fontSize: isMobile ? 24 : 28),
+            ),
           ),
           const SizedBox(height: 16),
 
@@ -79,16 +87,24 @@ class AboutSection extends StatelessWidget {
           if (isMobile)
             Column(
               children: [
-                _buildNarrativeCard(
-                  context,
-                  textColor,
-                  secondaryTextColor,
-                  isMobile,
+                ScrollReveal(
+                  staggerIndex: 0,
+                  slideDistance: 16.0,
+                  child: _buildNarrativeCard(
+                    context,
+                    textColor,
+                    secondaryTextColor,
+                    isMobile,
+                  ),
                 ),
                 const SizedBox(height: 18),
                 const StaggeredEntrance(
                   index: 1,
-                  child: _AboutCharacterStage(isMobile: true),
+                  child: ParallaxWidget(
+                    speed: -0.04,
+                    maxOffset: 16,
+                    child: _AboutCharacterStage(isMobile: true),
+                  ),
                 ),
               ],
             )
@@ -98,11 +114,15 @@ class AboutSection extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 6,
-                  child: _buildNarrativeCard(
-                    context,
-                    textColor,
-                    secondaryTextColor,
-                    isMobile,
+                  child: ScrollReveal(
+                    staggerIndex: 0,
+                    slideDistance: 16.0,
+                    child: _buildNarrativeCard(
+                      context,
+                      textColor,
+                      secondaryTextColor,
+                      isMobile,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 24),
@@ -110,7 +130,11 @@ class AboutSection extends StatelessWidget {
                   flex: 4,
                   child: StaggeredEntrance(
                     index: 1,
-                    child: _AboutCharacterStage(isMobile: false),
+                    child: ParallaxWidget(
+                      speed: -0.05,
+                      maxOffset: 20,
+                      child: _AboutCharacterStage(isMobile: false),
+                    ),
                   ),
                 ),
               ],
@@ -171,6 +195,7 @@ class AboutSection extends StatelessWidget {
                   accentColor: AppColors.violetPrimary,
                   animationTrigger: animationTrigger,
                   isCentered: true,
+                  staggerIndex: 0,
                 );
                 final card2 = _HighlightCard(
                   key: ValueKey('highlight_releases_$animationTrigger'),
@@ -182,6 +207,7 @@ class AboutSection extends StatelessWidget {
                   accentColor: const Color(0xFFF59E0B),
                   animationTrigger: animationTrigger,
                   isCentered: true,
+                  staggerIndex: 1,
                 );
                 final card3 = _HighlightCard(
                   key: ValueKey('highlight_projects_$animationTrigger'),
@@ -193,6 +219,7 @@ class AboutSection extends StatelessWidget {
                   accentColor: AppColors.cyanPrimary,
                   animationTrigger: animationTrigger,
                   isCentered: true,
+                  staggerIndex: 2,
                 );
                 final card4 = _HighlightCard(
                   key: ValueKey('highlight_edu_$animationTrigger'),
@@ -204,6 +231,7 @@ class AboutSection extends StatelessWidget {
                   accentColor: AppColors.bluePrimary,
                   animationTrigger: animationTrigger,
                   isCentered: true,
+                  staggerIndex: 3,
                 );
 
                 return Column(
@@ -254,6 +282,7 @@ class AboutSection extends StatelessWidget {
                     accentColor: AppColors.violetPrimary,
                     animationTrigger: animationTrigger,
                     isCentered: false,
+                    staggerIndex: 0,
                   ),
                   _HighlightCard(
                     key: ValueKey('highlight_releases_$animationTrigger'),
@@ -266,6 +295,7 @@ class AboutSection extends StatelessWidget {
                     accentColor: const Color(0xFFF59E0B),
                     animationTrigger: animationTrigger,
                     isCentered: false,
+                    staggerIndex: 1,
                   ),
                   _HighlightCard(
                     key: ValueKey('highlight_projects_$animationTrigger'),
@@ -278,6 +308,7 @@ class AboutSection extends StatelessWidget {
                     accentColor: AppColors.cyanPrimary,
                     animationTrigger: animationTrigger,
                     isCentered: false,
+                    staggerIndex: 2,
                   ),
                   _HighlightCard(
                     key: ValueKey('highlight_edu_$animationTrigger'),
@@ -290,6 +321,7 @@ class AboutSection extends StatelessWidget {
                     accentColor: AppColors.bluePrimary,
                     animationTrigger: animationTrigger,
                     isCentered: false,
+                    staggerIndex: 3,
                   ),
                 ],
               );
@@ -553,6 +585,7 @@ class _HighlightCard extends StatelessWidget {
   final Color accentColor;
   final int animationTrigger;
   final bool isCentered;
+  final int staggerIndex;
 
   const _HighlightCard({
     super.key,
@@ -565,6 +598,7 @@ class _HighlightCard extends StatelessWidget {
     required this.accentColor,
     this.animationTrigger = 0,
     this.isCentered = false,
+    this.staggerIndex = 0,
   });
 
   @override
@@ -656,7 +690,7 @@ class _HighlightCard extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: numericTarget != null
                     ? _AnimatedCounterText(
-                        key: ValueKey('counter__'),
+                        key: ValueKey('counter_${label}_$animationTrigger'),
                         targetValue: numericTarget!,
                         suffix: suffix,
                         fallbackText: value,
@@ -698,10 +732,16 @@ class _HighlightCard extends StatelessWidget {
       child: cardContent,
     );
 
+    final revealedCard = ScrollReveal(
+      staggerIndex: staggerIndex,
+      slideDistance: 18.0,
+      child: card,
+    );
+
     if (width != null) {
-      return SizedBox(width: width, child: card);
+      return SizedBox(width: width, child: revealedCard);
     }
-    return card;
+    return revealedCard;
   }
 }
 

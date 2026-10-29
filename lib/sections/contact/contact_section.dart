@@ -7,6 +7,8 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_launcher_util.dart';
 import '../../models/profile.dart';
+import '../../widgets/animations/parallax_widget.dart';
+import '../../widgets/animations/scroll_reveal.dart';
 import '../../widgets/animations/staggered_entrance.dart';
 
 /// Contact section providing direct inquiry channels (Email, WhatsApp, LinkedIn, GitHub)
@@ -60,74 +62,84 @@ class _ContactSectionState extends State<ContactSection> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section Tag & Header
-          Row(
-            children: [
-              Container(
-                width: 4,
-                height: 24,
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(width: 12),
-              const Text(
-                'GET IN TOUCH',
-                style: TextStyle(
-                  color: AppColors.cyanPrimary,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  letterSpacing: 1.5,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-
-          // Main Headline with Gradient
-          RichText(
-            text: TextSpan(
+          // Section Tag & Header with clipped text reveal
+          ScrollReveal.clippedText(
+            staggerIndex: 0,
+            child: Row(
               children: [
-                TextSpan(
-                  text: "Let's Discuss Your Next ",
-                  style: TextStyle(
-                    fontSize: isMobile ? 26 : 34,
-                    fontWeight: FontWeight.w800,
-                    color: textColor,
-                    letterSpacing: -0.5,
+                Container(
+                  width: 4,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.circular(2),
                   ),
                 ),
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.baseline,
-                  baseline: TextBaseline.alphabetic,
-                  child: ShaderMask(
-                    shaderCallback: (bounds) => const LinearGradient(
-                      colors: [
-                        Color(0xFF8B5CF6), // Violet
-                        Color(0xFFD946EF), // Magenta
-                        Color(0xFF06B6D4), // Cyan
-                      ],
-                    ).createShader(bounds),
-                    child: Text(
-                      'Mobile App',
-                      style: TextStyle(
-                        fontSize: isMobile ? 26 : 34,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
+                const SizedBox(width: 12),
+                const Text(
+                  'GET IN TOUCH',
+                  style: TextStyle(
+                    color: AppColors.cyanPrimary,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    letterSpacing: 1.5,
                   ),
                 ),
               ],
             ),
           ),
+          const SizedBox(height: 10),
+
+          // Main Headline with Gradient and clipped reveal
+          ScrollReveal.clippedText(
+            staggerIndex: 1,
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Let's Discuss Your Next ",
+                    style: TextStyle(
+                      fontSize: isMobile ? 26 : 34,
+                      fontWeight: FontWeight.w800,
+                      color: textColor,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.baseline,
+                    baseline: TextBaseline.alphabetic,
+                    child: ShaderMask(
+                      shaderCallback: (bounds) => const LinearGradient(
+                        colors: [
+                          Color(0xFF8B5CF6), // Violet
+                          Color(0xFFD946EF), // Magenta
+                          Color(0xFF06B6D4), // Cyan
+                        ],
+                      ).createShader(bounds),
+                      child: Text(
+                        'Mobile App',
+                        style: TextStyle(
+                          fontSize: isMobile ? 26 : 34,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(height: 8),
 
-          Text(
-            'Have a project in mind, need a skilled Flutter developer, or want to discuss an opportunity? Reach out via direct email, WhatsApp, LinkedIn, or GitHub.',
-            style: AppTypography.getBodyLarge(secondaryTextColor),
+          ScrollReveal(
+            staggerIndex: 2,
+            slideDistance: 14.0,
+            child: Text(
+              'Have a project in mind, need a skilled Flutter developer, or want to discuss an opportunity? Reach out via direct email, WhatsApp, LinkedIn, or GitHub.',
+              style: AppTypography.getBodyLarge(secondaryTextColor),
+            ),
           ),
           const SizedBox(height: 32),
 
@@ -239,7 +251,11 @@ class _ContactSectionState extends State<ContactSection> {
       children: [
         // 3D Cartoon Contact Character Stage with "Let's Connect" scribble badge
         Center(
-          child: _ContactCharacterStage(isMobile: isMobile, isDark: isDark),
+          child: ParallaxWidget(
+            speed: -0.05,
+            maxOffset: 20,
+            child: _ContactCharacterStage(isMobile: isMobile, isDark: isDark),
+          ),
         ),
         const SizedBox(height: 24),
 
@@ -322,207 +338,229 @@ class _ContactSectionState extends State<ContactSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 1. "Ready to Build" Callout Card (shifted from bottom)
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 18 : 24,
-            vertical: isMobile ? 20 : 24,
-          ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                  ? [
-                      const Color(0xFF1E1B4B).withOpacity(0.85),
-                      const Color(0xFF0F172A).withOpacity(0.92),
-                    ]
-                  : [const Color(0xFFEEF2FF), Colors.white],
+        // 1. "Ready to Build" Callout Card with subtle reveal
+        ScrollReveal(
+          staggerIndex: 0,
+          slideDistance: 16.0,
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 18 : 24,
+              vertical: isMobile ? 20 : 24,
             ),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: AppColors.violetPrimary.withOpacity(isDark ? 0.35 : 0.25),
-              width: 1.2,
-            ),
-            boxShadow: [
-              BoxShadow(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: isDark
+                    ? [
+                        const Color(0xFF1E1B4B).withOpacity(0.85),
+                        const Color(0xFF0F172A).withOpacity(0.92),
+                      ]
+                    : [const Color(0xFFEEF2FF), Colors.white],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
                 color: AppColors.violetPrimary.withOpacity(
-                  isDark ? 0.12 : 0.05,
+                  isDark ? 0.35 : 0.25,
                 ),
-                blurRadius: 16,
-                offset: const Offset(0, 4),
+                width: 1.2,
               ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Ready to Build Scalable Mobile Experiences Together?",
-                style: TextStyle(
-                  fontSize: isMobile ? 18 : 22,
-                  fontWeight: FontWeight.w800,
-                  color: textColor,
-                  letterSpacing: -0.3,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.violetPrimary.withOpacity(
+                    isDark ? 0.12 : 0.05,
+                  ),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                "Whether you need a dedicated Flutter developer, architectural guidance, or help shipping production releases — let's connect.",
-                style: TextStyle(
-                  fontSize: isMobile ? 12.5 : 14,
-                  color: secondaryTextColor,
-                  height: 1.45,
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Ready to Build Scalable Mobile Experiences Together?",
+                  style: TextStyle(
+                    fontSize: isMobile ? 18 : 22,
+                    fontWeight: FontWeight.w800,
+                    color: textColor,
+                    letterSpacing: -0.3,
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  "Whether you need a dedicated Flutter developer, architectural guidance, or help shipping production releases — let's connect.",
+                  style: TextStyle(
+                    fontSize: isMobile ? 12.5 : 14,
+                    color: secondaryTextColor,
+                    height: 1.45,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 16),
 
         // 2. Direct Contact Channels:
-        // Row 1: Email and WhatsApp
+        // Row 1: Email and WhatsApp with staggered entrance
         Row(
           children: [
             Expanded(
-              child: _InteractiveContactActionCard(
-                onTap: _openDirectEmail,
-                isDark: isDark,
-                accentColor: const Color(0xFF8B5CF6),
-                backgroundGradient: LinearGradient(
-                  colors: isDark
-                      ? [
-                          const Color(0xFF7C3AED).withOpacity(0.20),
-                          const Color(0xFF6366F1).withOpacity(0.08),
-                        ]
-                      : [const Color(0xFFF5F3FF), Colors.white],
-                ),
-                iconWidget: Container(
-                  width: isMobile ? 36 : 40,
-                  height: isMobile ? 36 : 40,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF8B5CF6).withOpacity(0.18),
-                    borderRadius: BorderRadius.circular(10),
+              child: ScrollReveal(
+                staggerIndex: 1,
+                slideDistance: 14.0,
+                child: _InteractiveContactActionCard(
+                  onTap: _openDirectEmail,
+                  isDark: isDark,
+                  accentColor: const Color(0xFF8B5CF6),
+                  backgroundGradient: LinearGradient(
+                    colors: isDark
+                        ? [
+                            const Color(0xFF7C3AED).withOpacity(0.20),
+                            const Color(0xFF6366F1).withOpacity(0.08),
+                          ]
+                        : [const Color(0xFFF5F3FF), Colors.white],
                   ),
-                  child: Icon(
-                    Icons.mail_rounded,
-                    size: isMobile ? 18 : 20,
-                    color: const Color(0xFFA78BFA),
+                  iconWidget: Container(
+                    width: isMobile ? 36 : 40,
+                    height: isMobile ? 36 : 40,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF8B5CF6).withOpacity(0.18),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      Icons.mail_rounded,
+                      size: isMobile ? 18 : 20,
+                      color: const Color(0xFFA78BFA),
+                    ),
                   ),
+                  title: 'Email',
+                  subtitle: 'Send an email directly',
+                  isMobile: isMobile,
                 ),
-                title: 'Email',
-                subtitle: 'Send an email directly',
-                isMobile: isMobile,
               ),
             ),
             SizedBox(width: isMobile ? 10 : 12),
             Expanded(
-              child: _InteractiveContactActionCard(
-                onTap: _openWhatsApp,
-                isDark: isDark,
-                accentColor: const Color(0xFF10B981),
-                backgroundGradient: LinearGradient(
-                  colors: isDark
-                      ? [
-                          const Color(0xFF10B981).withOpacity(0.22),
-                          const Color(0xFF059669).withOpacity(0.08),
-                        ]
-                      : [const Color(0xFFECFDF5), Colors.white],
-                ),
-                iconWidget: Container(
-                  width: isMobile ? 36 : 40,
-                  height: isMobile ? 36 : 40,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF10B981).withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(10),
+              child: ScrollReveal(
+                staggerIndex: 2,
+                slideDistance: 14.0,
+                child: _InteractiveContactActionCard(
+                  onTap: _openWhatsApp,
+                  isDark: isDark,
+                  accentColor: const Color(0xFF10B981),
+                  backgroundGradient: LinearGradient(
+                    colors: isDark
+                        ? [
+                            const Color(0xFF10B981).withOpacity(0.22),
+                            const Color(0xFF059669).withOpacity(0.08),
+                          ]
+                        : [const Color(0xFFECFDF5), Colors.white],
                   ),
-                  child: Center(
-                    child: _WhatsAppIconWidget(size: isMobile ? 18 : 20),
+                  iconWidget: Container(
+                    width: isMobile ? 36 : 40,
+                    height: isMobile ? 36 : 40,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF10B981).withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: _WhatsAppIconWidget(size: isMobile ? 18 : 20),
+                    ),
                   ),
+                  title: 'WhatsApp',
+                  subtitle: 'Connect on WhatsApp',
+                  isMobile: isMobile,
                 ),
-                title: 'WhatsApp',
-                subtitle: 'Connect on WhatsApp',
-                isMobile: isMobile,
               ),
             ),
           ],
         ),
         SizedBox(height: isMobile ? 10 : 12),
 
-        // Row 2: GitHub and LinkedIn
+        // Row 2: GitHub and LinkedIn with staggered entrance
         Row(
           children: [
             Expanded(
-              child: _InteractiveContactActionCard(
-                onTap: () =>
-                    UrlLauncherUtil.openUrl(githubUrl, context: context),
-                isDark: isDark,
-                accentColor: isDark
-                    ? const Color(0xFFA78BFA)
-                    : const Color(0xFF475569),
-                backgroundGradient: LinearGradient(
-                  colors: isDark
-                      ? [
-                          const Color(0xFF1E293B).withOpacity(0.7),
-                          const Color(0xFF0F172A).withOpacity(0.9),
-                        ]
-                      : [const Color(0xFFF8FAFC), Colors.white],
-                ),
-                iconWidget: Container(
-                  width: isMobile ? 36 : 40,
-                  height: isMobile ? 36 : 40,
-                  decoration: BoxDecoration(
-                    color: (isDark ? Colors.white : const Color(0xFF24292F))
-                        .withOpacity(0.12),
-                    borderRadius: BorderRadius.circular(10),
+              child: ScrollReveal(
+                staggerIndex: 3,
+                slideDistance: 14.0,
+                child: _InteractiveContactActionCard(
+                  onTap: () =>
+                      UrlLauncherUtil.openUrl(githubUrl, context: context),
+                  isDark: isDark,
+                  accentColor: isDark
+                      ? const Color(0xFFA78BFA)
+                      : const Color(0xFF475569),
+                  backgroundGradient: LinearGradient(
+                    colors: isDark
+                        ? [
+                            const Color(0xFF1E293B).withOpacity(0.7),
+                            const Color(0xFF0F172A).withOpacity(0.9),
+                          ]
+                        : [const Color(0xFFF8FAFC), Colors.white],
                   ),
-                  child: Center(
-                    child: FaIcon(
-                      FontAwesomeIcons.github,
-                      size: isMobile ? 16 : 18,
-                      color: isDark ? Colors.white : const Color(0xFF24292F),
+                  iconWidget: Container(
+                    width: isMobile ? 36 : 40,
+                    height: isMobile ? 36 : 40,
+                    decoration: BoxDecoration(
+                      color: (isDark ? Colors.white : const Color(0xFF24292F))
+                          .withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: FaIcon(
+                        FontAwesomeIcons.github,
+                        size: isMobile ? 16 : 18,
+                        color: isDark ? Colors.white : const Color(0xFF24292F),
+                      ),
                     ),
                   ),
+                  title: 'GitHub',
+                  subtitle: 'Explore repositories',
+                  isMobile: isMobile,
                 ),
-                title: 'GitHub',
-                subtitle: 'Explore repositories',
-                isMobile: isMobile,
               ),
             ),
             SizedBox(width: isMobile ? 10 : 12),
             Expanded(
-              child: _InteractiveContactActionCard(
-                onTap: () =>
-                    UrlLauncherUtil.openUrl(linkedinUrl, context: context),
-                isDark: isDark,
-                accentColor: const Color(0xFF0A66C2),
-                backgroundGradient: LinearGradient(
-                  colors: isDark
-                      ? [
-                          const Color(0xFF0A66C2).withOpacity(0.20),
-                          const Color(0xFF0284C7).withOpacity(0.08),
-                        ]
-                      : [const Color(0xFFF0F9FF), Colors.white],
-                ),
-                iconWidget: Container(
-                  width: isMobile ? 36 : 40,
-                  height: isMobile ? 36 : 40,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF0A66C2).withOpacity(0.18),
-                    borderRadius: BorderRadius.circular(10),
+              child: ScrollReveal(
+                staggerIndex: 4,
+                slideDistance: 14.0,
+                child: _InteractiveContactActionCard(
+                  onTap: () =>
+                      UrlLauncherUtil.openUrl(linkedinUrl, context: context),
+                  isDark: isDark,
+                  accentColor: const Color(0xFF0A66C2),
+                  backgroundGradient: LinearGradient(
+                    colors: isDark
+                        ? [
+                            const Color(0xFF0A66C2).withOpacity(0.20),
+                            const Color(0xFF0284C7).withOpacity(0.08),
+                          ]
+                        : [const Color(0xFFF0F9FF), Colors.white],
                   ),
-                  child: Center(
-                    child: FaIcon(
-                      FontAwesomeIcons.linkedinIn,
-                      size: isMobile ? 16 : 18,
-                      color: const Color(0xFF0A66C2),
+                  iconWidget: Container(
+                    width: isMobile ? 36 : 40,
+                    height: isMobile ? 36 : 40,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0A66C2).withOpacity(0.18),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: FaIcon(
+                        FontAwesomeIcons.linkedinIn,
+                        size: isMobile ? 16 : 18,
+                        color: const Color(0xFF0A66C2),
+                      ),
                     ),
                   ),
+                  title: 'LinkedIn',
+                  subtitle: 'Connect on LinkedIn',
+                  isMobile: isMobile,
                 ),
-                title: 'LinkedIn',
-                subtitle: 'Connect on LinkedIn',
-                isMobile: isMobile,
               ),
             ),
           ],
