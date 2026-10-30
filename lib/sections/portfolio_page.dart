@@ -399,9 +399,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             minHeight: isMobile ? 0 : viewportHeight,
                           ),
                           child: ResponsiveContentContainer(
-                            child: ScrollVisibilityRevealer(
-                              child: EducationSection(education: education),
-                            ),
+                            child: EducationSection(education: education),
                           ),
                         ),
                       ),
