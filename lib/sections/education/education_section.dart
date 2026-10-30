@@ -5,7 +5,6 @@ import '../../core/constants/app_breakpoints.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../models/education.dart';
-import '../../widgets/animations/scroll_reveal.dart';
 import '../../widgets/cards/glass_card.dart';
 
 /// Education section presenting verified degrees, universities, honors,
@@ -30,7 +29,7 @@ class EducationSection extends StatelessWidget {
           begin: begin,
           end: end,
           duration: duration,
-          curve: Curves.easeInOut,
+          curve: Curves.easeInOutSine,
         );
   }
 
@@ -56,40 +55,34 @@ class EducationSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Section Tag & Header with clipped text reveal
-          ScrollReveal.clippedText(
-            staggerIndex: 0,
-            child: Row(
-              children: [
-                Container(
-                  width: 4,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.primaryGradient,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+          // Section Tag & Header: stable, flicker-free typography coordinated with section entrance
+          Row(
+            children: [
+              Container(
+                width: 4,
+                height: 24,
+                decoration: BoxDecoration(
+                  gradient: AppColors.primaryGradient,
+                  borderRadius: BorderRadius.circular(2),
                 ),
-                const SizedBox(width: 12),
-                const Text(
-                  'ACADEMIC FOUNDATION',
-                  style: TextStyle(
-                    color: AppColors.cyanPrimary,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    letterSpacing: 1.5,
-                  ),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'ACADEMIC FOUNDATION',
+                style: TextStyle(
+                  color: AppColors.cyanPrimary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  letterSpacing: 1.5,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           const SizedBox(height: 10),
-          ScrollReveal.clippedText(
-            staggerIndex: 1,
-            child: Text(
-              'Education & Qualifications',
-              style: AppTypography.getDisplayMedium(textColor)
-                  .copyWith(fontSize: isMobile ? 26 : 32),
-            ),
+          Text(
+            'Education & Qualifications',
+            style: AppTypography.getDisplayMedium(textColor)
+                .copyWith(fontSize: isMobile ? 26 : 32),
           ),
           const SizedBox(height: 24),
 
@@ -113,47 +106,43 @@ class EducationSection extends StatelessWidget {
                         if (education.isNotEmpty)
                           Expanded(
                             flex: 7,
-                            child: _wrapFloating(
-                              _EducationCard(education: education[0]),
-                              begin: 8,
-                              end: -8,
-                              duration: const Duration(milliseconds: 2800),
-                              disableAnimations: disableAnimations,
+                            child: RepaintBoundary(
+                              child: _EducationCard(education: education[0]),
                             ),
                           ),
                         const SizedBox(width: 22),
                         Expanded(
                           flex: 6,
-                          child: _wrapFloating(
-                            const _EducationCharacterStage(isMobile: false),
-                            begin: -10,
-                            end: 10,
-                            duration: const Duration(milliseconds: 2400),
-                            disableAnimations: disableAnimations,
+                          child: RepaintBoundary(
+                            child: _wrapFloating(
+                              const _EducationCharacterStage(isMobile: false),
+                              begin: -6,
+                              end: 6,
+                              duration: const Duration(milliseconds: 2600),
+                              disableAnimations: disableAnimations,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 22),
                         if (education.length > 1)
                           Expanded(
                             flex: 7,
-                            child: _wrapFloating(
-                              _EducationCard(education: education[1]),
-                              begin: -8,
-                              end: 8,
-                              duration: const Duration(milliseconds: 3100),
-                              disableAnimations: disableAnimations,
+                            child: RepaintBoundary(
+                              child: _EducationCard(education: education[1]),
                             ),
                           ),
                       ],
                     ),
                     const SizedBox(height: 28),
                     Center(
-                      child: _wrapFloating(
-                        const _EducationAwardBadge(),
-                        begin: -5,
-                        end: 5,
-                        duration: const Duration(milliseconds: 2600),
-                        disableAnimations: disableAnimations,
+                      child: RepaintBoundary(
+                        child: _wrapFloating(
+                          const _EducationAwardBadge(),
+                          begin: -4,
+                          end: 4,
+                          duration: const Duration(milliseconds: 2600),
+                          disableAnimations: disableAnimations,
+                        ),
                       ),
                     ),
                   ],
@@ -161,21 +150,25 @@ class EducationSection extends StatelessWidget {
               } else if (isTabletLayout) {
                 return Column(
                   children: [
-                    _wrapFloating(
-                      const _EducationCharacterStage(isMobile: true),
-                      begin: -8,
-                      end: 8,
-                      duration: const Duration(milliseconds: 2400),
-                      disableAnimations: disableAnimations,
+                    RepaintBoundary(
+                      child: _wrapFloating(
+                        const _EducationCharacterStage(isMobile: true),
+                        begin: -6,
+                        end: 6,
+                        duration: const Duration(milliseconds: 2600),
+                        disableAnimations: disableAnimations,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Center(
-                      child: _wrapFloating(
-                        const _EducationAwardBadge(),
-                        begin: -5,
-                        end: 5,
-                        duration: const Duration(milliseconds: 2600),
-                        disableAnimations: disableAnimations,
+                      child: RepaintBoundary(
+                        child: _wrapFloating(
+                          const _EducationAwardBadge(),
+                          begin: -4,
+                          end: 4,
+                          duration: const Duration(milliseconds: 2600),
+                          disableAnimations: disableAnimations,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -184,23 +177,15 @@ class EducationSection extends StatelessWidget {
                       children: [
                         if (education.isNotEmpty)
                           Expanded(
-                            child: _wrapFloating(
-                              _EducationCard(education: education[0]),
-                              begin: 6,
-                              end: -6,
-                              duration: const Duration(milliseconds: 2800),
-                              disableAnimations: disableAnimations,
+                            child: RepaintBoundary(
+                              child: _EducationCard(education: education[0]),
                             ),
                           ),
                         if (education.length > 1) ...[
                           const SizedBox(width: 18),
                           Expanded(
-                            child: _wrapFloating(
-                              _EducationCard(education: education[1]),
-                              begin: -6,
-                              end: 6,
-                              duration: const Duration(milliseconds: 3100),
-                              disableAnimations: disableAnimations,
+                            child: RepaintBoundary(
+                              child: _EducationCard(education: education[1]),
                             ),
                           ),
                         ],
@@ -211,37 +196,34 @@ class EducationSection extends StatelessWidget {
               } else {
                 return Column(
                   children: [
-                    _wrapFloating(
-                      const _EducationCharacterStage(isMobile: true),
-                      begin: -8,
-                      end: 8,
-                      duration: const Duration(milliseconds: 2400),
-                      disableAnimations: disableAnimations,
-                    ),
-                    const SizedBox(height: 18),
-                    Center(
+                    RepaintBoundary(
                       child: _wrapFloating(
-                        const _EducationAwardBadge(),
-                        begin: -5,
-                        end: 5,
+                        const _EducationCharacterStage(isMobile: true),
+                        begin: -6,
+                        end: 6,
                         duration: const Duration(milliseconds: 2600),
                         disableAnimations: disableAnimations,
                       ),
                     ),
+                    const SizedBox(height: 18),
+                    Center(
+                      child: RepaintBoundary(
+                        child: _wrapFloating(
+                          const _EducationAwardBadge(),
+                          begin: -4,
+                          end: 4,
+                          duration: const Duration(milliseconds: 2600),
+                          disableAnimations: disableAnimations,
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     ...education.asMap().entries.map((entry) {
-                      final index = entry.key;
                       final edu = entry.value;
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 18),
-                        child: _wrapFloating(
-                          _EducationCard(education: edu),
-                          begin: index == 0 ? 6 : -6,
-                          end: index == 0 ? -6 : 6,
-                          duration: Duration(
-                            milliseconds: 2700 + (index * 400),
-                          ),
-                          disableAnimations: disableAnimations,
+                        child: RepaintBoundary(
+                          child: _EducationCard(education: edu),
                         ),
                       );
                     }),

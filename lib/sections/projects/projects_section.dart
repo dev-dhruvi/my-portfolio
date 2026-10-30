@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -499,6 +500,8 @@ class _DesktopSingleRowProjectSliderState
     extends State<_DesktopSingleRowProjectSlider> {
   Timer? _autoplayTimer;
   bool _isHovered = false;
+  bool _showLeftArrow = false;
+  bool _showRightArrow = false;
 
   @override
   void initState() {
@@ -547,6 +550,58 @@ class _DesktopSingleRowProjectSliderState
     _autoplayTimer?.cancel();
   }
 
+  void _onPointerHover(PointerHoverEvent event) {
+    _isHovered = true;
+    final renderBox = context.findRenderObject() as RenderBox?;
+    if (renderBox == null || !renderBox.hasSize) return;
+    final width = renderBox.size.width;
+    final x = event.localPosition.dx;
+
+    // Show left arrow when mouse is near the left edge (<= 140px)
+    final nearLeft = x <= 140.0;
+    // Show right arrow when mouse is near the right edge (>= width - 140px)
+    final nearRight = x >= (width - 140.0);
+
+    if (nearLeft != _showLeftArrow || nearRight != _showRightArrow) {
+      setState(() {
+        _showLeftArrow = nearLeft;
+        _showRightArrow = nearRight;
+      });
+    }
+  }
+
+  void _onPointerExit(PointerExitEvent event) {
+    if (_isHovered || _showLeftArrow || _showRightArrow) {
+      setState(() {
+        _isHovered = false;
+        _showLeftArrow = false;
+        _showRightArrow = false;
+      });
+    }
+  }
+
+  void _scrollPrevious(int pageCount) {
+    if (!widget.pageController.hasClients || pageCount <= 1) return;
+    final currentPage = widget.activePageNotifier.value;
+    final targetPage = currentPage > 0 ? currentPage - 1 : pageCount - 1;
+    widget.pageController.animateToPage(
+      targetPage,
+      duration: const Duration(milliseconds: 550),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  void _scrollNext(int pageCount) {
+    if (!widget.pageController.hasClients || pageCount <= 1) return;
+    final currentPage = widget.activePageNotifier.value;
+    final targetPage = (currentPage + 1) % pageCount;
+    widget.pageController.animateToPage(
+      targetPage,
+      duration: const Duration(milliseconds: 550),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     const itemsPerPage = 3;
@@ -562,81 +617,213 @@ class _DesktopSingleRowProjectSliderState
     final pageCount = pages.length;
 
     return MouseRegion(
-      onEnter: (_) => _isHovered = true,
-      onExit: (_) => _isHovered = false,
+      onHover: _onPointerHover,
+      onExit: _onPointerExit,
       child: SizedBox(
         height: 380,
-        child: PageView.builder(
+        child: Stack(
           clipBehavior: Clip.none,
-          controller: widget.pageController,
-          itemCount: pageCount,
-          onPageChanged: (pageIndex) {
-            widget.activePageNotifier.value = pageIndex;
-          },
-          itemBuilder: (context, pageIndex) {
-            final pageItems = pages[pageIndex];
+          children: [
+            // 1. Horizontally scrollable single-row project list (3 projects per page view)
+            PageView.builder(
+              clipBehavior: Clip.none,
+              controller: widget.pageController,
+              itemCount: pageCount,
+              onPageChanged: (pageIndex) {
+                widget.activePageNotifier.value = pageIndex;
+              },
+              itemBuilder: (context, pageIndex) {
+                final pageItems = pages[pageIndex];
 
-            return AnimatedBuilder(
-              animation: widget.pageController,
-              builder: (context, _) {
-                double currentPage = pageIndex.toDouble();
-                if (widget.pageController.hasClients &&
-                    widget.pageController.positions.length == 1) {
-                  final pos = widget.pageController.position;
-                  if (pos.hasContentDimensions &&
-                      widget.pageController.page != null) {
-                    currentPage = widget.pageController.page!;
-                  }
-                }
-                final double pageDelta = pageIndex - currentPage;
-                final double rotY = (-pageDelta * 0.08).clamp(-0.2, 0.2);
-                final double pageOpacity = (1.0 - (pageDelta.abs() * 0.35))
-                    .clamp(0.0, 1.0);
+                return AnimatedBuilder(
+                  animation: widget.pageController,
+                  builder: (context, _) {
+                    double currentPage = pageIndex.toDouble();
+                    if (widget.pageController.hasClients &&
+                        widget.pageController.positions.length == 1) {
+                      final pos = widget.pageController.position;
+                      if (pos.hasContentDimensions &&
+                          widget.pageController.page != null) {
+                        currentPage = widget.pageController.page!;
+                      }
+                    }
+                    final double pageDelta = pageIndex - currentPage;
+                    final double rotY = (-pageDelta * 0.08).clamp(-0.2, 0.2);
+                    final double pageOpacity = (1.0 - (pageDelta.abs() * 0.35))
+                        .clamp(0.0, 1.0);
 
-                return Opacity(
-                  opacity: pageOpacity,
-                  child: Transform(
-                    alignment: pageDelta > 0
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
-                    transform: Matrix4.identity()
-                      ..setEntry(3, 2, 0.0008)
-                      ..rotateY(rotY),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 4.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          for (int c = 0; c < itemsPerPage; c++) ...[
-                            if (c > 0) const SizedBox(width: 16),
-                            if (c < pageItems.length)
-                              Expanded(
-                                child: Transform.translate(
-                                  offset: Offset(
-                                    0.0,
-                                    pageDelta.abs() * (c * 4.0),
-                                  ),
-                                  child: ProjectCard(
-                                    project: pageItems[c],
-                                    isDesktopOrTablet: true,
-                                    imageHeight: 210.0,
-                                    enable3D: true,
-                                    onTap: () =>
-                                        widget.onProjectTap(pageItems[c]),
-                                  ),
-                                ),
-                              )
-                            else
-                              const Expanded(child: SizedBox.shrink()),
-                          ],
-                        ],
+                    return Opacity(
+                      opacity: pageOpacity,
+                      child: Transform(
+                        alignment: pageDelta > 0
+                            ? Alignment.centerLeft
+                            : Alignment.centerRight,
+                        transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.0008)
+                          ..rotateY(rotY),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 4.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              for (int c = 0; c < itemsPerPage; c++) ...[
+                                if (c > 0) const SizedBox(width: 16),
+                                if (c < pageItems.length)
+                                  Expanded(
+                                    child: Transform.translate(
+                                      offset: Offset(
+                                        0.0,
+                                        pageDelta.abs() * (c * 4.0),
+                                      ),
+                                      child: ProjectCard(
+                                        project: pageItems[c],
+                                        isDesktopOrTablet: true,
+                                        imageHeight: 210.0,
+                                        enable3D: true,
+                                        onTap: () =>
+                                            widget.onProjectTap(pageItems[c]),
+                                      ),
+                                    ),
+                                  )
+                                else
+                                  const Expanded(child: SizedBox.shrink()),
+                              ],
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
-            );
-          },
+            ),
+
+            // 2. Left Edge Navigation Arrow Button (smoothly revealed on left edge hover)
+            if (pageCount > 1)
+              Positioned(
+                left: 10,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: _DesktopSliderArrowButton(
+                    icon: Icons.arrow_back_ios_new_rounded,
+                    isVisible: _showLeftArrow,
+                    tooltip: 'Previous projects',
+                    onTap: () => _scrollPrevious(pageCount),
+                  ),
+                ),
+              ),
+
+            // 3. Right Edge Navigation Arrow Button (smoothly revealed on right edge hover)
+            if (pageCount > 1)
+              Positioned(
+                right: 10,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: _DesktopSliderArrowButton(
+                    icon: Icons.arrow_forward_ios_rounded,
+                    isVisible: _showRightArrow,
+                    tooltip: 'Next projects',
+                    onTap: () => _scrollNext(pageCount),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Sleek floating frosted-glass arrow button for desktop single-row project slider.
+/// Appears smoothly when cursor approaches left or right edges of the project section.
+class _DesktopSliderArrowButton extends StatefulWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+  final bool isVisible;
+  final String tooltip;
+
+  const _DesktopSliderArrowButton({
+    required this.icon,
+    required this.onTap,
+    required this.isVisible,
+    required this.tooltip,
+  });
+
+  @override
+  State<_DesktopSliderArrowButton> createState() =>
+      _DesktopSliderArrowButtonState();
+}
+
+class _DesktopSliderArrowButtonState extends State<_DesktopSliderArrowButton> {
+  bool _isButtonHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return IgnorePointer(
+      ignoring: !widget.isVisible,
+      child: AnimatedOpacity(
+        opacity: widget.isVisible ? 1.0 : 0.0,
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOutCubic,
+        child: AnimatedScale(
+          scale: widget.isVisible ? (_isButtonHovered ? 1.12 : 1.0) : 0.75,
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onEnter: (_) => setState(() => _isButtonHovered = true),
+            onExit: (_) => setState(() => _isButtonHovered = false),
+            child: GestureDetector(
+              onTap: widget.onTap,
+              child: Tooltip(
+                message: widget.tooltip,
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: _isButtonHovered
+                        ? AppColors.primaryGradient
+                        : null,
+                    color: _isButtonHovered
+                        ? null
+                        : (isDark
+                            ? const Color(0xFF0F172A).withOpacity(0.92)
+                            : Colors.white.withOpacity(0.95)),
+                    border: Border.all(
+                      color: _isButtonHovered
+                          ? Colors.white.withOpacity(0.85)
+                          : AppColors.cyanPrimary.withOpacity(isDark ? 0.5 : 0.65),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: (isDark
+                                ? AppColors.cyanPrimary
+                                : AppColors.violetPrimary)
+                            .withOpacity(_isButtonHovered ? 0.45 : 0.22),
+                        blurRadius: _isButtonHovered ? 18 : 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Icon(
+                      widget.icon,
+                      size: 20,
+                      color: _isButtonHovered
+                          ? Colors.white
+                          : (isDark ? Colors.white : AppColors.darkBackground),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
