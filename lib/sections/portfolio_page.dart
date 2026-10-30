@@ -52,6 +52,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   );
   double _lastCheckedOffset = -1.0;
   bool _precacheDone = false;
+  bool _secondaryPrecacheDone = false;
   bool _isProgrammaticScrolling = false;
   Timer? _programmaticScrollTimer;
   // On web, the preloader in web/index.html seamlessly handles the initial Flutter
@@ -75,27 +76,29 @@ class _PortfolioPageState extends State<PortfolioPage> {
         const AssetImage('assets/images/developer_character_3d.webp'),
         context,
       );
-      // Defer below-the-fold character stages to avoid blocking the initial frame
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        precacheImage(
-          const AssetImage('assets/images/developer_character_business.webp'),
-          context,
-        );
-        precacheImage(
-          const AssetImage('assets/images/developer_character_contact.webp'),
-          context,
-        );
-        precacheImage(
-          const AssetImage('assets/images/developer_character_graduate.webp'),
-          context,
-        );
-      });
     }
   }
 
   void _onScroll() {
     if (!_scrollController.hasClients || _isProgrammaticScrolling) return;
+
+    // Lazily precache below-the-fold illustrations when user starts scrolling,
+    // avoiding CPU/decoding contention during initial page load and TBT window.
+    if (!_secondaryPrecacheDone && _scrollController.offset > 80) {
+      _secondaryPrecacheDone = true;
+      precacheImage(
+        const AssetImage('assets/images/developer_character_business.webp'),
+        context,
+      );
+      precacheImage(
+        const AssetImage('assets/images/developer_character_graduate.webp'),
+        context,
+      );
+      precacheImage(
+        const AssetImage('assets/images/developer_character_contact.webp'),
+        context,
+      );
+    }
 
     final scrollOffset = _scrollController.offset;
     final maxScroll = _scrollController.position.maxScrollExtent;

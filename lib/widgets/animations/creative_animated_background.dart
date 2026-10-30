@@ -48,9 +48,17 @@ class _CreativeAnimatedBackgroundState extends State<CreativeAnimatedBackground>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 20),
-    )..repeat();
+    );
 
     _initParticles();
+
+    // Defer continuous background animation until after initial frame is mounted
+    // so initial paint and interactive bootstrap complete without competing canvas repaints
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _controller.repeat();
+      }
+    });
   }
 
   void _initParticles() {
