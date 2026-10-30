@@ -747,7 +747,7 @@ class _ContactCharacterStage extends StatelessWidget {
 
           // 3D Cartoon Contact Character
           Image.asset(
-            'assets/images/developer_character_contact.png',
+            'assets/images/developer_character_contact.webp',
             height: isMobile ? 200 : 230,
             fit: BoxFit.contain,
             errorBuilder: (context, error, stackTrace) =>

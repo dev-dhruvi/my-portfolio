@@ -406,7 +406,7 @@ class _AboutCharacterStage extends StatelessWidget {
               Positioned(
                 bottom: 0,
                 child: Image.asset(
-                  'assets/images/developer_character_business.png',
+                  'assets/images/developer_character_business.webp',
                   height: isMobile ? 260 : 320,
                   fit: BoxFit.contain,
                   filterQuality: FilterQuality.high,

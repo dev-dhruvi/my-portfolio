@@ -72,22 +72,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
       _precacheDone = true;
       // Precache primary hero character immediately for instant first frame
       precacheImage(
-        const AssetImage('assets/images/developer_character_3d.png'),
+        const AssetImage('assets/images/developer_character_3d.webp'),
         context,
       );
       // Defer below-the-fold character stages to avoid blocking the initial frame
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         precacheImage(
-          const AssetImage('assets/images/developer_character_business.png'),
+          const AssetImage('assets/images/developer_character_business.webp'),
           context,
         );
         precacheImage(
-          const AssetImage('assets/images/developer_character_contact.png'),
+          const AssetImage('assets/images/developer_character_contact.webp'),
           context,
         );
         precacheImage(
-          const AssetImage('assets/images/developer_character_graduate.png'),
+          const AssetImage('assets/images/developer_character_graduate.webp'),
           context,
         );
       });

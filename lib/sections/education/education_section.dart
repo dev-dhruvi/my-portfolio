@@ -326,7 +326,7 @@ class _EducationCharacterStage extends StatelessWidget {
 
               // 3D Anime Graduate Character Asset
               Image.asset(
-                'assets/images/developer_character_graduate.png',
+                'assets/images/developer_character_graduate.webp',
                 height: isMobile ? 220 : 270,
                 fit: BoxFit.contain,
                 filterQuality: FilterQuality.high,

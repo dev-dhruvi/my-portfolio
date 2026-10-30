@@ -736,7 +736,7 @@ class _HeroSectionState extends State<HeroSection> {
           Positioned(
             bottom: 12,
             child: Image.asset(
-              'assets/images/developer_character_3d.png',
+              'assets/images/developer_character_3d.webp',
               height: 410,
               fit: BoxFit.contain,
               filterQuality: FilterQuality.high,
@@ -898,7 +898,7 @@ class _HeroSectionState extends State<HeroSection> {
           Positioned(
             bottom: 10,
             child: Image.asset(
-              'assets/images/developer_character_3d.png',
+              'assets/images/developer_character_3d.webp',
               height: 330,
               fit: BoxFit.contain,
               filterQuality: FilterQuality.high,
@@ -1014,7 +1014,7 @@ class _HeroSectionState extends State<HeroSection> {
               Positioned(
                 bottom: 0,
                 child: Image.asset(
-                  'assets/images/developer_character_3d.png',
+                  'assets/images/developer_character_3d.webp',
                   height: 312,
                   fit: BoxFit.contain,
                   filterQuality: FilterQuality.high,

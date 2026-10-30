@@ -61,9 +61,9 @@ jobs:
             echo "href=/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
           fi
 
-      - name: Build Flutter Web (Release)
+      - name: Build Flutter Web (Release with WebAssembly & WasmGC)
         run: |
-          flutter build web --release --base-href "${{ steps.base_href.outputs.href }}"
+          flutter build web --release --wasm --optimization-level=4 --tree-shake-icons --base-href "${{ steps.base_href.outputs.href }}"
 
       - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
