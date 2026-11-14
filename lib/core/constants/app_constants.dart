@@ -32,12 +32,11 @@ class AppConstants {
 
   // Professional summary (Verified from latest resume)
   static const String summary =
-      'Senior Software Engineer specializing in Flutter development, with 4+ years '
-      'of experience building cross-platform mobile and web applications. Expertise in '
-      'Flutter, Dart, GetX, REST APIs, Firebase, AWS IoT Core (MQTT), and scalable application '
-      'architecture. Experienced in leading product development from scratch, implementing '
-      'real-time booking systems, optimizing performance, securing API communication, and '
-      'developing automated tests for production-ready applications.';
+      'Senior Flutter Developer from Surat with 4+ years of experience building Android, iOS and web apps '
+      'across 20+ client and company projects, including a marketplace app built from scratch with a 90%+ '
+      'crash-free session rate. I care about clean, modular code and well-tested features, and I enjoy '
+      'turning Figma designs into smooth UI and debugging performance issues. I prefer explaining things to '
+      'junior developers, and I like working closely with designers and backend teams to build apps people actually use.';
 
   // Primary Hero Section Headlines & Value Proposition
   static const String heroHeadlinePrefix = 'Building Scalable ';
