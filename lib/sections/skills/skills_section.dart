@@ -115,7 +115,8 @@ class SkillsSection extends StatelessWidget {
     final name = skill.name.toLowerCase();
 
     if (id == 'sk_flutter' ||
-        (name.contains('flutter') && !name.contains('flow'))) {
+        name == 'flutter' ||
+        name == 'flutter (mobile & web)') {
       return 'Flutter';
     }
     if (id == 'sk_dart' || name == 'dart') {
@@ -195,6 +196,25 @@ class SkillsSection extends StatelessWidget {
     }
     if (id == 'sk_hive' || name.contains('hive')) {
       return 'Hive';
+    }
+    if (id == 'sk_custom_painter' || name.contains('custompainter')) {
+      return 'CustomPainter';
+    }
+    if (id == 'sk_bloc' || name.contains('bloc')) {
+      return 'BLoC';
+    }
+    if (id == 'sk_github_actions' ||
+        name.contains('github actions') ||
+        name.contains('ci/cd')) {
+      return 'CI/CD';
+    }
+    if (id == 'sk_ocr_docusign' ||
+        name.contains('ocr') ||
+        name.contains('docusign')) {
+      return 'OCR & DocuSign';
+    }
+    if (id == 'sk_kyc_updates' || name.contains('kyc')) {
+      return 'Aadhaar KYC';
     }
     if (id == 'sk_integrations' ||
         name.contains('places') ||

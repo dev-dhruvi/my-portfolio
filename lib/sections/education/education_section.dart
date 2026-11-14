@@ -107,21 +107,13 @@ class _EducationSectionState extends State<EducationSection>
     // 4. Graduate Illustration: 0.7s -> 1.7s (1000ms duration, 0.2917 to 0.7083)
     _characterEntranceAnimation = CurvedAnimation(
       parent: _timelineController,
-      curve: const Interval(
-        700 / 2400,
-        1700 / 2400,
-        curve: Curves.easeOutBack,
-      ),
+      curve: const Interval(700 / 2400, 1700 / 2400, curve: Curves.easeOutBack),
     );
 
     // 5. Achievement Badge: 1.2s -> 2.4s (1200ms duration, 0.500 to 1.000)
     _awardEntranceAnimation = CurvedAnimation(
       parent: _timelineController,
-      curve: const Interval(
-        1200 / 2400,
-        1.0,
-        curve: Curves.easeOutBack,
-      ),
+      curve: const Interval(1200 / 2400, 1.0, curve: Curves.easeOutBack),
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -298,7 +290,8 @@ class _EducationSectionState extends State<EducationSection>
                 builder: (context, constraints) {
                   final isDesktopLayout = constraints.maxWidth >= 1050;
                   final isTabletLayout =
-                      constraints.maxWidth >= 650 && constraints.maxWidth < 1050;
+                      constraints.maxWidth >= 650 &&
+                      constraints.maxWidth < 1050;
 
                   if (isDesktopLayout) {
                     return _buildDesktopLayout(isDark, disableAnimations);
@@ -846,8 +839,9 @@ class _EducationCharacterStageState extends State<_EducationCharacterStage> {
                         colors: [
                           const Color(0xFF8B5CF6)
                               .withOpacity(isDark ? 0.40 : 0.25),
-                          AppColors.cyanPrimary
-                              .withOpacity(isDark ? 0.24 : 0.14),
+                          AppColors.cyanPrimary.withOpacity(
+                            isDark ? 0.24 : 0.14,
+                          ),
                           Colors.transparent,
                         ],
                         stops: const [0.0, 0.58, 1.0],
@@ -911,10 +905,7 @@ class _EducationCharacterStageState extends State<_EducationCharacterStage> {
 
                       return Transform.translate(
                         offset: Offset(0, dy),
-                        child: Transform.rotate(
-                          angle: tilt,
-                          child: child,
-                        ),
+                        child: Transform.rotate(angle: tilt, child: child),
                       );
                     },
                     child: Image.asset(
@@ -978,26 +969,22 @@ class _EducationAwardBadge extends StatelessWidget {
             final pulseAlpha = disableAnimations
                 ? 0.25
                 : 0.18 + (math.sin(t).abs() * 0.22);
-            final trophyBounce = disableAnimations ? 0.0 : math.sin(t * 2) * 2.5;
+            final trophyBounce = disableAnimations
+                ? 0.0
+                : math.sin(t * 2) * 2.5;
 
             final isHighlight = isCardHovered;
 
             return AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeOutCubic,
-              transform: Matrix4.identity()
-                ..scale(isHighlight ? 1.04 : 1.0),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
+              transform: Matrix4.identity()..scale(isHighlight ? 1.04 : 1.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    const Color(0xFFF59E0B)
-                        .withOpacity(isDark ? 0.24 : 0.15),
-                    AppColors.violetPrimary
-                        .withOpacity(isDark ? 0.18 : 0.10),
+                    const Color(0xFFF59E0B).withOpacity(isDark ? 0.24 : 0.15),
+                    AppColors.violetPrimary.withOpacity(isDark ? 0.18 : 0.10),
                   ],
                 ),
                 color: isDark
@@ -1005,16 +992,14 @@ class _EducationAwardBadge extends StatelessWidget {
                     : Colors.white.withOpacity(0.96),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: const Color(0xFFF59E0B).withOpacity(
-                    isHighlight ? 0.95 : (isDark ? 0.65 : 0.50),
-                  ),
+                  color: const Color(0xFFF59E0B)
+                      .withOpacity(isHighlight ? 0.95 : (isDark ? 0.65 : 0.50)),
                   width: isHighlight ? 1.6 : 1.2,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFF59E0B).withOpacity(
-                      isHighlight ? 0.45 : pulseAlpha,
-                    ),
+                    color: const Color(0xFFF59E0B)
+                        .withOpacity(isHighlight ? 0.45 : pulseAlpha),
                     blurRadius: isHighlight ? 22 : 14,
                     offset: const Offset(0, 4),
                   ),
@@ -1076,10 +1061,7 @@ class _EducationCard extends StatefulWidget {
   final Education education;
   final ValueChanged<bool>? onHoverChanged;
 
-  const _EducationCard({
-    required this.education,
-    this.onHoverChanged,
-  });
+  const _EducationCard({required this.education, this.onHoverChanged});
 
   @override
   State<_EducationCard> createState() => _EducationCardState();
@@ -1113,8 +1095,7 @@ class _EducationCardState extends State<_EducationCard> {
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOutCubic,
         // Move card upward by 6px on hover with scale lift
-        transform: Matrix4.identity()
-          ..translate(0.0, _isHovered ? -6.0 : 0.0),
+        transform: Matrix4.identity()..translate(0.0, _isHovered ? -6.0 : 0.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
@@ -1155,7 +1136,9 @@ class _EducationCardState extends State<_EducationCard> {
                       boxShadow: _isHovered
                           ? [
                               BoxShadow(
-                                color: AppColors.violetPrimary.withOpacity(0.40),
+                                color: AppColors.violetPrimary.withOpacity(
+                                  0.40,
+                                ),
                                 blurRadius: 10,
                                 offset: const Offset(0, 3),
                               ),

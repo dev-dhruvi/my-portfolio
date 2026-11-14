@@ -348,7 +348,7 @@ class SeedData {
     ),
     const Skill(
       id: 'sk_github_actions',
-      name: 'GitHub Actions (CI/CD for Flutter Web)',
+      name: 'GitHub Actions (CI/CD)',
       category: 'Engineering',
       iconName: 'bolt',
       description: 'Automated testing, build artifact caching, and zero-touch continuous deployment to GitHub Pages.',

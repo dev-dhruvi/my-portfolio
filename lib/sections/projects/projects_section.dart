@@ -662,7 +662,12 @@ class _DesktopSingleRowProjectSliderState
                           ..setEntry(3, 2, 0.0008)
                           ..rotateY(rotY),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 4.0),
+                          padding: const EdgeInsets.fromLTRB(
+                            2.0,
+                            10.0,
+                            2.0,
+                            4.0,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -792,20 +797,23 @@ class _DesktopSliderArrowButtonState extends State<_DesktopSliderArrowButton> {
                     color: _isButtonHovered
                         ? null
                         : (isDark
-                            ? const Color(0xFF0F172A).withOpacity(0.92)
-                            : Colors.white.withOpacity(0.95)),
+                              ? const Color(0xFF0F172A).withOpacity(0.92)
+                              : Colors.white.withOpacity(0.95)),
                     border: Border.all(
                       color: _isButtonHovered
                           ? Colors.white.withOpacity(0.85)
-                          : AppColors.cyanPrimary.withOpacity(isDark ? 0.5 : 0.65),
+                          : AppColors.cyanPrimary.withOpacity(
+                              isDark ? 0.5 : 0.65,
+                            ),
                       width: 1.5,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: (isDark
-                                ? AppColors.cyanPrimary
-                                : AppColors.violetPrimary)
-                            .withOpacity(_isButtonHovered ? 0.45 : 0.22),
+                        color:
+                            (isDark
+                                    ? AppColors.cyanPrimary
+                                    : AppColors.violetPrimary)
+                                .withOpacity(_isButtonHovered ? 0.45 : 0.22),
                         blurRadius: _isButtonHovered ? 18 : 10,
                         offset: const Offset(0, 4),
                       ),
