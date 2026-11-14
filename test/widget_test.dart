@@ -82,7 +82,7 @@ void main() {
     });
 
     testWidgets(
-      'ProjectsSection renders Pandits Near Me - Instant Puja and PMP CSV Validator project cards',
+      'ProjectsSection renders Pandits Near Me - Instant Puja and CSV Validator Web project cards',
       (tester) async {
         tester.view.physicalSize = const Size(1280, 800);
         tester.view.devicePixelRatio = 1.0;
@@ -109,7 +109,7 @@ void main() {
           find.text('Pandits Near Me - Instant Puja'),
           findsAtLeastNWidgets(1),
         );
-        expect(find.text('PMP CSV Validator'), findsAtLeastNWidgets(1));
+        expect(find.text('CSV Validator Web'), findsAtLeastNWidgets(1));
 
         // Advance to page 1 on desktop slider (4 cards/page)
         final dots = find.descendant(

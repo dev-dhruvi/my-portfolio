@@ -450,7 +450,7 @@ class SeedData {
     const Project(
       id: 'proj_pmp_csv_validator',
       slug: 'pmp-csv-validator',
-      title: 'PMP CSV Validator',
+      title: 'CSV Validator Web',
       shortDescription: 'Enterprise validation studio & mobile emulator featuring 34 syntax rules, O(N) Base64 token collapsing, and cross-window sync.',
       fullDescription:
           'PMP Question Bank Validation Studio & Multi-Device Emulation Suite is a high-performance cross-platform Flutter Web/Desktop application and Python ETL pipeline built for EdTech instructional designers, subject-matter experts, and QA teams. '
