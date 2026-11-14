@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -65,11 +66,24 @@ class UrlLauncherUtil {
   }
 
   static Future<bool> openResume({BuildContext? context}) async {
-    final success = await openUrl('resume.pdf');
-    if (!success) {
-      if (context != null && !context.mounted) return false;
-      return await openUrl('assets/docs/resume.pdf', context: context);
+    if (kIsWeb) {
+      try {
+        final webUri = Uri.base.resolve('resume.pdf');
+        final success = await launchUrl(
+          webUri,
+          mode: LaunchMode.externalApplication,
+        );
+        if (success) return true;
+      } catch (_) {}
     }
-    return success;
+    if (context != null && !context.mounted) return false;
+    final hostedSuccess = await openUrl(
+      'https://dev-dhruvi.github.io/my-portfolio/resume.pdf',
+      context: context,
+    );
+    if (hostedSuccess) return true;
+
+    if (context != null && !context.mounted) return false;
+    return await openUrl('assets/docs/resume.pdf', context: context);
   }
 }

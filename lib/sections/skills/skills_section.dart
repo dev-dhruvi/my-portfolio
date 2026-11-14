@@ -191,7 +191,15 @@ class SkillsSection extends StatelessWidget {
     if (id == 'sk_perf_opt' || name.contains('perf')) {
       return 'Performance';
     }
-    if (id == 'sk_git' || name.contains('git')) {
+    if (id == 'sk_github_actions' ||
+        name.contains('github actions') ||
+        name.contains('ci/cd')) {
+      return 'CI/CD';
+    }
+    if (id == 'sk_git' ||
+        name == 'git' ||
+        name.startsWith('git &') ||
+        name.startsWith('git ')) {
       return 'Git';
     }
     if (id == 'sk_hive' || name.contains('hive')) {
@@ -202,11 +210,6 @@ class SkillsSection extends StatelessWidget {
     }
     if (id == 'sk_bloc' || name.contains('bloc')) {
       return 'BLoC';
-    }
-    if (id == 'sk_github_actions' ||
-        name.contains('github actions') ||
-        name.contains('ci/cd')) {
-      return 'CI/CD';
     }
     if (id == 'sk_ocr_docusign' ||
         name.contains('ocr') ||
@@ -665,6 +668,17 @@ class _SkillChipState extends State<_SkillChip> {
         return const Color(0xFF3DDC84); // Android Green
       case 'iOS':
         return const Color(0xFFEC4899); // Rose Pink
+      case 'CI/CD':
+      case 'GitHub Actions':
+        return const Color(0xFF38BDF8); // Sky Blue CI/CD
+      case 'CustomPainter':
+        return const Color(0xFFEC4899); // Pink
+      case 'BLoC':
+        return const Color(0xFF6366F1); // Indigo
+      case 'OCR & DocuSign':
+        return const Color(0xFF10B981); // Emerald
+      case 'Aadhaar KYC':
+        return const Color(0xFF06B6D4); // Cyan
       default:
         return widget.skill.isHighlighted
             ? const Color(0xFF06B6D4)
@@ -795,6 +809,42 @@ class _SkillChipState extends State<_SkillChip> {
       case 'Google Places':
         return Icon(
           Icons.place_rounded,
+          size: size,
+          color: const Color(0xFF06B6D4),
+        );
+
+      case 'CI/CD':
+      case 'GitHub Actions':
+        return Icon(
+          Icons.rocket_launch_rounded,
+          size: size,
+          color: const Color(0xFF38BDF8),
+        );
+
+      case 'CustomPainter':
+        return Icon(
+          Icons.brush_rounded,
+          size: size,
+          color: const Color(0xFFEC4899),
+        );
+
+      case 'BLoC':
+        return Icon(
+          Icons.view_in_ar_rounded,
+          size: size,
+          color: const Color(0xFF6366F1),
+        );
+
+      case 'OCR & DocuSign':
+        return Icon(
+          Icons.document_scanner_rounded,
+          size: size,
+          color: const Color(0xFF10B981),
+        );
+
+      case 'Aadhaar KYC':
+        return Icon(
+          Icons.badge_rounded,
           size: size,
           color: const Color(0xFF06B6D4),
         );

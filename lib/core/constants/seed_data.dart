@@ -32,8 +32,8 @@ class SeedData {
       role: 'Sr. Software Engineer – Flutter Developer',
       location: 'Surat, Gujarat, India',
       startDate: 'May 2025',
-      endDate: 'Present',
-      isCurrent: true, // Preserving historical / explicit mode
+      endDate: 'October 2026',
+      isCurrent: false, // Updated to match resume (May 2025 – Oct 2026)
       locationType: 'On-Site', // Preserving historical / explicit mode
       award: 'Code Craft Excellence Award (2025)',
       description: 'Leading end-to-end development of production-grade cross-platform mobile applications using Flutter, Dart, and GetX under a scalable clean modular architecture. Architected real-time event systems with AWS IoT Core (MQTT) and Firebase Cloud Messaging, complex booking pipelines, role-based modules, and secure JWT authentication with automated API retry mechanisms. Engineered high-precision UI components using CustomPainter, automated unit and widget testing, and production telemetry with Firebase Crashlytics. Honored with the Code Craft Excellence Award (2025) for high architectural standards and code craftsmanship.',
@@ -60,7 +60,7 @@ class SeedData {
       endDate: 'April 2025',
       isCurrent: false,
       locationType: 'Remote',
-      description: 'Delivered cross-platform client applications for Android and iOS using Flutter and FlutterFlow with custom interactive widgets, GetX state management, and offline caching.',
+      description: 'Engineered high-performance, visually engaging mobile applications for Android and iOS using Flutter and FlutterFlow with custom interactive widgets. Implemented robust reactive state management, streamlined REST API integrations, and local data persistence to guarantee consistent animations and rapid screen rendering. Maintained existing client apps with rapid bug resolution, performance profiling, and continuous dependency updates while mentoring junior developers on clean code principles.',
       orderIndex: 1,
       isPublished: true,
       responsibilities: [
@@ -79,7 +79,7 @@ class SeedData {
       endDate: 'May 2024',
       isCurrent: false,
       locationType: 'On-Site',
-      description: 'Engineered and maintained production Android and iOS apps across 5+ client projects (including Adroit Vantage) spanning logistics, social networking, and fintech.',
+      description: 'Spearheaded cross-platform mobile development across Android and iOS platforms from concept through Google Play Store and Apple App Store deployment. Designed intuitive, user-centric interfaces, optimized app startup times, and resolved complex architectural bottlenecks across diverse client projects (including Adroit Vantage). Partnered closely with cross-functional product managers, designers, and backend engineers in an agile sprint cycle to deliver high-quality releases on schedule.',
       orderIndex: 2,
       isPublished: true,
       responsibilities: [
@@ -96,7 +96,7 @@ class SeedData {
       startDate: 'January 2022',
       endDate: 'June 2022',
       isCurrent: false,
-      description: 'Built an Android HR app for attendance, salary slips, and real-time HR-to-employee chat using Kotlin, Java, Android Studio, and Firebase Realtime Database.',
+      description: 'Contributed to native Android enterprise application development focused on human resource management, employee records, payroll calculation, and real-time internal messaging. Implemented core interface modules using Android Studio and Firebase real-time database alongside third-party SDK integrations. Performed device compatibility testing, memory profiling, and defect resolution while building strong foundational industry expertise in mobile lifecycle practices.',
       orderIndex: 3,
       isPublished: true,
       responsibilities: [

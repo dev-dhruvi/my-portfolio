@@ -348,7 +348,7 @@ class AboutSection extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           Text(
-            'I enjoy investigating complex bugs, finding root causes, and improving app performance and size. I have hands-on experience with GetX and am expanding my expertise in BLoC, Riverpod, Flutter Web, and cross-platform development.',
+            'I enjoy investigating complex bugs, finding root causes, and improving app performance and size. I specialize in GetX and setState for production state management, and am actively expanding my knowledge in BLoC, Riverpod, Flutter Web, and cross-platform development.',
             style: AppTypography.getBodyMedium(secondaryTextColor)
                 .copyWith(height: 1.6),
           ),

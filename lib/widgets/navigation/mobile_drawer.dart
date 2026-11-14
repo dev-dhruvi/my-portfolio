@@ -203,10 +203,7 @@ class MobileDrawer extends StatelessWidget {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         _closeDrawer(context);
-                        UrlLauncherUtil.openUrl(
-                          AppConstants.defaultResumeUrl,
-                          context: context,
-                        );
+                        UrlLauncherUtil.openResume(context: context);
                       },
                       icon: const Icon(
                         Icons.download_rounded,
